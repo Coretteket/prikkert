@@ -18,4 +18,5 @@ jobs:
           cd ./prikkert
           git diff --exit-code || { echo "Uncommitted changes found. Exiting."; exit 1; }
           git pull origin main
+          yes | docker compose run app npx drizzle-kit migrate --config drizzle.config.ts
           docker compose up -d --build --remove-orphans
