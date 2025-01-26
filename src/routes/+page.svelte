@@ -7,8 +7,8 @@
 Welkom!
 
 <p>
-	{#if data.user && data.session}
-		Ingelogd als {data.user.name ?? 'Anoniem'} tot {Instant.from(data.session.expiresAt)
+	{#if data.session}
+		Ingelogd als {data.session.user.name ?? 'Anoniem'} tot {Instant.from(data.session.expiresAt)
 			.toZonedDateTimeISO('UTC')
 			.toLocaleString('nl', {
 				day: 'numeric',

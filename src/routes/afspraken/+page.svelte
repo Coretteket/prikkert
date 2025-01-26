@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
-	import { Instant, PlainDate } from '@/lib/temporal'
+	import { Instant } from '@/lib/temporal'
 
 	let { data } = $props()
 </script>
@@ -13,21 +13,18 @@
 	<ul class="list-inside list-disc space-y-2">
 		{#each data.events ?? [] as event}
 			<li>
-				<a href="/afspraak/{event.id}" class="font-bold text-lg">
+				<a href="/afspraak/{event.id}" class="text-lg font-bold">
 					{event.title}
 				</a>
 				<ul class="ml-4 list-inside list-disc">
 					{#each event.options as date}
 						<li>
-							{Instant.from(date.startsAt)
-								.toZonedDateTimeISO('UTC')
-								.toPlainDate()
-								.toLocaleString('nl', {
-									weekday: 'short',
-									day: 'numeric',
-									month: 'long',
-									year: 'numeric',
-								})}
+							{Instant.from(date.startsAt).toZonedDateTimeISO('UTC').toLocaleString('nl', {
+								weekday: 'short',
+								day: 'numeric',
+								month: 'long',
+								year: 'numeric',
+							})}
 						</li>
 					{/each}
 				</ul>

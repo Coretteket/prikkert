@@ -5,7 +5,6 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			session: import('@/lib/server/session').Session
-			user: import('@/lib/server/session').User
 		}
 		// interface PageData {}
 		// interface PageState {}

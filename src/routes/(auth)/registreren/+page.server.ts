@@ -28,7 +28,7 @@ const registerSchema = zfd
 	)
 
 export const actions = {
-	default: async ({ request, cookies }) => {
+	default: async ({ request, cookies, locals }) => {
 		const input = registerSchema.parse(await request.formData())
 
 		if (await checkPasswordPwned(input.password))
@@ -46,6 +46,8 @@ export const actions = {
 		const session = await createSession({ userId: id, cookies })
 
 		if (!session) throw new Error('Er is iets misgegaan.')
+
+		locals.session = session
 
 		throw redirect(307, '/')
 	},

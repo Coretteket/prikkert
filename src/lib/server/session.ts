@@ -1,7 +1,7 @@
 import { db } from '@/db/index'
 import * as schema from '@/db/schema'
 import { generateNanoid } from '@/lib/server/crypto'
-import { eq, sql } from 'drizzle-orm'
+import { eq, getTableColumns, sql } from 'drizzle-orm'
 import { Duration, Now } from '@/lib/temporal'
 import { encodeSHA256 } from '@/lib/server/crypto'
 import type { Cookies } from '@sveltejs/kit'
@@ -15,12 +15,12 @@ export const MAX_REVAL_AGE = Duration.from({ days: 150 }).round({ largestUnit: '
 /** Key for the session ID in the prepared session query */
 const SESSION_PLACEHOLDER = 'sessionId' as const
 
+/** Client-safe user data columns */
+const { passwordHash: _, ...safeUser } = getTableColumns(schema.users)
+
 /** Prepared query to get session and client-safe user from the database with a session ID */
 const sessionQuery = db
-	.select({
-		session: schema.sessions,
-		user: { ...schema.users, passwordHash: {} },
-	})
+	.select({ session: schema.sessions, user: safeUser })
 	.from(schema.sessions)
 	.innerJoin(schema.users, eq(schema.sessions.userId, schema.users.id))
 	.where(eq(schema.sessions.id, sql.placeholder(SESSION_PLACEHOLDER)))
@@ -30,19 +30,21 @@ const sessionQuery = db
 /** Get the session and user from the database with a session token,
  * omitting the password hash for client-safe user data. */
 export async function getSession(token: string) {
-	const result = await sessionQuery.execute({ [SESSION_PLACEHOLDER]: await encodeSHA256(token) })
-	return { session: result.at(0)?.session ?? null, user: result.at(0)?.user ?? null }
+	const result = await sessionQuery
+		.execute({ [SESSION_PLACEHOLDER]: await encodeSHA256(token) })
+		.then((r) => r.at(0))
+	return result ? { ...result.session, user: result.user } : null
 }
 
 /** Gets and validates the session from cookies */
 export async function validateSession({ cookies }: WithCookies) {
 	// Get the encoded session token from cookies
 	const token = cookies.get('session')
-	if (!token) return { session: null, user: null }
+	if (!token) return null
 
 	// Get the session and user from the database with token
-	const { session, user } = await getSession(token)
-	if (!session || !user) return { session: null, user: null }
+	const session = await getSession(token)
+	if (!session) return null
 
 	/// Calculate the remaining life of the session
 	const sessionLife = Now.instant().until(session.expiresAt)
@@ -50,8 +52,7 @@ export async function validateSession({ cookies }: WithCookies) {
 	// If the session has expired, delete the session from the database and cookies
 	if (Duration.compare(sessionLife, { seconds: 0 }) < 0) {
 		await deleteSession({ cookies, sessionId: session.id })
-
-		return { session: null, user: null }
+		return null
 	}
 
 	// If the session is close to expiring, update the session in the database and cookies
@@ -66,7 +67,7 @@ export async function validateSession({ cookies }: WithCookies) {
 		setSessionCookie({ cookies, token })
 	}
 
-	return { session, user }
+	return session
 }
 
 /** Securely sets the session cookie based on a token */
@@ -132,5 +133,4 @@ export async function deleteSession({ cookies, sessionId }: WithCookies<{ sessio
 
 type WithCookies<T = object> = T & { cookies: Cookies }
 
-export type Session = Awaited<ReturnType<typeof getSession>>['session']
-export type User = Awaited<ReturnType<typeof getSession>>['user']
+export type Session = Awaited<ReturnType<typeof getSession>>
