@@ -13,10 +13,13 @@
 		"lint": "prettier --check . && eslint ."
 	},
 	"dependencies": {
+		"argon2": "^0.41.1",
 		"dotenv": "^16.4.7",
 		"drizzle-kit": "^0.30.1",
 		"drizzle-orm": "^0.38.3",
-		"pg": "^8.13.1"
+		"nanoid": "^5.0.9",
+		"pg": "^8.13.1",
+		"temporal-polyfill": "^0.2.5"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",

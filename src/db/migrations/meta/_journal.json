@@ -8,6 +8,13 @@
       "when": 1735508210622,
       "tag": "0000_lowly_speedball",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1737802834992,
+      "tag": "0001_faulty_jack_power",
+      "breakpoints": true
     }
   ]
 }
