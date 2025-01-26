@@ -21,10 +21,10 @@ services:
     networks:
       - prikkert
     depends_on:
-      - web
+      - app
     restart: always
 
-  web:
+  app:
     image: coretteket/prikkert:latest
     build:
       context: .

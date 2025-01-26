@@ -12,6 +12,11 @@
 				<a href="/afspraak/{event.id}">
 					{event.title}
 				</a>
+				<ul class="ml-4 list-inside list-disc">
+					{#each event.options as date}
+						<li>{date.startsAt}</li>
+					{/each}
+				</ul>
 			</li>
 		{/each}
 	</ul>
