@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      argon2:
+        specifier: ^0.41.1
+        version: 0.41.1
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -42,9 +45,6 @@ importers:
       '@types/pg':
         specifier: ^8.11.10
         version: 8.11.10
-      argon2:
-        specifier: ^0.41.1
-        version: 0.41.1
       eslint:
         specifier: ^9.7.0
         version: 9.17.0(jiti@2.4.2)
