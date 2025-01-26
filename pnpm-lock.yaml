@@ -19,13 +19,13 @@ importers:
         version: 0.30.1
       drizzle-orm:
         specifier: ^0.38.4
-        version: 0.38.4(@types/pg@8.11.10)(pg@8.13.1)
+        version: 0.38.4(@types/pg@8.11.10)(pg@8.13.1)(postgres@3.4.5)
       nanoid:
         specifier: ^5.0.9
         version: 5.0.9
-      pg:
-        specifier: ^8.13.1
-        version: 8.13.1
+      postgres:
+        specifier: ^3.4.5
+        version: 3.4.5
     devDependencies:
       '@eslint/compat':
         specifier: ^1.2.3
@@ -1847,6 +1847,10 @@ packages:
   postgres-range@1.1.4:
     resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
 
+  postgres@3.4.5:
+    resolution: {integrity: sha512-cDWgoah1Gez9rN3H4165peY9qfpEo+SA61oQv65O3cRUE1pOEoJWwddwcqKE8XZYjbblOJlYDlLV4h67HrEVDg==}
+    engines: {node: '>=12'}
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -2947,10 +2951,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.38.4(@types/pg@8.11.10)(pg@8.13.1):
+  drizzle-orm@0.38.4(@types/pg@8.11.10)(pg@8.13.1)(postgres@3.4.5):
     optionalDependencies:
       '@types/pg': 8.11.10
       pg: 8.13.1
+      postgres: 3.4.5
 
   enhanced-resolve@5.18.0:
     dependencies:
@@ -3444,7 +3449,8 @@ snapshots:
   pg-cloudflare@1.1.1:
     optional: true
 
-  pg-connection-string@2.7.0: {}
+  pg-connection-string@2.7.0:
+    optional: true
 
   pg-int8@1.0.1: {}
 
@@ -3453,6 +3459,7 @@ snapshots:
   pg-pool@3.7.0(pg@8.13.1):
     dependencies:
       pg: 8.13.1
+    optional: true
 
   pg-protocol@1.7.0: {}
 
@@ -3463,6 +3470,7 @@ snapshots:
       postgres-bytea: 1.0.0
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
+    optional: true
 
   pg-types@4.0.2:
     dependencies:
@@ -3483,10 +3491,12 @@ snapshots:
       pgpass: 1.0.5
     optionalDependencies:
       pg-cloudflare: 1.1.1
+    optional: true
 
   pgpass@1.0.5:
     dependencies:
       split2: 4.2.0
+    optional: true
 
   picocolors@1.1.1: {}
 
@@ -3520,27 +3530,33 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postgres-array@2.0.0: {}
+  postgres-array@2.0.0:
+    optional: true
 
   postgres-array@3.0.2: {}
 
-  postgres-bytea@1.0.0: {}
+  postgres-bytea@1.0.0:
+    optional: true
 
   postgres-bytea@3.0.0:
     dependencies:
       obuf: 1.1.2
 
-  postgres-date@1.0.7: {}
+  postgres-date@1.0.7:
+    optional: true
 
   postgres-date@2.1.0: {}
 
   postgres-interval@1.2.0:
     dependencies:
       xtend: 4.0.2
+    optional: true
 
   postgres-interval@3.0.0: {}
 
   postgres-range@1.1.4: {}
+
+  postgres@3.4.5: {}
 
   prelude-ls@1.2.1: {}
 
@@ -3633,7 +3649,8 @@ snapshots:
 
   source-map@0.6.1: {}
 
-  split2@4.2.0: {}
+  split2@4.2.0:
+    optional: true
 
   strip-json-comments@3.1.1: {}
 
@@ -3758,7 +3775,8 @@ snapshots:
 
   word-wrap@1.2.5: {}
 
-  xtend@4.0.2: {}
+  xtend@4.0.2:
+    optional: true
 
   yaml@1.10.2: {}
 
