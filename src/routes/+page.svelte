@@ -1,9 +1,25 @@
 <script lang="ts">
+	import { Instant } from '@/lib/temporal.js'
+
 	let { data } = $props()
 </script>
 
 Welkom!
 
-<a href="/afspraak/maken">Afspraak maken</a>
+<p>
+	{#if data.user && data.session}
+		Ingelogd als {data.user.name ?? 'Anoniem'} tot {Instant.from(data.session.expiresAt)
+			.toZonedDateTimeISO('UTC')
+			.toLocaleString('nl', {
+				day: 'numeric',
+				month: 'long',
+				year: 'numeric',
+				hour: 'numeric',
+				minute: 'numeric',
+			})}.
+	{:else}
+		Niet ingelogd.
+	{/if}
+</p>
 
-<pre>{JSON.stringify(data, null, 2)}</pre>
+<a href="/afspraak/maken" class="my-4 block w-fit border px-2 py-1">Afspraak maken</a>

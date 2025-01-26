@@ -1,26 +1,37 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
+	import { Instant, PlainDate } from '@/lib/temporal'
 
 	let { data } = $props()
 </script>
 
 <div class="space-y-4">
 	<p>Je bent ingelogd!</p>
-	<ul class="list-inside list-disc">
+	<form action="/uitloggen" method="post" use:enhance>
+		<button type="submit" class="cursor-pointer">Uitloggen</button>
+	</form>
+	<ul class="list-inside list-disc space-y-2">
 		{#each data.events ?? [] as event}
 			<li>
-				<a href="/afspraak/{event.id}">
+				<a href="/afspraak/{event.id}" class="font-bold text-lg">
 					{event.title}
 				</a>
 				<ul class="ml-4 list-inside list-disc">
 					{#each event.options as date}
-						<li>{date.startsAt}</li>
+						<li>
+							{Instant.from(date.startsAt)
+								.toZonedDateTimeISO('UTC')
+								.toPlainDate()
+								.toLocaleString('nl', {
+									weekday: 'short',
+									day: 'numeric',
+									month: 'long',
+									year: 'numeric',
+								})}
+						</li>
 					{/each}
 				</ul>
 			</li>
 		{/each}
 	</ul>
-	<form action="/uitloggen" method="post" use:enhance>
-		<button type="submit" class="cursor-pointer">Uitloggen</button>
-	</form>
 </div>
