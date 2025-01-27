@@ -1,4 +1,5 @@
 import { db, schema } from '@/db'
+import { error } from '@sveltejs/kit'
 import { eq } from 'drizzle-orm'
 
 export async function load({ params: { id } }) {
@@ -6,6 +7,8 @@ export async function load({ params: { id } }) {
 		where: eq(schema.events.id, id),
 		with: { options: { with: { responses: true } } },
 	})
+
+	if (!event) error(404, 'Afspraak niet gevonden')
 
 	return { event }
 }

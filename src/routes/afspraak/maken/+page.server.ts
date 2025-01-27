@@ -13,7 +13,7 @@ const createEventSchema = zfd.formData({
 
 export const actions = {
 	default: async ({ request, locals }) => {
-		const userId = locals.user?.id
+		const userId = locals.session?.userId
 		if (!userId) throw new Error('Unauthorized')
 
 		const input = createEventSchema.parse(await request.formData())
