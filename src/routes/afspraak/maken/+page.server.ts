@@ -1,33 +1,32 @@
 import { db, schema } from '@/db'
-import { PlainDate } from '@/lib/temporal'
 import { redirect, type Actions } from '@sveltejs/kit'
-import { z } from 'zod'
+import * as v from '@/lib/server/validation'
 import { zfd } from 'zod-form-data'
+import { z } from 'zod'
 
-const createEventSchema = zfd.formData({
-	title: zfd.text(z.string().min(1)),
-	dates: zfd
-		.text(z.string().min(1))
-		.transform((str) => str.split('\n').map((date) => PlainDate.from(date.trim()))),
+const CreateEventSchema = zfd.formData({
+	title: zfd.text(z.string({ message: 'Vul een titel in.' })),
+	options: zfd.repeatable(z.array(v.plainDate()).min(1, 'Vul minstens één datum in.')),
 })
 
 export const actions = {
-	default: async ({ request, locals }) => {
+	default: async ({ locals, request }) => {
 		const userId = locals.session?.userId
-		if (!userId) throw new Error('Unauthorized')
+		if (!userId) return v.fail(401, 'Je bent niet ingelogd.')
 
-		const input = createEventSchema.parse(await request.formData())
+		const parsed = await v.parse(request.formData(), CreateEventSchema)
+		if (parsed instanceof v.error) return parsed.fail()
 
 		const event = await db.transaction(async (db) => {
 			const [event] = await db
 				.insert(schema.events)
-				.values({ ownerId: userId, title: input.title })
+				.values({ ownerId: userId, title: parsed.title })
 				.returning()
 
 			await db.insert(schema.eventOptions).values(
-				input.dates.map((date) => ({
+				parsed.options.map((date) => ({
 					eventId: event.id,
-					startsAt: date.toString(),
+					startsAt: date.toZonedDateTime('UTC').toInstant().toString(),
 				})),
 			)
 

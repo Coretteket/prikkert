@@ -4,18 +4,18 @@
 	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
 	let view = $state(Now.plainDateISO('Europe/Amsterdam'))
-	let selected: Array<InstanceType<typeof PlainDate>> = $state([])
+	let selected: Array<PlainDate> = $state([])
 
-	function toggleDate(date: InstanceType<typeof PlainDate>) {
+	function toggleDate(date: PlainDate) {
 		if (selected.some((d) => d.equals(date))) selected = selected.filter((d) => !d.equals(date))
 		else selected.push(date)
 	}
 
-	function eachMondayOfMonth(date: InstanceType<typeof PlainDate>) {
+	function eachMondayOfMonth(date: PlainDate) {
 		const start = date.with({ day: 1 })
 		const end = date.with({ day: start.daysInMonth })
 
-		const mondays: Array<InstanceType<typeof PlainDate>> = []
+		const mondays: Array<PlainDate> = []
 		let current = start.subtract({ days: start.dayOfWeek - 1 })
 
 		while (PlainDate.compare(current, end) <= 0) {
@@ -72,3 +72,7 @@
 		{/each}
 	</tbody>
 </table>
+
+{#each selected as date}
+	<input type="hidden" name="options" value={date.toString()} />
+{/each}

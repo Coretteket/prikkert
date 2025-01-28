@@ -1,16 +1,15 @@
 import { db, schema } from '@/db'
-import { createSession } from '@/lib/server/session'
-import { redirect, type Actions } from '@sveltejs/kit'
-import { eq } from 'drizzle-orm'
+import { type Actions } from '@sveltejs/kit'
+import * as v from '@/lib/server/validation'
 import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 import argon2 from 'argon2'
 import { checkPasswordPwned } from '@/lib/server/crypto'
 
-const registerSchema = zfd
+const RegisterSchema = zfd
 	.formData({
 		name: z.string().min(1, 'Vul je naam in.'),
-		email: z.string().email('Het ingevoerde e-mailadres is ongeldig.'),
+		email: z.string().email('Vul een geldig e-mailadres in.'),
 		password: z
 			.string()
 			.min(8, 'Kies een wachtwoord van tenminste 8 tekens.')
@@ -23,32 +22,33 @@ const registerSchema = zfd
 			context.addIssue({
 				code: 'custom',
 				message: 'De ingevulde wachtwoorden komen niet overeen.',
-				path: ['confirm_password'],
+				path: ['confirmPassword'],
 			}),
 	)
 
+const UNSAFE_PASSWORD_MSG =
+	'Dit wachtwoord is onveilig, omdat het voorkomt in een lijst van gelekte wachtwoorden. Kies een ander wachtwoord.'
+
 export const actions = {
-	default: async ({ request, cookies, locals }) => {
-		const input = registerSchema.parse(await request.formData())
+	default: async ({ request }) => {
+		const parsed = await v.parse(request.formData(), RegisterSchema)
+		if (parsed instanceof v.error) return parsed.fail()
 
-		if (await checkPasswordPwned(input.password))
-			throw new Error(
-				'Dit wachtwoord is op eerder al gelekt en daarom niet veilig om te gebruiken. Kies een ander wachtwoord.',
-			)
+		if (await checkPasswordPwned(parsed.password)) {
+			return v.fail(400, { password: [UNSAFE_PASSWORD_MSG] })
+		}
 
-		const passwordHash = await argon2.hash(input.password)
+		const passwordHash = await argon2.hash(parsed.password)
 
-		const [{ id }] = await db
-			.insert(schema.users)
-			.values({ name: input.name, email: input.email, passwordHash })
-			.returning()
+		try {
+			await db
+				.insert(schema.users)
+				.values({ name: parsed.name, email: parsed.email, passwordHash })
+				.returning()
+		} catch {
+			console.warn('Failed to insert user', { name: parsed.name, email: parsed.email })
+		}
 
-		const session = await createSession({ userId: id, cookies })
-
-		if (!session) throw new Error('Er is iets misgegaan.')
-
-		locals.session = session
-
-		throw redirect(307, '/')
+		return { successMessage: 'Check je e-mail om je account te activeren.' }
 	},
 } satisfies Actions

@@ -1,17 +1,50 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
+
+	let { form } = $props()
 </script>
 
 <form method="post" use:enhance class="grid gap-4">
-	<input type="text" name="name" placeholder="Naam" class="border p-2" />
+	{#if form?.successMessage}
+		<p>{form.successMessage}</p>
+	{/if}
+
+	{#if form?.formErrors}
+		<p class="text-red-500">{form.formErrors}</p>
+	{/if}
+
+	<input type="text" name="name" placeholder="Naam" autocomplete="given-name" class="border p-2" />
+	{#if form?.fieldErrors?.name}
+		<p class="text-red-500">{form.fieldErrors.name}</p>
+	{/if}
+
 	<input type="email" name="email" placeholder="Email" class="border p-2" />
-	<input type="password" name="password" placeholder="Wachtwoord" class="border p-2" />
+	{#if form?.fieldErrors?.email}
+		<p class="text-red-500">{form.fieldErrors.email}</p>
+	{/if}
+
+	<input
+		type="password"
+		name="password"
+		placeholder="Wachtwoord"
+		autocomplete="new-password"
+		class="border p-2"
+	/>
+	{#if form?.fieldErrors?.password}
+		<p class="text-red-500">{form.fieldErrors.password}</p>
+	{/if}
+
 	<input
 		type="password"
 		name="confirmPassword"
 		placeholder="Herhaal wachtwoord"
+		autocomplete="new-password"
 		class="border p-2"
 	/>
-	<button type="submit" class="border bg-stone-100 p-2">Registreren</button>
-	<a href="/registreren">Of log in.</a>
+	{#if form?.fieldErrors?.confirmPassword}
+		<p class="text-red-500">{form.fieldErrors.confirmPassword}</p>
+	{/if}
+
+	<button type="submit" class="border bg-stone-100 p-2">Registreer</button>
+	<a href="/inloggen">Of log in.</a>
 </form>
