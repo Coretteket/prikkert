@@ -13,7 +13,7 @@
 	<ul class="list-inside list-disc space-y-2">
 		{#each data.events ?? [] as event}
 			<li>
-				<a href="/afspraak/{event.id}" class="text-lg font-bold">
+				<a href="/afspraak/overzicht/{event.id}" class="text-lg font-bold">
 					{event.title}
 				</a>
 				<ul class="ml-4 list-inside list-disc">

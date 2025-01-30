@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Instant } from '@/lib/temporal.js'
+	import { Instant } from '@/lib/temporal'
 
 	let { data } = $props()
 </script>
@@ -11,6 +11,8 @@
 {#if data.event.location}
 	<p>Locatie: {data.event.location}</p>
 {/if}
+
+<a href="/afspraak/invullen/{data.event.id}" class="my-4 block">Of invullen.</a>
 
 <ul class="list-inside list-disc">
 	{#each data.event.options as date}
