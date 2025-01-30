@@ -45,10 +45,11 @@ export const actions = {
 				.insert(schema.users)
 				.values({ name: parsed.name, email: parsed.email, passwordHash })
 				.returning()
+
+			return { successMessage: 'Check je e-mail om je account te activeren.' }
 		} catch {
 			console.warn('Failed to insert user', { name: parsed.name, email: parsed.email })
+			return v.fail(500, 'Er is iets misgegaan. Probeer het later opnieuw.')
 		}
-
-		return { successMessage: 'Check je e-mail om je account te activeren.' }
 	},
 } satisfies Actions

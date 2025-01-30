@@ -13,7 +13,7 @@ const LoginSchema = zfd.formData({
 })
 
 export const actions = {
-	default: async ({ request, cookies, locals }) => {
+	default: async ({ request, cookies }) => {
 		const parsed = await v.parse(request.formData(), LoginSchema)
 		if (parsed instanceof v.error) return parsed.fail()
 
@@ -30,8 +30,6 @@ export const actions = {
 		const session = await createSession({ userId: user.id, cookies })
 		if (!session) return v.fail(500, 'Er is iets misgegaan.')
 
-		locals.session = session
-
-		throw redirect(307, '/')
+		throw redirect(303, '/')
 	},
 } satisfies Actions

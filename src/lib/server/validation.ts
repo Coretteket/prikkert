@@ -1,6 +1,6 @@
+import { fail as kitFail } from '@sveltejs/kit'
 import { PlainDate } from '@/lib/temporal'
 import { z } from 'zod'
-import { fail as kitFail, type ActionFailure } from '@sveltejs/kit'
 
 /** Represents a validation error that occurs during schema validation.
  * Provides a `fail()` method to return form and field errors. */
@@ -36,7 +36,7 @@ export async function parse<TSchema extends z.ZodType>(
 	return parsed.data as z.output<TSchema>
 }
 
-/** Use `v.fail()` to return a global form error.
+/** Use `v.fail()` to return custom form or field errors.
  * @param status The [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses), in the range 400-599.
  * @param error The content of the error.
  */
