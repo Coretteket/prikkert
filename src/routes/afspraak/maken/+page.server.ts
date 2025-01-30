@@ -1,4 +1,4 @@
-import { db, schema } from '@/db'
+import { db, schema } from '@/lib/server/db'
 import { redirect, type Actions } from '@sveltejs/kit'
 import * as v from '@/lib/server/validation'
 import { zfd } from 'zod-form-data'

@@ -1,4 +1,4 @@
-import { db, schema } from '@/db'
+import { db, schema } from '@/lib/server/db'
 import { error } from '@sveltejs/kit'
 import { eq } from 'drizzle-orm'
 

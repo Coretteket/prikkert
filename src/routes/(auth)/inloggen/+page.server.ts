@@ -1,4 +1,4 @@
-import { db, schema } from '@/db'
+import { db, schema } from '@/lib/server/db'
 import { createSession } from '@/lib/server/session'
 import { redirect, type Actions } from '@sveltejs/kit'
 import { eq } from 'drizzle-orm'

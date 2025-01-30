@@ -1,5 +1,5 @@
-import { db } from '@/db/index'
-import * as schema from '@/db/schema'
+import { db } from '@/lib/server/db/index'
+import * as schema from '@/lib/server/db/schema'
 import { generateNanoid } from '@/lib/server/crypto'
 import { eq, getTableColumns, sql } from 'drizzle-orm'
 import { Duration, Now } from '@/lib/temporal'

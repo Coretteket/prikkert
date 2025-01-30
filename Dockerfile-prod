@@ -12,7 +12,7 @@ COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
 COPY drizzle.config.ts .
-COPY ./src/db ./src/db
+COPY ./src/lib/server/db ./src/lib/server/db
 ENV NODE_ENV=production
 CMD node build
 

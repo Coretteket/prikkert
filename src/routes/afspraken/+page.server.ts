@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { db, schema } from '@/db'
+import { db, schema } from '@/lib/server/db'
 import { redirect } from '@sveltejs/kit'
 
 export async function load({ locals }) {
