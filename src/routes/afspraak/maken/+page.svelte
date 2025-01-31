@@ -4,7 +4,6 @@
 	import DatePicker from './date-picker.svelte'
 	import { keys } from '@/lib/utils'
 	import { PlainDate } from '@/lib/temporal'
-	import TimeInput from './time-input.svelte'
 	import TimeRangeInput from './time-range-input.svelte'
 
 	let { form } = $props()

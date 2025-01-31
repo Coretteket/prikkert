@@ -31,9 +31,9 @@
 </script>
 
 <div class="mb-2 flex justify-between px-4">
-	<button type="button" onclick={() => (view = view.subtract({ months: 1 }))}> &lt; </button>
+	<button type="button" onclick={() => (view = view.subtract({ months: 1 }))}>&lt;</button>
 	<span>{view.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
-	<button type="button" onclick={() => (view = view.add({ months: 1 }))}> &gt; </button>
+	<button type="button" onclick={() => (view = view.add({ months: 1 }))}>&gt;</button>
 </div>
 
 <table class="grid w-full table-fixed gap-4">
