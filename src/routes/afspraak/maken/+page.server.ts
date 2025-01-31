@@ -6,7 +6,10 @@ import { z } from 'zod'
 
 const CreateEventSchema = zfd.formData({
 	title: zfd.text(z.string({ message: 'Vul een titel in.' })),
+	description: zfd.text(z.string().optional()),
+	location: zfd.text(z.string().optional()),
 	options: zfd.repeatable(z.array(v.plainDate()).min(1, 'Vul minstens één datum in.')),
+	times: zfd.repeatable(z.array(z.string()).optional()),
 })
 
 export const actions = {
@@ -33,6 +36,6 @@ export const actions = {
 			return event
 		})
 
-		redirect(307, `/afspraak/${event.id}`)
+		redirect(303, `/afspraak/${event.id}`)
 	},
 } satisfies Actions

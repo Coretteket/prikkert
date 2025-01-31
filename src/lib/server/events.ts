@@ -1,16 +1,21 @@
 import { db, schema } from '@/lib/server/db'
-import { eq, sql } from 'drizzle-orm'
-
-const EVENT_PLACEHOLDER = 'eventId' as const
-
-const eventQuery = db.query.events
-	.findFirst({
-		where: eq(schema.events.id, sql.placeholder(EVENT_PLACEHOLDER)),
-		with: { options: { with: { responses: true } } },
-	})
-	.prepare('event')
+import { eq } from 'drizzle-orm'
 
 export async function getEvent(eventId: string) {
-	const event = await eventQuery.execute({ [EVENT_PLACEHOLDER]: eventId })
+	const event = await db.query.events.findFirst({
+		where: eq(schema.events.id, eventId),
+		with: { options: { with: { responses: true } } },
+	})
+
 	return event
+}
+
+export async function getEventsByUser(ownerId: string) {
+	const events = await db.query.events.findMany({
+		// should be queried by all events a user participates in
+		where: eq(schema.events.ownerId, ownerId),
+		with: { options: { with: { responses: true } } },
+	})
+
+	return events
 }

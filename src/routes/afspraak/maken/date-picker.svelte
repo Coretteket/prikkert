@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { Now, PlainDate } from '@/lib/temporal'
 
+	type Props = { selected?: Array<PlainDate> }
+	let { selected = $bindable([]) }: Props = $props()
+
 	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
 	let view = $state(Now.plainDateISO('Europe/Amsterdam'))
-	let selected: Array<PlainDate> = $state([])
+	// let selected: Array<PlainDate> = $state([])
 
 	function toggleDate(date: PlainDate) {
 		if (selected.some((d) => d.equals(date))) selected = selected.filter((d) => !d.equals(date))
