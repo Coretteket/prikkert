@@ -3,8 +3,8 @@
 	import { SvelteSet } from 'svelte/reactivity'
 	import DatePicker from './date-picker.svelte'
 	import { keys } from '@/lib/utils'
-	import { PlainDate } from '@/lib/temporal'
-	import TimeRangeInput from './time-range-input.svelte'
+	import { Now, PlainDate } from '@/lib/temporal'
+	import TimeSlot from './time-slot.svelte'
 
 	let { form } = $props()
 
@@ -23,16 +23,18 @@
 	let selectedMetaFields: Set<keyof typeof metaFields> = new SvelteSet([])
 	let selectedOptionFields: Set<keyof typeof optionFields> = new SvelteSet([])
 
-	let selectedDates: Array<PlainDate> = $state([])
+	let selectedDates: Array<PlainDate> = $state(
+		Array.from({ length: 14 }).map((_, i) => Now.plainDateISO().add({ days: i })),
+	)
 </script>
 
-<form method="POST" use:enhance class="grid gap-4 border p-4">
+<form method="POST" use:enhance class="grid gap-5">
 	{#if form?.formErrors && form.formErrors.length > 0}
 		<p class="text-red-500">{form.formErrors}</p>
 	{/if}
 
-	<label for="form-name" class="font-bold">Titel</label>
-	<input id="form-name" type="text" name="title" class="border px-2 py-1" />
+	<label for="form-name" class="text-lg font-bold">Titel</label>
+	<input id="form-name" type="text" name="title" class="rounded border px-3 py-2 text-lg" />
 	{#if form?.fieldErrors?.title}
 		<p class="text-red-500">{form.fieldErrors.title}</p>
 	{/if}
@@ -41,7 +43,7 @@
 		{@const field = metaFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="font-bold">{field.label}</label>
+			<label for="form-{fieldId}" class="text-lg font-bold">{field.label}</label>
 			<button onclick={() => selectedMetaFields.delete(fieldId)}>X</button>
 		</div>
 
@@ -57,7 +59,7 @@
 			{#each metaFieldsKeys.difference(selectedMetaFields) as fieldId}
 				<button
 					type="button"
-					class="border px-2 py-1 text-sm"
+					class="rounded border px-2 py-1 text-sm"
 					onclick={() => selectedMetaFields.add(fieldId)}
 				>
 					+ {metaFields[fieldId].label}
@@ -66,10 +68,11 @@
 		</div>
 	{/if}
 
-	<label for="form-dates" class="font-bold">Datums</label>
-	<div id="form-dates" class="max-w-80 border p-4">
+	<label for="form-dates" class="text-lg font-bold">Datums</label>
+	<div id="form-dates">
 		<DatePicker bind:selected={selectedDates} />
 	</div>
+
 	{#if form?.fieldErrors?.options}
 		<p class="text-red-500">{form.fieldErrors.options}</p>
 	{/if}
@@ -78,7 +81,7 @@
 		{@const field = optionFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="font-bold">{field.label}</label>
+			<label for="form-{fieldId}" class="text-lg font-bold">{field.label}</label>
 			<button onclick={() => selectedOptionFields.delete(fieldId)}>X</button>
 		</div>
 
@@ -94,7 +97,7 @@
 			{#each optionFieldsKeys.difference(selectedOptionFields) as fieldId}
 				<button
 					type="button"
-					class="border px-2 py-1 text-sm"
+					class="rounded border px-2 py-1 text-sm"
 					onclick={() => selectedOptionFields.add(fieldId)}
 				>
 					+ {optionFields[fieldId].label}
@@ -103,31 +106,24 @@
 		</div>
 	{/if}
 
-	<button type="submit" class="border px-2 py-1">Afspraak maken</button>
+	<button type="submit" class="rounded border px-2 py-2">Afspraak maken</button>
 </form>
 
 {#snippet location(fieldId: string)}
-	<input name={fieldId} id="form-{fieldId}" type="text" class="border px-2 py-1" />
+	<input name={fieldId} id="form-{fieldId}" type="text" class="rounded border px-2 py-2" />
 {/snippet}
 
 {#snippet description(fieldId: string)}
-	<textarea name={fieldId} id="form-{fieldId}" class="h-24 border px-2 py-1"></textarea>
+	<textarea name={fieldId} id="form-{fieldId}" class="rounded border px-2 py-2"></textarea>
 {/snippet}
 
 {#snippet times(fieldId: string)}
-	<div class="grid gap-4">
-		{#each selectedDates.toSorted(PlainDate.compare) as date}
-			<div class="grid gap-2">
-				<div>
-					{date.toLocaleString('nl', {
-						weekday: 'long',
-						day: 'numeric',
-						month: 'long',
-						year: 'numeric',
-					})}
-				</div>
-				<TimeRangeInput />
-			</div>
+	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border p-5">
+		{#each selectedDates.toSorted(PlainDate.compare) as date (date)}
+			<TimeSlot
+				removeDate={() => (selectedDates = selectedDates.filter((d) => !d.equals(date)))}
+				{date}
+			/>
 		{:else}
 			<p>Selecteer datums om tijdsloten toe te voegen.</p>
 		{/each}

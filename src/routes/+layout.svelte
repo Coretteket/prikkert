@@ -10,7 +10,7 @@
 	<link rel="preload" as="font" type="font/woff2" href={fontHref} crossorigin="anonymous" />
 </svelte:head>
 
-<div class="mx-auto max-w-2xl p-4">
+<div class="mx-auto max-w-2xl p-2 sm:p-4">
 	<nav class="flex items-center justify-between p-4">
 		<a href="/">Prikkert</a>
 		{#if data.session}

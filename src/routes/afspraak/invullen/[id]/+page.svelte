@@ -25,7 +25,7 @@
 					year: 'numeric',
 				})}
 			</div>
-			<div class="flex gap-2 *:border *:px-2 *:py-1">
+			<div class="flex gap-2 *:border rounded *:px-2 *:py-1">
 				<button>Ja</button>
 				<button>Nee</button>
 				<button>Misschien</button>

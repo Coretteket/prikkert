@@ -22,4 +22,4 @@ Welkom!
 	{/if}
 </p>
 
-<a href="/afspraak/maken" class="my-4 block w-fit border px-2 py-1">Afspraak maken</a>
+<a href="/afspraak/maken" class="my-4 block w-fit border rounded px-2 py-1">Afspraak maken</a>

@@ -13,12 +13,12 @@
 		<p class="text-red-500">{form.formErrors}</p>
 	{/if}
 
-	<input type="text" name="name" placeholder="Naam" autocomplete="given-name" class="border p-2" />
+	<input type="text" name="name" placeholder="Naam" autocomplete="given-name" class="border rounded p-2" />
 	{#if form?.fieldErrors?.name}
 		<p class="text-red-500">{form.fieldErrors.name}</p>
 	{/if}
 
-	<input type="email" name="email" placeholder="Email" class="border p-2" />
+	<input type="email" name="email" placeholder="Email" class="border rounded p-2" />
 	{#if form?.fieldErrors?.email}
 		<p class="text-red-500">{form.fieldErrors.email}</p>
 	{/if}
@@ -28,7 +28,7 @@
 		name="password"
 		placeholder="Wachtwoord"
 		autocomplete="new-password"
-		class="border p-2"
+		class="border rounded p-2"
 	/>
 	{#if form?.fieldErrors?.password}
 		<p class="text-red-500">{form.fieldErrors.password}</p>
@@ -39,12 +39,12 @@
 		name="confirmPassword"
 		placeholder="Herhaal wachtwoord"
 		autocomplete="new-password"
-		class="border p-2"
+		class="border rounded p-2"
 	/>
 	{#if form?.fieldErrors?.confirmPassword}
 		<p class="text-red-500">{form.fieldErrors.confirmPassword}</p>
 	{/if}
 
-	<button type="submit" class="border bg-stone-100 p-2">Registreer</button>
+	<button type="submit" class="border rounded bg-stone-100 p-2">Registreer</button>
 	<a href="/inloggen">Of log in.</a>
 </form>
