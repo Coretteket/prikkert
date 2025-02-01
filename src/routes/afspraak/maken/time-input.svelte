@@ -48,4 +48,5 @@
 	placeholder="00"
 	class={['w-6 outline-none', type === 'hour' ? 'text-right' : 'text-left']}
 	aria-invalid={invalid ? true : undefined}
+	bind:value={value}
 />

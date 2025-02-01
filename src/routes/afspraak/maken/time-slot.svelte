@@ -12,6 +12,8 @@
 	let slots: Array<{ startsAt?: PlainTime; endsAt?: PlainTime }> = $state([
 		{ startsAt: undefined, endsAt: undefined },
 	])
+
+	$inspect(slots)
 </script>
 
 <div class="flex gap-2 max-sm:flex-col">
