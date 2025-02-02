@@ -118,7 +118,7 @@
 {/snippet}
 
 {#snippet times(fieldId: string)}
-	<div id="times" class="relative grid max-h-100 sm:max-h-80 gap-3 overflow-y-scroll rounded border p-5">
+	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border p-5">
 		{#each selectedDates.toSorted(PlainDate.compare) as date (date)}
 			<TimeSlot
 				removeDate={() => (selectedDates = selectedDates.filter((d) => !d.equals(date)))}

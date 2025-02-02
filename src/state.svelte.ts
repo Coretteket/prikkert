@@ -1,5 +1,5 @@
-class GlobalStore {
+class State {
 	activePopover: string | null = $state(null)
 }
 
-export const store = new GlobalStore()
+export const state = new State()
