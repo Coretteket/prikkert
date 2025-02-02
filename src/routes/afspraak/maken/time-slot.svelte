@@ -4,7 +4,6 @@
 	import { cubicInOut } from 'svelte/easing'
 	import { IconCopy, IconDotsVertical, IconPlus, IconTrash } from '@tabler/icons-svelte'
 	import { store } from '@/state.svelte'
-	import TimePicker from '@/lib/components/time-picker.svelte'
 
 	type Props = { date: PlainDate; removeDate: () => void }
 	let { date = $bindable(), removeDate }: Props = $props()
@@ -12,6 +11,8 @@
 	let slots: Array<{ startsAt?: PlainTime; endsAt?: PlainTime }> = $state([
 		{ startsAt: new PlainTime(0, 0), endsAt: new PlainTime(0, 0) },
 	])
+
+	$inspect(slots)
 
 	const Popover = import('@/lib/components/popover.svelte').then((m) => m.default)
 </script>
@@ -30,9 +31,23 @@
 		{#each slots as slot, i (slot)}
 			<div class="flex gap-2">
 				<div class="flex items-center gap-3">
-					<TimePicker bind:time={slot.startsAt} />
+					<input
+						type="time"
+						class="rounded border px-1 py-0.5 font-mono"
+						bind:value={
+							() => slot.startsAt?.toString().slice(0, 5) ?? '00:00',
+							(value) => (slot.startsAt = PlainTime.from(value ?? '00:00'))
+						}
+					/>
 					&mdash;
-					<TimePicker bind:time={slot.endsAt} />
+					<input
+						type="time"
+						class="rounded border px-1 py-0.5 font-mono"
+						bind:value={
+							() => slot.endsAt?.toString().slice(0, 5) ?? '00:00',
+							(value) => (slot.endsAt = PlainTime.from(value ?? '00:00'))
+						}
+					/>
 				</div>
 
 				{#await Popover}
