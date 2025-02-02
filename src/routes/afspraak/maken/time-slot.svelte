@@ -3,17 +3,17 @@
 	import { fade } from 'svelte/transition'
 	import { cubicInOut } from 'svelte/easing'
 	import { IconCopy, IconDotsVertical, IconPlus, IconTrash } from '@tabler/icons-svelte'
-	import TimeRange from './time-range.svelte'
 	import { store } from '@/state.svelte'
+	import TimePicker from '@/lib/components/time-picker.svelte'
 
 	type Props = { date: PlainDate; removeDate: () => void }
 	let { date = $bindable(), removeDate }: Props = $props()
 
 	let slots: Array<{ startsAt?: PlainTime; endsAt?: PlainTime }> = $state([
-		{ startsAt: undefined, endsAt: undefined },
+		{ startsAt: new PlainTime(0, 0), endsAt: new PlainTime(0, 0) },
 	])
 
-	const Popover = import('./popover.svelte').then((m) => m.default)
+	const Popover = import('@/lib/components/popover.svelte').then((m) => m.default)
 </script>
 
 <div class="flex gap-2 max-sm:flex-col">
@@ -29,7 +29,11 @@
 	<div class="grid gap-3">
 		{#each slots as slot, i (slot)}
 			<div class="flex gap-2">
-				<TimeRange bind:range={slots[i]} />
+				<div class="flex items-center gap-3">
+					<TimePicker bind:time={slot.startsAt} />
+					&mdash;
+					<TimePicker bind:time={slot.endsAt} />
+				</div>
 
 				{#await Popover}
 					<button type="button" class="cursor-pointer text-stone-600">
@@ -54,7 +58,7 @@
 								onclick={() => {
 									slots = [
 										...slots.slice(0, i + 1),
-										{ startsAt: undefined, endsAt: undefined },
+										{ startsAt: new PlainTime(0, 0), endsAt: new PlainTime(0, 0) },
 										...slots.slice(i + 1),
 									]
 									store.activePopover = null
