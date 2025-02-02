@@ -4,6 +4,7 @@
 	import { cubicInOut } from 'svelte/easing'
 	import { IconCopy, IconDotsVertical, IconPlus, IconTrash } from '@tabler/icons-svelte'
 	import { store } from '@/state.svelte'
+	import TimeInput from './time-input.svelte'
 
 	type Props = { date: PlainDate; removeDate: () => void }
 	let { date = $bindable(), removeDate }: Props = $props()
@@ -31,23 +32,9 @@
 		{#each slots as slot, i (slot)}
 			<div class="flex gap-2">
 				<div class="flex items-center gap-3">
-					<input
-						type="time"
-						class="rounded border px-1 py-0.5 font-mono"
-						bind:value={
-							() => slot.startsAt?.toString().slice(0, 5) ?? '00:00',
-							(value) => (slot.startsAt = PlainTime.from(value ?? '00:00'))
-						}
-					/>
+					<TimeInput bind:time={slot.startsAt} />
 					&mdash;
-					<input
-						type="time"
-						class="rounded border px-1 py-0.5 font-mono"
-						bind:value={
-							() => slot.endsAt?.toString().slice(0, 5) ?? '00:00',
-							(value) => (slot.endsAt = PlainTime.from(value ?? '00:00'))
-						}
-					/>
+					<TimeInput bind:time={slot.endsAt} />
 				</div>
 
 				{#await Popover}

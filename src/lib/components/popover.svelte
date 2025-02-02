@@ -9,6 +9,7 @@
 		useRole,
 		useDismiss,
 		useId,
+		shift,
 	} from '@skeletonlabs/floating-ui-svelte'
 	import { store } from '@/state.svelte'
 	import { IconDotsVertical } from '@tabler/icons-svelte'
@@ -21,7 +22,7 @@
 
 	const floating = useFloating({
 		placement: 'bottom-end',
-		middleware: [offset({ crossAxis: -4, mainAxis: 10 }), flip()],
+		middleware: [offset({ crossAxis: 4 }), shift(), flip()],
 		whileElementsMounted: autoUpdate,
 		onOpenChange: (v) => (store.activePopover = v ? id : null),
 		get open() {
@@ -46,7 +47,7 @@
 
 <div
 	bind:this={floating.elements.floating}
-	class={['absolute top-0 left-0 w-max']}
+	class={['absolute top-0 left-0 w-max p-2']}
 	style={floating.floatingStyles}
 	{...interactions.getFloatingProps()}
 >
