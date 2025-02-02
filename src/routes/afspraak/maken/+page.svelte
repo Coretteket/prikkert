@@ -44,7 +44,13 @@
 
 		<div class="flex items-center justify-between">
 			<label for="form-{fieldId}" class="text-lg font-bold">{field.label}</label>
-			<button onclick={() => selectedMetaFields.delete(fieldId)}>X</button>
+			<button
+				type="button"
+				onclick={() => selectedMetaFields.delete(fieldId)}
+				class="cursor-pointer"
+			>
+				X
+			</button>
 		</div>
 
 		{@render field.snippet(fieldId)}
@@ -59,7 +65,7 @@
 			{#each metaFieldsKeys.difference(selectedMetaFields) as fieldId}
 				<button
 					type="button"
-					class="rounded border px-2 py-1 text-sm"
+					class="cursor-pointer rounded border px-2 py-1 text-sm"
 					onclick={() => selectedMetaFields.add(fieldId)}
 				>
 					+ {metaFields[fieldId].label}
@@ -82,7 +88,13 @@
 
 		<div class="flex items-center justify-between">
 			<label for="form-{fieldId}" class="text-lg font-bold">{field.label}</label>
-			<button onclick={() => selectedOptionFields.delete(fieldId)}>X</button>
+			<button
+				type="button"
+				onclick={() => selectedOptionFields.delete(fieldId)}
+				class="cursor-pointer"
+			>
+				X
+			</button>
 		</div>
 
 		{@render field.snippet(fieldId)}
@@ -97,7 +109,7 @@
 			{#each optionFieldsKeys.difference(selectedOptionFields) as fieldId}
 				<button
 					type="button"
-					class="rounded border px-2 py-1 text-sm"
+					class="cursor-pointer rounded border px-2 py-1 text-sm"
 					onclick={() => selectedOptionFields.add(fieldId)}
 				>
 					+ {optionFields[fieldId].label}
@@ -120,10 +132,8 @@
 {#snippet times(fieldId: string)}
 	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border p-5">
 		{#each selectedDates.toSorted(PlainDate.compare) as date (date)}
-			<TimeSlot
-				removeDate={() => (selectedDates = selectedDates.filter((d) => !d.equals(date)))}
-				{date}
-			/>
+			{@const removeDate = () => (selectedDates = selectedDates.filter((d) => !d.equals(date)))}
+			<TimeSlot {removeDate} {date} />
 		{:else}
 			<p>Selecteer datums om tijdsloten toe te voegen.</p>
 		{/each}

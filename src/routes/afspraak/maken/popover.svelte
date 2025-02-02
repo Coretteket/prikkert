@@ -10,26 +10,22 @@
 		useDismiss,
 		useId,
 	} from '@skeletonlabs/floating-ui-svelte'
-	import { state } from '@/state.svelte'
+	import { store } from '@/state.svelte'
 	import { IconDotsVertical } from '@tabler/icons-svelte'
 	import type { Snippet } from 'svelte'
 
-	type Props = { children: Snippet<[typeof close]> }
+	type Props = { children: Snippet }
 	let { children }: Props = $props()
 
 	let id = useId()
 
-	function close() {
-		state.activePopover = null
-	}
-
 	const floating = useFloating({
 		placement: 'bottom-end',
-		middleware: [offset({ crossAxis: -4, mainAxis: 16 }), flip()],
+		middleware: [offset({ crossAxis: -4, mainAxis: 10 }), flip()],
 		whileElementsMounted: autoUpdate,
-		onOpenChange: (v) => (state.activePopover = v ? id : null),
+		onOpenChange: (v) => (store.activePopover = v ? id : null),
 		get open() {
-			return state.activePopover === id
+			return store.activePopover === id
 		},
 	})
 
@@ -55,6 +51,6 @@
 	{...interactions.getFloatingProps()}
 >
 	{#if floating.open}
-		{@render children(close)}
+		{@render children()}
 	{/if}
 </div>

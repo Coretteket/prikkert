@@ -2,9 +2,9 @@
 	import { PlainDate, PlainTime } from '@/lib/temporal'
 	import { fade } from 'svelte/transition'
 	import { cubicInOut } from 'svelte/easing'
-	import { IconCopy, IconPlus, IconTrash } from '@tabler/icons-svelte'
-	import Popover from './popover.svelte'
+	import { IconCopy, IconDotsVertical, IconPlus, IconTrash } from '@tabler/icons-svelte'
 	import TimeRange from './time-range.svelte'
+	import { store } from '@/state.svelte'
 
 	type Props = { date: PlainDate; removeDate: () => void }
 	let { date = $bindable(), removeDate }: Props = $props()
@@ -13,7 +13,7 @@
 		{ startsAt: undefined, endsAt: undefined },
 	])
 
-	$inspect(slots)
+	const Popover = import('./popover.svelte').then((m) => m.default)
 </script>
 
 <div class="flex gap-2 max-sm:flex-col">
@@ -31,8 +31,12 @@
 			<div class="flex gap-2">
 				<TimeRange bind:range={slots[i]} />
 
-				<Popover>
-					{#snippet children(close)}
+				{#await Popover}
+					<button type="button" class="cursor-pointer text-stone-600">
+						<IconDotsVertical size={20} />
+					</button>
+				{:then Popover}
+					<Popover>
 						<div
 							class="grid min-w-40 rounded border bg-white p-2 text-sm shadow"
 							transition:fade={{ duration: 150, easing: cubicInOut }}
@@ -53,7 +57,7 @@
 										{ startsAt: undefined, endsAt: undefined },
 										...slots.slice(i + 1),
 									]
-									close()
+									store.activePopover = null
 								}}
 							>
 								<IconPlus size={16} />
@@ -65,15 +69,15 @@
 								onclick={() => {
 									if (slots.length > 1) slots.splice(i, 1)
 									else removeDate()
-									close()
+									store.activePopover = null
 								}}
 							>
 								<IconTrash size={16} />
 								Tijdslot verwijderen
 							</button>
 						</div>
-					{/snippet}
-				</Popover>
+					</Popover>
+				{/await}
 			</div>
 		{/each}
 	</div>
