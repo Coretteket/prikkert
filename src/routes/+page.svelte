@@ -1,12 +1,28 @@
 <script lang="ts">
+	import Button from '@/lib/components/button.svelte'
 	import { Instant } from '@/lib/temporal.js'
 
 	let { data } = $props()
 </script>
 
-Welkom!
+<header class="my-12 space-y-4">
+	<h2 class="font-display mb-8 text-center text-4xl font-medium">
+		<p>Samen plannen,</p>
+		<p>zo geprikt</p>
+	</h2>
+	<h3 class="mx-auto mb-8 max-w-128 text-center text-lg text-balance text-stone-700">
+		Vind
+		<strong class="font-semibold">gratis</strong>
+		én
+		<strong class="font-semibold">reclamevrij</strong>
+		het beste moment voor elke groepsafspraak.
+	</h3>
+	<Button as="link" href="/afspraak/maken" size="lg" color="primary" class="mx-auto">
+		Afspraak maken
+	</Button>
+</header>
 
-<p>
+<p class="mt-20 text-gray-600">
 	{#if data.session}
 		Ingelogd als {data.session.user.name ?? 'Anoniem'} tot {Instant.from(data.session.expiresAt)
 			.toZonedDateTimeISO('UTC')
@@ -21,5 +37,3 @@ Welkom!
 		Niet ingelogd.
 	{/if}
 </p>
-
-<a href="/afspraak/maken" class="my-4 block w-fit border rounded px-2 py-1">Afspraak maken</a>

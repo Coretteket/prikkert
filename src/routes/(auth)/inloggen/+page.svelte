@@ -18,6 +18,6 @@
 		<p class="text-red-500">{form.fieldErrors.password}</p>
 	{/if}
 
-	<button type="submit" class="border rounded bg-stone-100 p-2">Login</button>
+	<button type="submit" class="border rounded bg-gray-100 p-2">Login</button>
 	<a href="/registreren">Of registreer.</a>
 </form>

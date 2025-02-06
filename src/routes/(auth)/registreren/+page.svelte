@@ -45,6 +45,6 @@
 		<p class="text-red-500">{form.fieldErrors.confirmPassword}</p>
 	{/if}
 
-	<button type="submit" class="border rounded bg-stone-100 p-2">Registreer</button>
+	<button type="submit" class="border rounded bg-gray-100 p-2">Registreer</button>
 	<a href="/inloggen">Of log in.</a>
 </form>

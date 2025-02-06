@@ -5,6 +5,8 @@
 	import { keys } from '@/lib/utils'
 	import { Now, PlainDate } from '@/lib/temporal'
 	import TimeSlot from './time-slot.svelte'
+	import Button from '@/lib/components/button.svelte'
+	import { IconPlus } from '@tabler/icons-svelte'
 
 	let { form } = $props()
 
@@ -23,9 +25,7 @@
 	let selectedMetaFields: Set<keyof typeof metaFields> = new SvelteSet([])
 	let selectedOptionFields: Set<keyof typeof optionFields> = new SvelteSet([])
 
-	let selectedDates: Array<PlainDate> = $state(
-		Array.from({ length: 14 }).map((_, i) => Now.plainDateISO().add({ days: i })),
-	)
+	let selectedDates: Array<PlainDate> = $state([])
 </script>
 
 <form method="POST" use:enhance class="grid gap-5">
@@ -33,8 +33,13 @@
 		<p class="text-red-500">{form.formErrors}</p>
 	{/if}
 
-	<label for="form-name" class="text-lg font-bold">Titel</label>
-	<input id="form-name" type="text" name="title" class="rounded border px-3 py-2 text-lg" />
+	<label for="form-name" class="font-display font-medium text-gray-800">Titel</label>
+	<input
+		id="form-name"
+		type="text"
+		name="title"
+		class="rounded border border-gray-300 px-3 py-2 text-lg"
+	/>
 	{#if form?.fieldErrors?.title}
 		<p class="text-red-500">{form.fieldErrors.title}</p>
 	{/if}
@@ -43,7 +48,9 @@
 		{@const field = metaFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="text-lg font-bold">{field.label}</label>
+			<label for="form-{fieldId}" class="font-display font-medium text-gray-800">
+				{field.label}
+			</label>
 			<button
 				type="button"
 				onclick={() => selectedMetaFields.delete(fieldId)}
@@ -61,20 +68,17 @@
 	{/each}
 
 	{#if metaFieldsKeys.difference(selectedMetaFields).size > 0}
-		<div class="flex gap-2">
+		<div class="flex gap-2 mb-4">
 			{#each metaFieldsKeys.difference(selectedMetaFields) as fieldId}
-				<button
-					type="button"
-					class="cursor-pointer rounded border px-2 py-1 text-sm"
-					onclick={() => selectedMetaFields.add(fieldId)}
-				>
-					+ {metaFields[fieldId].label}
-				</button>
+				<Button as="button" type="button" onclick={() => selectedMetaFields.add(fieldId)}>
+					<IconPlus class="size-3" />
+					{metaFields[fieldId].label}
+				</Button>
 			{/each}
 		</div>
 	{/if}
 
-	<label for="form-dates" class="text-lg font-bold">Datums</label>
+	<label for="form-dates" class="font-display font-medium text-gray-800">Datums</label>
 	<div id="form-dates">
 		<DatePicker bind:selected={selectedDates} />
 	</div>
@@ -87,7 +91,9 @@
 		{@const field = optionFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="text-lg font-bold">{field.label}</label>
+			<label for="form-{fieldId}" class="font-display font-medium text-gray-800">
+				{field.label}
+			</label>
 			<button
 				type="button"
 				onclick={() => selectedOptionFields.delete(fieldId)}
@@ -105,32 +111,40 @@
 	{/each}
 
 	{#if optionFieldsKeys.difference(selectedOptionFields).size > 0}
-		<div class="flex gap-2">
+		<div class="flex gap-2 mb-4">
 			{#each optionFieldsKeys.difference(selectedOptionFields) as fieldId}
-				<button
-					type="button"
-					class="cursor-pointer rounded border px-2 py-1 text-sm"
-					onclick={() => selectedOptionFields.add(fieldId)}
-				>
-					+ {optionFields[fieldId].label}
-				</button>
+				<Button as="button" type="button" onclick={() => selectedOptionFields.add(fieldId)}>
+					<IconPlus class="size-3" />
+					{optionFields[fieldId].label}
+				</Button>
 			{/each}
 		</div>
 	{/if}
 
-	<button type="submit" class="rounded border px-2 py-2">Afspraak maken</button>
+	<Button as="button" color="primary" type="submit" class="mt-4 ml-auto" size="lg">
+		Afspraak maken
+	</Button>
 </form>
 
 {#snippet location(fieldId: string)}
-	<input name={fieldId} id="form-{fieldId}" type="text" class="rounded border px-2 py-2" />
+	<input
+		name={fieldId}
+		id="form-{fieldId}"
+		type="text"
+		class="rounded border border-gray-300 px-2 py-2"
+	/>
 {/snippet}
 
 {#snippet description(fieldId: string)}
-	<textarea name={fieldId} id="form-{fieldId}" class="rounded border px-2 py-2"></textarea>
+	<textarea
+		name={fieldId}
+		id="form-{fieldId}"
+		class="rounded border border-gray-300 px-2 py-2"
+	></textarea>
 {/snippet}
 
 {#snippet times(fieldId: string)}
-	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border p-5">
+	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border border-gray-300 p-5">
 		{#each selectedDates.toSorted(PlainDate.compare) as date (date)}
 			{@const removeDate = () => (selectedDates = selectedDates.filter((d) => !d.equals(date)))}
 			<TimeSlot {removeDate} {date} />

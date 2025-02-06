@@ -30,9 +30,12 @@ importers:
       '@eslint/compat':
         specifier: ^1.2.5
         version: 1.2.5(eslint@9.19.0(jiti@2.4.2))
-      '@fontsource-variable/sofia-sans':
+      '@fontsource-variable/albert-sans':
         specifier: ^5.1.1
         version: 5.1.1
+      '@fontsource-variable/parkinsans':
+        specifier: ^5.0.1
+        version: 5.0.1
       '@skeletonlabs/floating-ui-svelte':
         specifier: ^0.3.9
         version: 0.3.9(svelte@5.19.3)
@@ -54,6 +57,9 @@ importers:
       '@types/pg':
         specifier: ^8.11.11
         version: 8.11.11
+      cva:
+        specifier: 1.0.0-beta.3
+        version: 1.0.0-beta.3(typescript@5.7.3)
       eslint:
         specifier: ^9.19.0
         version: 9.19.0(jiti@2.4.2)
@@ -739,8 +745,11 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
-  '@fontsource-variable/sofia-sans@5.1.1':
-    resolution: {integrity: sha512-XaYKq02LyZAyxQwegOfWlM0F5twEL0supUP7mQG0NfnoiKhf6vvJ80ahC5dGRRw9hzQekFN0kT/NKkbx0BdvHg==}
+  '@fontsource-variable/albert-sans@5.1.1':
+    resolution: {integrity: sha512-XvbCgfOjgiR3Hb6WHN2ZTKzS7Z5btKZTSzigVNDqDGxiFDFXRF2LDkvuLzM6oq6M211Y23tP62NjOXnpQHEF3w==}
+
+  '@fontsource-variable/parkinsans@5.0.1':
+    resolution: {integrity: sha512-XziEHnAktDYQLzlZToCvigjPQprVvXLFBjYmDqFzGsWfTAyn9kwwwdZl94aZBwjPKwlyqj6ASO3issuHGw2mhg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1209,6 +1218,14 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  cva@1.0.0-beta.3:
+    resolution: {integrity: sha512-CZa8pTkpEygxJRLH9aod/wfnSgK5z/0GJqG/NNehlwam+S8llqCWUXS3eCenvAiW5sTUpwTWE6bJaeeZ/b4pzA==}
+    peerDependencies:
+      typescript: '>= 4.5.5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   debug@4.4.0:
     resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
@@ -2509,7 +2526,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@fontsource-variable/sofia-sans@5.1.1': {}
+  '@fontsource-variable/albert-sans@5.1.1': {}
+
+  '@fontsource-variable/parkinsans@5.0.1': {}
 
   '@humanfs/core@0.19.1': {}
 
@@ -2948,6 +2967,12 @@ snapshots:
       which: 2.0.2
 
   cssesc@3.0.0: {}
+
+  cva@1.0.0-beta.3(typescript@5.7.3):
+    dependencies:
+      clsx: 2.1.1
+    optionalDependencies:
+      typescript: 5.7.3
 
   debug@4.4.0:
     dependencies:

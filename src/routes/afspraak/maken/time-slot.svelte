@@ -38,7 +38,7 @@
 				</div>
 
 				{#await Popover}
-					<button type="button" class="cursor-pointer text-stone-600">
+					<button type="button" class="cursor-pointer text-gray-600">
 						<IconDotsVertical size={20} />
 					</button>
 				{:then Popover}
@@ -49,14 +49,14 @@
 						>
 							<button
 								type="button"
-								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-stone-100"
+								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-gray-100"
 							>
 								<IconCopy size={16} />
 								Kopiëren naar alle datums
 							</button>
 							<button
 								type="button"
-								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-stone-100"
+								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-gray-100"
 								onclick={() => {
 									slots = [
 										...slots.slice(0, i + 1),
@@ -71,7 +71,7 @@
 							</button>
 							<button
 								type="button"
-								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-stone-100"
+								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-gray-100"
 								onclick={() => {
 									if (slots.length > 1) slots.splice(i, 1)
 									else removeDate()

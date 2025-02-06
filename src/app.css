@@ -1,13 +1,15 @@
 @import 'tailwindcss';
 
 @theme {
-	--font-sans: 'Sofia Sans Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-sans: 'Albert Sans Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-display: 'Parkinsans Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
 	html,
 	body {
-		font-family: var(--font-sans);
+		color: theme(--color-gray-900);
+		font-family: theme(--font-sans);
 		font-size: 18px;
 	}
 }
