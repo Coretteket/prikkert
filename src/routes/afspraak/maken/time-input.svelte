@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { PlainTime } from '@/lib/temporal'
 
-	let { time = $bindable() }: { time?: PlainTime } = $props()
+	let { time = $bindable(undefined) }: { time?: PlainTime } = $props()
 </script>
 
 <input
 	type="time"
-	class="w-16 appearance-none rounded border px-1 py-0.5 border-gray-300 text-center tabular-nums"
+	class="w-17 appearance-none rounded border border-gray-300 px-1.5 py-0.5 text-center text-gray-900 tabular-nums"
 	bind:value={
-		() => time?.toString().slice(0, 5) ?? '00:00',
-		(value) => (time = PlainTime.from(value ?? '00:00'))
+		() => time?.toString().slice(0, 5),
+		(value) => (time = value && value !== '' ? PlainTime.from(value) : undefined)
 	}
 />
 

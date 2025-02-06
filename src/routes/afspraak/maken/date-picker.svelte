@@ -1,20 +1,15 @@
 <script lang="ts">
 	import { Now, PlainDate } from '@/lib/temporal'
-
-	type Props = { selected?: Array<PlainDate> }
-	let { selected = $bindable([]) }: Props = $props()
-
-	const now = Now.plainDateISO('Europe/Amsterdam')
+	import type { SvelteMap } from 'svelte/reactivity'
+	import { emptySlot, type Slot } from './types'
 
 	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
-	let view = $state(now)
-	// let selected: Array<PlainDate> = $state([])
+	type Props = { options: SvelteMap<PlainDate, Array<Slot>> }
+	let { options }: Props = $props()
 
-	function toggleDate(date: PlainDate) {
-		if (selected.some((d) => d.equals(date))) selected = selected.filter((d) => !d.equals(date))
-		else selected.push(date)
-	}
+	const now = Now.plainDateISO('Europe/Amsterdam')
+	let view = $state(now)
 
 	function eachMondayOfMonth(date: PlainDate) {
 		const start = date.with({ day: 1 })
@@ -30,16 +25,24 @@
 
 		return mondays
 	}
+
+	function toggleDate(date: PlainDate) {
+		if (options.has(date)) options.delete(date)
+		else options.set(date, [emptySlot])
+	}
+
+	function time<T>(fn: () => T): T {
+		let start = performance.now()
+		let x = fn()
+		console.log(performance.now() - start + 'ms')
+		return x
+	}
 </script>
 
 <div class="grid divide-gray-300 rounded border border-gray-300 sm:grid-cols-2 sm:divide-x">
 	<div class="p-5">{@render month(view)}</div>
 	<div class="p-5 max-sm:hidden">{@render month(view.add({ months: 1 }))}</div>
 </div>
-
-{#each selected as date}
-	<input type="hidden" name="options" value={date.toString()} />
-{/each}
 
 {#snippet month(month: PlainDate)}
 	<div class="mb-3 flex justify-between px-2">
@@ -52,7 +55,7 @@
 		<thead class="grid gap-1">
 			<tr class="grid grid-cols-7 gap-1">
 				{#each weekdays as weekday}
-					<th class="text-center font-normal text-gray-500 text-sm">
+					<th class="text-center text-sm font-normal text-gray-500">
 						{weekday}
 					</th>
 				{/each}
@@ -65,7 +68,7 @@
 						{@const day = monday.add({ days: index })}
 						{@const inMonth = day.month === month.month}
 						{@const isPast = PlainDate.compare(day, now) < 0}
-						{@const isSelected = selected.some((d) => d.equals(day))}
+						{@const isSelected = options.keys().some((key) => PlainDate.compare(key, day) === 0)}
 
 						<td class="flex aspect-square">
 							<button

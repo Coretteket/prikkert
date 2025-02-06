@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
-	import { SvelteSet } from 'svelte/reactivity'
+	import { SvelteMap, SvelteSet } from 'svelte/reactivity'
 	import DatePicker from './date-picker.svelte'
 	import { keys } from '@/lib/utils'
-	import { Now, PlainDate } from '@/lib/temporal'
+	import { PlainDate } from '@/lib/temporal'
 	import TimeSlot from './time-slot.svelte'
 	import Button from '@/lib/components/button.svelte'
 	import { IconPlus } from '@tabler/icons-svelte'
+	import type { Slot } from './types'
 
 	let { form } = $props()
 
@@ -25,7 +26,7 @@
 	let selectedMetaFields: Set<keyof typeof metaFields> = new SvelteSet([])
 	let selectedOptionFields: Set<keyof typeof optionFields> = new SvelteSet([])
 
-	let selectedDates: Array<PlainDate> = $state([])
+	let options = new SvelteMap<PlainDate, Array<Slot>>()
 </script>
 
 <form method="POST" use:enhance class="grid gap-5">
@@ -68,7 +69,7 @@
 	{/each}
 
 	{#if metaFieldsKeys.difference(selectedMetaFields).size > 0}
-		<div class="flex gap-2 mb-4">
+		<div class="mb-4 flex gap-2">
 			{#each metaFieldsKeys.difference(selectedMetaFields) as fieldId}
 				<Button as="button" type="button" onclick={() => selectedMetaFields.add(fieldId)}>
 					<IconPlus class="size-3" />
@@ -80,7 +81,7 @@
 
 	<label for="form-dates" class="font-display font-medium text-gray-800">Datums</label>
 	<div id="form-dates">
-		<DatePicker bind:selected={selectedDates} />
+		<DatePicker {options} />
 	</div>
 
 	{#if form?.fieldErrors?.options}
@@ -111,7 +112,7 @@
 	{/each}
 
 	{#if optionFieldsKeys.difference(selectedOptionFields).size > 0}
-		<div class="flex gap-2 mb-4">
+		<div class="mb-4 flex gap-2">
 			{#each optionFieldsKeys.difference(selectedOptionFields) as fieldId}
 				<Button as="button" type="button" onclick={() => selectedOptionFields.add(fieldId)}>
 					<IconPlus class="size-3" />
@@ -145,9 +146,8 @@
 
 {#snippet times(fieldId: string)}
 	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border border-gray-300 p-5">
-		{#each selectedDates.toSorted(PlainDate.compare) as date (date)}
-			{@const removeDate = () => (selectedDates = selectedDates.filter((d) => !d.equals(date)))}
-			<TimeSlot {removeDate} {date} />
+		{#each Array.from(options.keys()).toSorted(PlainDate.compare) as date}
+			<TimeSlot {date} {options} />
 		{:else}
 			<p>Selecteer datums om tijdsloten toe te voegen.</p>
 		{/each}
