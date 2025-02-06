@@ -1,6 +1,4 @@
 <script lang="ts">
-	import albertSansLink from '@fontsource-variable/sofia-sans/files/albert-sans-latin-wght-normal.woff2?url'
-	import parkinsansLink from '@fontsource-variable/sofia-sans/files/parkinsans-latin-wght-normal.woff2?url'
 	import '@fontsource-variable/albert-sans'
 	import '@fontsource-variable/parkinsans'
 	import '../app.css'
@@ -12,8 +10,6 @@
 </script>
 
 <svelte:head>
-	<link rel="preload" as="font" type="font/woff2" href={albertSansLink} crossorigin="anonymous" />
-	<link rel="preload" as="font" type="font/woff2" href={parkinsansLink} crossorigin="anonymous" />
 	<link rel="icon" type="image/svg+xml" href={icon} />
 	<title>Prikkert</title>
 </svelte:head>
