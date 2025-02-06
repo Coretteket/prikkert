@@ -11,6 +11,8 @@
 	const now = Now.plainDateISO('Europe/Amsterdam')
 	let view = $state(now)
 
+	const isFirstMonth = $derived(view.with({ day: 1 }).since(now).sign <= 0)
+
 	function eachMondayOfMonth(date: PlainDate) {
 		const start = date.with({ day: 1 })
 		const end = date.with({ day: start.daysInMonth })
@@ -30,13 +32,6 @@
 		if (options.has(date)) options.delete(date)
 		else options.set(date, [emptySlot])
 	}
-
-	function time<T>(fn: () => T): T {
-		let start = performance.now()
-		let x = fn()
-		console.log(performance.now() - start + 'ms')
-		return x
-	}
 </script>
 
 <div class="grid divide-gray-300 rounded border border-gray-300 sm:grid-cols-2 sm:divide-x">
@@ -46,7 +41,14 @@
 
 {#snippet month(month: PlainDate)}
 	<div class="mb-3 flex justify-between px-2">
-		<button type="button" onclick={() => (view = view.subtract({ months: 1 }))}>&lt;</button>
+		<button
+			type="button"
+			onclick={() => (view = view.subtract({ months: 1 }))}
+			disabled={isFirstMonth}
+			class="disabled:text-stone-300"
+		>
+			&lt;
+		</button>
 		<span>{month.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
 		<button type="button" onclick={() => (view = view.add({ months: 1 }))}>&gt;</button>
 	</div>
