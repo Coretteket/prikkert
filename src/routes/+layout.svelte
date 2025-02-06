@@ -12,6 +12,8 @@
 
 <svelte:head>
 	<link rel="preload" as="font" type="font/woff2" href={fontHref} crossorigin="anonymous" />
+	<link rel="icon" type="image/svg+xml" href={icon} />
+	<title>Prikkert</title>
 </svelte:head>
 
 <div class="mx-auto my-8 max-w-2xl rounded-lg border border-gray-300 bg-white p-2 sm:p-4">
