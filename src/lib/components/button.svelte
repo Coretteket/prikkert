@@ -17,7 +17,7 @@
 		base: 'group relative block w-fit translate-y-1 cursor-pointer border transition',
 		variants: {
 			color: {
-				primary: 'border-rose-900 bg-rose-800',
+				primary: 'border-pink-900 bg-pink-800',
 				secondary: 'border-gray-300 bg-gray-100',
 			},
 			size: {
@@ -35,8 +35,8 @@
 		base: 'flex -translate-y-1 items-center gap-1.5 outline transition-all group-hover:-translate-y-1.5 group-active:-translate-y-0.5',
 		variants: {
 			color: {
-				primary: 'bg-rose-700 font-bold text-white outline-rose-900',
-				secondary: 'bg-white text-gray-700 outline-gray-300',
+				primary: 'bg-pink-700 font-bold text-white outline-pink-900',
+				secondary: 'bg-white text-gray-600 outline-gray-300',
 			},
 			size: {
 				md: 'rounded-md px-3 py-1.5 text-sm',

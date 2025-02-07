@@ -83,7 +83,7 @@
 								class={[
 									'flex aspect-square items-center justify-center rounded border border-gray-200 tabular-nums transition-colors',
 									isSelected
-										? 'border-rose-800 bg-rose-700 font-bold text-white hover:bg-rose-800'
+										? 'border-pink-800 bg-pink-700 font-bold text-white hover:bg-pink-800'
 										: isPast
 											? 'text-gray-300'
 											: 'text-gray-700 hover:bg-gray-100',

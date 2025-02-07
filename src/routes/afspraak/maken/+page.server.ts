@@ -12,6 +12,7 @@ const OptionSchema = z.tuple([
 
 const CreateEventSchema = zfd.formData({
 	title: zfd.text(z.string({ message: 'Vul een titel in.' })),
+	organizer: zfd.text(z.string().optional()),
 	description: zfd.text(z.string().optional()),
 	location: zfd.text(z.string().optional()),
 	options: zfd.repeatable(
@@ -26,7 +27,6 @@ const CreateEventSchema = zfd.formData({
 			)
 			.min(1, 'Vul minstens één datum in.'),
 	),
-	times: zfd.repeatable(z.array(z.string()).optional()),
 })
 
 function parseDateTimeRange(

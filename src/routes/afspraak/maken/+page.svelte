@@ -9,9 +9,10 @@
 	import { IconPlus } from '@tabler/icons-svelte'
 	import type { Options } from './types'
 
-	let { form } = $props()
+	let { data, form } = $props()
 
 	const metaFields = {
+		organizer: { label: 'Jouw naam', snippet: organizer },
 		description: { label: 'Beschrijving', snippet: description },
 		location: { label: 'Locatie', snippet: location },
 	}
@@ -29,18 +30,22 @@
 	let options = new SvelteMap() satisfies Options
 </script>
 
+<h1 class="font-display mb-6 text-xl font-medium">Afspraak maken</h1>
+
 <form method="POST" use:enhance class="grid gap-5">
 	{#if form?.formErrors && form.formErrors.length > 0}
 		<p class="text-red-500">{form.formErrors}</p>
 	{/if}
 
-	<label for="form-name" class="font-display font-medium text-gray-800">Titel</label>
+	<label for="form-title" class="text-gray-800">Titel</label>
 	<input
-		id="form-name"
-		type="text"
 		name="title"
-		class="rounded border border-gray-300 px-3 py-2 text-lg"
+		id="form-title"
+		type="text"
+		class="rounded-md border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		placeholder="Hoe heet deze afspraak?"
 	/>
+
 	{#if form?.fieldErrors?.title}
 		<p class="text-red-500">{form.fieldErrors.title}</p>
 	{/if}
@@ -49,7 +54,7 @@
 		{@const field = metaFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="font-display font-medium text-gray-800">
+			<label for="form-{fieldId}" class="text-gray-800">
 				{field.label}
 			</label>
 			<button
@@ -71,15 +76,19 @@
 	{#if metaFieldsKeys.difference(selectedMetaFields).size > 0}
 		<div class="mb-4 flex gap-2">
 			{#each metaFieldsKeys.difference(selectedMetaFields) as fieldId}
-				<Button as="button" type="button" onclick={() => selectedMetaFields.add(fieldId)}>
+				<button
+					type="button"
+					onclick={() => selectedMetaFields.add(fieldId)}
+					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50"
+				>
 					<IconPlus class="size-3" />
 					{metaFields[fieldId].label}
-				</Button>
+				</button>
 			{/each}
 		</div>
 	{/if}
 
-	<label for="form-dates" class="font-display font-medium text-gray-800">Datums</label>
+	<label for="form-dates" class="text-gray-800">Datums</label>
 	<div id="form-dates">
 		<DatePicker {options} />
 		{#each options as option}
@@ -95,7 +104,7 @@
 		{@const field = optionFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="font-display font-medium text-gray-800">
+			<label for="form-{fieldId}" class="text-gray-800">
 				{field.label}
 			</label>
 			<button
@@ -109,33 +118,47 @@
 
 		{@render field.snippet(fieldId)}
 
-		{#if form?.fieldErrors?.[fieldId]}
+		<!-- {#if form?.fieldErrors?.[fieldId]}
 			<p class="text-red-500">{form.fieldErrors[fieldId]}</p>
-		{/if}
+		{/if} -->
 	{/each}
 
 	{#if optionFieldsKeys.difference(selectedOptionFields).size > 0}
 		<div class="mb-4 flex gap-2">
 			{#each optionFieldsKeys.difference(selectedOptionFields) as fieldId}
-				<Button as="button" type="button" onclick={() => selectedOptionFields.add(fieldId)}>
+				<button
+					type="button"
+					onclick={() => selectedOptionFields.add(fieldId)}
+					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50"
+				>
 					<IconPlus class="size-3" />
 					{optionFields[fieldId].label}
-				</Button>
+				</button>
 			{/each}
 		</div>
 	{/if}
 
-	<Button as="button" color="primary" type="submit" class="mt-4 ml-auto" size="lg">
-		Afspraak maken
-	</Button>
+	<Button as="button" color="primary" type="submit" class="mt-4 ml-auto">Afspraak maken</Button>
 </form>
+
+{#snippet organizer(fieldId: string)}
+	<input
+		name={fieldId}
+		id="form-{fieldId}"
+		type="text"
+		defaultValue={data.session?.user.name}
+		class="rounded border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		placeholder="Wie organiseert deze afspraak?"
+	/>
+{/snippet}
 
 {#snippet location(fieldId: string)}
 	<input
 		name={fieldId}
 		id="form-{fieldId}"
 		type="text"
-		class="rounded border border-gray-300 px-2 py-2"
+		class="rounded border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		placeholder="Waar is deze afspraak?"
 	/>
 {/snippet}
 
@@ -143,7 +166,8 @@
 	<textarea
 		name={fieldId}
 		id="form-{fieldId}"
-		class="rounded border border-gray-300 px-2 py-2"
+		class="rounded border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		placeholder="Geef een beschrijving van deze afspraak..."
 	></textarea>
 {/snippet}
 

@@ -17,8 +17,8 @@
 <div
 	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(42rem,_calc(100vw_-_2rem))] sm:rounded-lg sm:border sm:border-gray-300 sm:p-4"
 >
-	<nav class="flex items-center justify-between p-4">
-		<a href="/" class="font-display flex items-center gap-3 text-xl font-medium">
+	<nav class="flex items-center justify-between px-4 py-2">
+		<a href="/" class="font-display flex items-center gap-3 text-xl text-gray-800">
 			<img src={icon} width={32} height={32} alt="" />
 			Prikkert
 		</a>
@@ -30,7 +30,7 @@
 			{/if}
 		</Button>
 	</nav>
-	<main class="p-4">
+	<main class="p-4 pt-8">
 		{@render children()}
 	</main>
 </div>

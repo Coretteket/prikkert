@@ -5,6 +5,7 @@ export async function getEvent(eventId: string) {
 	const event = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
 		with: {
+			owner: true,
 			options: {
 				with: { responses: true },
 				orderBy: [asc(schema.eventOptions.startsAt)],
