@@ -1,4 +1,4 @@
-import { PlainDate, PlainDateTime } from '../../temporal'
+import { Temporal } from 'temporal-polyfill'
 import { sql } from 'drizzle-orm'
 import {
 	char,
@@ -26,12 +26,15 @@ export const instant = (name?: string) => {
 	return name ? timestamp(name, params) : timestamp(params)
 }
 
-export const datetime = customType<{ data: PlainDateTime | PlainDate; driverData: string }>({
+export const datetime = customType<{
+	data: Temporal.PlainDateTime | Temporal.PlainDate
+	driverData: string
+}>({
 	dataType: () => 'text',
 	toDriver: (value) => value.toString(),
 	fromDriver: (value) => {
-		if (value.includes('T')) return PlainDateTime.from(value)
-		return PlainDate.from(value)
+		if (value.includes('T')) return Temporal.PlainDateTime.from(value)
+		return Temporal.PlainDate.from(value)
 	},
 })
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
-	import { formatDateTimeRange } from '@/lib/temporal'
+	import { formatDateTimeRange } from '@/lib/time-format'
 
 	let { data } = $props()
 </script>

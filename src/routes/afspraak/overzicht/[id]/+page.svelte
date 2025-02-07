@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formatDateTimeRange } from '@/lib/temporal'
+	import { formatDateTimeRange } from '@/lib/time-format'
 
 	let { data } = $props()
 </script>

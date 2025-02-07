@@ -53,6 +53,7 @@
 </script>
 
 {#if as === 'link'}
+	<!-- @ts-expect-error - too complex, eh -->
 	<a {...rest as AsLinkProps} class={button({ color, size, className })}>
 		<span class={buttonInner({ color, size })}>
 			{@render children?.()}

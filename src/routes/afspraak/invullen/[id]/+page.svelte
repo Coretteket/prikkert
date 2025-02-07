@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '@/lib/components/button.svelte'
-	import { formatDateTimeRange } from '@/lib/temporal'
+	import { formatDateTimeRange } from '@/lib/time-format'
 
 	let { data } = $props()
 </script>
