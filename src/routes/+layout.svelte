@@ -1,6 +1,6 @@
 <script lang="ts">
-	import '@fontsource-variable/albert-sans'
 	import '@fontsource-variable/parkinsans'
+	import '@fontsource-variable/roboto-flex'
 	import '../app.css'
 
 	import icon from '@/lib/assets/icon.svg'
@@ -16,7 +16,7 @@
 
 <div class="mx-auto my-8 max-w-2xl rounded-lg border border-gray-300 bg-white p-2 sm:p-4">
 	<nav class="flex items-center justify-between p-4">
-		<a href="/" class="font-display flex items-center gap-3 text-xl">
+		<a href="/" class="font-display font-medium flex items-center gap-3 text-xl">
 			<img src={icon} width={32} height={32} alt="" />
 			Prikkert
 		</a>

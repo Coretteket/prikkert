@@ -6,15 +6,15 @@
 </script>
 
 <header class="my-12 space-y-4">
-	<h2 class="font-display mb-8 text-center text-4xl font-medium">
+	<h2 class="font-display mb-8 text-center text-4xl leading-tight font-semibold">
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
 	</h2>
-	<h3 class="mx-auto mb-8 max-w-128 text-center text-lg text-balance text-stone-700">
+	<h3 class="mx-auto mb-8 max-w-128 text-center text-lg text-balance text-gray-800">
 		Vind
-		<strong class="font-semibold">gratis</strong>
+		<strong class="text-rose-700 font-semibold">gratis</strong>
 		én
-		<strong class="font-semibold">reclamevrij</strong>
+		<strong class="text-rose-700 font-semibold">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h3>
 	<Button as="link" href="/afspraak/maken" size="lg" color="primary" class="mx-auto">

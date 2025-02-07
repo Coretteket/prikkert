@@ -45,7 +45,7 @@
 			type="button"
 			onclick={() => (view = view.subtract({ months: 1 }))}
 			disabled={isFirstMonth}
-			class="not-disabled:cursor-pointer disabled:text-stone-300"
+			class="not-disabled:cursor-pointer disabled:text-gray-300"
 		>
 			&lt;
 		</button>
