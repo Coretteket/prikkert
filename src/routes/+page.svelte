@@ -6,11 +6,11 @@
 </script>
 
 <header class="my-12 space-y-4">
-	<h2 class="font-display mb-8 text-center text-4xl leading-tight font-semibold">
+	<h2 class="font-display mb-8 text-center text-3xl sm:text-4xl leading-tight font-semibold">
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
 	</h2>
-	<h3 class="mx-auto mb-8 max-w-128 text-center text-lg text-balance text-gray-800">
+	<h3 class="mx-auto mb-8 max-w-60 sm:max-w-100 text-center text-lg text-balance text-gray-700">
 		Vind
 		<strong class="text-rose-700 font-semibold">gratis</strong>
 		én

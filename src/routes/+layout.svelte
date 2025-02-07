@@ -14,9 +14,11 @@
 	<title>Prikkert</title>
 </svelte:head>
 
-<div class="mx-auto my-8 max-w-2xl rounded-lg border border-gray-300 bg-white p-2 sm:p-4">
+<div
+	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(42rem,_calc(100vw_-_2rem))] sm:rounded-lg sm:border sm:border-gray-300 sm:p-4"
+>
 	<nav class="flex items-center justify-between p-4">
-		<a href="/" class="font-display font-medium flex items-center gap-3 text-xl">
+		<a href="/" class="font-display flex items-center gap-3 text-xl font-medium">
 			<img src={icon} width={32} height={32} alt="" />
 			Prikkert
 		</a>
@@ -33,7 +35,7 @@
 	</main>
 </div>
 
-<div class="fixed top-0 left-0 -z-50 bg-gray-300">
+<div class="fixed top-0 left-0 -z-50 bg-gray-300 max-sm:hidden">
 	<div class="sticky top-0 left-0 h-screen w-screen overflow-hidden">
 		<div class="absolute inset-0 -z-1 bg-white/20"></div>
 		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
