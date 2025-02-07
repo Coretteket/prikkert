@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Instant } from '@/lib/temporal'
+	import { formatDateTimeRange } from '@/lib/temporal'
 
 	let { data } = $props()
 </script>
@@ -15,14 +15,9 @@
 <a href="/afspraak/invullen/{data.event.id}" class="my-4 block">Of invullen.</a>
 
 <ul class="list-inside list-disc">
-	{#each data.event.options as date}
+	{#each data.event.options as option}
 		<li>
-			{Instant.from(date.startsAt).toZonedDateTimeISO('UTC').toLocaleString('nl', {
-				weekday: 'short',
-				day: 'numeric',
-				month: 'long',
-				year: 'numeric',
-			})}
+			{formatDateTimeRange(option)}
 		</li>
 	{/each}
 </ul>

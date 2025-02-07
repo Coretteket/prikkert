@@ -13,8 +13,8 @@
 
 	const slots = $derived(options.get(date) ?? [])
 
-	function setSlot(slot: Slot, key: 'startsAt' | 'endsAt', time: PlainTime | undefined) {
-		const updated = slots.map((s) => (s === slot ? { ...s, [key]: time } : s))
+	function setSlot(index: number, slot: Slot) {
+		const updated = slots.map((s, i) => (i === index ? slot : s))
 		options.set(date, updated)
 	}
 
@@ -39,9 +39,9 @@
 		{#each slots as slot, i (i)}
 			<div class="flex gap-2">
 				<div class="flex items-center gap-3">
-					<TimeInput bind:time={() => slot.startsAt, (time) => setSlot(slot, 'startsAt', time)} />
+					<TimeInput bind:time={() => slot[0], (time) => setSlot(i, [time, slot[1]])} />
 					&mdash;
-					<TimeInput bind:time={() => slot.endsAt, (time) => setSlot(slot, 'endsAt', time)} />
+					<TimeInput bind:time={() => slot[1], (time) => setSlot(i, [slot[0], time])} />
 				</div>
 
 				{#await Popover}

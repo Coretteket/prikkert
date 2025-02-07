@@ -1,5 +1,5 @@
 import { fail as kitFail } from '@sveltejs/kit'
-import { PlainDate } from '@/lib/temporal'
+import { PlainDate, PlainTime } from '@/lib/temporal'
 import { z } from 'zod'
 
 /** Represents a validation error that occurs during schema validation.
@@ -55,12 +55,22 @@ export const fail = <const T extends string | Record<string, string[] | undefine
 	)
 
 /** Use `v.plainDate()` to validate a Temporal PlainDate. */
-export const plainDate = (message?: string) =>
+export const plainDate = (message = 'Vul een geldige datum in.') =>
 	z.string().transform((value, context) => {
 		try {
 			return PlainDate.from(value)
 		} catch {
-			context.addIssue({ code: 'invalid_date', message: message ?? 'Vul een geldige datum in.' })
+			context.addIssue({ code: 'invalid_date', message })
+			return z.NEVER
+		}
+	})
+
+export const plainTime = (message = 'Vul een geldige tijd in.') =>
+	z.string().transform((value, context) => {
+		try {
+			return PlainTime.from(value)
+		} catch {
+			context.addIssue({ code: 'invalid_date', message })
 			return z.NEVER
 		}
 	})

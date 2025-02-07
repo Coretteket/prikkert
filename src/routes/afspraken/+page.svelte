@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
-	import { Instant } from '@/lib/temporal'
+	import { formatDateTimeRange } from '@/lib/temporal'
 
 	let { data } = $props()
 </script>
@@ -17,14 +17,9 @@
 					{event.title}
 				</a>
 				<ul class="ml-4 list-inside list-disc">
-					{#each event.options as date}
+					{#each event.options as option}
 						<li>
-							{Instant.from(date.startsAt).toZonedDateTimeISO('UTC').toLocaleString('nl', {
-								weekday: 'short',
-								day: 'numeric',
-								month: 'long',
-								year: 'numeric',
-							})}
+							{formatDateTimeRange(option)}
 						</li>
 					{/each}
 				</ul>

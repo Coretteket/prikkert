@@ -7,7 +7,7 @@
 	import TimeSlot from './time-slot.svelte'
 	import Button from '@/lib/components/button.svelte'
 	import { IconPlus } from '@tabler/icons-svelte'
-	import type { Slot } from './types'
+	import type { Options } from './types'
 
 	let { form } = $props()
 
@@ -26,7 +26,7 @@
 	let selectedMetaFields: Set<keyof typeof metaFields> = new SvelteSet([])
 	let selectedOptionFields: Set<keyof typeof optionFields> = new SvelteSet([])
 
-	let options = new SvelteMap<PlainDate, Array<Slot>>()
+	let options = new SvelteMap() satisfies Options
 </script>
 
 <form method="POST" use:enhance class="grid gap-5">
@@ -82,6 +82,9 @@
 	<label for="form-dates" class="font-display font-medium text-gray-800">Datums</label>
 	<div id="form-dates">
 		<DatePicker {options} />
+		{#each options as option}
+			<input type="hidden" name="options" value={JSON.stringify(option)} />
+		{/each}
 	</div>
 
 	{#if form?.fieldErrors?.options}

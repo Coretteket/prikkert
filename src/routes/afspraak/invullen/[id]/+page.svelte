@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Instant } from '@/lib/temporal'
+	import Button from '@/lib/components/button.svelte'
+	import { formatDateTimeRange } from '@/lib/temporal'
 
 	let { data } = $props()
 </script>
@@ -15,20 +16,15 @@
 <a href="/afspraak/overzicht/{data.event.id}" class="my-4 block">Of bekijken.</a>
 
 <ul class="grid gap-2">
-	{#each data.event.options as date}
+	{#each data.event.options as option}
 		<li>
-			<div class="my-2">
-				{Instant.from(date.startsAt).toZonedDateTimeISO('UTC').toLocaleString('nl', {
-					weekday: 'short',
-					day: 'numeric',
-					month: 'long',
-					year: 'numeric',
-				})}
+			<div class="my-2 font-medium">
+				{formatDateTimeRange(option)}
 			</div>
-			<div class="flex gap-2 *:border rounded *:px-2 *:py-1">
-				<button>Ja</button>
-				<button>Nee</button>
-				<button>Misschien</button>
+			<div class="flex gap-2 rounded">
+				<Button>Ja</Button>
+				<Button>Nee</Button>
+				<Button>Misschien</Button>
 			</div>
 		</li>
 	{/each}

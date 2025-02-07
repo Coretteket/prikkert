@@ -1,5 +1,12 @@
+import { PlainDate, PlainDateTime } from '../../temporal'
 import { sql } from 'drizzle-orm'
-import { char, timestamp, type PgCharConfig, type PgTimestampConfig } from 'drizzle-orm/pg-core'
+import {
+	char,
+	customType,
+	timestamp,
+	type PgCharConfig,
+	type PgTimestampConfig,
+} from 'drizzle-orm/pg-core'
 
 /** Char of length 16 (for storing NanoIDs). */
 export const char16 = (name?: string) => {
@@ -18,6 +25,15 @@ export const instant = (name?: string) => {
 	const params = { withTimezone: true, mode: 'string' } satisfies PgTimestampConfig
 	return name ? timestamp(name, params) : timestamp(params)
 }
+
+export const datetime = customType<{ data: PlainDateTime | PlainDate; driverData: string }>({
+	dataType: () => 'text',
+	toDriver: (value) => value.toString(),
+	fromDriver: (value) => {
+		if (value.includes('T')) return PlainDateTime.from(value)
+		return PlainDate.from(value)
+	},
+})
 
 /** Created at timestamp. */
 export const createdAt = () =>

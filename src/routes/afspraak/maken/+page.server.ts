@@ -3,14 +3,43 @@ import { redirect, type Actions } from '@sveltejs/kit'
 import * as v from '@/lib/server/validation'
 import { zfd } from 'zod-form-data'
 import { z } from 'zod'
+import type { PlainDate, PlainTime } from '@/lib/temporal'
+
+const OptionSchema = z.tuple([
+	v.plainDate(),
+	z.array(z.tuple([]).or(z.tuple([v.plainTime(), v.plainTime().nullable()]))),
+])
 
 const CreateEventSchema = zfd.formData({
 	title: zfd.text(z.string({ message: 'Vul een titel in.' })),
 	description: zfd.text(z.string().optional()),
 	location: zfd.text(z.string().optional()),
-	options: zfd.repeatable(z.array(v.plainDate()).min(1, 'Vul minstens één datum in.')),
+	options: zfd.repeatable(
+		z
+			.array(
+				z.string().transform((value, context) => {
+					const parsed = OptionSchema.safeParse(JSON.parse(value))
+					if (parsed.success) return parsed.data
+					parsed.error.issues.forEach((issue) => context.addIssue(issue))
+					return z.NEVER
+				}),
+			)
+			.min(1, 'Vul minstens één datum in.'),
+	),
 	times: zfd.repeatable(z.array(z.string()).optional()),
 })
+
+function parseDateTimeRange(
+	date: PlainDate,
+	[startTime, endTime]: z.output<typeof OptionSchema>[1][number],
+) {
+	const toDateTime = (time?: PlainTime | null) => (time ? date.toPlainDateTime(time) : undefined)
+
+	return {
+		startsAt: toDateTime(startTime) ?? date,
+		endsAt: toDateTime(endTime),
+	}
+}
 
 export const actions = {
 	default: async ({ locals, request }) => {
@@ -27,15 +56,17 @@ export const actions = {
 				.returning()
 
 			await db.insert(schema.eventOptions).values(
-				parsed.options.map((date) => ({
-					eventId: event.id,
-					startsAt: date.toZonedDateTime('UTC').toInstant().toString(),
-				})),
+				parsed.options.flatMap(([date, slots]) =>
+					slots.map((slot) => ({
+						eventId: event.id,
+						...parseDateTimeRange(date, slot),
+					})),
+				),
 			)
 
 			return event
 		})
 
-		redirect(303, `/afspraak/${event.id}`)
+		redirect(303, `/afspraak/overzicht/${event.id}`)
 	},
 } satisfies Actions

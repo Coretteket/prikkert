@@ -45,12 +45,14 @@
 			type="button"
 			onclick={() => (view = view.subtract({ months: 1 }))}
 			disabled={isFirstMonth}
-			class="disabled:text-stone-300"
+			class="not-disabled:cursor-pointer disabled:text-stone-300"
 		>
 			&lt;
 		</button>
 		<span>{month.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
-		<button type="button" onclick={() => (view = view.add({ months: 1 }))}>&gt;</button>
+		<button type="button" onclick={() => (view = view.add({ months: 1 }))} class="cursor-pointer">
+			&gt;
+		</button>
 	</div>
 
 	<table class="grid w-full table-fixed gap-4">

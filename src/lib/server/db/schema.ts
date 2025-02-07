@@ -6,7 +6,7 @@ import {
 	primaryKey,
 	type ReferenceConfig,
 } from 'drizzle-orm/pg-core'
-import { instant, char16, nanoid, createdAt } from './types'
+import { instant, char16, nanoid, createdAt, datetime } from './types'
 import { relations } from 'drizzle-orm'
 
 /* UTILITIES */
@@ -48,8 +48,8 @@ export const eventOptions = pgTable('event_options', {
 	eventId: char16('event_id')
 		.references(() => events.id, CASCADE)
 		.notNull(),
-	startsAt: instant('starts_at').notNull(),
-	endsAt: instant('ends_at'),
+	startsAt: datetime('starts_at').notNull(),
+	endsAt: datetime('ends_at'),
 	isSelected: boolean('is_selected').notNull().default(false),
 })
 
