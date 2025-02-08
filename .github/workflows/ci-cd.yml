@@ -24,7 +24,7 @@ jobs:
       - name: Create .env file
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          echo "COOKIE_PREFIX=${{ secrets.COOKIE_PREFIX }}" >> .env
+          echo "COOKIE_PREFIX=${{ vars.COOKIE_PREFIX }}" >> .env
 
       - name: Build and push Docker images
         run: |
