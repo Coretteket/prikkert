@@ -5,7 +5,7 @@ import { zfd } from 'zod-form-data'
 import { z } from 'zod'
 import { Now, type PlainDate, type PlainTime } from '@/lib/temporal'
 import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
-import { COOKIE_PREFIX } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 import { dev } from '$app/environment'
 
 const OptionSchema = z.tuple([
@@ -89,7 +89,7 @@ export const actions = {
 			return event
 		})
 
-		cookies.set(COOKIE_PREFIX + event.id, token, {
+		cookies.set(env.COOKIE_PREFIX + event.id, token, {
 			path: '/',
 			httpOnly: true,
 			sameSite: 'strict',

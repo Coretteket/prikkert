@@ -5,8 +5,7 @@ import { zfd } from 'zod-form-data'
 import * as v from '@/lib/server/validation'
 import { db, schema } from '@/lib/server/db/index'
 import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
-import { Now } from '@/lib/temporal'
-import { COOKIE_PREFIX } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 import { dev } from '$app/environment'
 import { eq } from 'drizzle-orm'
 
@@ -72,7 +71,7 @@ export const actions = {
 			)
 		})
 
-		cookies.set(COOKIE_PREFIX + id, token, {
+		cookies.set(env.COOKIE_PREFIX + id, token, {
 			path: '/',
 			httpOnly: true,
 			sameSite: 'strict',
