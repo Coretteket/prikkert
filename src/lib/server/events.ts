@@ -1,32 +1,28 @@
 import { db, schema } from '@/lib/server/db'
-import { asc, eq } from 'drizzle-orm'
+import { asc, eq, inArray } from 'drizzle-orm'
+import { encodeSHA256 } from './crypto'
 
 export async function getEvent(eventId: string) {
-	const event = await db.query.events.findFirst({
+	return db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
 		with: {
-			owner: true,
+			organizer: {
+				with: { session: { columns: { name: true } } },
+			},
 			options: {
-				with: { responses: true },
-				orderBy: [asc(schema.eventOptions.startsAt)],
+				with: { responses: { with: { session: { columns: { name: true } } } } },
+				orderBy: [asc(schema.options.startsAt)],
 			},
 		},
 	})
-
-	return event
 }
 
-export async function getEventsByUser(ownerId: string) {
-	const events = await db.query.events.findMany({
-		// should be queried by all events a user participates in
-		where: eq(schema.events.ownerId, ownerId),
-		with: {
-			options: {
-				with: { responses: true },
-				orderBy: [asc(schema.eventOptions.startsAt)],
-			},
-		},
-	})
+export async function getSessions(locals: Map<string, string>) {
+	const sessionIds = await Promise.all(locals.values().map(encodeSHA256))
 
-	return events
+	return db.query.sessions.findMany({
+		where: inArray(schema.sessions.token, sessionIds),
+		with: { event: { with: { organizer: true } } },
+		columns: { token: false },
+	})
 }

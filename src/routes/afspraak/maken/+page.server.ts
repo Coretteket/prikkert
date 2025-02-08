@@ -3,7 +3,10 @@ import { redirect, type Actions } from '@sveltejs/kit'
 import * as v from '@/lib/server/validation'
 import { zfd } from 'zod-form-data'
 import { z } from 'zod'
-import type { PlainDate, PlainTime } from '@/lib/temporal'
+import { Now, type PlainDate, type PlainTime } from '@/lib/temporal'
+import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
+import { COOKIE_PREFIX } from '$env/static/private'
+import { dev } from '$app/environment'
 
 const OptionSchema = z.tuple([
 	v.plainDate(),
@@ -42,20 +45,25 @@ function parseDateTimeRange(
 }
 
 export const actions = {
-	default: async ({ locals, request }) => {
-		const userId = locals.session?.userId
-		if (!userId) return v.fail(401, 'Je bent niet ingelogd.')
-
+	default: async ({ request, cookies }) => {
 		const parsed = await v.parse(request.formData(), CreateEventSchema)
 		if (parsed instanceof v.error) return parsed.fail()
+
+		const token = generateNanoid(21)
+		const expiresAt = Now.instant()
+			.add({ hours: 90 * 24 })
+			.toString()
 
 		const event = await db.transaction(async (db) => {
 			const [event] = await db
 				.insert(schema.events)
-				.values({ ownerId: userId, title: parsed.title })
+				.values({
+					title: parsed.title,
+					expiresAt,
+				})
 				.returning()
 
-			await db.insert(schema.eventOptions).values(
+			await db.insert(schema.options).values(
 				parsed.options.flatMap(([date, slots]) =>
 					slots.map((slot) => ({
 						eventId: event.id,
@@ -64,7 +72,29 @@ export const actions = {
 				),
 			)
 
+			const [session] = await db
+				.insert(schema.sessions)
+				.values({
+					token: await encodeSHA256(token),
+					eventId: event.id,
+					name: parsed.organizer,
+				})
+				.returning()
+
+			await db.insert(schema.organizers).values({
+				eventId: event.id,
+				sessionId: session.id,
+			})
+
 			return event
+		})
+
+		cookies.set(COOKIE_PREFIX + event.id, token, {
+			path: '/',
+			httpOnly: true,
+			sameSite: 'strict',
+			secure: !dev,
+			expires: new Date(expiresAt),
 		})
 
 		redirect(303, `/afspraak/overzicht/${event.id}`)

@@ -1,13 +1,17 @@
+// For a graphical overview, see:
+// https://dbdiagram.io/d/Prikkert-67a699e4263d6cf9a06ff8ed
+
 import {
 	pgTable,
+	char,
 	text,
 	boolean,
 	pgEnum,
 	primaryKey,
 	type ReferenceConfig,
 } from 'drizzle-orm/pg-core'
-import { instant, char16, nanoid, createdAt, datetime } from './types'
-import { relations } from 'drizzle-orm'
+import { instant, datetime } from './types'
+import { relations, sql } from 'drizzle-orm'
 
 /* UTILITIES */
 
@@ -15,37 +19,23 @@ const CASCADE = { onUpdate: 'cascade', onDelete: 'cascade' } satisfies Reference
 
 /* SCHEMAS */
 
-export const users = pgTable('users', {
-	id: nanoid(),
-	name: text(),
-	email: text().unique(),
-	passwordHash: text('password_hash'),
-	createdAt: createdAt(),
-})
-
-export const sessions = pgTable('sessions', {
-	id: text().primaryKey(),
-	userId: char16('user_id')
-		.references(() => users.id, CASCADE)
-		.notNull(),
-	expiresAt: instant('expires_at').notNull(),
-	createdAt: createdAt(),
-})
-
 export const events = pgTable('events', {
-	id: nanoid(),
-	ownerId: char16('owner_id')
-		.references(() => users.id, CASCADE)
-		.notNull(),
+	id: char({ length: 12 })
+		.default(sql`generate_nanoid(12)`)
+		.primaryKey(),
+
 	title: text().notNull(),
 	description: text(),
 	location: text(),
-	createdAt: createdAt(),
+	createdAt: instant('created_at').defaultNow().notNull(),
+	expiresAt: instant('expires_at').notNull(),
 })
 
-export const eventOptions = pgTable('event_options', {
-	id: nanoid(),
-	eventId: char16('event_id')
+export const options = pgTable('options', {
+	id: char({ length: 12 })
+		.default(sql`generate_nanoid(12)`)
+		.primaryKey(),
+	eventId: char('event_id', { length: 12 })
 		.references(() => events.id, CASCADE)
 		.notNull(),
 	startsAt: datetime('starts_at').notNull(),
@@ -53,48 +43,71 @@ export const eventOptions = pgTable('event_options', {
 	isSelected: boolean('is_selected').notNull().default(false),
 })
 
-export const responseEnum = pgEnum('response', ['YES', 'NO', 'MAYBE'])
+export const sessions = pgTable('sessions', {
+	id: char({ length: 12 })
+		.default(sql`generate_nanoid(12)`)
+		.primaryKey(),
+	eventId: char({ length: 12 })
+		.references(() => events.id, CASCADE)
+		.notNull(),
+	token: char({ length: 44 }).notNull(),
+	name: text(),
+	createdAt: instant('created_at').defaultNow().notNull(),
+})
 
-export const eventResponses = pgTable(
-	'event_responses',
+export const organizers = pgTable(
+	'organizers',
 	{
-		optionId: char16('option_id')
-			.references(() => eventOptions.id, CASCADE)
+		eventId: char('event_id', { length: 12 })
+			.references(() => events.id, CASCADE)
 			.notNull(),
-		userId: char16('user_id')
-			.references(() => users.id, CASCADE)
+		sessionId: char('session_id', { length: 12 })
+			.references(() => sessions.id, CASCADE)
 			.notNull(),
-		choice: responseEnum().notNull(),
 	},
-	(t) => [{ pk: primaryKey({ columns: [t.optionId, t.userId] }) }],
+	(t) => [{ pk: primaryKey({ columns: [t.eventId, t.sessionId] }) }],
+)
+
+export const availability = pgEnum('availability', ['YES', 'NO', 'MAYBE'])
+
+export const responses = pgTable(
+	'responses',
+	{
+		optionId: char('option_id', { length: 12 })
+			.references(() => options.id, CASCADE)
+			.notNull(),
+		sessionId: char('session_id', { length: 12 })
+			.references(() => sessions.id, CASCADE)
+			.notNull(),
+		availability: availability().notNull(),
+		note: text(),
+	},
+	(t) => [{ pk: primaryKey({ columns: [t.optionId, t.sessionId] }) }],
 )
 
 /* RELATIONS */
 
-export const usersRelations = relations(users, ({ many }) => ({
-	sessions: many(sessions),
-	events: many(events),
-	responses: many(eventResponses),
-}))
-
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-	user: one(users, { fields: [sessions.userId], references: [users.id] }),
-}))
-
 export const eventsRelations = relations(events, ({ one, many }) => ({
-	owner: one(users, { fields: [events.ownerId], references: [users.id] }),
-	options: many(eventOptions),
+	organizer: one(organizers, { fields: [events.id], references: [organizers.eventId] }),
+	options: many(options),
 }))
 
-export const eventsOptionsRelations = relations(eventOptions, ({ one, many }) => ({
-	event: one(events, { fields: [eventOptions.eventId], references: [events.id] }),
-	responses: many(eventResponses),
+export const optionsRelations = relations(options, ({ one, many }) => ({
+	event: one(events, { fields: [options.eventId], references: [events.id] }),
+	responses: many(responses),
 }))
 
-export const eventResponsesRelations = relations(eventResponses, ({ one }) => ({
-	option: one(eventOptions, {
-		fields: [eventResponses.optionId],
-		references: [eventOptions.id],
-	}),
-	user: one(users, { fields: [eventResponses.userId], references: [users.id] }),
+export const sessionsRelations = relations(sessions, ({ one, many }) => ({
+	event: one(events, { fields: [sessions.eventId], references: [events.id] }),
+	responses: many(responses),
+}))
+
+export const organizersRelations = relations(organizers, ({ one }) => ({
+	event: one(events, { fields: [organizers.eventId], references: [events.id] }),
+	session: one(sessions, { fields: [organizers.sessionId], references: [sessions.id] }),
+}))
+
+export const responsesRelations = relations(responses, ({ one }) => ({
+	option: one(options, { fields: [responses.optionId], references: [options.id] }),
+	session: one(sessions, { fields: [responses.sessionId], references: [sessions.id] }),
 }))

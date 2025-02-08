@@ -2,6 +2,8 @@
 	import { formatDateTimeRange } from '@/lib/time-format'
 
 	let { data } = $props()
+
+	$inspect(data.event)
 </script>
 
 <div
@@ -9,9 +11,9 @@
 	style={`background-image: url("${data.pattern}")`}
 >
 	<h1 class="font-display my-2 text-2xl font-bold capitalize drop-shadow-sm">{data.event.title}</h1>
-	{#if data.event.owner.name}
+	{#if data.event.organizer.session.name}
 		<h2 class="font-semibold text-gray-100 drop-shadow-sm">
-			Georganiseerd door {data.event.owner.name}
+			Georganiseerd door {data.event.organizer.session.name}
 		</h2>
 	{/if}
 </div>
@@ -29,6 +31,9 @@
 	{#each data.event.options as option}
 		<li>
 			{formatDateTimeRange(option)}
+			{#each option.responses as response}
+				<p class="ml-8 text-gray-600">{response.session.name} - {response.availability}</p>
+			{/each}
 		</li>
 	{/each}
 </ul>

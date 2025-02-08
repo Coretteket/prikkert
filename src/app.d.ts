@@ -4,7 +4,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			session: import('@/lib/server/session').Session
+			session: Map<string, string>
 		}
 		// interface PageData {}
 		// interface PageState {}

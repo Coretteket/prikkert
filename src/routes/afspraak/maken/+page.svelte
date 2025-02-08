@@ -9,7 +9,7 @@
 	import { IconPlus } from '@tabler/icons-svelte'
 	import type { Options } from './types'
 
-	let { data, form } = $props()
+	let { form } = $props()
 
 	const metaFields = {
 		organizer: { label: 'Jouw naam', snippet: organizer },
@@ -146,7 +146,6 @@
 		name={fieldId}
 		id="form-{fieldId}"
 		type="text"
-		defaultValue={data.session?.user.name}
 		class="rounded border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
 		placeholder="Wie organiseert deze afspraak?"
 	/>

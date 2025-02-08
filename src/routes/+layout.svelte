@@ -6,7 +6,7 @@
 	import icon from '@/lib/assets/icon.svg'
 	import Button from '@/lib/components/button.svelte'
 
-	let { data, children } = $props()
+	let { children } = $props()
 </script>
 
 <svelte:head>
@@ -22,13 +22,7 @@
 			<img src={icon} width={32} height={32} alt="" />
 			Prikkert
 		</a>
-		<Button as="link" href={data.session ? '/afspraken' : '/inloggen'}>
-			{#if data.session}
-				Jouw afspraken
-			{:else}
-				Inloggen
-			{/if}
-		</Button>
+		<Button as="link" href="/afspraak/maken">Afspraak maken</Button>
 	</nav>
 	<main class="p-4 pt-8">
 		{@render children()}

@@ -1,10 +1,7 @@
-import { getEventsByUser } from '@/lib/server/events'
-import { redirect } from '@sveltejs/kit'
+import { getSessions } from '@/lib/server/events'
 
-export async function load({ locals: { session } }) {
-	if (!session) throw redirect(307, '/inloggen')
+export async function load({ locals }) {
+	const sessions = await getSessions(locals.session)
 
-	const events = await getEventsByUser(session.userId)
-
-	return { events }
+	return { sessions }
 }

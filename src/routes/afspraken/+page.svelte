@@ -1,29 +1,29 @@
 <script lang="ts">
-	import { enhance } from '$app/forms'
-	import { formatDateTimeRange } from '@/lib/time-format'
+	// import { formatDateTimeRange } from '@/lib/time-format'
 
 	let { data } = $props()
+
+	$inspect(data.sessions)
 </script>
 
 <div class="space-y-4">
-	<p>Je bent ingelogd!</p>
-	<form action="/uitloggen" method="post" use:enhance>
-		<button type="submit" class="cursor-pointer">Uitloggen</button>
-	</form>
 	<ul class="list-inside list-disc space-y-2">
-		{#each data.events ?? [] as event}
+		{#each data.sessions ?? [] as session}
 			<li>
-				<a href="/afspraak/overzicht/{event.id}" class="text-lg font-bold">
-					{event.title}
+				<a href="/afspraak/overzicht/{session.event.id}" class="text-lg font-bold">
+					{session.event.title}
 				</a>
-				<ul class="ml-4 list-inside list-disc">
+				<span>{session.id === session.event.organizer.sessionId ? 'Eigenaar' : 'Deelnemer'}</span>
+				<!-- <ul class="ml-4 list-inside list-disc">
 					{#each event.options as option}
 						<li>
 							{formatDateTimeRange(option)}
 						</li>
 					{/each}
-				</ul>
+				</ul> -->
 			</li>
+		{:else}
+			<li>Geen afspraken gevonden</li>
 		{/each}
 	</ul>
 </div>

@@ -1,7 +1,16 @@
 import type { Handle } from '@sveltejs/kit'
-import { validateSession } from '@/lib/server/session'
+import { COOKIE_PREFIX } from '$env/static/private'
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.session = await validateSession({ cookies: event.cookies })
+	event.locals.session = new Map(
+		event.cookies
+			.getAll()
+			.flatMap((cookie) =>
+				cookie.name.startsWith(COOKIE_PREFIX)
+					? [[cookie.name.slice(COOKIE_PREFIX.length), cookie.value]]
+					: [],
+			),
+	)
+
 	return resolve(event)
 }
