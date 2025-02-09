@@ -90,6 +90,7 @@ export const responses = pgTable(
 export const eventsRelations = relations(events, ({ one, many }) => ({
 	organizer: one(organizers, { fields: [events.id], references: [organizers.eventId] }),
 	options: many(options),
+	sessions: many(sessions)
 }))
 
 export const optionsRelations = relations(options, ({ one, many }) => ({
