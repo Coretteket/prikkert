@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { Now, PlainDate } from '@/lib/temporal'
-	import type { SvelteMap } from 'svelte/reactivity'
-	import { emptySlot, type Slot } from './types'
+	import { emptySlot, type Options, type Slot } from './types'
 
 	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
-	type Props = { options: SvelteMap<PlainDate, Array<Slot>> }
+	type Props = { options: Options }
 	let { options }: Props = $props()
 
 	const now = Now.plainDateISO('Europe/Amsterdam')
@@ -29,9 +28,11 @@
 	}
 
 	function toggleDate(date: PlainDate) {
-		if (options.has(date)) options.delete(date)
-		else options.set(date, [emptySlot])
+		if (options.has(date.toString())) options.delete(date.toString())
+		else options.set(date.toString(), [emptySlot])
 	}
+
+	$inspect(options)
 </script>
 
 <div class="grid divide-gray-300 rounded border border-gray-300 sm:grid-cols-2 sm:divide-x">
@@ -68,7 +69,7 @@
 		<tbody class="grid gap-0.5">
 			{#each eachMondayOfMonth(month) as monday (monday)}
 				<tr class="grid grid-cols-7 gap-0.5">
-					{#each { length: 7 }, index}
+					{#each { length: 7 }, index (index)}
 						{@const day = monday.add({ days: index })}
 						{@const inMonth = day.month === month.month}
 						{@const isPast = PlainDate.compare(day, now) < 0}

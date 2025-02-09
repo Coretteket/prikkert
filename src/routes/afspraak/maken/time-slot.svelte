@@ -7,7 +7,7 @@
 	import TimeInput from './time-input.svelte'
 	import { emptySlot, type Options, type Slot } from './types'
 
-	type Props = { date: PlainDate; options: Options }
+	type Props = { date: string; options: Options }
 
 	let { date, options }: Props = $props()
 
@@ -27,7 +27,7 @@
 
 <div class="flex max-w-md gap-2 max-sm:flex-col">
 	<div class="grow py-1 text-gray-800">
-		{date.toLocaleString('nl', {
+		{PlainDate.from(date).toLocaleString('nl', {
 			weekday: 'long',
 			day: 'numeric',
 			month: 'long',
