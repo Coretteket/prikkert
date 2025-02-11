@@ -1,7 +1,5 @@
 import { getEvent } from '@/lib/server/events'
 import { error, redirect } from '@sveltejs/kit'
-import { z } from 'zod'
-import { zfd } from 'zod-form-data'
 import * as v from '@/lib/server/validation'
 import { db, schema } from '@/lib/server/db/index'
 import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
