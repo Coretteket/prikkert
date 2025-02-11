@@ -17,25 +17,16 @@ export async function load({ params: { id } }) {
 	return { event }
 }
 
-const AvailabilityEnum = z.enum(['YES', 'NO', 'MAYBE'])
+const AvailabilityEnum = v.picklist(['YES', 'NO', 'MAYBE'])
 
-const AvailabilitySchema = z.object({
-	optionId: z.string().length(12),
+const AvailabilitySchema = v.object({
+	optionId: v.pipe(v.string(), v.minLength(12)),
 	availability: AvailabilityEnum,
 })
 
-const CreateResponseSchema = zfd.formData({
-	name: zfd.text(z.string().optional()),
-	options: zfd.repeatable(
-		z.array(
-			z.string().transform((value, context) => {
-				const parsed = AvailabilitySchema.safeParse(JSON.parse(value))
-				if (parsed.success) return parsed.data
-				parsed.error.issues.forEach((issue) => context.addIssue(issue))
-				return z.NEVER
-			}),
-		),
-	),
+const CreateResponseSchema = v.object({
+	name: v.optional(v.string()),
+	options: v.array(v.pipe(v.string(), v.transformJSON(), AvailabilitySchema)),
 })
 
 export const actions = {
@@ -47,8 +38,8 @@ export const actions = {
 
 		if (!event) return error(404, 'Afspraak niet gevonden')
 
-		const parsed = await v.parse(request.formData(), CreateResponseSchema)
-		if (parsed instanceof v.error) return parsed.fail()
+		const parsed = v.parseForm(CreateResponseSchema, await request.formData())
+		if (parsed instanceof v.FormError) return parsed.fail()
 
 		const token = generateNanoid(21)
 
