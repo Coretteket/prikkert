@@ -79,7 +79,7 @@
 				<button
 					type="button"
 					onclick={() => selectedMetaFields.add(fieldId)}
-					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50"
+					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm font-[350] text-gray-500 transition-colors hover:bg-gray-50"
 				>
 					<IconPlus class="size-3" />
 					{metaFields[fieldId].label}
@@ -127,7 +127,7 @@
 				<button
 					type="button"
 					onclick={() => selectedOptionFields.add(fieldId)}
-					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50"
+					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm font-[350] text-gray-500 transition-colors hover:bg-gray-50"
 				>
 					<IconPlus class="size-3" />
 					{optionFields[fieldId].label}

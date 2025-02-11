@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
-	--font-sans: 'Roboto Flex Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-sans: 'Lexend Variable', ui-sans-serif, system-ui, sans-serif;
 	--font-display: 'Parkinsans Variable', ui-sans-serif, system-ui, sans-serif;
 }
 

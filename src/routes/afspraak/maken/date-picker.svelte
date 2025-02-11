@@ -82,7 +82,7 @@
 								onclick={() => toggleDate(day)}
 								disabled={!inMonth || isPast}
 								class={[
-									'flex aspect-square items-center justify-center rounded border border-gray-200 tabular-nums transition-colors',
+									'flex aspect-square font-[350] items-center justify-center rounded border border-gray-200 tabular-nums transition-colors',
 									isSelected
 										? 'border-pink-800 bg-pink-700 font-bold text-white hover:bg-pink-800'
 										: isPast

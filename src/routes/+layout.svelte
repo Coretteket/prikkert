@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@fontsource-variable/parkinsans'
-	import '@fontsource-variable/roboto-flex'
+	import '@fontsource-variable/lexend'
 	import '../app.css'
 
 	import icon from '@/lib/assets/icon.svg'

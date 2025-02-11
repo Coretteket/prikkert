@@ -23,8 +23,8 @@
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.6",
+		"@fontsource-variable/lexend": "^5.1.2",
 		"@fontsource-variable/parkinsans": "^5.0.1",
-		"@fontsource-variable/roboto-flex": "^5.1.1",
 		"@skeletonlabs/floating-ui-svelte": "^0.3.9",
 		"@sveltejs/adapter-node": "^5.2.12",
 		"@sveltejs/kit": "^2.17.1",

@@ -33,12 +33,12 @@ importers:
       '@eslint/compat':
         specifier: ^1.2.6
         version: 1.2.6(eslint@9.19.0(jiti@2.4.2))
+      '@fontsource-variable/lexend':
+        specifier: ^5.1.2
+        version: 5.1.2
       '@fontsource-variable/parkinsans':
         specifier: ^5.0.1
         version: 5.0.1
-      '@fontsource-variable/roboto-flex':
-        specifier: ^5.1.1
-        version: 5.1.1
       '@skeletonlabs/floating-ui-svelte':
         specifier: ^0.3.9
         version: 0.3.9(svelte@5.19.9)
@@ -748,11 +748,11 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
+  '@fontsource-variable/lexend@5.1.2':
+    resolution: {integrity: sha512-5gY4aYZXvhCNrpqa7f/JmRnUyRMAPqGdE0IXicbqvusj+jEwuj1JuiLPl61hTbGntQP+sMZsDHECBhlrEY/8iQ==}
+
   '@fontsource-variable/parkinsans@5.0.1':
     resolution: {integrity: sha512-XziEHnAktDYQLzlZToCvigjPQprVvXLFBjYmDqFzGsWfTAyn9kwwwdZl94aZBwjPKwlyqj6ASO3issuHGw2mhg==}
-
-  '@fontsource-variable/roboto-flex@5.1.1':
-    resolution: {integrity: sha512-cMtqtR+EhqTcox5+Sz+/+N7C8hHheQm1EtxJ9qrr356N2lwbpEU0y5OA4as+V7cdiaEFxXw6jzO9KoqLMZ6tNg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2537,9 +2537,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@fontsource-variable/parkinsans@5.0.1': {}
+  '@fontsource-variable/lexend@5.1.2': {}
 
-  '@fontsource-variable/roboto-flex@5.1.1': {}
+  '@fontsource-variable/parkinsans@5.0.1': {}
 
   '@humanfs/core@0.19.1': {}
 

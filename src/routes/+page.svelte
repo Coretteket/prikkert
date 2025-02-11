@@ -7,11 +7,11 @@
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
 	</h2>
-	<h3 class="mx-auto mb-8 max-w-60 text-center text-lg text-balance text-gray-700 sm:max-w-100">
+	<h3 class="mx-auto mb-8 max-w-60 font-[350] text-center text-lg text-balance text-gray-700 sm:max-w-100">
 		Vind
-		<strong class="font-semibold text-pink-700">gratis</strong>
+		<strong class="font-medium text-pink-700">gratis</strong>
 		én
-		<strong class="font-semibold text-pink-700">reclamevrij</strong>
+		<strong class="font-medium text-pink-700">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h3>
 	<Button as="link" href="/afspraak/maken" size="lg" color="primary" class="mx-auto">
