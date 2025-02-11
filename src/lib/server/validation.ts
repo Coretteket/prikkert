@@ -1,76 +1,55 @@
-import { fail as kitFail } from '@sveltejs/kit'
-import { PlainDate, PlainTime } from '@/lib/temporal'
-import { z } from 'zod'
+import * as v from 'valibot'
+import { decode } from './form'
+import { fail } from '@sveltejs/kit'
+import { PlainDate, PlainTime } from '../temporal'
 
-/** Represents a validation error that occurs during schema validation.
- * Provides a `fail()` method to return form and field errors. */
-class ValidationError<TSchema extends z.ZodType> {
-	public error: z.typeToFlattenedError<z.output<TSchema>>
-	constructor(input: z.SafeParseError<unknown>) {
-		this.error = input.error.flatten()
-	}
-
-	/** Use `parsed.fail()` to return form and field errors. */
-	fail() {
-		return kitFail(400, this.error)
-	}
-}
-
-export const error = ValidationError
-
-/** Use `v.parse()` to validate FormData with a given schema.
- * @returns A Promise that returns `ValidationError` if the data is invalid, otherwise the parsed data.
- * @example
- * ```ts
- * const parsed = await v.parse(request.formData(), Schema)
- * if (parsed instanceof v.error) return parsed.fail()
- * else console.log(parsed)
- * ```
- */
-export async function parse<TSchema extends z.ZodType>(
-	formData: Promise<FormData>,
-	schema: TSchema,
-) {
-	const parsed = await schema.safeParseAsync(await formData)
-	if (parsed.error) return new ValidationError<TSchema>(parsed)
-	return parsed.data as z.output<TSchema>
-}
-
-/** Use `v.fail()` to return custom form or field errors.
- * @param status The [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses), in the range 400-599.
- * @param error The content of the error.
- */
-export const fail = <const T extends string | Record<string, string[] | undefined>>(
-	status: number,
-	error: T,
+export const temporal = <T>(
+	temporal: { from: (input: string) => T },
+	message = 'Vul een geldige datum in.',
 ) =>
-	kitFail(
-		status,
-		(typeof error === 'string'
-			? { formErrors: [error], fieldErrors: {} }
-			: { formErrors: [], fieldErrors: error }) as {
-			formErrors?: string[]
-			fieldErrors: Record<string, string[] | undefined>
-		},
+	v.pipe(
+		v.string(),
+		v.rawTransform((context) => {
+			try {
+				return temporal.from(context.dataset.value)
+			} catch {
+				context.addIssue({ message })
+				return context.NEVER
+			}
+		}),
 	)
 
-/** Use `v.plainDate()` to validate a Temporal PlainDate. */
-export const plainDate = (message = 'Vul een geldige datum in.') =>
-	z.string().transform((value, context) => {
+export const plainDate = () => temporal(PlainDate, 'Vul een geldige datum in.')
+export const plainTime = () => temporal(PlainTime, 'Vul een geldig tijdstip in.')
+
+export const transformJSON = () =>
+	v.rawTransform<string, object>((context) => {
 		try {
-			return PlainDate.from(value)
+			return JSON.parse(context.dataset.value)
 		} catch {
-			context.addIssue({ code: 'invalid_date', message })
-			return z.NEVER
+			context.addIssue({ message: 'Ongeldige invoer.' })
+			return context.NEVER
 		}
 	})
 
-export const plainTime = (message = 'Vul een geldige tijd in.') =>
-	z.string().transform((value, context) => {
-		try {
-			return PlainTime.from(value)
-		} catch {
-			context.addIssue({ code: 'invalid_date', message })
-			return z.NEVER
-		}
-	})
+export class FormError<TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>> {
+	constructor(public issues: [v.InferIssue<TSchema>, ...v.InferIssue<TSchema>[]]) {}
+
+	/** Use `parsed.fail()` in a SvelteKit action to return form validation errors. */
+	fail() {
+		return fail(400, { error: v.flatten<TSchema>(this.issues) })
+	}
+}
+
+export function parseForm<
+	const TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>,
+>(schema: TSchema, formData: FormData, config?: v.Config<v.InferIssue<TSchema>>) {
+	const decoded = decode(schema, formData, '')
+	const data = schema.type === 'object' ? decoded || {} : decoded
+
+	const result = v.safeParse(schema, data, config)
+	if (!result.success) return new FormError<TSchema>(result.issues)
+	return result.output
+}
+
+export * from 'valibot'

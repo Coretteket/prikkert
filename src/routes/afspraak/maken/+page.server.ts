@@ -1,40 +1,29 @@
 import { db, schema } from '@/lib/server/db'
 import { redirect, type Actions } from '@sveltejs/kit'
-import * as v from '@/lib/server/validation'
-import { zfd } from 'zod-form-data'
-import { z } from 'zod'
 import { Now, type PlainDate, type PlainTime } from '@/lib/temporal'
 import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
 import { env } from '$env/dynamic/private'
 import { dev } from '$app/environment'
+import * as v from '@/lib/server/validation'
 
-const OptionSchema = z.tuple([
-	v.plainDate(),
-	z.array(z.tuple([]).or(z.tuple([v.plainTime(), v.plainTime().nullable()]))),
-])
+const OptionTimeSchema = v.union([v.tuple([v.plainTime(), v.optional(v.plainTime())]), v.tuple([])])
 
-const CreateEventSchema = zfd.formData({
-	title: zfd.text(z.string({ message: 'Vul een titel in.' })),
-	organizer: zfd.text(z.string().optional()),
-	description: zfd.text(z.string().optional()),
-	location: zfd.text(z.string().optional()),
-	options: zfd.repeatable(
-		z
-			.array(
-				z.string().transform((value, context) => {
-					const parsed = OptionSchema.safeParse(JSON.parse(value))
-					if (parsed.success) return parsed.data
-					parsed.error.issues.forEach((issue) => context.addIssue(issue))
-					return z.NEVER
-				}),
-			)
-			.min(1, 'Vul minstens één datum in.'),
-	),
+const OptionSchema = v.pipe(
+	v.array(v.tuple([v.plainDate(), v.array(OptionTimeSchema)])),
+	v.minLength(1, 'Vul minstens één datum in.'),
+)
+
+const CreateEventSchema = v.object({
+	title: v.string('Vul een titel in.'),
+	organizer: v.optional(v.string()),
+	description: v.optional(v.string()),
+	location: v.optional(v.string()),
+	options: v.pipe(v.string(), v.transformJSON(), OptionSchema),
 })
 
 function parseDateTimeRange(
 	date: PlainDate,
-	[startTime, endTime]: z.output<typeof OptionSchema>[1][number],
+	[startTime, endTime]: v.InferOutput<typeof OptionTimeSchema>,
 ) {
 	const toDateTime = (time?: PlainTime | null) => (time ? date.toPlainDateTime(time) : undefined)
 
@@ -46,8 +35,8 @@ function parseDateTimeRange(
 
 export const actions = {
 	default: async ({ request, cookies }) => {
-		const parsed = await v.parse(request.formData(), CreateEventSchema)
-		if (parsed instanceof v.error) return parsed.fail()
+		const parsed = v.parseForm(CreateEventSchema, await request.formData())
+		if (parsed instanceof v.FormError) return parsed.fail()
 
 		const token = generateNanoid(21)
 		const expiresAt = Now.instant()

@@ -33,8 +33,8 @@
 <h1 class="font-display mb-6 text-xl font-medium">Afspraak maken</h1>
 
 <form method="POST" use:enhance class="grid gap-5">
-	{#if form?.formErrors && form.formErrors.length > 0}
-		<p class="text-red-500">{form.formErrors}</p>
+	{#if form?.error.root && form.error.root.length > 0}
+		<p class="text-red-500">{form.error.root}</p>
 	{/if}
 
 	<label for="form-title" class="text-gray-800">Titel</label>
@@ -46,8 +46,8 @@
 		placeholder="Hoe heet deze afspraak?"
 	/>
 
-	{#if form?.fieldErrors?.title}
-		<p class="text-red-500">{form.fieldErrors.title}</p>
+	{#if form?.error.nested?.title}
+		<p class="text-red-500">{form.error.nested.title}</p>
 	{/if}
 
 	{#each selectedMetaFields as fieldId}
@@ -68,8 +68,8 @@
 
 		{@render field.snippet(fieldId)}
 
-		{#if form?.fieldErrors?.[fieldId]}
-			<p class="text-red-500">{form.fieldErrors[fieldId]}</p>
+		{#if form?.error.nested?.[fieldId]}
+			<p class="text-red-500">{form.error.nested[fieldId]}</p>
 		{/if}
 	{/each}
 
@@ -91,13 +91,11 @@
 	<label for="form-dates" class="text-gray-800">Datums</label>
 	<div id="form-dates">
 		<DatePicker {options} />
-		{#each options as option}
-			<input type="hidden" name="options" value={JSON.stringify(option)} />
-		{/each}
+		<input type="hidden" name="options" value={JSON.stringify(Array.from(options.entries()))} />
 	</div>
 
-	{#if form?.fieldErrors?.options}
-		<p class="text-red-500">{form.fieldErrors.options}</p>
+	{#if form?.error.nested?.options}
+		<p class="text-red-500">{form.error.nested.options}</p>
 	{/if}
 
 	{#each selectedOptionFields as fieldId}
