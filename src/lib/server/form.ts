@@ -1,3 +1,5 @@
+// Adapted from https://github.com/fabian-hiller/valibot/pull/672. This will hopefully be implemented in Valibot or a community package in the future.
+
 import * as v from 'valibot'
 
 export function decodeEntry(
@@ -59,7 +61,7 @@ export function decode<const TSchema extends v.BaseSchema<unknown, unknown, v.Ba
 			return result
 		}
 		case 'array': {
-			let result: unknown[] = []
+			let result: unknown[] | undefined
 			const { item } = schema as unknown as v.ArraySchema<TSchema, undefined>
 			const entries = formData.getAll(key)
 			if (entries.length > 0) {
@@ -72,6 +74,7 @@ export function decode<const TSchema extends v.BaseSchema<unknown, unknown, v.Ba
 				for (let i = 0; ; i++) {
 					const value = decode(item, formData, `${key}.${i}`)
 					if (value === undefined) break
+					if (!result) result = []
 					result.push(value)
 				}
 			}
