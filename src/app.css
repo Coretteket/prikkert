@@ -11,5 +11,6 @@
 		color: theme(--color-gray-900);
 		font-family: theme(--font-sans);
 		font-size: 18px;
+		scrollbar-gutter: stable both-edges;
 	}
 }

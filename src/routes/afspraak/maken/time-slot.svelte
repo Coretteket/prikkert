@@ -25,7 +25,7 @@
 	}
 </script>
 
-<div class="flex max-w-md gap-2 max-sm:flex-col">
+<div class="flex gap-2 max-sm:flex-col">
 	<div class="grow py-1 text-gray-800">
 		{PlainDate.from(date).toLocaleString('nl', {
 			weekday: 'long',
