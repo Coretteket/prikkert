@@ -4,7 +4,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			session: Map<string, string>
+			session: Map<string, { id: string; token: string }>
 		}
 		// interface PageData {}
 		// interface PageState {}

@@ -7,8 +7,8 @@ import { env } from '$env/dynamic/private'
 import { dev } from '$app/environment'
 import { eq } from 'drizzle-orm'
 
-export async function load({ params: { id } }) {
-	const event = await getEvent(id)
+export async function load({ params: { eventId } }) {
+	const event = await getEvent(eventId)
 
 	if (!event) throw error(404, 'Afspraak niet gevonden')
 
@@ -28,10 +28,10 @@ const CreateResponseSchema = v.object({
 })
 
 export const actions = {
-	default: async ({ request, cookies, params: { id } }) => {
+	default: async ({ request, locals, cookies, params: { eventId } }) => {
 		const event = await db.query.events.findFirst({
 			columns: { expiresAt: true },
-			where: eq(schema.events.id, id),
+			where: eq(schema.events.id, eventId),
 		})
 
 		if (!event) return error(404, 'Afspraak niet gevonden')
@@ -39,28 +39,27 @@ export const actions = {
 		const parsed = v.parseForm(CreateResponseSchema, await request.formData())
 		if (parsed instanceof v.FormError) return parsed.fail()
 
-		const token = generateNanoid(21)
+		const session = locals.session.get(eventId)
+		const sessionId = session?.id ?? generateNanoid(12)
+		const token = session?.token ?? generateNanoid(21)
+		const encodedToken = await encodeSHA256(token)
 
 		await db.transaction(async (db) => {
-			const [session] = await db
+			await db
 				.insert(schema.sessions)
-				.values({
-					eventId: id,
-					name: parsed.name,
-					token: await encodeSHA256(token),
-				})
-				.returning({ id: schema.sessions.id })
+				.values({ eventId, id: sessionId, token: encodedToken, name: parsed.name })
+				.onConflictDoUpdate({ target: schema.sessions.token, set: { name: parsed.name } })
 
 			await db.insert(schema.responses).values(
 				parsed.options.map(({ optionId, availability }) => ({
 					optionId,
-					sessionId: session.id,
+					sessionId,
 					availability,
 				})),
 			)
 		})
 
-		cookies.set(env.COOKIE_PREFIX + id, token, {
+		cookies.set(env.COOKIE_PREFIX + eventId, sessionId + '/' + token, {
 			path: '/',
 			httpOnly: true,
 			sameSite: 'strict',
@@ -68,6 +67,6 @@ export const actions = {
 			expires: new Date(event.expiresAt),
 		})
 
-		redirect(303, `/afspraak/overzicht/${id}`)
+		redirect(303, `/afspraak/overzicht/${eventId}`)
 	},
 }

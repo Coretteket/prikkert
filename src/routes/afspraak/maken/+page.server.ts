@@ -75,15 +75,15 @@ export const actions = {
 				name: parsed.organizer,
 			})
 
-			return event
-		})
+			cookies.set(env.COOKIE_PREFIX + event.id, session.id + '/' + token, {
+				path: '/',
+				httpOnly: true,
+				sameSite: 'strict',
+				secure: !dev,
+				expires: new Date(expiresAt),
+			})
 
-		cookies.set(env.COOKIE_PREFIX + event.id, token, {
-			path: '/',
-			httpOnly: true,
-			sameSite: 'strict',
-			secure: !dev,
-			expires: new Date(expiresAt),
+			return event
 		})
 
 		redirect(303, `/afspraak/overzicht/${event.id}`)
