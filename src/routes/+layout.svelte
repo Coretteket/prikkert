@@ -6,7 +6,7 @@
 	import icon from '@/lib/assets/icon.svg'
 	import Button from '@/lib/components/button.svelte'
 
-	let {data, children } = $props()
+	let { data, children } = $props()
 </script>
 
 <svelte:head>

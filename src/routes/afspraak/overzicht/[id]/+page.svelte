@@ -11,15 +11,15 @@
 	style={`background-image: url("${data.pattern}")`}
 >
 	<h1 class="font-display my-2 text-2xl font-bold capitalize drop-shadow-sm">{data.event.title}</h1>
-	{#if data.event.organizer.name}
+	{#if data.event.organizer}
 		<h2 class="font-semibold text-gray-100 drop-shadow-sm">
-			Georganiseerd door {data.event.organizer.name}
+			Georganiseerd door {data.event.organizer}
 		</h2>
 	{/if}
 </div>
 
 <p>
-	Eigenaar: {data.event.organizer.name ?? 'Anoniem'}
+	Eigenaar: {data.event.organizer ?? 'Anoniem'}
 	{#if data.event.isOrganizer}(jij){/if}
 </p>
 {#if data.event.description}

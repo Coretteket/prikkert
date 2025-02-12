@@ -23,7 +23,6 @@ export const events = pgTable('events', {
 	id: char({ length: 12 })
 		.default(sql`generate_nanoid(12)`)
 		.primaryKey(),
-
 	title: text().notNull(),
 	description: text(),
 	location: text(),
@@ -64,6 +63,7 @@ export const organizers = pgTable(
 		sessionId: char('session_id', { length: 12 })
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
+		name: text(),
 	},
 	(t) => [{ pk: primaryKey({ columns: [t.eventId, t.sessionId] }) }],
 )
@@ -90,7 +90,7 @@ export const responses = pgTable(
 export const eventsRelations = relations(events, ({ one, many }) => ({
 	organizer: one(organizers, { fields: [events.id], references: [organizers.eventId] }),
 	options: many(options),
-	sessions: many(sessions)
+	sessions: many(sessions),
 }))
 
 export const optionsRelations = relations(options, ({ one, many }) => ({

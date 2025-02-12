@@ -7,7 +7,7 @@ export async function getEvent(eventId: string, token?: string) {
 		where: eq(schema.events.id, eventId),
 		with: {
 			sessions: { columns: { id: true, name: true } },
-			organizer: { with: { session: true } },
+			organizer: { with: { session: { columns: { token: true } } } },
 			options: {
 				orderBy: [asc(schema.options.startsAt)],
 				with: { responses: { with: { session: { columns: { name: true } } } } },
@@ -18,9 +18,6 @@ export async function getEvent(eventId: string, token?: string) {
 	if (!event) return null
 
 	const encodedToken = await encodeSHA256(token)
-	const isOrganizer = encodedToken === event.organizer.session.token
-
-	const { token: _, ...organizer } = event.organizer.session
 
 	const options = event.options.map((option) => ({
 		...option,
@@ -32,9 +29,9 @@ export async function getEvent(eventId: string, token?: string) {
 
 	return {
 		...event,
-		isOrganizer,
-		organizer,
 		options,
+		isOrganizer: encodedToken === event.organizer.session.token,
+		organizer: event.organizer.name,
 		participants: event.sessions,
 	}
 }
