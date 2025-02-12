@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Now, PlainDate } from '@/lib/temporal'
 	import { emptySlot, type Options, type Slot } from './types'
+	import { IconChevronLeft, IconChevronRight } from '@tabler/icons-svelte'
 
 	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
@@ -48,11 +49,11 @@
 			disabled={isFirstMonth}
 			class="not-disabled:cursor-pointer disabled:text-gray-300"
 		>
-			&lt;
+			<IconChevronLeft class="size-4.5" />
 		</button>
 		<span>{month.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
 		<button type="button" onclick={() => (view = view.add({ months: 1 }))} class="cursor-pointer">
-			&gt;
+			<IconChevronRight class="size-4.5" />
 		</button>
 	</div>
 
@@ -75,16 +76,16 @@
 						{@const isPast = PlainDate.compare(day, now) < 0}
 						{@const isSelected = options.keys().some((key) => PlainDate.compare(key, day) === 0)}
 
-						<td class="flex aspect-square">
+						<td class="relative flex aspect-square">
 							<button
 								type="button"
 								tabIndex={-1}
 								onclick={() => toggleDate(day)}
 								disabled={!inMonth || isPast}
 								class={[
-									'flex aspect-square font-[350] items-center justify-center rounded border border-gray-200 tabular-nums transition-colors',
+									'flex aspect-square items-center justify-center rounded font-[350] tabular-nums transition',
 									isSelected
-										? 'border-pink-800 bg-pink-700 font-bold text-white hover:bg-pink-800'
+										? 'border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800'
 										: isPast
 											? 'text-gray-300'
 											: 'text-gray-700 hover:bg-gray-100',
@@ -94,6 +95,16 @@
 							>
 								{day.day}
 							</button>
+							{#if PlainDate.compare(day, now) === 0}
+								<div
+									class={[
+										'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl transition',
+										isSelected ? 'text-gray-100' : 'text-gray-700',
+									]}
+								>
+									&middot;
+								</div>
+							{/if}
 						</td>
 					{/each}
 				</tr>
