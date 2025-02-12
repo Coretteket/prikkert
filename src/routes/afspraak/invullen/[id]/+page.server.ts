@@ -15,16 +15,16 @@ export async function load({ params: { id } }) {
 	return { event }
 }
 
-const AvailabilityEnum = v.picklist(['YES', 'NO', 'MAYBE'])
-
-const AvailabilitySchema = v.object({
-	optionId: v.pipe(v.string(), v.minLength(12)),
-	availability: AvailabilityEnum,
-})
-
 const CreateResponseSchema = v.object({
 	name: v.optional(v.string()),
-	options: v.array(v.pipe(v.string(), v.transformJSON(), AvailabilitySchema)),
+	options: v.array(
+		v.json(
+			v.object({
+				optionId: v.pipe(v.string(), v.minLength(12)),
+				availability: v.picklist(['YES', 'NO', 'MAYBE']),
+			}),
+		),
+	),
 })
 
 export const actions = {

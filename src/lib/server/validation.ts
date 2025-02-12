@@ -32,6 +32,10 @@ export const transformJSON = () =>
 		}
 	})
 
+export const json = <TSchema extends v.BaseSchema<object, unknown, v.BaseIssue<unknown>>>(
+	schema: TSchema,
+) => v.pipe(v.string(), transformJSON(), schema)
+
 export class FormError<TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>> {
 	constructor(public issues: [v.InferIssue<TSchema>, ...v.InferIssue<TSchema>[]]) {}
 

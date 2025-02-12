@@ -8,17 +8,17 @@ import * as v from '@/lib/server/validation'
 
 const OptionTimeSchema = v.union([v.tuple([v.plainTime(), v.optional(v.plainTime())]), v.tuple([])])
 
-const OptionSchema = v.pipe(
-	v.array(v.tuple([v.plainDate(), v.array(OptionTimeSchema)])),
-	v.minLength(1, 'Vul minstens één datum in.'),
-)
-
 const CreateEventSchema = v.object({
 	title: v.string('Vul een titel in.'),
 	organizer: v.optional(v.string()),
 	description: v.optional(v.string()),
 	location: v.optional(v.string()),
-	options: v.pipe(v.string(), v.transformJSON(), OptionSchema),
+	options: v.json(
+		v.pipe(
+			v.array(v.tuple([v.plainDate(), v.array(OptionTimeSchema)])),
+			v.minLength(1, 'Vul minstens één datum in.'),
+		),
+	),
 })
 
 function parseDateTimeRange(
