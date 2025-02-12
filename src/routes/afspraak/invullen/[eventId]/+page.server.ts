@@ -7,12 +7,20 @@ import { env } from '$env/dynamic/private'
 import { dev } from '$app/environment'
 import { eq } from 'drizzle-orm'
 
-export async function load({ params: { eventId } }) {
+export async function load({ locals, params: { eventId } }) {
 	const event = await getEvent(eventId)
 
 	if (!event) throw error(404, 'Afspraak niet gevonden')
 
-	return { event }
+	const sessionId = locals.session.get(eventId)?.id
+	if (!sessionId) return { event }
+
+	const session = await db.query.sessions.findFirst({
+		where: eq(schema.sessions.id, sessionId),
+		with: { responses: true },
+	})
+
+	return { event, session }
 }
 
 const CreateResponseSchema = v.object({

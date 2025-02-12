@@ -29,6 +29,7 @@
 		type="text"
 		class="rounded-md border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
 		placeholder="Hoe wil je genoemd worden?"
+		defaultValue={data.session?.name}
 	/>
 
 	<ul class="grid gap-4">
@@ -63,7 +64,10 @@
 					<input
 						type="hidden"
 						name="options"
-						value={JSON.stringify({ optionId: option.id, availability: availability.get(option.id) })}
+						value={JSON.stringify({
+							optionId: option.id,
+							availability: availability.get(option.id),
+						})}
 					/>
 				</div>
 			</li>

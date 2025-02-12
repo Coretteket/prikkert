@@ -7,7 +7,7 @@ export async function getEvent(eventId: string, token?: string) {
 		where: eq(schema.events.id, eventId),
 		with: {
 			sessions: { columns: { id: true, name: true } },
-			organizer: { with: { session: { columns: { token: true } } } },
+			organizer: { with: { session: { columns: { name: true, token: true } } } },
 			options: {
 				orderBy: [asc(schema.options.startsAt)],
 				with: { responses: { with: { session: { columns: { name: true } } } } },
@@ -30,17 +30,17 @@ export async function getEvent(eventId: string, token?: string) {
 	return {
 		...event,
 		options,
-		isOrganizer: encodedToken === event.organizer.session.token,
-		organizer: event.organizer.name,
 		participants: event.sessions,
+		organizer: event.organizer.session.name,
+		isOrganizer: encodedToken === event.organizer.session.token,
 	}
 }
 
-export async function getSessions(locals: Map<string, string>) {
-	const sessionIds = await Promise.all(locals.values().map(encodeSHA256))
+export async function getSessions(session: App.Locals['session']) {
+	const sessionIds = await Promise.all(session.values().map(({ id }) => id))
 
 	return db.query.sessions.findMany({
-		where: inArray(schema.sessions.token, sessionIds),
+		where: inArray(schema.sessions.id, sessionIds),
 		with: { event: { with: { organizer: true } } },
 		columns: { token: false },
 	})

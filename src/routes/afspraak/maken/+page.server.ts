@@ -66,13 +66,13 @@ export const actions = {
 				.values({
 					token: await encodeSHA256(token),
 					eventId: event.id,
+					name: parsed.organizer,
 				})
 				.returning()
 
 			await db.insert(schema.organizers).values({
 				eventId: event.id,
 				sessionId: session.id,
-				name: parsed.organizer,
 			})
 
 			cookies.set(env.COOKIE_PREFIX + event.id, session.id + '/' + token, {

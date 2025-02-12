@@ -63,7 +63,6 @@ export const organizers = pgTable(
 		sessionId: char('session_id', { length: 12 })
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
-		name: text(),
 	},
 	(t) => [{ pk: primaryKey({ columns: [t.eventId, t.sessionId] }) }],
 )
