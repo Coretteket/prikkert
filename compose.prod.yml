@@ -40,7 +40,7 @@ services:
     restart: always
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.web.rule=Host(`prikkert.qntn.io`)'
+      - 'traefik.http.routers.web.rule=Host(`prikkert.nl`)'
       - 'traefik.http.routers.web.entrypoints=websecure'
       - 'traefik.http.routers.web.tls.certresolver=myresolver'
       - 'traefik.http.routers.web.middlewares=mycompress,myratelimit'
