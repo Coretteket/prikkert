@@ -17,8 +17,8 @@
 		base: 'group relative block w-fit translate-y-1 cursor-pointer border transition',
 		variants: {
 			color: {
-				primary: 'border-pink-900 bg-pink-800',
-				secondary: 'border-gray-300 bg-gray-100',
+				primary: 'border-pink-900 bg-pink-800 dark:bg-pink-900',
+				secondary: 'border-zinc-300 bg-zinc-100 dark:bg-zinc-800/50 dark:border-zinc-800',
 			},
 			size: {
 				md: 'rounded-md',
@@ -35,8 +35,8 @@
 		base: 'flex -translate-y-1 items-center gap-1.5 outline transition-all group-hover:-translate-y-1.5 group-active:-translate-y-0.5',
 		variants: {
 			color: {
-				primary: 'bg-pink-700 font-bold text-white outline-pink-900',
-				secondary: 'bg-white text-gray-600 outline-gray-300',
+				primary: 'bg-pink-700 font-bold text-white outline-pink-900 dark:bg-pink-800',
+				secondary: 'bg-white text-zinc-600 outline-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:outline-zinc-800',
 			},
 			size: {
 				md: 'rounded-md px-3 py-1.5 text-sm',

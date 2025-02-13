@@ -39,7 +39,7 @@
 <button
 	type="button"
 	bind:this={floating.elements.reference}
-	class="cursor-pointer text-gray-600"
+	class="cursor-pointer text-zinc-600"
 	{...interactions.getReferenceProps()}
 >
 	<IconDotsVertical size={20} />

@@ -5,6 +5,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			session: Map<string, { id: string; token: string }>
+			theme: "light" | "dark" | "system";
 		}
 		// interface PageData {}
 		// interface PageState {}

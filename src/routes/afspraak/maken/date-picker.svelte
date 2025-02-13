@@ -36,7 +36,7 @@
 	$inspect(options)
 </script>
 
-<div class="grid divide-gray-300 rounded border border-gray-300 sm:grid-cols-2 sm:divide-x">
+<div class="grid divide-zinc-300 rounded border border-zinc-300 sm:grid-cols-2 sm:divide-x">
 	<div class="p-5">{@render month(view)}</div>
 	<div class="p-5 max-sm:hidden">{@render month(view.add({ months: 1 }))}</div>
 </div>
@@ -47,7 +47,7 @@
 			type="button"
 			onclick={() => (view = view.subtract({ months: 1 }))}
 			disabled={isFirstMonth}
-			class="not-disabled:cursor-pointer disabled:text-gray-300"
+			class="not-disabled:cursor-pointer disabled:text-zinc-300"
 		>
 			<IconChevronLeft class="size-4.5" />
 		</button>
@@ -61,7 +61,7 @@
 		<thead class="grid gap-1">
 			<tr class="grid grid-cols-7 gap-1">
 				{#each weekdays as weekday}
-					<th class="text-center text-sm font-normal text-gray-500">
+					<th class="text-center text-sm font-normal text-zinc-500">
 						{weekday}
 					</th>
 				{/each}
@@ -87,8 +87,8 @@
 									isSelected
 										? 'border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800'
 										: isPast
-											? 'text-gray-300'
-											: 'text-gray-700 hover:bg-gray-100',
+											? 'text-zinc-300'
+											: 'text-zinc-700 hover:bg-zinc-100',
 									!isPast && 'cursor-pointer',
 									!inMonth && 'invisible',
 								]}
@@ -99,7 +99,7 @@
 								<div
 									class={[
 										'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl transition',
-										isSelected ? 'text-gray-100' : 'text-gray-700',
+										isSelected ? 'text-zinc-100' : 'text-zinc-700',
 									]}
 								>
 									&middot;

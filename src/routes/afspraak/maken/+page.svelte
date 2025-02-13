@@ -37,12 +37,12 @@
 		<p class="text-red-500">{form.error.root}</p>
 	{/if}
 
-	<label for="form-title" class="text-gray-800">Titel</label>
+	<label for="form-title" class="text-zinc-800">Titel</label>
 	<input
 		name="title"
 		id="form-title"
 		type="text"
-		class="rounded-md border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		class="rounded-md border border-zinc-300 px-3 py-2 placeholder:text-base placeholder:text-zinc-400"
 		placeholder="Hoe heet deze afspraak?"
 	/>
 
@@ -54,7 +54,7 @@
 		{@const field = metaFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="text-gray-800">
+			<label for="form-{fieldId}" class="text-zinc-800">
 				{field.label}
 			</label>
 			<button
@@ -79,7 +79,7 @@
 				<button
 					type="button"
 					onclick={() => selectedMetaFields.add(fieldId)}
-					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm font-[350] text-gray-500 transition-colors hover:border-gray-400/75 hover:text-gray-600"
+					class="flex cursor-pointer items-center gap-1 rounded-md border border-zinc-300 px-2 py-1 text-sm font-[350] text-zinc-500 transition-colors hover:border-zinc-400/75 hover:text-zinc-600"
 				>
 					<IconPlus class="size-3" />
 					{metaFields[fieldId].label}
@@ -88,7 +88,7 @@
 		</div>
 	{/if}
 
-	<label for="form-dates" class="text-gray-800">Datums</label>
+	<label for="form-dates" class="text-zinc-800">Datums</label>
 	<div id="form-dates">
 		<DatePicker {options} />
 		<input type="hidden" name="options" value={JSON.stringify(Array.from(options.entries()))} />
@@ -102,7 +102,7 @@
 		{@const field = optionFields[fieldId]}
 
 		<div class="flex items-center justify-between">
-			<label for="form-{fieldId}" class="text-gray-800">
+			<label for="form-{fieldId}" class="text-zinc-800">
 				{field.label}
 			</label>
 			<button
@@ -127,7 +127,7 @@
 				<button
 					type="button"
 					onclick={() => selectedOptionFields.add(fieldId)}
-					class="flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-sm font-[350] text-gray-500 transition-colors hover:border-gray-400/75"
+					class="flex cursor-pointer items-center gap-1 rounded-md border border-zinc-300 px-2 py-1 text-sm font-[350] text-zinc-500 transition-colors hover:border-zinc-400/75"
 				>
 					<IconPlus class="size-3" />
 					{optionFields[fieldId].label}
@@ -144,7 +144,7 @@
 		name={fieldId}
 		id="form-{fieldId}"
 		type="text"
-		class="rounded border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		class="rounded border border-zinc-300 px-3 py-2 placeholder:text-base placeholder:text-zinc-400"
 		placeholder="Wie organiseert deze afspraak?"
 	/>
 {/snippet}
@@ -154,7 +154,7 @@
 		name={fieldId}
 		id="form-{fieldId}"
 		type="text"
-		class="rounded border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		class="rounded border border-zinc-300 px-3 py-2 placeholder:text-base placeholder:text-zinc-400"
 		placeholder="Waar is deze afspraak?"
 	/>
 {/snippet}
@@ -163,13 +163,13 @@
 	<textarea
 		name={fieldId}
 		id="form-{fieldId}"
-		class="rounded border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		class="rounded border border-zinc-300 px-3 py-2 placeholder:text-base placeholder:text-zinc-400"
 		placeholder="Geef een beschrijving van deze afspraak..."
 	></textarea>
 {/snippet}
 
 {#snippet times(fieldId: string)}
-	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border border-gray-300 p-5">
+	<div class="relative grid max-h-80 gap-3 overflow-y-scroll rounded border border-zinc-300 p-5">
 		{#each Array.from(options.keys()).toSorted(PlainDate.compare) as date}
 			<TimeSlot {date} {options} />
 		{:else}

@@ -12,7 +12,7 @@
 >
 	<h1 class="font-display my-2 text-2xl font-bold capitalize drop-shadow-sm">{data.event.title}</h1>
 	{#if data.event.organizer}
-		<h2 class="font-semibold text-gray-100 drop-shadow-sm">
+		<h2 class="font-semibold text-zinc-100 drop-shadow-sm">
 			Georganiseerd door {data.event.organizer}
 		</h2>
 	{/if}
@@ -38,7 +38,7 @@
 		<li>
 			{formatDateTimeRange(option)}
 			{#each option.responses as response}
-				<p class="ml-8 text-gray-600">{response.name} - {response.availability}</p>
+				<p class="ml-8 text-zinc-600">{response.name} - {response.availability}</p>
 			{/each}
 		</li>
 	{/each}

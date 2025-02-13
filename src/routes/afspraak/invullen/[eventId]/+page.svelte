@@ -18,16 +18,16 @@
 	<p>Locatie: {data.event.location}</p>
 {/if}
 
-<a href="/afspraak/overzicht/{data.event.id}" class="my-4 block text-gray-500">Of bekijken.</a>
+<a href="/afspraak/overzicht/{data.event.id}" class="my-4 block text-zinc-500">Of bekijken.</a>
 
 <form method="POST" use:enhance class="grid gap-4">
 	<pre>{JSON.stringify(form, null, 2)}</pre>
-	<label for="form-name" class="text-gray-800">Jouw naam</label>
+	<label for="form-name" class="text-zinc-800">Jouw naam</label>
 	<input
 		name="name"
 		id="form-name"
 		type="text"
-		class="rounded-md border border-gray-300 px-3 py-2 placeholder:text-base placeholder:text-gray-400"
+		class="rounded-md border border-zinc-300 px-3 py-2 placeholder:text-base placeholder:text-zinc-400"
 		placeholder="Hoe wil je genoemd worden?"
 		defaultValue={data.session?.name}
 	/>

@@ -1,0 +1,18 @@
+<svg width="64" height="64" fill="none" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <path d="M24 72L8 88M8 72L24 88" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m56 8-16 16m0-16 16 16" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m88 40-16 16m0-16 16 16" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m120 104-16 16m0-16 16 16" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m6.6667 16 6.6666 6.6667 13.333-13.333" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m38.667 48 6.6666 6.6667 13.333-13.333" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m70.667 16 6.6666 6.6667 13.333-13.333" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m6.6667 112 6.6666 6.667 13.333-13.334" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m102.67 80 6.666 6.6667 13.334-13.333" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m70.667 112 6.6666 6.667 13.333-13.334" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m38.667 80 6.6666 6.6667 13.333-13.333" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m5.3333 48c0-2.2093 2.1227-4 4.7414-4 2.6186 0 4.1466 2 5.9253 4 1.7773 2 3.3067 4 5.9253 4 2.6187 0 4.7414-1.7907 4.7414-4" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m69.333 80c0-2.2093 2.1227-4 4.7414-4 2.6186 0 4.1466 2 5.9253 4 1.7773 2 3.3067 4 5.9253 4 2.6187 0 4.7414-1.7907 4.7414-4" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m101.33 16c0-2.2093 2.123-4 4.742-4 2.618 0 4.146 2 5.925 4 1.777 2 3.307 4 5.925 4 2.619 0 4.742-1.7907 4.742-4" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m120 40-16 16m0-16 16 16" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+  <path d="m37.333 112c0-2.209 2.1227-4 4.7414-4 2.6186 0 4.1466 2 5.9253 4 1.7773 2 3.3067 4 5.9253 4 2.6187 0 4.7414-1.791 4.7414-4" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6667"/>
+</svg>

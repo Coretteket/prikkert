@@ -26,7 +26,7 @@
 </script>
 
 <div class="flex gap-2 max-sm:flex-col">
-	<div class="grow py-1 text-gray-800">
+	<div class="grow py-1 text-zinc-800">
 		{PlainDate.from(date).toLocaleString('nl', {
 			weekday: 'long',
 			day: 'numeric',
@@ -45,18 +45,18 @@
 				</div>
 
 				{#await Popover}
-					<button type="button" class="cursor-pointer text-gray-600">
+					<button type="button" class="cursor-pointer text-zinc-600">
 						<IconDotsVertical size={20} />
 					</button>
 				{:then Popover}
 					<Popover>
 						<div
-							class="grid min-w-40 rounded border border-gray-300 bg-white p-2 text-sm shadow"
+							class="grid min-w-40 rounded border border-zinc-300 bg-white p-2 text-sm shadow"
 							transition:fade={{ duration: 150, easing: cubicInOut }}
 						>
 							<button
 								type="button"
-								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-gray-100"
+								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-zinc-100"
 								onclick={() => {
 									for (const key of options.keys()) options.set(key, slots)
 									closePopover()
@@ -67,7 +67,7 @@
 							</button>
 							<button
 								type="button"
-								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-gray-100"
+								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-zinc-100"
 								onclick={() => {
 									options.set(date, slots.concat([emptySlot]))
 									closePopover()
@@ -78,7 +78,7 @@
 							</button>
 							<button
 								type="button"
-								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-gray-100"
+								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-zinc-100"
 								onclick={() => {
 									if (slots.length >= 1) {
 										const remaining = slots.filter((s) => s !== slot)

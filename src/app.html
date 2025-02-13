@@ -1,8 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html %sveltekit.theme% lang="nl">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			if (document.documentElement.getAttribute('data-theme') === 'system') {
+				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+				const setTheme = (e) => {
+					document.documentElement.classList.toggle('no-transition', true)
+					document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light')
+					document.documentElement.classList.toggle('no-transition', true)
+				}
+				mediaQuery.addListener(setTheme)
+				setTheme(mediaQuery)
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

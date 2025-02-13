@@ -1,6 +1,9 @@
 import type { Handle } from '@sveltejs/kit'
 import { env } from '$env/dynamic/private'
 
+const isTheme = (theme: string): theme is 'light' | 'dark' | 'system' =>
+	['light', 'dark', 'system'].includes(theme)
+
 export const handle: Handle = async ({ event, resolve }) => {
 	const sessionData = new Map<string, { id: string; token: string }>()
 
@@ -14,5 +17,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.session = sessionData
 
-	return resolve(event)
+	const theme = event.cookies.get('theme')
+	event.locals.theme = theme && isTheme(theme) ? theme : 'system'
+
+	return resolve(event, {
+		transformPageChunk: ({ html }) =>
+			html.replace('<html %sveltekit.theme%', `<html data-theme="${event.locals.theme}"`),
+	})
 }
