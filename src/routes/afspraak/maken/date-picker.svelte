@@ -36,7 +36,7 @@
 	$inspect(options)
 </script>
 
-<div class="grid divide-zinc-300 rounded border border-zinc-300 sm:grid-cols-2 sm:divide-x">
+<div class="grid divide-zinc-300 rounded border sm:grid-cols-2 sm:divide-x dark:divide-zinc-700">
 	<div class="p-5">{@render month(view)}</div>
 	<div class="p-5 max-sm:hidden">{@render month(view.add({ months: 1 }))}</div>
 </div>
@@ -47,7 +47,7 @@
 			type="button"
 			onclick={() => (view = view.subtract({ months: 1 }))}
 			disabled={isFirstMonth}
-			class="not-disabled:cursor-pointer disabled:text-zinc-300"
+			class="not-disabled:cursor-pointer disabled:text-zinc-300 dark:disabled:text-zinc-700"
 		>
 			<IconChevronLeft class="size-4.5" />
 		</button>
@@ -85,10 +85,10 @@
 								class={[
 									'flex aspect-square items-center justify-center rounded font-[350] tabular-nums transition',
 									isSelected
-										? 'border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800'
+										? 'border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800 dark:border-pink-800 dark:bg-pink-900'
 										: isPast
-											? 'text-zinc-300'
-											: 'text-zinc-700 hover:bg-zinc-100',
+											? 'text-zinc-300 dark:text-zinc-700'
+											: 'text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 hover:dark:bg-zinc-800',
 									!isPast && 'cursor-pointer',
 									!inMonth && 'invisible',
 								]}
@@ -99,7 +99,7 @@
 								<div
 									class={[
 										'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl transition',
-										isSelected ? 'text-zinc-100' : 'text-zinc-700',
+										isSelected ? 'text-zinc-100' : 'text-zinc-700 dark:text-zinc-300',
 									]}
 								>
 									&middot;

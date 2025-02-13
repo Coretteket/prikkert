@@ -18,7 +18,7 @@
 		variants: {
 			color: {
 				primary: 'border-pink-900 bg-pink-800 dark:bg-pink-900',
-				secondary: 'border-zinc-300 bg-zinc-100 dark:bg-zinc-800/50 dark:border-zinc-800',
+				secondary: ' bg-zinc-100 dark:bg-zinc-800/50 dark:border-zinc-800',
 			},
 			size: {
 				md: 'rounded-md',
@@ -36,7 +36,8 @@
 		variants: {
 			color: {
 				primary: 'bg-pink-700 font-bold text-white outline-pink-900 dark:bg-pink-800',
-				secondary: 'bg-white text-zinc-600 outline-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:outline-zinc-800',
+				secondary:
+					'bg-white text-zinc-600 outline-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:outline-zinc-800',
 			},
 			size: {
 				md: 'rounded-md px-3 py-1.5 text-sm',

@@ -27,7 +27,7 @@
 		name="name"
 		id="form-name"
 		type="text"
-		class="rounded-md border border-zinc-300 px-3 py-2 placeholder:text-base placeholder:text-zinc-400"
+		class="rounded-md border px-3 py-2 placeholder:text-base placeholder:text-zinc-400"
 		placeholder="Hoe wil je genoemd worden?"
 		defaultValue={data.session?.name}
 	/>

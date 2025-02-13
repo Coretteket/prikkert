@@ -4,12 +4,14 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script>
-			if (document.documentElement.getAttribute('data-theme') === 'system') {
+			const html = document.documentElement
+			if (html.getAttribute('data-theme') === 'system') {
 				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 				const setTheme = (e) => {
-					document.documentElement.classList.toggle('no-transition', true)
-					document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light')
-					document.documentElement.classList.toggle('no-transition', true)
+					html.classList.add('no-transition')
+					html.setAttribute('data-theme', e.matches ? 'dark' : 'light')
+					html.style.colorScheme = e.matches ? 'dark' : 'light'
+					setTimeout(() => html.classList.remove('no-transition'))
 				}
 				mediaQuery.addListener(setTheme)
 				setTheme(mediaQuery)

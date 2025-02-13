@@ -29,7 +29,7 @@
 	<p>Locatie: {data.event.location}</p>
 {/if}
 
-<p>Deelnemers: {data.event.participants.map((p) => p.name ?? "Anoniem").join(', ')}</p>
+<p>Deelnemers: {data.event.participants.map((p) => p.name ?? 'Anoniem').join(', ')}</p>
 
 <a href="/afspraak/invullen/{data.event.id}" class="my-4 block">Of invullen.</a>
 

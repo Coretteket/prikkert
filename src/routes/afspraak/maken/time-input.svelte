@@ -6,7 +6,7 @@
 
 <input
 	type="time"
-	class="w-fit min-w-20 appearance-none rounded border border-zinc-300 px-1.5 py-0.5 text-center text-zinc-900 tabular-nums"
+	class="w-fit min-w-20 appearance-none rounded border px-1.5 py-0.5 text-center text-zinc-900 tabular-nums"
 	bind:value={
 		() => time?.toString().slice(0, 5),
 		(value) => (time = value && value !== '' ? PlainTime.from(value) : undefined)

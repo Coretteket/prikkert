@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
@@ -10,14 +11,17 @@
 	html {
 		@apply font-sans text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50;
 		font-size: 18px;
+		scrollbar-gutter: stable both-edges;
 	}
 
-	body {
-		scrollbar-gutter: stable both-edges;
+	* {
+		@apply border-zinc-300 dark:border-zinc-700;
 	}
 }
 
-.no-transition,
-.no-transition * {
-	transition-duration: 0ms !important;
+@utility no-transition {
+	&,
+	& * {
+		transition-duration: 0ms !important;
+	}
 }

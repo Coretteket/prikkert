@@ -21,7 +21,7 @@
 ></div>
 
 <div
-	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(42rem,_calc(100vw_-_2rem))] sm:rounded-lg sm:border sm:border-zinc-300 sm:p-4 dark:bg-zinc-900 dark:sm:border-zinc-700/50"
+	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(42rem,_calc(100vw_-_2rem))] sm:rounded-lg sm:border sm:p-4 dark:bg-zinc-900 dark:sm:border-zinc-800"
 >
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
