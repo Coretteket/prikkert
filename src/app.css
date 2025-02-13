@@ -20,8 +20,7 @@
 }
 
 @utility no-transition {
-	&,
-	& * {
-		transition-duration: 0ms !important;
+	:where(&, & *) {
+		transition: none !important;
 	}
 }

@@ -11,7 +11,8 @@
 					html.classList.add('no-transition')
 					html.setAttribute('data-theme', e.matches ? 'dark' : 'light')
 					html.style.colorScheme = e.matches ? 'dark' : 'light'
-					setTimeout(() => html.classList.remove('no-transition'))
+					html.offsetHeight
+					html.classList.remove('no-transition')
 				}
 				mediaQuery.addListener(setTheme)
 				setTheme(mediaQuery)
