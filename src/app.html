@@ -3,14 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<script type="module">
-			import { setTheme } from '/src/lib/theme.js'
-			if (document.documentElement.getAttribute('data-theme') === 'system') {
-				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-				mediaQuery.addEventListener('change', setTheme)
-				setTheme(mediaQuery)
-			}
-		</script>
+		<script type="module" src="/src/lib/theme.js"></script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
