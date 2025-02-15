@@ -7,27 +7,16 @@
 	import pattern from '@/lib/assets/pattern.svg'
 	import Button from '@/lib/components/button.svelte'
 	import { IconMoon, IconSun } from '@tabler/icons-svelte'
+	import { setTheme, toggleTheme } from '@/lib/theme'
 	import { browser } from '$app/environment'
 
 	let { data, children } = $props()
 
-	function parseCookie(key: string) {
-		if (!browser) return 'light'
-		const cookie = document.cookie.split('; ').find((row) => row.startsWith(`${key}=`))
-		return cookie ? cookie.split('=')[1] : 'light'
+	if (browser && document.documentElement.getAttribute('data-theme') === 'system') {
+		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+		mediaQuery.addEventListener('change', setTheme)
+		setTheme(mediaQuery)
 	}
-
-	let theme = $state(parseCookie('theme') === 'light' ? 'light' : 'dark')
-
-	$effect(() => {
-		if (!browser) return
-		document.documentElement.classList.add('no-transition')
-		const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-		document.cookie = `theme=${theme === systemTheme ? 'system' : theme}; path=/; max-age=31536000`
-		document.documentElement.dataset.theme = theme
-		document.documentElement.offsetHeight
-		document.documentElement.classList.remove('no-transition')
-	})
 </script>
 
 <svelte:head>
@@ -53,12 +42,9 @@
 		</a>
 
 		<div class="flex gap-4">
-			<button onclick={() => (theme = theme === 'dark' ? 'light' : 'dark')} class="opacity-75">
-				{#if theme === 'dark'}
-					<IconSun />
-				{:else}
-					<IconMoon />
-				{/if}
+			<button onclick={() => toggleTheme()} class="opacity-75">
+				<IconSun class="not-dark:hidden" />
+				<IconMoon class="dark:hidden" />
 			</button>
 			{#if data.hasSession}
 				<Button as="link" href="/afspraken">Jouw afspraken</Button>

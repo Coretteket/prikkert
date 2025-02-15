@@ -10,7 +10,7 @@
 		<p>zo geprikt</p>
 	</h2>
 	<h3
-		class="mx-auto mb-8 max-w-80 text-center text-xl font-[350] text-zinc-700 sm:max-w-100 sm:text-balance dark:text-zinc-300"
+		class="mx-auto mb-8 max-w-80 text-center text-xl font-[350] text-zinc-700 sm:max-w-100 text-balance dark:text-zinc-300"
 	>
 		Vind
 		<strong class="font-semibold text-pink-700 dark:text-zinc-200">gratis</strong>
@@ -48,7 +48,7 @@
 					Altijd gratis
 				</h4>
 			</div>
-			<p class="font-[350] text-zinc-600 sm:text-balance dark:text-pink-50/70">
+			<p class="font-[350] text-zinc-600 text-balance dark:text-pink-50/70">
 				Geen verborgen kosten, geen verrassingen. Alle functies van Prikkert blijven altijd gratis.
 			</p>
 		</div>
@@ -65,7 +65,7 @@
 					Nooit reclame
 				</h4>
 			</div>
-			<p class="font-[350] text-zinc-600 sm:text-balance dark:text-pink-50/70">
+			<p class="font-[350] text-zinc-600 text-balance dark:text-pink-50/70">
 				Waarom zou je langs eindeloze advertenties moeten scrollen? Prikkert houdt het reclamevrij.
 			</p>
 		</div>
@@ -82,7 +82,7 @@
 					Privacy voorop
 				</h4>
 			</div>
-			<p class="font-[350] text-zinc-600 sm:text-balance dark:text-pink-50/70">
+			<p class="font-[350] text-zinc-600 text-balance dark:text-pink-50/70">
 				Jouw gegevens zijn van jou. Prikkert deelt niets met anderen en bewaart alles veilig in de
 				EU.
 			</p>
@@ -100,7 +100,7 @@
 					Open source
 				</h4>
 			</div>
-			<p class="font-[350] text-zinc-600 sm:text-balance dark:text-pink-50/70">
+			<p class="font-[350] text-zinc-600 text-balance dark:text-pink-50/70">
 				Iedereen kan de broncode lezen en verbeteren, want Prikkert heeft niets te verbergen.
 			</p>
 		</div>

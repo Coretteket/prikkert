@@ -3,20 +3,6 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<script>
-			const html = document.documentElement
-			if (html.getAttribute('data-theme') === 'system') {
-				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-				const setTheme = (e) => {
-					html.classList.add('no-transition')
-					html.setAttribute('data-theme', e.matches ? 'dark' : 'light')
-					html.offsetHeight
-					html.classList.remove('no-transition')
-				}
-				mediaQuery.addListener(setTheme)
-				setTheme(mediaQuery)
-			}
-		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
