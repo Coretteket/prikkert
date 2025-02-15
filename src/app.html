@@ -6,12 +6,9 @@
 		%sveltekit.head%
 		<script>
 			if (document.documentElement.getAttribute('data-theme') === 'system') {
+				const setTheme = (query) =>
+					(document.documentElement.dataset.theme = query.matches ? 'dark' : 'light')
 				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-				const setTheme = (query) => {
-					document.documentElement.classList.add('no-transition')
-					document.documentElement.dataset.theme = query.matches ? 'dark' : 'light'
-					document.documentElement.classList.remove('no-transition')
-				}
 				mediaQuery.addEventListener('change', setTheme)
 				setTheme(mediaQuery)
 			}
