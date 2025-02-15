@@ -7,16 +7,9 @@
 	import pattern from '@/lib/assets/pattern.svg'
 	import Button from '@/lib/components/button.svelte'
 	import { IconMoon, IconSun } from '@tabler/icons-svelte'
-	import { setTheme, toggleTheme } from '@/lib/theme'
-	import { browser } from '$app/environment'
+	import { toggleTheme } from '@/lib/theme'
 
 	let { data, children } = $props()
-
-	if (browser && document.documentElement.getAttribute('data-theme') === 'system') {
-		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-		mediaQuery.addEventListener('change', setTheme)
-		setTheme(mediaQuery)
-	}
 </script>
 
 <svelte:head>
