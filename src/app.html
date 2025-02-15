@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script type="module">
-			import { setTheme } from '/src/lib/theme.ts'
+			import { setTheme } from '/src/lib/theme.js'
 			if (document.documentElement.getAttribute('data-theme') === 'system') {
 				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 				mediaQuery.addEventListener('change', setTheme)
