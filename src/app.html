@@ -10,7 +10,6 @@
 				const setTheme = (e) => {
 					html.classList.add('no-transition')
 					html.setAttribute('data-theme', e.matches ? 'dark' : 'light')
-					html.style.colorScheme = e.matches ? 'dark' : 'light'
 					html.offsetHeight
 					html.classList.remove('no-transition')
 				}
