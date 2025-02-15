@@ -9,9 +9,8 @@
 
 @layer base {
 	html {
-		@apply font-sans text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50;
+		@apply bg-white font-sans text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50;
 
-		font-size: 18px;
 		scrollbar-gutter: stable both-edges;
 
 		color-scheme: light dark;
