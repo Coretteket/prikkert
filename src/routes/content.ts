@@ -30,15 +30,15 @@ export const promises = [
 export const steps = [
 	{
 		bold: 'Maak een afspraak aan',
-		normal: 'met een titel en een alle datumopties.',
+		normal: 'met een titel en alle datumopties, plus extra informatie als je dat wil.',
 	},
 	{
 		bold: 'Deel de link',
-		normal: 'via WhatsApp, e-mail of een ander kanaal.',
+		normal: 'via WhatsApp, e-mail of elk ander kanaal om mensen uit te nodigen.',
 	},
 	{
-		bold: 'Kies samen',
-		normal: 'het moment die voor de meeste mensen werkt.',
+		bold: 'Prik',
+		normal: 'het beste moment voor de afspraak, als iedereen heeft gereageerd.',
 	},
 ]
 

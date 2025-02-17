@@ -70,7 +70,7 @@
 	>
 		Plan jouw groepsafspraak in drie simpele stappen.
 	</p>
-	<div class="mx-auto max-w-100">
+	<div class="mx-auto max-w-130">
 		{#each steps as step, i}
 			<div class="mb-8 flex items-start gap-4">
 				<div
@@ -80,7 +80,7 @@
 						{i + 1}
 					</p>
 				</div>
-				<p class="text-lg text-zinc-700 dark:text-zinc-300">
+				<p class="sm:text-lg text-zinc-700 dark:text-zinc-300">
 					<b class="font-semibold text-zinc-800 dark:text-zinc-200">{step.bold}</b>
 					{step.normal}
 				</p>
