@@ -8,6 +8,7 @@
 	import Button from '@/lib/components/button.svelte'
 	import { IconMoon, IconSun } from '@tabler/icons-svelte'
 	import { toggleTheme } from '@/lib/theme'
+	import { Now } from '@/lib/temporal'
 
 	let { data, children } = $props()
 </script>
@@ -49,4 +50,8 @@
 	<main class="p-4 pt-8">
 		{@render children()}
 	</main>
+	<footer class="p-4 dark:text-zinc-600 text-zinc-400 text-sm pt-12 text-center text-balance">
+		Prikkert &copy; {Now.plainDateISO().year} &mdash; gelicenseerd krachtens de
+		<a href="https://github.com/coretteket/prikkert/?tab=EUPL-1.2-1-ov-file#readme" target="_blank" class="hover:underline">EUPL</a>
+	</footer>
 </div>
