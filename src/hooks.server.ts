@@ -1,27 +1,15 @@
 import type { Handle } from '@sveltejs/kit'
-import { env } from '$env/dynamic/private'
+import { parseSessionCookies } from './lib/server/session'
+import * as v from '@/lib/server/validation'
 
-const isTheme = (theme: string): theme is 'light' | 'dark' | 'system' =>
-	['light', 'dark', 'system'].includes(theme)
+const ThemeSchema = v.fallback(v.picklist(['light', 'dark', 'system']), 'system')
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const sessionData = new Map<string, { id: string; token: string }>()
+	event.locals.session = parseSessionCookies(event)
 
-	for (const cookie of event.cookies.getAll()) {
-		if (cookie.name.startsWith(env.COOKIE_PREFIX)) {
-			const key = cookie.name.slice(env.COOKIE_PREFIX.length)
-			const [id, token] = cookie.value.split('/') as [string, string]
-			sessionData.set(key, { id, token })
-		}
-	}
-
-	event.locals.session = sessionData
-
-	const theme = event.cookies.get('theme')
-	event.locals.theme = theme && isTheme(theme) ? theme : 'system'
+	event.locals.theme = v.parse(ThemeSchema, event.cookies.get('theme'))
 
 	return resolve(event, {
-		transformPageChunk: ({ html }) =>
-			html.replace('<html %sveltekit.theme%', `<html data-theme="${event.locals.theme}"`),
+		transformPageChunk: ({ html }) => html.replace('%sveltekit.theme%', event.locals.theme),
 	})
 }

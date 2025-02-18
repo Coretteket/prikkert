@@ -2,9 +2,8 @@ import { db, schema } from '@/lib/server/db'
 import { redirect, type Actions } from '@sveltejs/kit'
 import { Now, type PlainDate, type PlainTime } from '@/lib/temporal'
 import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
-import { env } from '$env/dynamic/private'
-import { dev } from '$app/environment'
 import * as v from '@/lib/server/validation'
+import { setSessionCookie } from '@/lib/server/session'
 
 const OptionTimeSchema = v.union([v.tuple([v.plainTime(), v.optional(v.plainTime())]), v.tuple([])])
 
@@ -75,12 +74,12 @@ export const actions = {
 				sessionId: session.id,
 			})
 
-			cookies.set(env.COOKIE_PREFIX + event.id, session.id + '/' + token, {
-				path: '/',
-				httpOnly: true,
-				sameSite: 'strict',
-				secure: !dev,
-				expires: new Date(expiresAt),
+			setSessionCookie({
+				cookies,
+				eventId: event.id,
+				sessionId: session.id,
+				token,
+				expires: expiresAt,
 			})
 
 			return event

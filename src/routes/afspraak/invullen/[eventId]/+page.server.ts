@@ -3,8 +3,7 @@ import { error, redirect } from '@sveltejs/kit'
 import * as v from '@/lib/server/validation'
 import { db, schema } from '@/lib/server/db/index'
 import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
-import { env } from '$env/dynamic/private'
-import { dev } from '$app/environment'
+import { setSessionCookie } from '@/lib/server/session'
 import { eq } from 'drizzle-orm'
 
 export async function load({ locals, params: { eventId } }) {
@@ -56,7 +55,7 @@ export const actions = {
 			await db
 				.insert(schema.sessions)
 				.values({ eventId, id: sessionId, token: encodedToken, name: parsed.name })
-				.onConflictDoUpdate({ target: schema.sessions.token, set: { name: parsed.name } })
+				.onConflictDoUpdate({ target: schema.sessions.id, set: { name: parsed.name } })
 
 			await db.insert(schema.responses).values(
 				parsed.options.map(({ optionId, availability }) => ({
@@ -67,13 +66,7 @@ export const actions = {
 			)
 		})
 
-		cookies.set(env.COOKIE_PREFIX + eventId, sessionId + '/' + token, {
-			path: '/',
-			httpOnly: true,
-			sameSite: 'strict',
-			secure: !dev,
-			expires: new Date(event.expiresAt),
-		})
+		setSessionCookie({ cookies, sessionId, eventId, token, expires: event.expiresAt })
 
 		redirect(303, `/afspraak/overzicht/${eventId}`)
 	},
