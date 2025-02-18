@@ -12,11 +12,11 @@
 		@apply bg-white font-sans text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50;
 
 		scrollbar-gutter: stable both-edges;
-    interpolate-size: allow-keywords; /* Experimental Chrome-only attribute */
+		interpolate-size: allow-keywords; /* Experimental Chrome-only attribute */
 
-		color-scheme: light dark;
-		&[date-theme='dark'] {
-			color-scheme: dark light;
+		color-scheme: only light;
+		&[data-theme='dark'] {
+			color-scheme: only dark;
 		}
 	}
 
