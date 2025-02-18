@@ -12,6 +12,7 @@
 		@apply bg-white font-sans text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50;
 
 		scrollbar-gutter: stable both-edges;
+    interpolate-size: allow-keywords; /* Experimental Chrome-only attribute */
 
 		color-scheme: light dark;
 		&[date-theme='dark'] {

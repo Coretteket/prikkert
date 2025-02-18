@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { IconArrowNarrowRight, IconCaretRight, IconChevronRight } from '@tabler/icons-svelte'
+	import { IconChevronRight } from '@tabler/icons-svelte'
 	import { faq, promises, steps } from './content'
+
+	let openAccordion = $state(0)
 </script>
 
 <header class="mt-10 mb-24 space-y-4">
@@ -43,7 +45,7 @@
 					<div
 						class="aspect-square w-fit rounded-lg bg-pink-500/20 p-2.5 text-pink-700 dark:text-pink-100"
 					>
-						<svelte:component this={promise.icon} />
+						<promise.icon />
 					</div>
 					<h4 class="font-display text-xl font-medium text-zinc-800 dark:text-zinc-200">
 						{promise.title}
@@ -80,7 +82,7 @@
 						{i + 1}
 					</p>
 				</div>
-				<p class="sm:text-lg text-zinc-700 dark:text-zinc-300">
+				<p class="text-zinc-700 sm:text-lg dark:text-zinc-300">
 					<b class="font-semibold text-zinc-800 dark:text-zinc-200">{step.bold}</b>
 					{step.normal}
 				</p>
@@ -103,13 +105,20 @@
 		Vind de antwoorden op veelgestelde vragen.
 	</p>
 	<div class="mx-auto max-w-130">
-		{#each faq as { question, answer }}
-			<details class="group mb-4 pb-4 not-last-of-type:border-b">
+		{#each faq as { question, answer }, i}
+			<details
+				class="group mb-4 pb-4 transition not-last-of-type:border-b"
+				open={openAccordion === i}
+			>
 				<summary
-					class="flex cursor-pointer gap-2 list-none justify-between font-medium text-zinc-800 dark:text-zinc-200"
+					class="flex cursor-pointer list-none justify-between gap-2 font-medium text-zinc-800 dark:text-zinc-200"
+					onclick={(e) => {
+						e.preventDefault()
+						openAccordion = openAccordion === i ? -1 : i
+					}}
 				>
 					<span class="not-group-open:truncate" title={question}>{question}</span>
-					<IconChevronRight class="size-5 transition group-open:rotate-90 my-0.5" />
+					<IconChevronRight class="my-0.5 size-5 transition group-open:rotate-90" />
 				</summary>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				<p class="pt-2 text-zinc-600 dark:text-zinc-300">{@html answer}</p>
@@ -123,3 +132,19 @@
 		Neem contact op
 	</a>
 </section>
+
+<style>
+	@supports selector(::details-content) {
+		::details-content {
+			height: 0;
+			transition:
+				height 0.3s ease,
+				content-visibility 0.3s ease allow-discrete;
+			overflow: clip;
+		}
+
+		details[open]::details-content {
+			height: auto;
+		}
+	}
+</style>
