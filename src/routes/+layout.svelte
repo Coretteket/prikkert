@@ -43,7 +43,7 @@
 			{#if data.hasSession}
 				<Button as="link" href="/afspraken">Jouw afspraken</Button>
 			{:else}
-				<Button as="link" href="/afspraak/maken">Afspraak maken</Button>
+				<Button as="link" href="/afspraak/aanmaken">Afspraak aanmaken</Button>
 			{/if}
 		</div>
 	</nav>

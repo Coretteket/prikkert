@@ -10,7 +10,7 @@
 	let datePickerHeight = $state(328)
 </script>
 
-<h1 class="font-display mb-8 text-xl font-[550]">Afspraak maken</h1>
+<h1 class="font-display mb-8 text-xl font-[550]">Afspraak aanmaken</h1>
 
 <form>
 	<div class="mb-8">
@@ -90,9 +90,9 @@
 	</div>
 
 	<a
-		href="/afspraak/maken"
+		href="/afspraak/aanmaken"
 		class="ml-auto block w-fit rounded-lg bg-pink-700 px-4 py-2 font-semibold text-white shadow transition hover:bg-pink-800 dark:bg-pink-800 dark:text-zinc-100 dark:hover:bg-pink-900"
 	>
-		Afspraak maken
+		Afspraak aanmaken
 	</a>
 </form>

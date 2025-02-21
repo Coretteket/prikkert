@@ -22,10 +22,10 @@
 		het beste moment voor elke groepsafspraak.
 	</h3>
 	<a
-		href="/afspraak/maken"
+		href="/afspraak/aanmaken"
 		class="mx-auto block w-fit rounded-lg bg-pink-700 px-4 py-2 text-lg font-semibold text-white shadow transition hover:bg-pink-800 dark:bg-pink-800 dark:text-zinc-100 dark:hover:bg-pink-900"
 	>
-		Afspraak maken
+		Afspraak aanmaken
 	</a>
 </header>
 
@@ -90,7 +90,7 @@
 		{/each}
 	</div>
 	<a
-		href="/afspraak/maken"
+		href="/afspraak/aanmaken"
 		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-500"
 	>
 		Begin met plannen
