@@ -59,7 +59,7 @@
 	</div>
 	<a
 		href="#faq"
-		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-400/90"
+		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-500"
 	>
 		Hoe werkt dat?
 	</a>
@@ -91,7 +91,7 @@
 	</div>
 	<a
 		href="/afspraak/maken"
-		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-400/90"
+		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-500"
 	>
 		Begin met plannen
 	</a>
@@ -127,7 +127,7 @@
 	</div>
 	<a
 		href="mailto:prikkert@qntn.io"
-		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-400/90"
+		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-500"
 	>
 		Neem contact op
 	</a>

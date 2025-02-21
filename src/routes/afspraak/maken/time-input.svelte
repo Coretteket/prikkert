@@ -6,7 +6,7 @@
 
 <input
 	type="time"
-	class="w-fit min-w-20 appearance-none rounded border px-1.5 py-0.5 text-center text-zinc-900 tabular-nums"
+	class="w-fit appearance-none rounded-md border px-2.5 min-w-20 py-1.5 text-center text-zinc-700 tabular-nums dark:bg-zinc-800/50 dark:text-zinc-300"
 	bind:value={
 		() => time?.toString().slice(0, 5),
 		(value) => (time = value && value !== '' ? PlainTime.from(value) : undefined)
@@ -17,5 +17,10 @@
 	input[type='time']::-webkit-date-and-time-value {
 		margin: 0;
 		width: 100%;
+	}
+
+	input[type='time']::-webkit-calendar-picker-indicator {
+		display: none;
+		-webkit-appearance: none;
 	}
 </style>

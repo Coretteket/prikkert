@@ -30,3 +30,7 @@
 		transition: none !important;
 	}
 }
+
+@utility gutter-stable {
+	scrollbar-gutter: stable both-edges;
+}

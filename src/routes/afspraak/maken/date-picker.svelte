@@ -36,12 +36,12 @@
 	$inspect(options)
 </script>
 
-<div class="grid divide-zinc-300 rounded border sm:grid-cols-2 sm:divide-x dark:divide-zinc-700">
+<!-- <div class="grid divide-zinc-300 rounded border sm:grid-cols-2 sm:divide-x dark:divide-zinc-700">
 	<div class="p-5">{@render month(view)}</div>
 	<div class="p-5 max-sm:hidden">{@render month(view.add({ months: 1 }))}</div>
 </div>
 
-{#snippet month(month: PlainDate)}
+{#snippet month(month: PlainDate)} -->
 	<div class="mb-3 flex justify-between px-2">
 		<button
 			type="button"
@@ -51,7 +51,7 @@
 		>
 			<IconChevronLeft class="size-4.5" />
 		</button>
-		<span>{month.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
+		<span>{view.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
 		<button type="button" onclick={() => (view = view.add({ months: 1 }))} class="cursor-pointer">
 			<IconChevronRight class="size-4.5" />
 		</button>
@@ -68,11 +68,11 @@
 			</tr>
 		</thead>
 		<tbody class="grid gap-0.5">
-			{#each eachMondayOfMonth(month) as monday (monday)}
+			{#each eachMondayOfMonth(view) as monday (monday)}
 				<tr class="grid grid-cols-7 gap-0.5">
 					{#each { length: 7 }, index (index)}
 						{@const day = monday.add({ days: index })}
-						{@const inMonth = day.month === month.month}
+						{@const inMonth = day.month === view.month}
 						{@const isPast = PlainDate.compare(day, now) < 0}
 						{@const isSelected = options.keys().some((key) => PlainDate.compare(key, day) === 0)}
 
@@ -111,4 +111,4 @@
 			{/each}
 		</tbody>
 	</table>
-{/snippet}
+<!-- {/snippet} -->
