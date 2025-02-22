@@ -82,7 +82,7 @@ export const responses = pgTable(
 		availability: availability().notNull(),
 		note: text(),
 	},
-	(t) => [{ pk: primaryKey({ columns: [t.optionId, t.sessionId] }) }],
+	(t) => [primaryKey({ columns: [t.optionId, t.sessionId] })],
 )
 
 /* RELATIONS */
