@@ -1,4 +1,4 @@
-import { IconAd, IconCode, IconMoneybag, IconShield } from '@tabler/icons-svelte'
+import { IconMoneybag, IconAd, IconShield, IconSparkles } from '@tabler/icons-svelte'
 
 export const promises = [
 	{
@@ -20,7 +20,7 @@ export const promises = [
 			'Zonder account, zonder zorgen. Prikkert verkoopt je gegevens niet en slaat alles veilig op in de EU.',
 	},
 	{
-		icon: IconCode,
+		icon: IconSparkles,
 		title: 'Open source',
 		description:
 			'Iedereen kan de broncode lezen en verbeteren, want Prikkert heeft niets te verbergen.',
@@ -30,7 +30,7 @@ export const promises = [
 export const steps = [
 	{
 		bold: 'Maak een afspraak aan',
-		normal: 'met een titel en alle datumopties, en extra informatie als je dat wil.',
+		normal: 'met alle datums en tijden waarvoor je mensen wil uitnodigen.',
 	},
 	{
 		bold: 'Deel de link',
@@ -44,9 +44,9 @@ export const steps = [
 
 export const faq = [
 	{
-		question: 'Hoe verschilt Prikkert van Datumprikker.nl?',
+		question: 'Wat maakt Prikkert anders dan Datumprikker.nl?',
 		answer:
-			"<a href='https://datumprikker.nl' rel='nofollow noopener noreferrer' target='_blank' class='underline'>Datumprikker.nl</a> is populair, maar staat bordevol reclames en deelt je gegevens standaard met honderden bedrijven. Bovendien heb je een account nodig en zijn sommige functies betaald. Prikkert is een gratis, reclamevrij en privacyvriendelijk alternatief.",
+			"<a href='https://datumprikker.nl' rel='nofollow noopener noreferrer' target='_blank' class='underline'>Datumprikker.nl</a> is populair, maar al die reclames maken het frustrerend om een afspraak te plannen. Bovendien sturen ze je gegevens standaard door naar honderden advertentiebedrijven. Prikkert is het gratis en reclamevrije alternatief. Je hoeft geen account aan te maken, en kan zo aan de slag.",
 	},
 	{
 		question: 'Hoe is Prikkert gratis en reclamevrij?',
@@ -61,11 +61,11 @@ export const faq = [
 	{
 		question: 'Hoe beschermt Prikkert je privacy?',
 		answer:
-			"Prikkert is de meest privacyvriendelijke datumprikker. Je hoeft geen account aan te maken, en kan Prikkert zelfs helemaal anoniem gebruiken. Als je meerdere afspraken aanmaakt, worden die ook op geen enkele manier aan elkaar verbonden. Daarnaast gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en word je nooit getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet verkocht aan derden.",
+			"Prikkert is de meest privacyvriendelijke datumprikker. Je hoeft geen account aan te maken, en kan Prikkert zelfs helemaal anoniem gebruiken. Als je meerdere afspraken aanmaakt, worden die ook op geen enkele manier aan elkaar verbonden. Daarnaast gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en word je nooit getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
 	},
 	{
-		question: 'Wat betekent het dat Prikkert open-source is?',
+		question: 'Wat betekent open source voor Prikkert?',
 		answer:
-			"Open-source betekent dat iedereen de broncode van Prikkert kan lezen en verbeteren. Prikkert is in licentie gegeven krachtens de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>EUPL</a>, wat betekent dat iedereen onder bepaalde voorwaarden een eigen versie mag publiceren. De volledige broncode van Prikkert is te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a>.",
+			"Open source betekent dat iedereen de broncode van Prikkert kan lezen en verbeteren. Prikkert is in licentie gegeven krachtens de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>EUPL</a>, wat betekent dat iedereen onder bepaalde voorwaarden een eigen versie mag publiceren. De volledige broncode van Prikkert is te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a>.",
 	},
 ]
