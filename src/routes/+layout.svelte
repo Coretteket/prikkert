@@ -23,12 +23,12 @@
 ></div>
 
 <div
-	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(48rem,_calc(100vw_-_3rem))] sm:rounded-lg sm:border sm:p-4 dark:bg-zinc-900 dark:sm:border-zinc-800"
+	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(48rem,_calc(100vw_-_3rem))] sm:rounded-lg sm:border sm:p-4 dark:bg-neutral-900 dark:sm:border-neutral-800"
 >
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
 			href="/"
-			class="font-display flex items-center gap-3 font-[450] text-zinc-800 text-xl dark:text-zinc-300"
+			class="font-display flex items-center gap-3 font-medium text-neutral-800 text-xl dark:text-neutral-300"
 		>
 			<img src={icon} width={36} height={36} alt="" class="max-xs:size-10" />
 			<span class="max-xs:hidden">Prikkert</span>

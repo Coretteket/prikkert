@@ -8,18 +8,18 @@
 
 <header class="mt-10 mb-24 space-y-4">
 	<h2
-		class="font-display mb-8 text-center text-4xl font-semibold text-zinc-900 sm:text-[2.75rem] sm:leading-tight dark:text-zinc-100"
+		class="font-display mb-8 text-center text-4xl font-semibold text-neutral-900 sm:text-[2.75rem] sm:leading-tight dark:text-neutral-100"
 	>
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
 	</h2>
 	<h3
-		class="mx-auto mb-8 max-w-80 text-center text-xl font-[350] text-balance text-zinc-700 sm:max-w-100 dark:text-zinc-300"
+		class="mx-auto mb-8 max-w-80 text-center text-xl font-[350] text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
 	>
 		Vind
-		<strong class="font-semibold text-pink-700 dark:text-zinc-200">gratis</strong>
+		<strong class="font-semibold text-pink-700 dark:text-neutral-200">gratis</strong>
 		én
-		<strong class="font-semibold text-pink-700 dark:text-zinc-200">reclamevrij</strong>
+		<strong class="font-semibold text-pink-700 dark:text-neutral-200">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h3>
 	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="md" class="mx-auto text-lg">
@@ -30,14 +30,14 @@
 <section class="mb-20">
 	<h3 class="font-display mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-zinc-600 dark:text-zinc-300"
+		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Datumprikken kan ook zonder verdienmodel. Daarom doet Prikkert vier beloftes.
 	</p>
 	<div class="mb-8 grid gap-4 sm:grid-cols-2">
 		{#each promises as promise}
 			<div
-				class="rounded-lg border from-zinc-900 to-pink-700/5 px-6 py-5 dark:border-zinc-800 dark:bg-gradient-to-tl"
+				class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:border-neutral-800 dark:bg-gradient-to-tl"
 			>
 				<div class="mb-4 flex items-center gap-4">
 					<div
@@ -45,11 +45,11 @@
 					>
 						<promise.icon />
 					</div>
-					<h4 class="font-display text-xl font-medium text-zinc-800 dark:text-zinc-200">
+					<h4 class="font-display text-xl font-medium text-neutral-800 dark:text-neutral-200">
 						{promise.title}
 					</h4>
 				</div>
-				<p class="font-[350] text-balance text-zinc-600 dark:text-pink-50/70">
+				<p class="font-[350] text-balance text-neutral-600 dark:text-pink-50/70">
 					{@html promise.description}
 				</p>
 			</div>
@@ -63,7 +63,7 @@
 <section class="mb-20">
 	<h3 class="font-display mb-4 text-center text-xl font-semibold">Hoe gebruik je Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-zinc-600 dark:text-zinc-300"
+		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Plan jouw groepsafspraak in drie simpele stappen.
 	</p>
@@ -77,8 +77,8 @@
 						{i + 1}
 					</p>
 				</div>
-				<p class="text-zinc-700 sm:text-lg dark:text-zinc-300">
-					<b class="font-semibold text-zinc-800 dark:text-zinc-200">{step.bold}</b>
+				<p class="text-neutral-700 sm:text-lg dark:text-neutral-300">
+					<b class="font-semibold text-neutral-800 dark:text-neutral-200">{step.bold}</b>
 					{step.normal}
 				</p>
 			</div>
@@ -92,7 +92,7 @@
 <section>
 	<h3 class="font-display mb-4 text-center text-xl font-semibold" id="faq">Hoe werkt Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-zinc-600 dark:text-zinc-300"
+		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Vind de antwoorden op veelgestelde vragen.
 	</p>
@@ -103,7 +103,7 @@
 				open={openAccordion === i}
 			>
 				<summary
-					class="flex cursor-pointer list-none justify-between gap-2 font-medium text-zinc-800 dark:text-zinc-200"
+					class="flex cursor-pointer list-none justify-between gap-2 font-medium text-neutral-800 dark:text-neutral-200"
 					onclick={(e) => {
 						e.preventDefault()
 						openAccordion = openAccordion === i ? -1 : i
@@ -113,7 +113,7 @@
 					<IconChevronRight class="my-0.5 size-5 transition group-open:rotate-90" />
 				</summary>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				<p class="pt-2 text-zinc-600 dark:text-zinc-300">{@html answer}</p>
+				<p class="pt-2 text-neutral-600 dark:text-neutral-300">{@html answer}</p>
 			</details>
 		{/each}
 	</div>
@@ -122,7 +122,7 @@
 	</Button>
 </section>
 
-<footer class="p-4 pt-12 text-center text-sm text-balance text-zinc-400 dark:text-zinc-500">
+<footer class="p-4 pt-12 text-center text-sm text-balance text-neutral-400 dark:text-neutral-500">
 	Prikkert is
 	<a href="https://github.com/coretteket/prikkert" target="_blank" class="underline">
 		open source

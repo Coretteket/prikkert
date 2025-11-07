@@ -38,7 +38,7 @@
 			id="title"
 			name="title"
 			class={[
-				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-zinc-800/50',
+				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
 				form?.error.nested?.title ? 'outline outline-pink-600 dark:outline-pink-500' : '',
 			]}
 		/>
@@ -50,13 +50,13 @@
 	<div class="mb-8">
 		<label for="description" class="mb-4 block font-medium">
 			Beschrijving
-			<span class="font-normal text-zinc-500 dark:text-zinc-400">(optioneel)</span>
+			<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 		</label>
 		<textarea
 			id="description"
 			name="description"
 			class={[
-				'mb-4 block w-full rounded-lg border px-4 py-2.5 dark:bg-zinc-800/50',
+				'mb-4 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50',
 				form?.error.nested?.description ? 'outline outline-pink-600 dark:outline-pink-500' : '',
 			]}
 			rows={3}
@@ -71,7 +71,7 @@
 			<p class="mb-4 block font-medium">
 				Datums
 				{#if options.size > 0}
-					<span class="font-normal text-zinc-500 dark:text-zinc-400">({options.size} geselecteerd)</span>
+					<span class="font-normal text-neutral-500 dark:text-neutral-400">({options.size} geselecteerd)</span>
 				{/if}
 			</p>
 			<div
@@ -91,7 +91,7 @@
 		<div>
 			<p class="mb-4 block font-medium">
 				Tijden
-				<span class="font-normal text-zinc-500 dark:text-zinc-400">(optioneel)</span>
+				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 			</p>
 			<div
 				style="--max-height: {datePickerHeight}px"
@@ -108,7 +108,7 @@
 						</p>
 					{/if}
 				{:else}
-					<p class="text-zinc-500 py-4 text-center text-balance dark:text-zinc-400 font-[350] p-2">
+					<p class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 font-[350] p-2">
 						Selecteer datums om tijden toe te voegen.
 					</p>
 				{/each}
@@ -121,7 +121,7 @@
 	<div class="mb-6">
 		<p class="mb-4 block font-medium">
 			Instellingen
-			<span class="font-normal text-zinc-500 dark:text-zinc-400">(optioneel)</span>
+			<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 		</p>
 		<div class="grid gap-4 rounded-lg border p-6">
 			<div class="flex items-start gap-3">
@@ -133,7 +133,7 @@
 				/>
 				<label
 					for="form-disallowAnonymous"
-					class="grid gap-1 font-[350] text-zinc-700 dark:text-zinc-300"
+					class="grid gap-1 font-[350] text-neutral-700 dark:text-neutral-300"
 				>
 					<p class="text-balance">Maak het verplicht voor deelnemers om hun naam in te vullen</p>
 				</label>
@@ -147,7 +147,7 @@
 				/>
 				<label
 					for="form-hideParticipants"
-					class="grid gap-1 font-[350] text-zinc-700 dark:text-zinc-300"
+					class="grid gap-1 font-[350] text-neutral-700 dark:text-neutral-300"
 				>
 					<p class="text-balance">Verberg deelnemers voor elkaar</p>
 				</label>

@@ -42,7 +42,7 @@
 		size="icon"
 		onclick={() => (view = view.subtract({ months: 1 }))}
 		disabled={isFirstMonth}
-		class="disabled:text-zinc-300 dark:disabled:text-zinc-700"
+		class="disabled:text-neutral-300 dark:disabled:text-neutral-700"
 	>
 		<IconChevronLeft class="size-5" />
 	</Button>
@@ -61,7 +61,7 @@
 	<thead class="grid gap-1">
 		<tr class="grid grid-cols-7 gap-1">
 			{#each weekdays as weekday}
-				<th class="text-center text-sm font-normal text-zinc-600 dark:text-zinc-400">
+				<th class="text-center text-sm font-normal text-neutral-600 dark:text-neutral-400">
 					{weekday}
 				</th>
 			{/each}
@@ -87,8 +87,8 @@
 								isSelected
 									? 'border border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800 dark:border-pink-700 dark:bg-pink-800'
 									: isPast
-										? 'text-zinc-300 dark:text-zinc-700'
-										: 'text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 hover:dark:bg-zinc-800',
+										? 'text-neutral-300 dark:text-neutral-700'
+										: 'text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 hover:dark:bg-neutral-800',
 								!isPast && 'cursor-pointer',
 								!inMonth && 'invisible',
 							]}
@@ -99,7 +99,7 @@
 							<div
 								class={[
 									'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl transition',
-									isSelected ? 'text-zinc-100' : 'text-zinc-700 dark:text-zinc-300',
+									isSelected ? 'text-neutral-100' : 'text-neutral-700 dark:text-neutral-300',
 								]}
 							>
 								&middot;

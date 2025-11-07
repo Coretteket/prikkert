@@ -26,7 +26,7 @@
 </script>
 
 <div class="flex flex-col items-center gap-2 pb-1">
-	<div class="grow py-1 font-[350] text-zinc-700 dark:text-zinc-300">
+	<div class="grow py-1 font-[350] text-neutral-700 dark:text-neutral-300">
 		{PlainDate.from(date).toLocaleString('nl', {
 			weekday: 'long',
 			day: 'numeric',
@@ -40,13 +40,13 @@
 			<div class="-mr-4 flex gap-2">
 				<div class="flex items-center gap-3">
 					<TimeInput bind:time={() => slot[0], (time) => setSlot(i, [time, slot[1]])} />
-					<span class="text-zinc-500">&mdash;</span>
+					<span class="text-neutral-500">&mdash;</span>
 					<TimeInput bind:time={() => slot[1], (time) => setSlot(i, [slot[0], time])} />
 				</div>
 
 				<Popover>
 					<div
-						class="grid min-w-40 rounded border bg-white p-2 text-sm text-zinc-700 shadow-sm dark:bg-zinc-900 dark:text-zinc-300"
+						class="grid min-w-40 rounded border bg-white p-2 text-sm text-neutral-700 shadow-sm dark:bg-neutral-900 dark:text-neutral-300"
 						transition:fade={{ duration: 150, easing: cubicInOut }}
 					>
 						<Button

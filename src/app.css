@@ -10,7 +10,7 @@
 
 @layer base {
 	html {
-		@apply bg-white font-sans text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50;
+		@apply bg-white font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50;
 
 		scrollbar-gutter: stable both-edges;
 		interpolate-size: allow-keywords; /* Experimental Chrome-only attribute */
@@ -22,7 +22,7 @@
 	}
 
 	* {
-		@apply border-zinc-300 dark:border-zinc-700;
+		@apply border-neutral-300 dark:border-neutral-700;
 	}
 }
 
