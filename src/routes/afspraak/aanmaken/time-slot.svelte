@@ -7,6 +7,7 @@
 	import TimeInput from './time-input.svelte'
 	import { emptySlot, type Options, type Slot } from './types'
 	import Popover from '@/lib/components/popover.svelte'
+	import Button from '@/lib/components/button.svelte'
 
 	type Props = { date: string; options: Options }
 
@@ -48,9 +49,11 @@
 						class="grid min-w-40 rounded border bg-white p-2 text-sm shadow-sm dark:bg-zinc-900"
 						transition:fade={{ duration: 150, easing: cubicInOut }}
 					>
-						<button
+						<Button
 							type="button"
-							class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
+							variant="ghost"
+							size="sm"
+							class="justify-start"
 							onclick={() => {
 								for (const key of options.keys()) options.set(key, slots)
 								closePopover()
@@ -58,10 +61,12 @@
 						>
 							<IconCopy size={16} />
 							Kopiëren naar alle datums
-						</button>
-						<button
+						</Button>
+						<Button
 							type="button"
-							class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
+							variant="ghost"
+							size="sm"
+							class="justify-start"
 							onclick={() => {
 								options.set(date, slots.concat([emptySlot]))
 								closePopover()
@@ -69,11 +74,13 @@
 						>
 							<IconPlus size={16} />
 							Nieuw tijdslot toevoegen
-						</button>
+						</Button>
 						{#if slots.length > 1}
-							<button
+							<Button
 								type="button"
-								class="flex cursor-pointer items-center gap-2 rounded p-2 pr-3 text-left transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
+								variant="ghost"
+								size="sm"
+								class="justify-start"
 								onclick={() => {
 									const remaining = slots.filter((_, j) => j !== i)
 									options.set(date, remaining)
@@ -82,7 +89,7 @@
 							>
 								<IconTrash size={16} />
 								Tijdslot verwijderen
-							</button>
+							</Button>
 						{/if}
 					</div>
 				</Popover>

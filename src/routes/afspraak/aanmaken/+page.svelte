@@ -7,6 +7,7 @@
 	import TimeSlot from './time-slot.svelte'
 	import { keys } from '@/lib/utils'
 	import { untrack } from 'svelte'
+	import Button from '@/lib/components/button.svelte'
 
 	let { form } = $props()
 
@@ -146,10 +147,7 @@
 		</div>
 	</div>
 
-	<button
-		type="submit"
-		class="ml-auto block w-fit rounded-lg bg-pink-700 px-4 py-2 font-semibold text-white shadow transition hover:bg-pink-800 dark:bg-pink-800 dark:text-zinc-100 dark:hover:bg-pink-900"
-	>
+	<Button type="submit" variant="primary" class="ml-auto">
 		Afspraak aanmaken
-	</button>
+	</Button>
 </form>

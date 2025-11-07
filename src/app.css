@@ -5,6 +5,7 @@
 @theme {
 	--font-sans: 'Lexend Variable', ui-sans-serif, system-ui, sans-serif;
 	--font-display: 'Parkinsans Variable', ui-sans-serif, system-ui, sans-serif;
+	--breakpoint-xs: 30rem; /* or whatever value you want */
 }
 
 @layer base {

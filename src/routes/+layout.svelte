@@ -8,7 +8,6 @@
 	import Button from '@/lib/components/button.svelte'
 	import { IconMoon, IconSun } from '@tabler/icons-svelte'
 	import { toggleTheme } from '@/lib/theme'
-	import { Now } from '@/lib/temporal'
 
 	let { data, children } = $props()
 </script>
@@ -29,17 +28,17 @@
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
 			href="/"
-			class="font-display flex items-center gap-3 text-xl font-[450] text-zinc-800 dark:text-zinc-300"
+			class="font-display flex items-center gap-3 text-xl font-[450] text-zinc-800 sm:text-2xl dark:text-zinc-300"
 		>
-			<img src={icon} width={32} height={32} alt="" />
-			Prikkert
+			<img src={icon} width={36} height={36} alt="" class="max-xs:size-10" />
+			<span class="max-xs:hidden">Prikkert</span>
 		</a>
 
-		<div class="flex gap-4">
-			<button onclick={() => toggleTheme()} class="opacity-75">
+		<div class="flex gap-3">
+			<Button size="icon" onclick={() => toggleTheme()}>
 				<IconSun class="not-dark:hidden" />
 				<IconMoon class="dark:hidden" />
-			</button>
+			</Button>
 			{#if data.hasSession}
 				<Button as="link" href="/afspraken">Jouw afspraken</Button>
 			{:else}

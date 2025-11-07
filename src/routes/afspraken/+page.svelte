@@ -10,7 +10,7 @@
 	<ul class="list-inside list-disc space-y-2">
 		{#each data.sessions ?? [] as session}
 			<li>
-				<a href="/afspraak/overzicht/{session.event.id}" class="text-lg font-bold">
+				<a href="/afspraak/invullen/{session.event.id}" class="text-lg font-bold">
 					{session.event.title}
 				</a>
 				<span>{session.id === session.event.organizer.sessionId ? 'Eigenaar' : 'Deelnemer'}</span>

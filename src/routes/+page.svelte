@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { IconChevronRight } from '@tabler/icons-svelte'
 	import { faq, promises, steps } from './content'
+	import Button from '@/lib/components/button.svelte'
 
 	let openAccordion = $state(0)
 </script>
@@ -21,12 +22,9 @@
 		<strong class="font-semibold text-pink-700 dark:text-zinc-200">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h3>
-	<a
-		href="/afspraak/aanmaken"
-		class="mx-auto block w-fit rounded-lg bg-pink-700 px-4 py-2 text-lg font-semibold text-white shadow transition hover:bg-pink-800 dark:bg-pink-800 dark:text-zinc-100 dark:hover:bg-pink-900"
-	>
+	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="md" class="mx-auto text-lg">
 		Afspraak aanmaken
-	</a>
+	</Button>
 </header>
 
 <section class="mb-20">
@@ -57,12 +55,9 @@
 			</div>
 		{/each}
 	</div>
-	<a
-		href="#faq"
-		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-500"
-	>
+	<Button as="link" href="#faq" variant="tertiary" class="mx-auto">
 		Hoe werkt dat?
-	</a>
+	</Button>
 </section>
 
 <section class="mb-20">
@@ -89,12 +84,9 @@
 			</div>
 		{/each}
 	</div>
-	<a
-		href="/afspraak/aanmaken"
-		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-500"
-	>
+	<Button as="link" href="/afspraak/aanmaken" variant="tertiary" class="mx-auto">
 		Begin met plannen
-	</a>
+	</Button>
 </section>
 
 <section>
@@ -125,12 +117,9 @@
 			</details>
 		{/each}
 	</div>
-	<a
-		href="mailto:prikkert@qntn.io"
-		class="mx-auto flex w-fit font-medium text-pink-600 hover:underline dark:text-pink-500"
-	>
+	<Button as="link" href="mailto:prikkert@qntn.io" variant="tertiary" class="mx-auto">
 		Neem contact op
-	</a>
+	</Button>
 </section>
 
 <footer class="p-4 pt-12 text-center text-sm text-balance text-zinc-400 dark:text-zinc-500">
