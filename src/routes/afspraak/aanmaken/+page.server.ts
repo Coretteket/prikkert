@@ -5,6 +5,7 @@ import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
 import * as v from '@/lib/server/validation'
 import { setSessionCookie } from '@/lib/server/session'
 import { CreateEventSchema } from './schema.server'
+import { deduplicate } from '@/lib/utils'
 
 export const actions = {
 	default: async ({ request, cookies }) => {
@@ -28,7 +29,7 @@ export const actions = {
 				})
 				.returning()
 
-			const options = db.insert(schema.options).values(
+			const uniqueOptions = deduplicate(
 				parsed.options.flatMap(([date, slots]) =>
 					slots.map(([startTime, endTime]) => ({
 						eventId: event.id,
@@ -36,7 +37,10 @@ export const actions = {
 						endsAt: endTime ? date.toPlainDateTime(endTime) : undefined,
 					})),
 				),
+				(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
 			)
+
+			const options = db.insert(schema.options).values(uniqueOptions)
 
 			const [session] = await db
 				.insert(schema.sessions)
