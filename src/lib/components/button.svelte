@@ -14,16 +14,16 @@
 	type Props = BaseProps & (T extends 'button' ? AsButtonProps : AsLinkProps)
 
 	const buttonVariants = cva({
-		base: 'w-fit flex items-center gap-1.5 transition cursor-pointer',
+		base: 'w-fit flex items-center gap-1.5 transition not-disabled:cursor-pointer',
 		variants: {
 			variant: {
 				primary:
-					'rounded-lg font-semibold bg-pink-700 text-white shadow hover:bg-pink-800 dark:bg-pink-800 dark:text-zinc-100 dark:hover:bg-pink-700',
+					'rounded-lg font-semibold bg-pink-700 text-white shadow not-disabled:hover:bg-pink-800 dark:bg-pink-800 dark:text-zinc-100 dark:not-disabled:hover:bg-pink-700 border dark:border-pink-700 border-pink-800',
 				secondary:
-					'rounded-lg border bg-white text-zinc-700 hover:bg-zinc-50 dark:bg-zinc-800/50 dark:text-zinc-300 dark:hover:bg-zinc-800',
+					'rounded-lg border bg-white text-zinc-700 not-disabled:hover:bg-zinc-50 dark:bg-zinc-800/50 dark:text-zinc-300 dark:not-disabled:hover:bg-zinc-800',
 				tertiary:
-					'font-medium text-pink-600 hover:text-pink-800 dark:hover:text-pink-400 dark:text-pink-500',
-				ghost: 'rounded hover:bg-zinc-100 dark:hover:bg-zinc-800',
+					'font-medium text-pink-600 not-disabled:hover:text-pink-800 dark:not-disabled:hover:text-pink-400 dark:text-pink-500',
+				ghost: 'rounded not-disabled:hover:bg-zinc-100 not-disabled:dark:hover:bg-zinc-800',
 			},
 			size: {
 				sm: 'px-3 py-1.5 text-sm',

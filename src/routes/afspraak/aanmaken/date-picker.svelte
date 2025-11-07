@@ -2,6 +2,7 @@
 	import { Now, PlainDate } from '@/lib/temporal'
 	import { emptySlot, type Options, type Slot } from './types'
 	import { IconChevronLeft, IconChevronRight } from '@tabler/icons-svelte'
+	import Button from '@/lib/components/button.svelte'
 
 	let { options }: { options: Options } = $props()
 
@@ -34,26 +35,33 @@
 	}
 </script>
 
-<div class="mb-3 flex justify-between px-2">
-	<button
+<div class="mb-3 flex items-center justify-between">
+	<Button
 		type="button"
+		variant="ghost"
+		size="icon"
 		onclick={() => (view = view.subtract({ months: 1 }))}
 		disabled={isFirstMonth}
-		class="not-disabled:cursor-pointer disabled:text-zinc-300 dark:disabled:text-zinc-700"
+		class="disabled:text-zinc-300 dark:disabled:text-zinc-700"
 	>
-		<IconChevronLeft class="size-4.5" />
-	</button>
+		<IconChevronLeft class="size-5" />
+	</Button>
 	<span>{view.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
-	<button type="button" onclick={() => (view = view.add({ months: 1 }))} class="cursor-pointer">
-		<IconChevronRight class="size-4.5" />
-	</button>
+	<Button
+		type="button"
+		variant="ghost"
+		size="icon"
+		onclick={() => (view = view.add({ months: 1 }))}
+	>
+		<IconChevronRight class="size-5" />
+	</Button>
 </div>
 
 <table class="grid w-full table-fixed gap-4">
 	<thead class="grid gap-1">
 		<tr class="grid grid-cols-7 gap-1">
 			{#each weekdays as weekday}
-				<th class="text-center text-sm font-normal text-zinc-500">
+				<th class="text-center text-sm font-normal text-zinc-600 dark:text-zinc-400">
 					{weekday}
 				</th>
 			{/each}
@@ -77,7 +85,7 @@
 							class={[
 								'flex aspect-square items-center justify-center rounded font-[350] tabular-nums transition',
 								isSelected
-									? 'border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800 dark:border-pink-800 dark:bg-pink-900'
+									? 'border border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800 dark:border-pink-700 dark:bg-pink-800'
 									: isPast
 										? 'text-zinc-300 dark:text-zinc-700'
 										: 'text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 hover:dark:bg-zinc-800',

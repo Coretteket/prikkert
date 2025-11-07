@@ -11,7 +11,7 @@
 
 	let { form } = $props()
 
-	let datePickerHeight = $state(328)
+	let datePickerHeight = $state(338)
 
 	let options = new SvelteMap() satisfies Options
 
@@ -68,7 +68,12 @@
 
 	<div class="mb-6 grid gap-6 sm:grid-cols-2">
 		<div>
-			<p class="mb-4 block font-medium">Datums</p>
+			<p class="mb-4 block font-medium">
+				Datums
+				{#if options.size > 0}
+					<span class="font-normal text-zinc-500 dark:text-zinc-400">({options.size} geselecteerd)</span>
+				{/if}
+			</p>
 			<div
 				class={[
 					'mb-4 rounded-lg border p-6',
@@ -114,14 +119,17 @@
 	</div>
 
 	<div class="mb-6">
-		<p class="mb-4 block font-medium">Instellingen</p>
+		<p class="mb-4 block font-medium">
+			Instellingen
+			<span class="font-normal text-zinc-500 dark:text-zinc-400">(optioneel)</span>
+		</p>
 		<div class="grid gap-4 rounded-lg border p-6">
 			<div class="flex items-start gap-3">
 				<input
 					type="checkbox"
 					name="settings.disallowAnonymous"
 					id="form-disallowAnonymous"
-					class="my-1.5 accent-pink-600 dark:accent-pink-700"
+					class="my-1.5 size-4 accent-pink-600 dark:accent-pink-700"
 				/>
 				<label
 					for="form-disallowAnonymous"
@@ -135,7 +143,7 @@
 					type="checkbox"
 					name="settings.hideParticipants"
 					id="form-hideParticipants"
-					class="my-1.5 accent-pink-600 dark:accent-pink-700"
+					class="my-1.5 size-4 accent-pink-600 dark:accent-pink-700"
 				/>
 				<label
 					for="form-hideParticipants"
@@ -147,7 +155,5 @@
 		</div>
 	</div>
 
-	<Button type="submit" variant="primary" class="ml-auto">
-		Afspraak aanmaken
-	</Button>
+	<Button type="submit" variant="primary" class="ml-auto">Afspraak aanmaken</Button>
 </form>

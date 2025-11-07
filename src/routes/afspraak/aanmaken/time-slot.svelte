@@ -46,7 +46,7 @@
 
 				<Popover>
 					<div
-						class="grid min-w-40 rounded border bg-white p-2 text-sm shadow-sm dark:bg-zinc-900"
+						class="grid min-w-40 rounded border bg-white p-2 text-sm text-zinc-700 shadow-sm dark:bg-zinc-900 dark:text-zinc-300"
 						transition:fade={{ duration: 150, easing: cubicInOut }}
 					>
 						<Button

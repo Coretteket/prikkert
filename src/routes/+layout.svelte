@@ -18,7 +18,7 @@
 </svelte:head>
 
 <div
-	class="fixed inset-0 -z-50 opacity-5 max-sm:hidden dark:invert"
+	class="fixed inset-0 -z-50 opacity-[4%] max-sm:hidden dark:opacity-[2%] dark:invert"
 	style={`background: url("${pattern}"); background-size: 100px;`}
 ></div>
 
@@ -28,7 +28,7 @@
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
 			href="/"
-			class="font-display flex items-center gap-3 text-xl font-[450] text-zinc-800 sm:text-2xl dark:text-zinc-300"
+			class="font-display flex items-center gap-3 font-[450] text-zinc-800 text-xl dark:text-zinc-300"
 		>
 			<img src={icon} width={36} height={36} alt="" class="max-xs:size-10" />
 			<span class="max-xs:hidden">Prikkert</span>
