@@ -20,13 +20,13 @@ function tablerIcons() {
 				(match, whitespace: string, imports: string) =>
 					imports
 						.split(',')
-						.map((v) => v.trim())
 						.map((name) => {
-							const newName = name
+							const trimmed = name.trim()
+							const newName = trimmed
 								.replace(/([A-Z]|[0-9]+)/g, '-$1')
 								.toLowerCase()
 								.slice(6)
-							return `${whitespace}import ${name} from '@tabler/icons-svelte/icons/${newName}'${match.endsWith(';') ? ';' : ''}`
+							return `${whitespace}import ${trimmed} from '@tabler/icons-svelte/icons/${newName}'${match.endsWith(';') ? ';' : ''}`
 						})
 						.join('\n'),
 			)

@@ -48,20 +48,20 @@ export function decode<const TSchema extends v.BaseSchema<unknown, unknown, v.Ba
 		schema = schema.wrapped
 	}
 	switch (schema.type) {
+		case 'strict_object':
 		case 'object': {
-			let result: Record<string, unknown> | undefined
-			const { entries } = schema as unknown as v.ObjectSchema<v.ObjectEntries, undefined>
+			const result: Record<string, unknown> | undefined = {}
+			const { entries } = schema as unknown as
+				| v.ObjectSchema<v.ObjectEntries, undefined>
+				| v.StrictObjectSchema<v.ObjectEntries, undefined>
 			for (const [entryKey, entrySchema] of Object.entries(entries)) {
 				const value = decode(entrySchema, formData, key ? `${key}.${entryKey}` : entryKey)
-				if (value !== undefined) {
-					if (!result) result = {}
-					result[entryKey] = value
-				}
+				result[entryKey] = value
 			}
 			return result
 		}
 		case 'array': {
-			let result: unknown[] | undefined
+			let result: unknown[] = []
 			const { item } = schema as unknown as v.ArraySchema<TSchema, undefined>
 			const entries = formData.getAll(key)
 			if (entries.length > 0) {
@@ -74,7 +74,6 @@ export function decode<const TSchema extends v.BaseSchema<unknown, unknown, v.Ba
 				for (let i = 0; ; i++) {
 					const value = decode(item, formData, `${key}.${i}`)
 					if (value === undefined) break
-					if (!result) result = []
 					result.push(value)
 				}
 			}

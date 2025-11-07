@@ -2,7 +2,7 @@ import { PlainDate, PlainDateTime } from './temporal'
 
 const formatOptions = {
 	date: {
-		weekday: 'short',
+		weekday: 'long',
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric',

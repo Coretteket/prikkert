@@ -52,7 +52,7 @@
 					</h4>
 				</div>
 				<p class="font-[350] text-balance text-zinc-600 dark:text-pink-50/70">
-					{promise.description}
+					{@html promise.description}
 				</p>
 			</div>
 		{/each}
@@ -133,7 +133,7 @@
 	</a>
 </section>
 
-<footer class="p-4 pt-12 text-center text-sm text-balance text-zinc-400 dark:text-zinc-600">
+<footer class="p-4 pt-12 text-center text-sm text-balance text-zinc-400 dark:text-zinc-500">
 	Prikkert is
 	<a href="https://github.com/coretteket/prikkert" target="_blank" class="underline">
 		open source

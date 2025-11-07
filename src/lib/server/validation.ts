@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 import { decode } from './form'
-import { fail } from '@sveltejs/kit'
+import { fail as kitFail } from '@sveltejs/kit'
 import { PlainDate, PlainTime } from '../temporal'
 
 export const temporal = <T>(
@@ -52,7 +52,7 @@ export class FormError<TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssu
 
 	/** Use `parsed.fail()` in a SvelteKit action to return form validation errors. */
 	fail() {
-		return fail(400, { error: v.flatten<TSchema>(this.issues) })
+		return kitFail(400, { error: v.flatten<TSchema>(this.issues) })
 	}
 }
 
@@ -61,6 +61,7 @@ export function parseForm<
 >(schema: TSchema, formData: FormData, config?: v.Config<v.InferIssue<TSchema>>) {
 	const decoded = decode(schema, formData, '')
 	const data = schema.type === 'object' ? decoded || {} : decoded
+	console.log(data)
 
 	const result = v.safeParse(schema, data, config)
 	if (!result.success) return new FormError<TSchema>(result.issues)

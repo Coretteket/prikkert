@@ -27,7 +27,7 @@
 	})
 </script>
 
-<h1 class="font-display mb-8 text-xl font-[550]">Afspraak aanmaken</h1>
+<h1 class="font-display mb-8 text-2xl font-[550]">Afspraak aanmaken</h1>
 
 <form method="POST" use:enhance>
 	<div class="mb-8">

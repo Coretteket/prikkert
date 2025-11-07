@@ -29,7 +29,7 @@
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
 			href="/"
-			class="font-display flex items-center gap-3 text-2xl text-zinc-800 dark:text-zinc-300"
+			class="font-display flex items-center gap-3 text-xl font-[450] text-zinc-800 dark:text-zinc-300"
 		>
 			<img src={icon} width={32} height={32} alt="" />
 			Prikkert

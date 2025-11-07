@@ -10,6 +10,7 @@ export const actions = {
 	default: async ({ request, cookies }) => {
 		const parsed = v.parseForm(CreateEventSchema, await request.formData())
 		if (parsed instanceof v.FormError) return parsed.fail()
+		console.log(parsed)
 
 		const token = generateNanoid(21)
 		const expiresAt = Now.instant()
@@ -19,7 +20,12 @@ export const actions = {
 		const event = await db.transaction(async (db) => {
 			const [event] = await db
 				.insert(schema.events)
-				.values({ ...parsed.settings, title: parsed.title, expiresAt })
+				.values({
+					...parsed.settings,
+					title: parsed.title,
+					description: parsed.description,
+					expiresAt,
+				})
 				.returning()
 
 			const options = db.insert(schema.options).values(

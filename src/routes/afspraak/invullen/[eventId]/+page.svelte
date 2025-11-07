@@ -14,9 +14,6 @@
 {#if data.event.description}
 	<p>Beschrijving: {data.event.description}</p>
 {/if}
-{#if data.event.location}
-	<p>Locatie: {data.event.location}</p>
-{/if}
 
 <a href="/afspraak/overzicht/{data.event.id}" class="my-4 block text-zinc-500">Of bekijken.</a>
 

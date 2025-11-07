@@ -17,13 +17,13 @@ export const promises = [
 		icon: IconShield,
 		title: 'Privacy voorop',
 		description:
-			'Zonder account, zonder zorgen. Prikkert verkoopt je gegevens niet en slaat alles veilig op in de EU.',
+			'Geen account, geen zorgen. Prikkert verkoopt je gegevens nooit en slaat alles veilig op in de EU.',
 	},
 	{
 		icon: IconSparkles,
 		title: 'Open source',
 		description:
-			'Iedereen kan de broncode lezen en verbeteren, want Prikkert heeft niets te verbergen.',
+			'Iedereen kan <a href="https://github.com/coretteket/prikkert" target="_blank" class="hover:underline">de broncode</a> lezen en verbeteren, want Prikkert heeft niets te verbergen.',
 	},
 ]
 
@@ -61,11 +61,11 @@ export const faq = [
 	{
 		question: 'Hoe beschermt Prikkert je privacy?',
 		answer:
-			"Prikkert is de meest privacyvriendelijke datumprikker. Je hoeft geen account aan te maken, en kan Prikkert zelfs helemaal anoniem gebruiken. Als je meerdere afspraken aanmaakt, worden die ook op geen enkele manier aan elkaar verbonden. Daarnaast gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en word je nooit getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
+			"Met Prikkert staat jouw privacy écht voorop. Je hoeft geen account aan te maken, en kan Prikkert zelfs helemaal anoniem gebruiken, als organisator en als deelnemer. Als je verschillende afspraken maakt, worden die niet aan elkaar gekoppeld. Zo worden zo min mogelijk van jouw persoonsgegevens verwerkt. Daarnaast gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en word je nooit getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
 	},
 	{
-		question: 'Wat betekent open source voor Prikkert?',
+		question: 'Wat betekent het dat Prikkert open source is?',
 		answer:
-			"Open source betekent dat iedereen de broncode van Prikkert kan lezen en verbeteren. Prikkert is in licentie gegeven krachtens de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>EUPL</a>, wat betekent dat iedereen onder bepaalde voorwaarden een eigen versie mag publiceren. De volledige broncode van Prikkert is te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a>.",
+			"Open source betekent dat iedereen kan zien hoe Prikkert is gemaakt en het kan verbeteren. Prikkert is in licentie gegeven krachtens de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>EUPL</a>, wat betekent dat iedereen onder bepaalde voorwaarden een eigen versie mag publiceren. De volledige broncode van Prikkert is te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a>.",
 	},
 ]

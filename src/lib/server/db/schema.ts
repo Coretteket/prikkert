@@ -65,7 +65,7 @@ export const organizers = pgTable(
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
 	},
-	(t) => [{ pk: primaryKey({ columns: [t.eventId, t.sessionId] }) }],
+	(t) => [primaryKey({ columns: [t.eventId, t.sessionId] })],
 )
 
 export const availability = pgEnum('availability', ['YES', 'NO', 'MAYBE'])
