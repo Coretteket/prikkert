@@ -4,6 +4,11 @@ import * as schema from './schema'
 import { env } from '$env/dynamic/private'
 
 const client = postgres(env.DATABASE_URL)
-export const db = drizzle({ client, schema, logger: env.NODE_ENV === 'development' })
+export const db = drizzle({
+	client,
+	schema,
+	logger: env.NODE_ENV === 'development',
+	casing: 'snake_case',
+})
 
 export { schema }

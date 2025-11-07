@@ -1,5 +1,5 @@
 // For a graphical overview, see:
-// https://dbdiagram.io/d/Prikkert-67a699e4263d6cf9a06ff8ed
+// https://dbdiagram.io/d/Prikkert-690e25276735e11170c6319a
 
 import {
 	pgTable,
@@ -25,22 +25,22 @@ export const events = pgTable('events', {
 		.primaryKey(),
 	title: text().notNull(),
 	description: text(),
-	disallowAnonymous: boolean('disallow_anonymous').notNull().default(false),
-	hideParticipants: boolean('hide_participants').notNull().default(false),
-	createdAt: instant('created_at').defaultNow().notNull(),
-	expiresAt: instant('expires_at').notNull(),
+	disallowAnonymous: boolean().notNull().default(false),
+	hideParticipants: boolean().notNull().default(false),
+	createdAt: instant().defaultNow().notNull(),
+	expiresAt: instant().notNull(),
 })
 
 export const options = pgTable('options', {
 	id: char({ length: 12 })
 		.default(sql`generate_nanoid(12)`)
 		.primaryKey(),
-	eventId: char('event_id', { length: 12 })
+	eventId: char({ length: 12 })
 		.references(() => events.id, CASCADE)
 		.notNull(),
-	startsAt: datetime('starts_at').notNull(),
-	endsAt: datetime('ends_at'),
-	isSelected: boolean('is_selected').notNull().default(false),
+	startsAt: datetime().notNull(),
+	endsAt: datetime(),
+	isSelected: boolean().notNull().default(false),
 })
 
 export const sessions = pgTable('sessions', {
@@ -52,16 +52,16 @@ export const sessions = pgTable('sessions', {
 		.notNull(),
 	token: char({ length: 44 }).notNull(),
 	name: text(),
-	createdAt: instant('created_at').defaultNow().notNull(),
+	createdAt: instant().defaultNow().notNull(),
 })
 
 export const organizers = pgTable(
 	'organizers',
 	{
-		eventId: char('event_id', { length: 12 })
+		eventId: char({ length: 12 })
 			.references(() => events.id, CASCADE)
 			.notNull(),
-		sessionId: char('session_id', { length: 12 })
+		sessionId: char({ length: 12 })
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
 	},
@@ -73,10 +73,10 @@ export const availability = pgEnum('availability', ['YES', 'NO', 'MAYBE'])
 export const responses = pgTable(
 	'responses',
 	{
-		optionId: char('option_id', { length: 12 })
+		optionId: char({ length: 12 })
 			.references(() => options.id, CASCADE)
 			.notNull(),
-		sessionId: char('session_id', { length: 12 })
+		sessionId: char({ length: 12 })
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
 		availability: availability().notNull(),
