@@ -21,7 +21,7 @@ export async function load({ locals, params: { eventId } }) {
 	const session = await db.query.sessions.findFirst({
 		where: eq(schema.sessions.id, sessionId),
 		columns: { id: true, name: true },
-		with: { responses: { columns: { optionId: true, availability: true } } },
+		with: { responses: true },
 	})
 
 	if (!session) return { event, session: undefined }
@@ -30,9 +30,7 @@ export async function load({ locals, params: { eventId } }) {
 		event,
 		session: {
 			...session,
-			responses: new Map(
-				session.responses.map((response) => [response.optionId, response.availability]),
-			),
+			responses: new Map(session.responses.map((response) => [response.optionId, response])),
 		},
 	}
 }
@@ -47,6 +45,14 @@ const createResponseSchema = (event: {
 		name: event.disallowAnonymous ? v.string('Vul je naam in.') : v.nullable(v.string()),
 		availability: v.object(
 			Object.fromEntries(event.options.map((o) => [o.id, AvailabilitySchema])),
+		),
+		note: v.object(
+			Object.fromEntries(
+				event.options.map((o) => [
+					o.id,
+					v.optional(v.pipe(v.string(), v.maxLength(500, 'Opmerking is te lang.'))),
+				]),
+			),
 		),
 	})
 
@@ -83,11 +89,15 @@ export const actions = {
 						optionId,
 						sessionId,
 						availability,
+						note: parsed.note[optionId] || null,
 					})),
 				)
 				.onConflictDoUpdate({
 					target: [schema.responses.optionId, schema.responses.sessionId],
-					set: { availability: sql.raw(`excluded.${schema.responses.availability.name}`) },
+					set: {
+						availability: sql.raw(`excluded.${schema.responses.availability.name}`),
+						note: sql.raw(`excluded.${schema.responses.note.name}`),
+					},
 				})
 		})
 

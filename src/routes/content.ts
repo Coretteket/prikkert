@@ -46,26 +46,26 @@ export const faq = [
 	{
 		question: 'Wat maakt Prikkert anders dan Datumprikker.nl?',
 		answer:
-			"<a href='https://datumprikker.nl' rel='nofollow noopener noreferrer' target='_blank' class='underline'>Datumprikker.nl</a> is populair, maar al die reclames maken het frustrerend om een afspraak te plannen. Bovendien sturen ze je gegevens standaard door naar honderden advertentiebedrijven. Prikkert is het gratis en reclamevrije alternatief. Je hoeft geen account aan te maken, en kan zo aan de slag.",
+			"<a href='https://datumprikker.nl' rel='nofollow noopener noreferrer' target='_blank' class='underline'>Datumprikker.nl</a> is populair, maar al die reclames maken het frustrerend om een afspraak te plannen. Bovendien sturen ze je gegevens standaard door naar honderden advertentiebedrijven. Prikkert is hét gratis en reclamevrije alternatief. Je hoeft geen account aan te maken, en kan zo aan de slag.",
 	},
 	{
 		question: 'Hoe is Prikkert gratis en reclamevrij?',
 		answer:
-			'Prikkert is niet van een bedrijf, maar een hobbyproject van een enthousiaste programmeur. Hij betaalt daarom graag €4,53 per maand om Prikkert in de lucht te houden, waardoor iedereen gratis, reclamevrij, en privacyvriendelijk datums kan prikken.',
+			'Prikkert is geen commercieel product, maar een hobbyproject van een enthousiaste programmeur. Hij betaalt graag een paar euro per maand om Prikkert in de lucht te houden, zodat iedereen gratis, reclamevrij, en privacyvriendelijk datums kan prikken.',
 	},
 	{
 		question: 'Wie heeft Prikkert gemaakt?',
 		answer:
-			"Prikkert is een hobbyproject van Quinten Coret. Als masterstudent en ontwikkelaar bouwde hij Prikkert in zijn weekenden en avonduren, gedreven door zijn passie voor programmeren en zijn hekel aan reclames. Lees meer over Quinten op <a href='https://qntn.io' target='_blank' class='underline'>zijn website</a>.",
+			"Prikkert is een hobbyproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Als masterstudent en ontwikkelaar bouwde hij Prikkert in zijn weekenden en avonduren, omdat hij vindt dat een simpele site om datums te prikken geen verdienmodel nodig heeft.",
 	},
 	{
 		question: 'Hoe beschermt Prikkert je privacy?',
 		answer:
-			"Met Prikkert staat jouw privacy écht voorop. Je hoeft geen account aan te maken, en kan Prikkert zelfs helemaal anoniem gebruiken, als organisator en als deelnemer. Als je verschillende afspraken maakt, worden die niet aan elkaar gekoppeld. Zo worden zo min mogelijk van jouw persoonsgegevens verwerkt. Daarnaast gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en word je nooit getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
+			"Jouw persoonsgegevens zijn en blijven van jou. Dat is geen loze belofte, zo werkt Prikkert: je hebt geen account nodig en kan het anoniem gebruiken. Ook gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en je wordt onder geen beding getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
 	},
 	{
 		question: 'Wat betekent het dat Prikkert open source is?',
 		answer:
-			"Open source betekent dat iedereen kan zien hoe Prikkert is gemaakt en het kan verbeteren. Prikkert is in licentie gegeven krachtens de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>EUPL</a>, wat betekent dat iedereen onder bepaalde voorwaarden een eigen versie mag publiceren. De volledige broncode van Prikkert is te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a>.",
+			"Open source betekent dat iedereen kan zien hoe Prikkert is gemaakt en eraan kan bijdragen. Prikkert is vrijgegeven onder de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>European Union Public License</a>, wat betekent dat iedereen onder bepaalde voorwaarden een eigen versie mag publiceren. De volledige broncode van Prikkert is te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a>.",
 	},
 ]

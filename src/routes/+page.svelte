@@ -30,18 +30,18 @@
 <section class="mb-20">
 	<h3 class="font-display mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
+		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-200"
 	>
 		Datumprikken kan ook zonder verdienmodel. Daarom doet Prikkert vier beloftes.
 	</p>
 	<div class="mb-8 grid gap-4 sm:grid-cols-2">
 		{#each promises as promise}
 			<div
-				class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:border-neutral-800 dark:bg-gradient-to-tl"
+				class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:bg-gradient-to-tl"
 			>
 				<div class="mb-4 flex items-center gap-4">
 					<div
-						class="aspect-square w-fit rounded-lg bg-pink-500/20 p-2.5 text-pink-700 dark:text-pink-100"
+						class="aspect-square w-fit rounded-lg bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100"
 					>
 						<promise.icon />
 					</div>
@@ -71,7 +71,7 @@
 		{#each steps as step, i}
 			<div class="mb-8 flex items-start gap-4">
 				<div
-					class="flex aspect-square h-9 w-9 items-center justify-center rounded-lg bg-pink-500/10"
+					class="flex aspect-square h-9 w-9 items-center justify-center rounded-lg bg-pink-500/25"
 				>
 					<p class="font-semibold text-pink-700 dark:text-pink-100">
 						{i + 1}
@@ -122,21 +122,22 @@
 	</Button>
 </section>
 
-<footer class="p-4 pt-12 text-center text-sm text-balance text-neutral-400 dark:text-neutral-500">
+<footer class="p-4 pt-12 text-center text-sm text-balance text-neutral-400">
 	Prikkert is
 	<a href="https://github.com/coretteket/prikkert" target="_blank" class="underline">
 		open source
 	</a>, vrijgegeven onder de
-	<a href="https://eupl.eu/1.2/nl/" target="_blank" class="underline">EUPL-licentie</a>.
+	<a href="https://eupl.eu/1.2/nl/" target="_blank" class="underline">EUPL</a>.
 </footer>
 
 <style>
-	@supports selector(::details-content) {
+	/* Firefox has buggy ::details-content support, so we exclude it */
+	@supports selector(::details-content) and (not (-moz-appearance: none)) {
 		::details-content {
 			height: 0;
 			transition:
-				height 0.3s ease,
-				content-visibility 0.3s ease allow-discrete;
+				height 150ms cubic-bezier(0.4, 0, 0.2, 1),
+				content-visibility 150ms cubic-bezier(0.4, 0, 0.2, 1) allow-discrete;
 			overflow: clip;
 		}
 

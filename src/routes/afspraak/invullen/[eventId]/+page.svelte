@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
-	import { formatDateTimeRange } from '@/lib/time-format'
-	import { IconCheck, IconQuestionMark, IconX, IconMessageCircle } from '@tabler/icons-svelte'
 	import Button from '@/lib/components/button.svelte'
+	import OptionInput from './option-input.svelte'
 
 	let { data, form } = $props()
 
@@ -55,76 +54,15 @@
 			]}
 		>
 			{#each data.event.options as option}
-				<div class="px-6 py-4 pr-4">
-					<fieldset class="flex items-center gap-2">
-						<p class="mr-2 grow">
-							{formatDateTimeRange(option)}
-							<!-- donderdag 30 september 2025, 20:08 - 22:08 -->
-						</p>
-						<div class="flex divide-x">
-							<label class="group cursor-pointer">
-								<input
-									type="radio"
-									name="availability.{option.id}"
-									value="YES"
-									class="absolute opacity-0"
-									defaultChecked={data.session?.responses.get(option.id) === 'YES'}
-								/>
-								<span
-									class="flex items-center gap-1.5 rounded-l-lg border border-r-0 px-3 py-2 text-sm transition-colors group-has-checked:bg-lime-300/75 group-has-checked:text-lime-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-lime-500/25 dark:group-has-checked:text-lime-100"
-								>
-									<IconCheck class="size-4.5" />
-									Ja
-								</span>
-							</label>
-
-							<label class="group cursor-pointer">
-								<input
-									type="radio"
-									name="availability.{option.id}"
-									value="MAYBE"
-									class="absolute opacity-0"
-									defaultChecked={data.session?.responses.get(option.id) === 'MAYBE'}
-								/>
-								<span
-									class="flex items-center gap-1.5 border border-x-0 px-3 py-2 text-sm transition-colors group-has-checked:bg-amber-300/50 group-has-checked:text-amber-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-amber-500/15 dark:group-has-checked:text-amber-100"
-								>
-									<IconQuestionMark class="size-4.5" />
-									Misschien
-								</span>
-							</label>
-
-							<label class="group cursor-pointer">
-								<input
-									type="radio"
-									name="availability.{option.id}"
-									value="NO"
-									class="absolute opacity-0"
-									defaultChecked={data.session?.responses.get(option.id) === 'NO'}
-								/>
-								<span
-									class="flex items-center gap-1.5 rounded-r-lg border border-l-0 px-3 py-2 text-sm transition-colors group-has-checked:bg-red-300/75 group-has-checked:text-red-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-red-500/25 dark:group-has-checked:text-red-100"
-								>
-									<IconX class="size-4.5" />
-									Nee
-								</span>
-							</label>
-						</div>
-						<!-- <button
-							class="rounded-lg border p-2 text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
-						>
-							<IconMessageCircle class="size-4.5" />
-						</button> -->
-					</fieldset>
-
-					<!-- <p class="text-right text-sm mt-2 text-neutral-400">Opmerking toevoegen</p> -->
-
-					{#if availabilityErrors.size <= availabilityErrorTreshold && availabilityErrors.has(`availability.${option.id}`)}
-						<p class="text-pink-600 dark:text-pink-500">
-							{availabilityErrors.get(`availability.${option.id}`)}
-						</p>
-					{/if}
-				</div>
+				<OptionInput {option} response={data.session?.responses.get(option.id)}>
+					{#snippet error()}
+						{#if availabilityErrors.size <= availabilityErrorTreshold && availabilityErrors.has(`availability.${option.id}`)}
+							<p class="text-pink-600 dark:text-pink-500">
+								{availabilityErrors.get(`availability.${option.id}`)}
+							</p>
+						{/if}
+					{/snippet}
+				</OptionInput>
 			{/each}
 		</div>
 		{#if availabilityErrors.size > availabilityErrorTreshold}
@@ -132,7 +70,5 @@
 		{/if}
 	</div>
 
-	<Button type="submit" variant="primary" class="ml-auto">
-		Beschikbaarheid opslaan
-	</Button>
+	<Button type="submit" variant="primary" class="ml-auto">Beschikbaarheid opslaan</Button>
 </form>

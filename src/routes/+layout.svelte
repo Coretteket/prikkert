@@ -18,12 +18,12 @@
 </svelte:head>
 
 <div
-	class="fixed inset-0 -z-50 opacity-[4%] max-sm:hidden dark:opacity-[2%] dark:invert"
+	class="fixed inset-0 -z-50 opacity-[4%] max-sm:hidden dark:invert"
 	style={`background: url("${pattern}"); background-size: 100px;`}
 ></div>
 
 <div
-	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(48rem,_calc(100vw_-_3rem))] sm:rounded-lg sm:border sm:p-4 dark:bg-neutral-900 dark:sm:border-neutral-800"
+	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(48rem,_calc(100vw_-_3rem))] sm:rounded-lg sm:border sm:p-4 dark:bg-neutral-850"
 >
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
