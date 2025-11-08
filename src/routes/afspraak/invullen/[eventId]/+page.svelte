@@ -7,6 +7,8 @@
 
 	const data = $derived(await getEvent(page.params.eventId))
 
+	$inspect(data)
+
 	const issues = $derived(submitResponse.fields.allIssues() ?? [])
 
 	const availabilityErrorThreshold = $derived(Math.ceil(data.event.options.length * 0.2))
@@ -46,7 +48,7 @@
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
 				nameIssues.length > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
 			]}
-			defaultValue={data.session?.name ?? ''}
+			value={data.session?.name ?? ''}
 		/>
 		{#each nameIssues as issue}
 			<p class="text-pink-600 dark:text-pink-500">{issue}</p>

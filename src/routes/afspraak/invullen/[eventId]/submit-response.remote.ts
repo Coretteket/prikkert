@@ -3,7 +3,7 @@ import * as v from '@/lib/server/validation'
 import { db, schema } from '@/lib/server/db/index'
 import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
 import { setSessionCookie } from '@/lib/server/session'
-import { eq, sql } from 'drizzle-orm'
+import { asc, eq, sql } from 'drizzle-orm'
 import { getEvent } from './get-event.remote'
 
 const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
@@ -40,7 +40,7 @@ export const submitResponse = form('unchecked', async (raw, invalid) => {
 	console.log(raw)
 
 	const event = await db.query.events.findFirst({
-		with: { options: true },
+		with: { options: { orderBy: [asc(schema.options.startsAt)] } },
 		where: eq(schema.events.id, eventId),
 	})
 
