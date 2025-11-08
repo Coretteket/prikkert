@@ -31,7 +31,6 @@
 					name={availabilityName}
 					value="YES"
 					class="absolute opacity-0"
-					defaultChecked={response?.availability === 'YES'}
 					checked={response?.availability === 'YES'}
 				/>
 				<span
@@ -48,7 +47,6 @@
 					name={availabilityName}
 					value="MAYBE"
 					class="absolute opacity-0"
-					defaultChecked={response?.availability === 'MAYBE'}
 					checked={response?.availability === 'MAYBE'}
 				/>
 				<span
@@ -65,7 +63,6 @@
 					name={availabilityName}
 					value="NO"
 					class="absolute opacity-0"
-					defaultChecked={response?.availability === 'NO'}
 					checked={response?.availability === 'NO'}
 				/>
 				<span
@@ -100,7 +97,6 @@
 				class="mt-3 block min-h-12 w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50"
 				placeholder="Voeg een opmerking toe."
 				rows={1}
-				defaultValue={response?.note ?? ''}
 				value={response?.note ?? ''}
 			></textarea>
 		</div>
