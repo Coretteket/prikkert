@@ -1,29 +1,4 @@
 services:
-  traefik:
-    image: traefik:v3.3
-    command:
-      - '--providers.docker'
-      - '--providers.docker.exposedbydefault=false'
-      - '--entryPoints.websecure.address=:443'
-      - '--certificatesresolvers.myresolver.acme.tlschallenge=true'
-      - '--certificatesresolvers.myresolver.acme.email=hey@qntn.io'
-      - '--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json'
-      - '--entrypoints.web.address=:80'
-      - '--entrypoints.web.http.redirections.entrypoint.to=websecure'
-      - '--entrypoints.web.http.redirections.entrypoint.scheme=https'
-      - '--accesslog=true'
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - letsencrypt:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - prikkert
-    depends_on:
-      - app
-    restart: always
-
   app:
     image: coretteket/prikkert:latest
     build:
@@ -37,19 +12,14 @@ services:
       - db
     networks:
       - prikkert
+      - traefik
     restart: always
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.web.rule=Host(`prikkert.nl`)'
-      - 'traefik.http.routers.web.entrypoints=websecure'
-      - 'traefik.http.routers.web.tls.certresolver=myresolver'
-      - 'traefik.http.routers.web.middlewares=mycompress,myratelimit'
-      - 'traefik.http.middlewares.mycompress.compress=true'
-      - 'traefik.http.middlewares.mycompress.compress.includedcontenttypes=application/json,text/html,text/plain,text/javascript,text/css'
-      - 'traefik.http.middlewares.mycompress.compress.defaultEncoding=gzip'
-      - 'traefik.http.middlewares.mycompress.compress.encodings=br,gzip,zstd'
-      - 'traefik.http.middlewares.myratelimit.ratelimit.average=10'
-      - 'traefik.http.middlewares.myratelimit.ratelimit.burst=50'
+      - 'traefik.http.routers.prikkert.rule=Host(`prikkert.nl`)'
+      - 'traefik.http.routers.prikkert.entrypoints=websecure'
+      - 'traefik.http.routers.prikkert.tls.certresolver=myresolver'
+      - "traefik.http.routers.prikkert.middlewares=myratelimit@file,mycompress@file,myhsts@file,mysecurityheaders@file"
 
   db:
     image: postgres:alpine
@@ -69,3 +39,5 @@ volumes:
 
 networks:
   prikkert:
+  traefik:
+    external: true

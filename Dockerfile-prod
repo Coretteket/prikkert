@@ -15,5 +15,5 @@ COPY package.json .
 COPY drizzle.config.ts .
 COPY ./src/lib/server/db ./src/lib/server/db
 ENV NODE_ENV=production
-CMD node build
+CMD ["node", "build"]
 

@@ -4,4 +4,4 @@ RUN npm install -g corepack@latest
 COPY package.json pnpm-lock.yaml ./
 RUN corepack pnpm i --frozen-lockfile
 COPY . .
-CMD corepack pnpm dev --host
+CMD ["corepack", "pnpm", "dev", "--host"]
