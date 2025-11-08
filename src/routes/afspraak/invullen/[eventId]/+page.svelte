@@ -7,8 +7,6 @@
 
 	const data = $derived(await getEvent(page.params.eventId))
 
-	$inspect(data)
-
 	const issues = $derived(submitResponse.fields.allIssues() ?? [])
 
 	const availabilityErrorThreshold = $derived(Math.ceil(data.event.options.length * 0.2))
