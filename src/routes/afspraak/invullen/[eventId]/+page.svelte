@@ -22,6 +22,10 @@
 				.map((issue) => [issue.path?.[0]?.toString() ?? '', issue.message]) ?? [],
 		),
 	)
+
+	$inspect('PARAMS ARE CHANGING', page.params.eventId)
+	$inspect('DATA IS CHANGING', data)
+	$inspect('ISSUES ARE CHANGING', issues)
 </script>
 
 <h1 class="font-display mb-8 text-2xl font-[550]">{data.event.title}</h1>
@@ -30,7 +34,7 @@
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
 </p>
 
-<form {...submitResponse}>
+<form {...submitResponse.enhance(({ submit }) => submit())}>
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Jouw naam
