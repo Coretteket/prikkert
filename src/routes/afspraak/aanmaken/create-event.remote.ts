@@ -6,6 +6,9 @@ import { setSessionCookie } from '@/lib/server/session'
 import { CreateEventSchema } from './schema.server'
 import { deduplicate } from '@/lib/utils'
 import { form, getRequestEvent } from '$app/server'
+import { hasSession } from '@/routes/has-session.remote'
+import { getEvents } from '@/routes/afspraken/get-events.remote'
+import { getEvent } from '../invullen/[eventId]/get-event.remote'
 
 export const createEvent = form(CreateEventSchema, async (parsed) => {
 	const token = generateNanoID(21)
@@ -13,7 +16,7 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 		.add({ hours: 90 * 24 })
 		.toString()
 
-	const event = await db.transaction(async (db) => {
+	const [event, options] = await db.transaction(async (db) => {
 		const [event] = await db
 			.insert(schema.events)
 			.values({
@@ -56,10 +59,13 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 			expires: expiresAt,
 		})
 
-		await Promise.allSettled([options, organizers])
+		const [awaitedOptions] = await Promise.all([options, organizers])
 
-		return event
+		return [event, awaitedOptions]
 	})
 
-	redirect(303, `/afspraak/overzicht/${event.id}`)
+	getEvent(event.id).set({ event: { ...event, options }, session: undefined })
+	hasSession().set(true)
+
+	redirect(303, `/afspraak/invullen/${event.id}`)
 })

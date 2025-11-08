@@ -1,17 +1,25 @@
 <script lang="ts">
-	import { enhance } from '$app/forms'
 	import Button from '@/lib/components/button.svelte'
 	import OptionInput from './option-input.svelte'
+	import { page } from '$app/state'
+	import { getEvent } from './get-event.remote'
+	import { submitResponse } from './submit-response.remote'
 
-	let { data, form } = $props()
+	const data = $derived(await getEvent(page.params.eventId))
 
-	const availabilityErrorTreshold = $derived(Math.ceil(data.event.options.length * 0.2))
+	const issues = $derived(submitResponse.fields.allIssues() ?? [])
 
-	const availabilityErrors = $derived(
+	const availabilityErrorThreshold = $derived(Math.ceil(data.event.options.length * 0.2))
+
+	const nameIssues = $derived(
+		issues.filter((issue) => issue.path?.[0] === 'name').map((issue) => issue.message) ?? [],
+	)
+
+	const availabilityIssues = $derived(
 		new Map(
-			form?.error.nested
-				? Object.entries(form.error.nested).filter(([key]) => key.startsWith('availability.'))
-				: [],
+			issues
+				?.filter((issue) => issue.path?.[0]?.toString().startsWith('availability'))
+				.map((issue) => [issue.path?.[0]?.toString() ?? '', issue.message]) ?? [],
 		),
 	)
 </script>
@@ -22,7 +30,7 @@
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
 </p>
 
-<form method="POST" use:enhance>
+<form {...submitResponse}>
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Jouw naam
@@ -36,13 +44,13 @@
 			name="name"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				form?.error.nested?.name ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+				nameIssues.length > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
 			]}
 			defaultValue={data.session?.name ?? ''}
 		/>
-		{#if form?.error.nested?.name}
-			<p class="text-pink-600 dark:text-pink-500">{form.error.nested.name}</p>
-		{/if}
+		{#each nameIssues as issue}
+			<p class="text-pink-600 dark:text-pink-500">{issue}</p>
+		{/each}
 	</div>
 
 	<div class="mb-6">
@@ -50,22 +58,22 @@
 		<div
 			class={[
 				'mb-4 block divide-y rounded-lg border',
-				availabilityErrors.size > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+				availabilityIssues.size > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
 			]}
 		>
 			{#each data.event.options as option}
 				<OptionInput {option} response={data.session?.responses.get(option.id)}>
 					{#snippet error()}
-						{#if availabilityErrors.size <= availabilityErrorTreshold && availabilityErrors.has(`availability.${option.id}`)}
+						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(`availability.${option.id}`)}
 							<p class="text-pink-600 dark:text-pink-500">
-								{availabilityErrors.get(`availability.${option.id}`)}
+								{availabilityIssues.get(`availability.${option.id}`)}
 							</p>
 						{/if}
 					{/snippet}
 				</OptionInput>
 			{/each}
 		</div>
-		{#if availabilityErrors.size > availabilityErrorTreshold}
+		{#if availabilityIssues.has('availability') || availabilityIssues.size > availabilityErrorThreshold}
 			<p class="text-pink-600 dark:text-pink-500">Vul je beschikbaarheid in voor alle opties.</p>
 		{/if}
 	</div>

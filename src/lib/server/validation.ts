@@ -1,7 +1,11 @@
 import * as v from 'valibot'
+import '@valibot/i18n/nl'
+
 import { decode } from './form'
 import { fail as kitFail } from '@sveltejs/kit'
 import { PlainDate, PlainTime } from '../temporal'
+
+v.setGlobalConfig({ lang: 'nl' })
 
 export const temporal = <T>(
 	temporal: { from: (input: string) => T },

@@ -1,4 +1,5 @@
 import { dev } from '$app/environment'
+import { getRequestEvent } from '$app/server'
 import { env } from '$env/dynamic/private'
 import * as v from '@/lib/server/validation'
 import type { Cookies } from '@sveltejs/kit'
@@ -44,7 +45,9 @@ export function setSessionCookie({
 	})
 }
 
-export function parseSessionCookies({ cookies }: { cookies: Cookies }) {
+export function parseSessionCookies() {
+	const { cookies } = getRequestEvent()
+
 	const sessionData = new Map<
 		v.InferOutput<typeof SessionKeySchema>,
 		v.InferOutput<typeof SessionValueSchema>
