@@ -93,19 +93,17 @@
 	</fieldset>
 
 	<div data-note={showNote ? 'show' : 'hide'}>
-		{#key showNote}
-			<div>
-				<textarea
-					id={noteName}
-					name={showNote ? noteName : undefined}
-					class="mt-3 block min-h-12 w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50"
-					placeholder="Voeg een opmerking toe."
-					rows={1}
-					defaultValue={response?.note ?? ''}
-					value={response?.note ?? ''}
-				></textarea>
-			</div>
-		{/key}
+		<div>
+			<textarea
+				id={noteName}
+				name={showNote ? noteName : undefined}
+				class="mt-3 block min-h-12 w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50"
+				placeholder="Voeg een opmerking toe."
+				rows={1}
+				defaultValue={response?.note ?? ''}
+				value={response?.note ?? ''}
+			></textarea>
+		</div>
 	</div>
 
 	{@render error()}
