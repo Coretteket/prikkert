@@ -1,7 +1,7 @@
 import { customAlphabet } from 'nanoid'
 
 /** Generates an alphanumeric NanoID. */
-export const generateNanoid = customAlphabet(
+export const generateNanoID = customAlphabet(
 	'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 )
 

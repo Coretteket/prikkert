@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit'
 import * as v from '@/lib/server/validation'
 import { db, schema } from '@/lib/server/db/index'
-import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
+import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
 import { setSessionCookie } from '@/lib/server/session'
 import { asc, eq, sql } from 'drizzle-orm'
 
@@ -72,8 +72,8 @@ export const actions = {
 		if (parsed instanceof v.FormError) return parsed.fail()
 
 		const session = locals.session.get(eventId)
-		const sessionId = session?.id ?? generateNanoid(12)
-		const token = session?.token ?? generateNanoid(21)
+		const sessionId = session?.id ?? generateNanoID(12)
+		const token = session?.token ?? generateNanoID(21)
 		const encodedToken = await encodeSHA256(token)
 
 		await db.transaction(async (db) => {

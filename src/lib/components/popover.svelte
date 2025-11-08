@@ -12,8 +12,8 @@
 		shift,
 	} from '@skeletonlabs/floating-ui-svelte'
 	import { store } from '@/state.svelte'
-	import { IconDotsVertical } from '@tabler/icons-svelte'
 	import type { Snippet } from 'svelte'
+	import Icon from './icon.svelte'
 
 	type Props = { children: Snippet }
 	let { children }: Props = $props()
@@ -42,12 +42,12 @@
 	class="cursor-pointer text-neutral-600 dark:text-neutral-400"
 	{...interactions.getReferenceProps()}
 >
-	<IconDotsVertical size={20} />
+	<Icon icon="tabler--dots-vertical" class="size-5" />
 </button>
 
 <div
 	bind:this={floating.elements.floating}
-	class={['absolute top-0 left-0 w-max p-2']}
+	class={['absolute top-0 left-0 z-100 w-max p-2']}
 	style={floating.floatingStyles}
 	{...interactions.getFloatingProps()}
 >

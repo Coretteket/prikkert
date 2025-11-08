@@ -1,7 +1,7 @@
 import { db, schema } from '@/lib/server/db'
 import { redirect, type Actions } from '@sveltejs/kit'
 import { Now } from '@/lib/temporal'
-import { encodeSHA256, generateNanoid } from '@/lib/server/crypto'
+import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
 import * as v from '@/lib/server/validation'
 import { setSessionCookie } from '@/lib/server/session'
 import { CreateEventSchema } from './schema.server'
@@ -13,7 +13,7 @@ export const actions = {
 		if (parsed instanceof v.FormError) return parsed.fail()
 		console.log(parsed)
 
-		const token = generateNanoid(21)
+		const token = generateNanoID(21)
 		const expiresAt = Now.instant()
 			.add({ hours: 90 * 24 })
 			.toString()

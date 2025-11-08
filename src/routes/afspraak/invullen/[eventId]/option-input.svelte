@@ -1,17 +1,9 @@
 <script lang="ts">
 	import { formatDateTimeRange } from '@/lib/time-format'
-	import {
-		IconCheck,
-		IconQuestionMark,
-		IconX,
-		IconMessageCircle,
-		IconMessageCircleX,
-		IconMessageCircleExclamation,
-	} from '@tabler/icons-svelte'
 	import type { Snippet } from 'svelte'
 	import type { InferSelectModel } from 'drizzle-orm'
 	import type { schema } from '@/lib/server/db'
-	import { cx } from 'cva'
+	import Icon from '@/lib/components/icon.svelte'
 
 	type Props = {
 		option: Pick<InferSelectModel<typeof schema.options>, 'id' | 'startsAt' | 'endsAt'>
@@ -41,7 +33,7 @@
 				<span
 					class="flex items-center gap-1.5 rounded-l-lg border border-r-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-lime-300/75 group-has-checked:text-lime-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-lime-500/25 dark:group-has-checked:text-lime-100"
 				>
-					<IconCheck class="size-4.5" />
+					<Icon icon="tabler--check" class="size-5" />
 					Ja
 				</span>
 			</label>
@@ -57,7 +49,7 @@
 				<span
 					class="flex items-center gap-1.5 border border-x-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-amber-300/50 group-has-checked:text-amber-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-amber-500/15 dark:group-has-checked:text-amber-100"
 				>
-					<IconQuestionMark class="size-4.5" />
+					<Icon icon="tabler--question-mark" class="size-5" />
 					Misschien
 				</span>
 			</label>
@@ -73,24 +65,22 @@
 				<span
 					class="flex items-center gap-1.5 rounded-r-lg border border-l-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-red-300/75 group-has-checked:text-red-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-red-500/25 dark:group-has-checked:text-red-100"
 				>
-					<IconX class="size-4.5" />
+					<Icon icon="tabler--x" class="size-5" />
 					Nee
 				</span>
 			</label>
 		</div>
 		<button
 			type="button"
-			onclick={() => {
-				showNote = !showNote
-			}}
-			class="cursor-pointer rounded-lg border p-2 text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
+			onclick={() => (showNote = !showNote)}
+			class="flex cursor-pointer rounded-lg border p-2 text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
 			title={showNote ? 'Opmerking verwijderen' : 'Opmerking toevoegen'}
 		>
 			{#if showNote}
-				<IconMessageCircleX class="size-4.5" />
+				<Icon icon="tabler--message-circle-x" class="size-5" />
 				<span class="sr-only">Opmerking verwijderen voor {formatDateTimeRange(option)}</span>
 			{:else}
-				<IconMessageCircle class="size-4.5" />
+				<Icon icon="tabler--message-circle" class="size-5" />
 				<span class="sr-only">Opmerking toevoegen voor {formatDateTimeRange(option)}</span>
 			{/if}
 		</button>
@@ -107,7 +97,7 @@
 					rows={1}>{response?.note ?? ''}</textarea
 				>
 			</div>
-      {/key}
+		{/key}
 	</div>
 
 	{@render error()}
@@ -117,7 +107,7 @@
 	[data-note] {
 		display: grid;
 		grid-template-rows: 0fr;
-		transition: grid-template-rows 150ms cubic-bezier(0.4, 0, 0.2, 1);
+		transition: grid-template-rows 150ms ease;
 		overflow: clip;
 	}
 

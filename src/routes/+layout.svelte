@@ -6,8 +6,8 @@
 	import icon from '@/lib/assets/icon.svg'
 	import pattern from '@/lib/assets/pattern.svg'
 	import Button from '@/lib/components/button.svelte'
-	import { IconMoon, IconSun } from '@tabler/icons-svelte'
 	import { toggleTheme } from '@/lib/theme'
+	import Icon from '@/lib/components/icon.svelte'
 
 	let { data, children } = $props()
 </script>
@@ -18,17 +18,17 @@
 </svelte:head>
 
 <div
-	class="fixed inset-0 -z-50 opacity-[4%] max-sm:hidden dark:invert"
+	class="fixed inset-0 -z-50 opacity-4 max-sm:hidden dark:invert"
 	style={`background: url("${pattern}"); background-size: 100px;`}
 ></div>
 
 <div
-	class="bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(48rem,_calc(100vw_-_3rem))] sm:rounded-lg sm:border sm:p-4 dark:bg-neutral-850"
+	class="dark:bg-neutral-850 bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(48rem,calc(100vw-3rem))] sm:rounded-lg sm:border sm:p-4"
 >
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
 			href="/"
-			class="font-display flex items-center gap-3 font-medium text-neutral-800 text-xl dark:text-neutral-300"
+			class="font-display flex items-center gap-3 text-xl font-medium text-neutral-800 dark:text-neutral-300"
 		>
 			<img src={icon} width={36} height={36} alt="" class="max-xs:size-10" />
 			<span class="max-xs:hidden">Prikkert</span>
@@ -36,8 +36,8 @@
 
 		<div class="flex gap-3">
 			<Button size="icon" onclick={() => toggleTheme()}>
-				<IconSun class="not-dark:hidden" />
-				<IconMoon class="dark:hidden" />
+				<Icon icon="tabler--sun" class="size-5 not-dark:hidden" />
+				<Icon icon="tabler--moon" class="size-5 dark:hidden" />
 			</Button>
 			{#if data.hasSession}
 				<Button as="link" href="/afspraken">Jouw afspraken</Button>

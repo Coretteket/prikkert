@@ -11,7 +11,8 @@ import {
 	type ReferenceConfig,
 } from 'drizzle-orm/pg-core'
 import { instant, datetime } from './types'
-import { relations, sql } from 'drizzle-orm'
+import { relations } from 'drizzle-orm'
+import { generateNanoID } from '../crypto'
 
 /* UTILITIES */
 
@@ -21,7 +22,7 @@ const CASCADE = { onUpdate: 'cascade', onDelete: 'cascade' } satisfies Reference
 
 export const events = pgTable('events', {
 	id: char({ length: 12 })
-		.default(sql`generate_nanoid(12)`)
+		.$default(() => generateNanoID(12))
 		.primaryKey(),
 	title: text().notNull(),
 	description: text(),
@@ -33,7 +34,7 @@ export const events = pgTable('events', {
 
 export const options = pgTable('options', {
 	id: char({ length: 12 })
-		.default(sql`generate_nanoid(12)`)
+		.$default(() => generateNanoID(12))
 		.primaryKey(),
 	eventId: char({ length: 12 })
 		.references(() => events.id, CASCADE)
@@ -45,7 +46,7 @@ export const options = pgTable('options', {
 
 export const sessions = pgTable('sessions', {
 	id: char({ length: 12 })
-		.default(sql`generate_nanoid(12)`)
+		.$default(() => generateNanoID(12))
 		.primaryKey(),
 	eventId: char({ length: 12 })
 		.references(() => events.id, CASCADE)

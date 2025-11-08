@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { IconChevronRight } from '@tabler/icons-svelte'
+	import Icon from '@/lib/components/icon.svelte'
 	import { faq, promises, steps } from './content'
 	import Button from '@/lib/components/button.svelte'
 
@@ -36,14 +36,10 @@
 	</p>
 	<div class="mb-8 grid gap-4 sm:grid-cols-2">
 		{#each promises as promise}
-			<div
-				class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:bg-gradient-to-tl"
-			>
+			<div class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:bg-linear-to-tl">
 				<div class="mb-4 flex items-center gap-4">
-					<div
-						class="aspect-square w-fit rounded-lg bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100"
-					>
-						<promise.icon />
+					<div class="flex w-fit rounded-lg bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100">
+						<Icon icon={promise.icon} class="size-6" />
 					</div>
 					<h4 class="font-display text-xl font-medium text-neutral-800 dark:text-neutral-200">
 						{promise.title}
@@ -55,9 +51,7 @@
 			</div>
 		{/each}
 	</div>
-	<Button as="link" href="#faq" variant="tertiary" class="mx-auto">
-		Hoe werkt dat?
-	</Button>
+	<Button as="link" href="#faq" variant="tertiary" class="mx-auto">Hoe werkt dat?</Button>
 </section>
 
 <section class="mb-20">
@@ -110,7 +104,10 @@
 					}}
 				>
 					<span class="not-group-open:truncate" title={question}>{question}</span>
-					<IconChevronRight class="my-0.5 size-5 transition group-open:rotate-90" />
+					<Icon
+						icon="tabler--chevron-right"
+						class="my-0.5 size-5 transition group-open:rotate-90"
+					/>
 				</summary>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				<p class="pt-2 text-neutral-600 dark:text-neutral-300">{@html answer}</p>
@@ -136,8 +133,8 @@
 		::details-content {
 			height: 0;
 			transition:
-				height 150ms cubic-bezier(0.4, 0, 0.2, 1),
-				content-visibility 150ms cubic-bezier(0.4, 0, 0.2, 1) allow-discrete;
+				height 150ms ease,
+				content-visibility 150ms ease allow-discrete;
 			overflow: clip;
 		}
 

@@ -1,31 +1,29 @@
-import { IconMoneybag, IconAd, IconShield, IconSparkles } from '@tabler/icons-svelte'
-
 export const promises = [
 	{
-		icon: IconMoneybag,
+		icon: 'tabler--pig-money',
 		title: 'Altijd gratis',
 		description:
 			'Geen verborgen kosten, geen verrassingen. Alle functies van Prikkert blijven altijd gratis.',
 	},
 	{
-		icon: IconAd,
+		icon: 'tabler--ad-off',
 		title: 'Nooit reclame',
 		description:
 			'Waarom zou je langs eindeloze advertenties moeten scrollen? Prikkert houdt het reclamevrij.',
 	},
 	{
-		icon: IconShield,
+		icon: 'tabler--shield-lock',
 		title: 'Privacy voorop',
 		description:
 			'Geen account, geen zorgen. Prikkert verkoopt je gegevens nooit en slaat alles veilig op in de EU.',
 	},
 	{
-		icon: IconSparkles,
+		icon: 'tabler--folder-open',
 		title: 'Open source',
 		description:
 			'Iedereen kan <a href="https://github.com/coretteket/prikkert" target="_blank" class="hover:underline">de broncode</a> lezen en verbeteren, want Prikkert heeft niets te verbergen.',
 	},
-]
+] as const
 
 export const steps = [
 	{

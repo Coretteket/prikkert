@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+@plugin '@iconify/tailwind4' {
+	prefixes: 'tabler';
+}
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -11,7 +14,7 @@
 
 @layer base {
 	html {
-		@apply bg-white font-sans text-neutral-900 dark:bg-neutral-850 dark:text-neutral-50;
+		@apply dark:bg-neutral-850 bg-white font-sans text-neutral-900 dark:text-neutral-50;
 
 		scrollbar-gutter: stable both-edges;
 		interpolate-size: allow-keywords; /* Experimental Chrome-only attribute */

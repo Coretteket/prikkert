@@ -1,17 +1,4 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile-dev
-    ports:
-      - 5173:5173
-    env_file:
-      - .env
-    volumes:
-      - /app/node_modules
-      - .:/app
-    networks:
-      - prikkert
   db:
     image: postgres:alpine
     env_file:
@@ -20,12 +7,6 @@ services:
       - 5432:5432
     volumes:
       - db-data:/var/lib/postgresql/data
-    networks:
-      - prikkert
 
 volumes:
   db-data:
-
-networks:
-  prikkert:
-    driver: bridge

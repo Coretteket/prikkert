@@ -2,12 +2,12 @@
 	import { PlainDate } from '@/lib/temporal'
 	import { fade } from 'svelte/transition'
 	import { cubicInOut } from 'svelte/easing'
-	import { IconCopy, IconPlus, IconTrash } from '@tabler/icons-svelte'
 	import { store } from '@/state.svelte'
 	import TimeInput from './time-input.svelte'
 	import { emptySlot, type Options, type Slot } from './types'
 	import Popover from '@/lib/components/popover.svelte'
 	import Button from '@/lib/components/button.svelte'
+	import Icon from '@/lib/components/icon.svelte'
 
 	type Props = { date: string; options: Options }
 
@@ -59,7 +59,7 @@
 								closePopover()
 							}}
 						>
-							<IconCopy size={16} />
+							<Icon icon="tabler--copy" class="size-4.5" />
 							Kopiëren naar alle datums
 						</Button>
 						<Button
@@ -72,7 +72,7 @@
 								closePopover()
 							}}
 						>
-							<IconPlus size={16} />
+							<Icon icon="tabler--plus" class="size-4.5" />
 							Nieuw tijdslot toevoegen
 						</Button>
 						{#if slots.length > 1}
@@ -87,7 +87,7 @@
 									closePopover()
 								}}
 							>
-								<IconTrash size={16} />
+								<Icon icon="tabler--trash" class="size-4.5" />
 								Tijdslot verwijderen
 							</Button>
 						{/if}

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Now, PlainDate } from '@/lib/temporal'
-	import { emptySlot, type Options, type Slot } from './types'
-	import { IconChevronLeft, IconChevronRight } from '@tabler/icons-svelte'
+	import { emptySlot, type Options } from './types'
 	import Button from '@/lib/components/button.svelte'
+	import Icon from '@/lib/components/icon.svelte'
 
 	let { options }: { options: Options } = $props()
 
@@ -42,9 +42,9 @@
 		size="icon"
 		onclick={() => (view = view.subtract({ months: 1 }))}
 		disabled={isFirstMonth}
-		class="disabled:text-neutral-300 dark:disabled:text-neutral-700"
+		class="disabled:opacity-40"
 	>
-		<IconChevronLeft class="size-5" />
+		<Icon icon="tabler--chevron-left" class="size-5" />
 	</Button>
 	<span>{view.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
 	<Button
@@ -53,7 +53,7 @@
 		size="icon"
 		onclick={() => (view = view.add({ months: 1 }))}
 	>
-		<IconChevronRight class="size-5" />
+		<Icon icon="tabler--chevron-right" class="size-5" />
 	</Button>
 </div>
 

@@ -27,8 +27,8 @@
 			},
 			size: {
 				sm: 'px-3 py-1.5 text-sm',
-				md: 'px-4 py-2',
-				icon: 'p-2 not-dark:text-neutral-600!',
+				md: 'px-3 py-1.5',
+				icon: 'aspect-square p-2 not-dark:text-neutral-600!',
 			},
 		},
 		defaultVariants: {
