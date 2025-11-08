@@ -61,7 +61,7 @@
 				availabilityIssues.size > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
 			]}
 		>
-			{#each data.event.options as option}
+			{#each data.event.options as option (option.id)}
 				{@const availabilityName = `availability.option_${option.id}`}
 				<OptionInput {option} response={data.session?.responses.get(option.id)}>
 					{#snippet error()}
