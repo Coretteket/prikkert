@@ -18,8 +18,16 @@ export const CreateEventSchema = v.object({
 		v.minLength(3, 'Vul een titel in van minstens drie tekens.'),
 		v.maxLength(200, 'Vul een titel in van maximaal 200 tekens.'),
 	),
-	description: v.nullable(
-		v.pipe(v.string(), v.maxLength(2000, 'Vul een beschrijving in van maximaal 2000 tekens.')),
+	description: v.pipe(
+		v.string(),
+		v.transform((val) => (val === '' ? null : val)),
+		v.nullable(
+			v.pipe(
+				v.string(),
+				v.nonEmpty(),
+				v.maxLength(2000, 'Vul een beschrijving in van maximaal 2000 tekens.'),
+			),
+		),
 	),
 	options: v.json(
 		v.pipe(

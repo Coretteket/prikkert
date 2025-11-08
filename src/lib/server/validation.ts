@@ -22,19 +22,9 @@ export const temporal = <T>(
 export const plainDate = () => temporal(PlainDate, 'Vul een geldige datum in.')
 export const plainTime = () => temporal(PlainTime, 'Vul een geldig tijdstip in.')
 
-export const transformJSON = () =>
-	v.rawTransform<string, object>((context) => {
-		try {
-			return JSON.parse(context.dataset.value)
-		} catch {
-			context.addIssue({ message: 'Ongeldige invoer.' })
-			return context.NEVER
-		}
-	})
-
 export const json = <TSchema extends v.BaseSchema<object, unknown, v.BaseIssue<unknown>>>(
 	schema: TSchema,
-) => v.pipe(v.string(), transformJSON(), schema)
+) => v.pipe(v.string(), v.parseJson(), schema)
 
 export const checkbox = (fallback = false) =>
 	v.fallback(

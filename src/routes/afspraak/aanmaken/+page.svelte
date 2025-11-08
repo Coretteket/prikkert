@@ -1,28 +1,26 @@
 <script lang="ts">
-	import { enhance } from '$app/forms'
 	import { SvelteMap } from 'svelte/reactivity'
 	import DatePicker from './date-picker.svelte'
 	import type { Options } from './types'
 	import { PlainDate } from '@/lib/temporal'
 	import TimeSlot from './time-slot.svelte'
-	import { keys } from '@/lib/utils'
 	import { untrack } from 'svelte'
 	import Button from '@/lib/components/button.svelte'
-
-	let { form } = $props()
+	import { createEvent } from './create-event.remote'
 
 	let datePickerHeight = $state(338)
 
 	let options = new SvelteMap() satisfies Options
 
-	let nestedOptionsError = $derived.by(() => {
-		const nestedKeys = keys(form?.error.nested ?? {})
+	let nestedOptionsIssues = $derived.by(() => {
+		const allIssues = createEvent.fields
+			.allIssues()
+			?.filter((issue) => issue.path?.[0] === 'options')
+
 		return new Map(
 			untrack(() => options.keys()).flatMap((date, i) => {
-				const issues = nestedKeys.flatMap((k) =>
-					k.startsWith('options.' + i) ? form?.error.nested?.[k] : [],
-				)
-				return issues.length > 0 ? [[date, issues] as const] : []
+				const issues = allIssues?.find((issue) => issue.path?.[1] === i)
+				return issues ? [[date, issues] as const] : []
 			}),
 		)
 	})
@@ -30,21 +28,21 @@
 
 <h1 class="font-display mb-8 text-2xl font-[550]">Afspraak aanmaken</h1>
 
-<form method="POST" use:enhance>
+<form {...createEvent}>
 	<div class="mb-8">
 		<label for="title" class="mb-4 block font-medium">Titel</label>
 		<input
-			type="text"
+			{...createEvent.fields.title.as('text')}
 			id="title"
-			name="title"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				form?.error.nested?.title ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+				(createEvent.fields.title.issues()?.length ?? 0) > 0 &&
+					'outline outline-pink-600 dark:outline-pink-500',
 			]}
 		/>
-		{#if form?.error.nested?.title}
-			<p class="text-pink-600 dark:text-pink-500">{form.error.nested.title}</p>
-		{/if}
+		{#each createEvent.fields.title.issues() ?? [] as issue}
+			<p class="text-pink-600 dark:text-pink-500">{issue.message}</p>
+		{/each}
 	</div>
 
 	<div class="mb-8">
@@ -53,17 +51,18 @@
 			<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 		</label>
 		<textarea
+			{...createEvent.fields.description.as('text')}
 			id="description"
-			name="description"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50',
-				form?.error.nested?.description ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+				(createEvent.fields.description.issues()?.length ?? 0) > 0 &&
+					'outline outline-pink-600 dark:outline-pink-500',
 			]}
 			rows={3}
 		></textarea>
-		{#if form?.error.nested?.description}
-			<p class="text-pink-600 dark:text-pink-500">{form.error.nested.description}</p>
-		{/if}
+		{#each createEvent.fields.description.issues() ?? [] as issue}
+			<p class="text-pink-600 dark:text-pink-500">{issue.message}</p>
+		{/each}
 	</div>
 
 	<div class="mb-6 grid gap-6 sm:grid-cols-2">
@@ -71,22 +70,25 @@
 			<p class="mb-4 block font-medium">
 				Datums
 				{#if options.size > 0}
-					<span class="font-normal text-neutral-500 dark:text-neutral-400">({options.size} geselecteerd)</span>
+					<span class="font-normal text-neutral-500 dark:text-neutral-400"
+						>({options.size} geselecteerd)</span
+					>
 				{/if}
 			</p>
 			<div
 				class={[
 					'mb-4 rounded-lg border p-6',
-					form?.error.nested?.options ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+					(createEvent.fields.options.issues()?.length ?? 0) > 0 &&
+						'outline outline-pink-600 dark:outline-pink-500',
 				]}
 				bind:clientHeight={datePickerHeight}
 			>
 				<DatePicker {options} />
 			</div>
 
-			{#if form?.error.nested?.options}
-				<p class="text-pink-600 dark:text-pink-500">{form?.error.nested?.options}</p>
-			{/if}
+			{#each createEvent.fields.options.issues() as issue}
+				<p class="text-pink-600 dark:text-pink-500">{issue.message}</p>
+			{/each}
 		</div>
 		<div>
 			<p class="mb-4 block font-medium">
@@ -96,26 +98,28 @@
 			<div
 				style="--max-height: {datePickerHeight}px"
 				class={[
-					'gutter-stable relative mb-4 max-h-90 space-y-3 overflow-y-auto rounded-lg border p-5 sm:h-full sm:max-h-[var(--max-height)]',
-					nestedOptionsError?.size > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+					'gutter-stable relative mb-4 max-h-90 space-y-3 overflow-y-auto rounded-lg border p-5 sm:h-full sm:max-h-(--max-height)',
+					nestedOptionsIssues.size > 0 && 'outline outline-pink-600 dark:outline-pink-500',
 				]}
 			>
 				{#each Array.from(options.keys()).toSorted(PlainDate.compare) as date}
 					<TimeSlot {date} {options} />
-					{#if nestedOptionsError?.has(date)}
+					{#if nestedOptionsIssues.has(date)}
 						<p class="text-center text-pink-600 dark:text-pink-500">
-							{nestedOptionsError.get(date)}
+							{nestedOptionsIssues.get(date)!.message}
 						</p>
 					{/if}
 				{:else}
-					<p class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 font-[350] p-2">
+					<p
+						class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 font-[350] p-2"
+					>
 						Selecteer datums om tijden toe te voegen.
 					</p>
 				{/each}
 			</div>
 		</div>
 
-		<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
+		<input {...createEvent.fields.options.as('hidden', JSON.stringify(Array.from(options)))} />
 	</div>
 
 	<div class="mb-6">
