@@ -4,10 +4,11 @@ import { db, schema } from '@/lib/server/db/index'
 import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
 import { setSessionCookie } from '@/lib/server/session'
 import { eq, sql } from 'drizzle-orm'
-import { type Invalid, type RemoteFormInput } from '@sveltejs/kit'
 import { getEvent } from './get-event.remote'
 
 const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
+
+type OptionName = `option_${string}`
 
 const createResponseSchema = (event: {
 	options: Array<{ id: string }>
@@ -17,7 +18,7 @@ const createResponseSchema = (event: {
 		name: event.disallowAnonymous ? v.string('Vul je naam in.') : v.optional(v.string()),
 		availability: v.strictObject(
 			v.entriesFromList(
-				event.options.map((o) => o.id),
+				event.options.map((o) => ('option_' + o.id) as OptionName),
 				AvailabilitySchema,
 			),
 			'Vul je beschikbaarheid in.',
@@ -25,7 +26,7 @@ const createResponseSchema = (event: {
 		note: v.optional(
 			v.strictObject(
 				v.entriesFromList(
-					event.options.map((o) => o.id),
+					event.options.map((o) => ('option_' + o.id) as OptionName),
 					v.optional(v.pipe(v.string(), v.maxLength(500, 'Opmerking is te lang.'))),
 				),
 			),
@@ -50,7 +51,7 @@ export const submitResponse = form('unchecked', async (raw, invalid) => {
 	const result = v.safeParse(ResponseSchema, raw)
 
 	if (!result.success) {
-		handleValidationErrors(result.issues, invalid)
+		invalid(...handleValidationErrors(result.issues))
 		return
 	}
 
@@ -76,11 +77,11 @@ export const submitResponse = form('unchecked', async (raw, invalid) => {
 		const responses = await db
 			.insert(schema.responses)
 			.values(
-				Object.entries(data.availability).map(([optionId, availabilityValue]) => ({
-					optionId,
+				Object.entries(data.availability).map(([optionName, availabilityValue]) => ({
+					optionId: optionName.replace('option_', ''),
 					sessionId,
 					availability: availabilityValue,
-					note: data.note?.[optionId] ?? null,
+					note: data.note?.[optionName as OptionName] ?? null,
 				})),
 			)
 			.onConflictDoUpdate({
@@ -103,24 +104,17 @@ export const submitResponse = form('unchecked', async (raw, invalid) => {
 	})
 })
 
-function handleValidationErrors(
-	issues: [v.BaseIssue<unknown>, ...v.BaseIssue<unknown>[]],
-	invalid: Invalid<RemoteFormInput>,
-) {
+function handleValidationErrors(issues: [v.BaseIssue<unknown>, ...v.BaseIssue<unknown>[]]) {
 	const flatErrors = v.flatten(issues)
-	const validationIssues: Array<ReturnType<(typeof invalid)[keyof typeof invalid]>> = []
+	type Issue = { message: string; path?: ReadonlyArray<PropertyKey> | undefined }
+	const validationIssues: Array<Issue> = []
 
-	if (flatErrors.root) {
-		validationIssues.push(...flatErrors.root)
-	}
+	if (flatErrors.root) validationIssues.push(...flatErrors.root.map((message) => ({ message })))
 
-	if (flatErrors.nested) {
+	if (flatErrors.nested)
 		for (const [key, messages] of Object.entries(flatErrors.nested)) {
-			if (messages?.[0]) {
-				validationIssues.push(invalid[key as keyof typeof invalid](messages[0]))
-			}
+			if (messages?.[0]) validationIssues.push({ message: messages[0], path: [key] })
 		}
-	}
 
-	invalid(...validationIssues)
+	return validationIssues
 }

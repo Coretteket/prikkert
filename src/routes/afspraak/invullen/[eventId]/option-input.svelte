@@ -14,6 +14,9 @@
 	let { option, response, error }: Props = $props()
 
 	let showNote = $state(response?.note && response.note.length > 0)
+
+	const availabilityName = $derived(`availability.option_${option.id}`)
+	const noteName = $derived(`note.option_${option.id}`)
 </script>
 
 <div class="px-6 py-4 pr-4">
@@ -25,7 +28,7 @@
 			<label class="group cursor-pointer">
 				<input
 					type="radio"
-					name="availability.{option.id}"
+					name={availabilityName}
 					value="YES"
 					class="absolute opacity-0"
 					defaultChecked={response?.availability === 'YES'}
@@ -41,7 +44,7 @@
 			<label class="group cursor-pointer">
 				<input
 					type="radio"
-					name="availability.{option.id}"
+					name={availabilityName}
 					value="MAYBE"
 					class="absolute opacity-0"
 					defaultChecked={response?.availability === 'MAYBE'}
@@ -57,7 +60,7 @@
 			<label class="group cursor-pointer">
 				<input
 					type="radio"
-					name="availability.{option.id}"
+					name={availabilityName}
 					value="NO"
 					class="absolute opacity-0"
 					defaultChecked={response?.availability === 'NO'}
@@ -90,8 +93,8 @@
 		{#key showNote}
 			<div>
 				<textarea
-					id="note-{option.id}"
-					name={showNote ? `note.${option.id}` : undefined}
+					id={noteName}
+					name={showNote ? noteName : undefined}
 					class="mt-3 block min-h-12 w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50"
 					placeholder="Voeg een opmerking toe."
 					rows={1}>{response?.note ?? ''}</textarea

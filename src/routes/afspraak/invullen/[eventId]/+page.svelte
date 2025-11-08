@@ -62,11 +62,12 @@
 			]}
 		>
 			{#each data.event.options as option}
+				{@const availabilityName = `availability.option_${option.id}`}
 				<OptionInput {option} response={data.session?.responses.get(option.id)}>
 					{#snippet error()}
-						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(`availability.${option.id}`)}
+						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(availabilityName)}
 							<p class="text-pink-600 dark:text-pink-500">
-								{availabilityIssues.get(`availability.${option.id}`)}
+								{availabilityIssues.get(availabilityName)}
 							</p>
 						{/if}
 					{/snippet}
