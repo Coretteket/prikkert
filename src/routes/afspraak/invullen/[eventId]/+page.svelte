@@ -6,6 +6,8 @@
 
 	let { data, form } = $props()
 
+	let isSubmitting = $state(false)
+
 	const availabilityErrorThreshold = $derived(Math.ceil(data.event.options.length * 0.2))
 
 	const extractIssues = (prefix: string) =>
@@ -15,11 +17,11 @@
 			),
 		)
 
-	let availabilityIssues = $derived(extractIssues('availability.option_'))
-	let noteIssues = $derived(extractIssues('note.option_'))
+	let availabilityIssues = $derived(extractIssues('availability.'))
+	let noteIssues = $derived(extractIssues('note.'))
 </script>
 
-<h1 class="font-display mb-8 text-2xl font-[550] capitalize">{data.event.title}</h1>
+<h1 class="font-display mb-8 text-2xl font-[550] capitalize-first">{data.event.title}</h1>
 
 <p class="-mt-4 mb-6 font-[350] text-balance text-neutral-700 dark:text-neutral-300">
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
@@ -27,9 +29,10 @@
 
 <form
 	method="POST"
-	use:enhance={() =>
-		({ update }) =>
-			update({ reset: false })}
+	use:enhance={() => {
+		isSubmitting = true
+		return ({ update }) => update({ reset: false }).finally(() => (isSubmitting = false))
+	}}
 >
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
@@ -91,5 +94,12 @@
 		{/if}
 	</div>
 
-	<Button type="submit" variant="primary" class="ml-auto">Beschikbaarheid opslaan</Button>
+	<Button
+		type="submit"
+		variant="primary"
+		class={['ml-auto', isSubmitting && 'animate-pulse']}
+		disabled={isSubmitting}
+	>
+		Beschikbaarheid opslaan
+	</Button>
 </form>

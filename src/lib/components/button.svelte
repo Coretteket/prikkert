@@ -1,12 +1,12 @@
 <script lang="ts" generics="T extends 'button' | 'link' = 'button'">
 	import { cva, type VariantProps } from 'cva'
 	import type { Snippet } from 'svelte'
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { ClassValue, HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 	type BaseProps = {
 		as?: T
 		children?: Snippet
-		class?: string
+		class?: ClassValue
 	} & VariantProps<typeof buttonVariants>
 
 	type AsButtonProps = Omit<HTMLButtonAttributes, keyof BaseProps>

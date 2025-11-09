@@ -16,8 +16,8 @@
 	let showNote = $state(response?.note && response.note.length > 0)
 	let noteValue = $state(response?.note ?? '')
 
-	const availabilityName = $derived(`availability.option_${option.id}`)
-	const noteName = $derived(`note.option_${option.id}`)
+	const availabilityName = $derived(`availability.${option.id}`)
+	const noteName = $derived(`note.${option.id}`)
 
 	function handleAvailabilityChange(availability: string) {
 		if (availability === 'MAYBE') showNote = true
@@ -27,7 +27,7 @@
 
 <div class="px-5 py-4 pr-4 text-neutral-800 dark:text-neutral-200">
 	<div class="grid items-center gap-x-6 gap-y-3 md:grid-cols-[1fr_auto]">
-		<p class="font-[350] md:w-60 max-xs:w-60">{formatDateTimeRange(option)}</p>
+		<p class="max-xs:w-60 font-[350] md:w-60">{formatDateTimeRange(option)}</p>
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
 				<label class="group cursor-pointer">

@@ -39,3 +39,9 @@
 @utility gutter-stable {
 	scrollbar-gutter: stable both-edges;
 }
+
+@utility capitalize-first {
+	&::first-letter {
+		text-transform: uppercase;
+	}
+}

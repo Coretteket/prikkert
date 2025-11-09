@@ -49,7 +49,7 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 		name: event.allowAnonymous ? v.nullable(v.string()) : v.string('Vul je naam in.'),
 		availability: v.strictObject(
 			v.entriesFromList(
-				event.options.map((o) => ('option_' + o.id) as OptionName),
+				event.options.map((o) => o.id),
 				AvailabilitySchema,
 			),
 			'Vul je beschikbaarheid in.',
@@ -57,7 +57,7 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 		note: v.optional(
 			v.strictObject(
 				v.entriesFromList(
-					event.options.map((o) => ('option_' + o.id) as OptionName),
+					event.options.map((o) => o.id),
 					v.optional(v.nullable(v.pipe(v.string(), v.maxLength(500, 'Opmerking is te lang.')))),
 				),
 			),
@@ -97,11 +97,11 @@ export const actions: Actions = {
 			await db
 				.insert(schema.responses)
 				.values(
-					Object.entries(parsed.availability).map(([optionName, availabilityValue]) => ({
-						optionId: optionName.replace('option_', ''),
+					Object.entries(parsed.availability).map(([optionId, availabilityValue]) => ({
+						optionId,
 						sessionId,
 						availability: availabilityValue,
-						note: parsed.note?.[optionName as OptionName] ?? null,
+						note: parsed.note?.[optionId as OptionName] ?? null,
 					})),
 				)
 				.onConflictDoUpdate({

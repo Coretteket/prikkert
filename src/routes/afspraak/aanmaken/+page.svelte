@@ -11,6 +11,8 @@
 
 	let { form } = $props()
 
+	let isSubmitting = $state(false)
+
 	let datePickerHeight = $state(338)
 
 	let options = new SvelteMap() satisfies Options
@@ -31,7 +33,13 @@
 
 <h1 class="font-display mb-8 text-2xl font-[550]">Afspraak aanmaken</h1>
 
-<form method="POST" use:enhance>
+<form
+	method="POST"
+	use:enhance={() => {
+		isSubmitting = true
+		return ({ update }) => update({ reset: false }).finally(() => (isSubmitting = false))
+	}}
+>
 	<div class="mb-8">
 		<label for="title" class="mb-4 block font-medium">Titel</label>
 		<input
@@ -158,5 +166,12 @@
 		</div>
 	</div>
 
-	<Button type="submit" variant="primary" class="ml-auto">Afspraak aanmaken</Button>
+	<Button
+		type="submit"
+		variant="primary"
+		class={['ml-auto', isSubmitting && 'animate-pulse']}
+		disabled={isSubmitting}
+	>
+		Afspraak aanmaken
+	</Button>
 </form>
