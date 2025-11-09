@@ -13,7 +13,8 @@
 
 	let { option, response, error }: Props = $props()
 
-	let showNote = $state(response?.note && response.note.length > 0)
+	let availabilityValue = $state(response?.availability ?? '')
+	let showNote = $state(Boolean(response?.note))
 	let noteValue = $state(response?.note ?? '')
 
 	const availabilityName = $derived(`availability.${option.id}`)
@@ -25,65 +26,55 @@
 	}
 </script>
 
+{#snippet radioButton(value: string, icon: string, label: string, classes: string)}
+	<label class="group cursor-pointer">
+		<input
+			type="radio"
+			name={availabilityName}
+			{value}
+			class="absolute opacity-0"
+			bind:group={availabilityValue}
+			onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
+		/>
+		<span
+			class="flex items-center gap-1.5 px-3 py-2 text-sm leading-none transition-colors {classes}"
+		>
+			<Icon {icon} class="size-5" />
+			<span class="max-xs:hidden">{label}</span>
+		</span>
+	</label>
+{/snippet}
+
 <div class="px-5 py-4 pr-4 text-neutral-800 dark:text-neutral-200">
 	<div class="grid items-center gap-x-6 gap-y-3 md:grid-cols-[1fr_auto]">
 		<p class="max-xs:w-60 font-[350] md:w-60">{formatDateTimeRange(option)}</p>
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
-				<label class="group cursor-pointer">
-					<input
-						type="radio"
-						name={availabilityName}
-						value="YES"
-						class="absolute opacity-0"
-						checked={response?.availability === 'YES'}
-						onclick={(e) => handleAvailabilityChange(e.currentTarget.value)}
-					/>
-					<span
-						class="flex items-center gap-1.5 rounded-l-lg border border-r-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-lime-300/75 group-has-checked:text-lime-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-lime-500/25 dark:group-has-checked:text-lime-100"
-					>
-						<Icon icon="tabler--check" class="size-5" />
-						<span class="max-xs:hidden">Ja</span>
-					</span>
-				</label>
-
-				<label class="group cursor-pointer">
-					<input
-						type="radio"
-						name={availabilityName}
-						value="MAYBE"
-						class="absolute opacity-0"
-						checked={response?.availability === 'MAYBE'}
-						onclick={(e) => handleAvailabilityChange(e.currentTarget.value)}
-					/>
-					<span
-						class="flex items-center gap-1.5 border border-x-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-amber-300/50 group-has-checked:text-amber-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-amber-500/15 dark:group-has-checked:text-amber-100"
-					>
-						<Icon icon="tabler--question-mark" class="size-5" />
-						<span class="max-xs:hidden">Misschien</span>
-					</span>
-				</label>
-
-				<label class="group cursor-pointer">
-					<input
-						type="radio"
-						name={availabilityName}
-						value="NO"
-						class="absolute opacity-0"
-						checked={response?.availability === 'NO'}
-						onclick={(e) => handleAvailabilityChange(e.currentTarget.value)}
-					/>
-					<span
-						class="flex items-center gap-1.5 rounded-r-lg border border-l-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-red-300/75 group-has-checked:text-red-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-red-500/25 dark:group-has-checked:text-red-100"
-					>
-						<Icon icon="tabler--x" class="size-5" />
-						<span class="max-xs:hidden">Nee</span>
-					</span>
-				</label>
+				{@render radioButton(
+					'YES',
+					'tabler--check',
+					'Ja',
+					'rounded-l-lg border border-r-0 group-has-checked:bg-lime-300/75 group-has-checked:text-lime-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-lime-500/25 dark:group-has-checked:text-lime-100',
+				)}
+				{@render radioButton(
+					'MAYBE',
+					'tabler--question-mark',
+					'Misschien',
+					'border border-x-0 group-has-checked:bg-amber-300/50 group-has-checked:text-amber-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-amber-500/15 dark:group-has-checked:text-amber-100',
+				)}
+				{@render radioButton(
+					'NO',
+					'tabler--x',
+					'Nee',
+					'rounded-r-lg border border-l-0 group-has-checked:bg-red-300/75 group-has-checked:text-red-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-red-500/25 dark:group-has-checked:text-red-100',
+				)}
 			</fieldset>
 			<button
 				type="button"
-				onclick={() => (showNote = !showNote)}
+				onclick={() => {
+					showNote = !showNote
+					if (!showNote) setTimeout(() => (noteValue = ''), 150)
+				}}
 				class="flex cursor-pointer rounded-lg border p-2 text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
 				title={showNote ? 'Opmerking verwijderen' : 'Opmerking toevoegen'}
 			>
