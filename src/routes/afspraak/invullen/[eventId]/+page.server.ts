@@ -1,0 +1,123 @@
+import type { Actions, PageServerLoad } from './$types'
+import { db, schema } from '@/lib/server/db'
+import { error } from '@sveltejs/kit'
+import { asc, eq, sql } from 'drizzle-orm'
+import * as v from '@/lib/server/validation'
+import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
+import { setSessionCookie } from '@/lib/server/session'
+
+export const load: PageServerLoad = async ({ params, locals }) => {
+	const eventId = params.eventId
+
+	if (!eventId) error(404, 'Afspraak niet gevonden')
+
+	const event = await db.query.events.findFirst({
+		where: eq(schema.events.id, eventId),
+		columns: { hideParticipants: false, createdAt: false, expiresAt: false },
+		with: { options: { columns: { eventId: false }, orderBy: [asc(schema.options.startsAt)] } },
+	})
+
+	if (!event) error(404, 'Afspraak niet gevonden')
+
+	const sessionId = locals.session.get(eventId)?.id
+
+	if (!sessionId) return { event, session: undefined }
+
+	const session = await db.query.sessions.findFirst({
+		where: eq(schema.sessions.id, sessionId),
+		columns: { id: true, name: true },
+		with: { responses: true },
+	})
+
+	if (!session) return { event, session: undefined }
+
+	return {
+		event,
+		session: {
+			...session,
+			responses: new Map(session.responses.map((response) => [response.optionId, response])),
+		},
+	}
+}
+
+const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
+
+type OptionName = `option_${string}`
+
+const createResponseSchema = (event: {
+	options: Array<{ id: string }>
+	disallowAnonymous: boolean
+}) =>
+	v.object({
+		name: event.disallowAnonymous ? v.string('Vul je naam in.') : v.nullable(v.string()),
+		availability: v.strictObject(
+			v.entriesFromList(
+				event.options.map((o) => ('option_' + o.id) as OptionName),
+				AvailabilitySchema,
+			),
+			'Vul je beschikbaarheid in.',
+		),
+		note: v.optional(
+			v.strictObject(
+				v.entriesFromList(
+					event.options.map((o) => ('option_' + o.id) as OptionName),
+					v.optional(v.pipe(v.string(), v.maxLength(500, 'Opmerking is te lang.'))),
+				),
+			),
+		),
+	})
+
+export const actions: Actions = {
+	default: async ({ locals, cookies, params, request }) => {
+		const eventId = params.eventId
+
+		const event = await db.query.events.findFirst({
+			with: { options: { orderBy: [asc(schema.options.startsAt)] } },
+			where: eq(schema.events.id, eventId),
+		})
+
+		if (!event) error(404, 'Afspraak niet gevonden')
+
+		const ResponseSchema = createResponseSchema(event)
+
+		const parsed = v.parseForm(ResponseSchema, await request.formData())
+		if (parsed instanceof v.FormError) return parsed.fail()
+
+		const localsSession = locals.session.get(eventId)
+		const sessionId = localsSession?.id ?? generateNanoID(12)
+		const token = localsSession?.token ?? generateNanoID(21)
+		const encodedToken = await encodeSHA256(token)
+
+		await db.transaction(async (db) => {
+			await db
+				.insert(schema.sessions)
+				.values({ eventId, id: sessionId, token: encodedToken, name: parsed.name })
+				.onConflictDoUpdate({
+					target: schema.sessions.id,
+					set: { name: parsed.name },
+				})
+
+			await db
+				.insert(schema.responses)
+				.values(
+					Object.entries(parsed.availability).map(([optionName, availabilityValue]) => ({
+						optionId: optionName.replace('option_', ''),
+						sessionId,
+						availability: availabilityValue,
+						note: parsed.note?.[optionName as OptionName] ?? null,
+					})),
+				)
+				.onConflictDoUpdate({
+					target: [schema.responses.optionId, schema.responses.sessionId],
+					set: {
+						availability: sql.raw(`excluded.${schema.responses.availability.name}`),
+						note: sql.raw(`excluded.${schema.responses.note.name}`),
+					},
+				})
+		})
+
+		setSessionCookie({ cookies, sessionId, eventId, token, expires: event.expiresAt })
+
+		return { success: true }
+	},
+}

@@ -1,31 +1,25 @@
 <script lang="ts">
 	import Button from '@/lib/components/button.svelte'
 	import OptionInput from './option-input.svelte'
-	import { page } from '$app/state'
-	import { getEvent } from './get-event.remote'
-	import { submitResponse } from './submit-response.remote'
+	import { enhance } from '$app/forms'
+	import { keys } from '@/lib/utils'
 
-	const data = $derived(await getEvent(page.params.eventId))
-
-	const issues = $derived(submitResponse.fields.allIssues() ?? [])
+	let { data, form } = $props()
 
 	const availabilityErrorThreshold = $derived(Math.ceil(data.event.options.length * 0.2))
 
-	const nameIssues = $derived(
-		issues.filter((issue) => issue.path?.[0] === 'name').map((issue) => issue.message) ?? [],
-	)
+	function extractIssues(prefix: string) {
+		const nestedKeys = keys(form?.error?.nested ?? {})
+		return new Map(
+			nestedKeys.flatMap((key) => {
+				if (!key.startsWith(prefix)) return []
+				return [[key.replace(prefix, ''), form!.error!.nested![key]]]
+			}),
+		)
+	}
 
-	const availabilityIssues = $derived(
-		new Map(
-			issues
-				?.filter((issue) => issue.path?.[0]?.toString().startsWith('availability'))
-				.map((issue) => [issue.path?.[0]?.toString() ?? '', issue.message]) ?? [],
-		),
-	)
-
-	$inspect('PARAMS ARE CHANGING', page.params.eventId)
-	$inspect('DATA IS CHANGING', data)
-	$inspect('ISSUES ARE CHANGING', issues)
+	let availabilityIssues = $derived(extractIssues('availability.option_'))
+	let noteIssues = $derived(extractIssues('note.option_'))
 </script>
 
 <h1 class="font-display mb-8 text-2xl font-[550]">{data.event.title}</h1>
@@ -34,7 +28,12 @@
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
 </p>
 
-<form {...submitResponse.enhance(({ submit }) => submit())}>
+<form
+	method="POST"
+	use:enhance={() =>
+		({ update }) =>
+			update({ reset: false })}
+>
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Jouw naam
@@ -48,11 +47,13 @@
 			name="name"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				nameIssues.length > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+				form?.error?.nested?.name && form.error.nested.name.length > 0
+					? 'outline outline-pink-600 dark:outline-pink-500'
+					: '',
 			]}
 			value={data.session?.name ?? ''}
 		/>
-		{#each nameIssues as issue}
+		{#each form?.error?.nested?.name as issue}
 			<p class="text-pink-600 dark:text-pink-500">{issue}</p>
 		{/each}
 	</div>
@@ -62,23 +63,33 @@
 		<div
 			class={[
 				'mb-4 block divide-y rounded-lg border',
-				availabilityIssues.size > 0 ? 'outline outline-pink-600 dark:outline-pink-500' : '',
+				availabilityIssues.size > 0 || noteIssues.size > 0
+					? 'outline outline-pink-600 dark:outline-pink-500'
+					: '',
 			]}
 		>
 			{#each data.event.options as option (option.id)}
-				{@const availabilityName = `availability.option_${option.id}`}
 				<OptionInput {option} response={data.session?.responses.get(option.id)}>
 					{#snippet error()}
-						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(availabilityName)}
-							<p class="text-pink-600 dark:text-pink-500">
-								{availabilityIssues.get(availabilityName)}
-							</p>
+						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(option.id)}
+							{#each availabilityIssues.get(option.id) as issue}
+								<p class="mt-2 text-pink-600 dark:text-pink-500">
+									{issue}
+								</p>
+							{/each}
+						{/if}
+						{#if noteIssues.has(option.id)}
+							{#each noteIssues.get(option.id) as issue}
+								<p class="mt-2 text-pink-600 dark:text-pink-500">
+									{issue}
+								</p>
+							{/each}
 						{/if}
 					{/snippet}
 				</OptionInput>
 			{/each}
 		</div>
-		{#if availabilityIssues.has('availability') || availabilityIssues.size > availabilityErrorThreshold}
+		{#if form?.error?.nested?.availability || availabilityIssues.size > availabilityErrorThreshold}
 			<p class="text-pink-600 dark:text-pink-500">Vul je beschikbaarheid in voor alle opties.</p>
 		{/if}
 	</div>

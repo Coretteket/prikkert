@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { getEvents } from './get-events.remote'
-
 	// import { formatDateTimeRange } from '@/lib/time-format'
 
-	const data = $derived(await getEvents())
+	let { data } = $props()
 </script>
 
 <div class="space-y-4">
