@@ -59,7 +59,7 @@ export const faq = [
 	{
 		question: 'Hoe beschermt Prikkert je privacy?',
 		answer:
-			"Jouw persoonsgegevens zijn en blijven van jou. Dat is geen loze belofte, zo werkt Prikkert: je hebt geen account nodig en kan het anoniem gebruiken. Ook gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en je wordt onder geen beding getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
+			"Jouw persoonsgegevens zijn en blijven van jou. Dat is geen loze belofte, zo werkt Prikkert: je hebt geen account nodig en kan het zelfs anoniem gebruiken. Ook gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en je wordt onder geen beding getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
 	},
 	{
 		question: 'Wat betekent het dat Prikkert open source is?',

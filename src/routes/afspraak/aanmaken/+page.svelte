@@ -133,34 +133,28 @@
 			<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 		</p>
 		<div class="grid gap-4 rounded-lg border p-6">
-			<div class="flex items-start gap-3">
+			<label
+				class="flex cursor-pointer items-center gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
+			>
 				<input
 					type="checkbox"
-					name="settings.disallowAnonymous"
-					id="form-disallowAnonymous"
-					class="my-1.5 size-4 accent-pink-600 dark:accent-pink-700"
+					name="settings.allowAnonymous"
+					class="my-1.5 size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
-				<label
-					for="form-disallowAnonymous"
-					class="grid gap-1 font-[350] text-neutral-700 dark:text-neutral-300"
-				>
-					<p class="text-balance">Maak het verplicht voor deelnemers om hun naam in te vullen</p>
-				</label>
-			</div>
-			<div class="flex items-start gap-3">
+
+				<p class="text-balance">Sta deelnemers toe om anoniem te reageren</p>
+			</label>
+			<label
+				class="flex cursor-pointer items-center gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
+			>
 				<input
 					type="checkbox"
 					name="settings.hideParticipants"
-					id="form-hideParticipants"
-					class="my-1.5 size-4 accent-pink-600 dark:accent-pink-700"
+					class="my-1.5 size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
-				<label
-					for="form-hideParticipants"
-					class="grid gap-1 font-[350] text-neutral-700 dark:text-neutral-300"
-				>
-					<p class="text-balance">Verberg deelnemers voor elkaar</p>
-				</label>
-			</div>
+
+				<p class="text-balance">Verberg deelnemers voor elkaar</p>
+			</label>
 		</div>
 	</div>
 

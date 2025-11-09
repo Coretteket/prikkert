@@ -8,7 +8,7 @@
 @theme {
 	--font-sans: 'Lexend Variable', ui-sans-serif, system-ui, sans-serif;
 	--font-display: 'Parkinsans Variable', ui-sans-serif, system-ui, sans-serif;
-	--breakpoint-xs: 30rem;
+	--breakpoint-xs: 28rem;
 	--color-neutral-850: #1a1a1a;
 }
 

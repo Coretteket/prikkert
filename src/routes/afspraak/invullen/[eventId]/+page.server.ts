@@ -6,7 +6,7 @@ import * as v from '@/lib/server/validation'
 import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
 import { setSessionCookie } from '@/lib/server/session'
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load = async ({ params, locals }) => {
 	const eventId = params.eventId
 
 	if (!eventId) error(404, 'Afspraak niet gevonden')
@@ -44,12 +44,9 @@ const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaa
 
 type OptionName = `option_${string}`
 
-const createResponseSchema = (event: {
-	options: Array<{ id: string }>
-	disallowAnonymous: boolean
-}) =>
+const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnonymous: boolean }) =>
 	v.object({
-		name: event.disallowAnonymous ? v.string('Vul je naam in.') : v.nullable(v.string()),
+		name: event.allowAnonymous ? v.nullable(v.string()) : v.string('Vul je naam in.'),
 		availability: v.strictObject(
 			v.entriesFromList(
 				event.options.map((o) => ('option_' + o.id) as OptionName),
@@ -61,7 +58,7 @@ const createResponseSchema = (event: {
 			v.strictObject(
 				v.entriesFromList(
 					event.options.map((o) => ('option_' + o.id) as OptionName),
-					v.optional(v.pipe(v.string(), v.maxLength(500, 'Opmerking is te lang.'))),
+					v.optional(v.nullable(v.pipe(v.string(), v.maxLength(500, 'Opmerking is te lang.')))),
 				),
 			),
 		),

@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill'
+if (!('Temporal' in globalThis)) await import('temporal-polyfill/global')
 
 export const { Now, Instant, PlainDate, PlainDateTime, PlainTime, Duration } = Temporal
 

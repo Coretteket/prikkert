@@ -1,4 +1,4 @@
-// Adapted from https://github.com/fabian-hiller/valibot/pull/672. This will hopefully be implemented in Valibot or a community package in the future.
+// Adapted from https://github.com/fabian-hiller/valibot/pull/672.
 
 import * as v from 'valibot'
 
@@ -37,9 +37,7 @@ export function decodeEntry(
 }
 
 export function decode<const TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>>(
-	context: TSchema & {
-		wrapped?: TSchema
-	},
+	context: TSchema & { wrapped?: TSchema },
 	formData: FormData,
 	key: string,
 ): unknown {

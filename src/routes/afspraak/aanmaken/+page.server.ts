@@ -40,7 +40,7 @@ const CreateEventSchema = v.object({
 	),
 	settings: v.optional(
 		v.strictObject(
-			{ disallowAnonymous: v.checkbox(), hideParticipants: v.checkbox() },
+			{ allowAnonymous: v.checkbox(), hideParticipants: v.checkbox() },
 			'Vul een geldige instelling in.',
 		),
 	),

@@ -8,21 +8,18 @@
 
 	const availabilityErrorThreshold = $derived(Math.ceil(data.event.options.length * 0.2))
 
-	function extractIssues(prefix: string) {
-		const nestedKeys = keys(form?.error?.nested ?? {})
-		return new Map(
-			nestedKeys.flatMap((key) => {
-				if (!key.startsWith(prefix)) return []
-				return [[key.replace(prefix, ''), form!.error!.nested![key]]]
-			}),
+	const extractIssues = (prefix: string) =>
+		new Map(
+			keys(form?.error?.nested ?? {}).flatMap((key) =>
+				key.startsWith(prefix) ? [[key.replace(prefix, ''), form!.error!.nested![key]]] : [],
+			),
 		)
-	}
 
 	let availabilityIssues = $derived(extractIssues('availability.option_'))
 	let noteIssues = $derived(extractIssues('note.option_'))
 </script>
 
-<h1 class="font-display mb-8 text-2xl font-[550]">{data.event.title}</h1>
+<h1 class="font-display mb-8 text-2xl font-[550] capitalize">{data.event.title}</h1>
 
 <p class="-mt-4 mb-6 font-[350] text-balance text-neutral-700 dark:text-neutral-300">
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
@@ -37,7 +34,7 @@
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Jouw naam
-			{#if !data.event.disallowAnonymous}
+			{#if data.event.allowAnonymous}
 				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 			{/if}
 		</label>
@@ -45,11 +42,12 @@
 			type="text"
 			id="name"
 			name="name"
+			autocomplete="name"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				form?.error?.nested?.name && form.error.nested.name.length > 0
-					? 'outline outline-pink-600 dark:outline-pink-500'
-					: '',
+				form?.error?.nested?.name &&
+					form.error.nested.name.length > 0 &&
+					'outline outline-pink-600 dark:outline-pink-500',
 			]}
 			value={data.session?.name ?? ''}
 		/>
@@ -63,9 +61,8 @@
 		<div
 			class={[
 				'mb-4 block divide-y rounded-lg border',
-				availabilityIssues.size > 0 || noteIssues.size > 0
-					? 'outline outline-pink-600 dark:outline-pink-500'
-					: '',
+				(availabilityIssues.size > 0 || noteIssues.size > 0) &&
+					'outline outline-pink-600 dark:outline-pink-500',
 			]}
 		>
 			{#each data.event.options as option (option.id)}
