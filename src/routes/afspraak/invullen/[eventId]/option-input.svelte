@@ -37,7 +37,7 @@
 						value="YES"
 						class="absolute opacity-0"
 						checked={response?.availability === 'YES'}
-						onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
+						onclick={(e) => handleAvailabilityChange(e.currentTarget.value)}
 					/>
 					<span
 						class="flex items-center gap-1.5 rounded-l-lg border border-r-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-lime-300/75 group-has-checked:text-lime-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-lime-500/25 dark:group-has-checked:text-lime-100"
@@ -54,7 +54,7 @@
 						value="MAYBE"
 						class="absolute opacity-0"
 						checked={response?.availability === 'MAYBE'}
-						onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
+						onclick={(e) => handleAvailabilityChange(e.currentTarget.value)}
 					/>
 					<span
 						class="flex items-center gap-1.5 border border-x-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-amber-300/50 group-has-checked:text-amber-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-amber-500/15 dark:group-has-checked:text-amber-100"
@@ -71,7 +71,7 @@
 						value="NO"
 						class="absolute opacity-0"
 						checked={response?.availability === 'NO'}
-						onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
+						onclick={(e) => handleAvailabilityChange(e.currentTarget.value)}
 					/>
 					<span
 						class="flex items-center gap-1.5 rounded-r-lg border border-l-0 px-3 py-2 text-sm leading-none transition-colors group-has-checked:bg-red-300/75 group-has-checked:text-red-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-red-500/25 dark:group-has-checked:text-red-100"
