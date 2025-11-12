@@ -21,7 +21,7 @@ export const promises = [
 		icon: 'tabler--folder-open',
 		title: 'Open source',
 		description:
-			'Iedereen kan <a href="https://github.com/coretteket/prikkert" target="_blank" class="hover:underline">de broncode</a> lezen en verbeteren, want Prikkert heeft niets te verbergen.',
+			'Iedereen kan de broncode lezen en verbeteren, want Prikkert heeft niets te verbergen.',
 	},
 ] as const
 
@@ -32,7 +32,7 @@ export const steps = [
 	},
 	{
 		bold: 'Deel de link',
-		normal: 'via WhatsApp, e-mail of elk ander kanaal om mensen uit te nodigen.',
+		normal: 'in een berichtje, mail of op een andere manier om mensen uit te nodigen.',
 	},
 	{
 		bold: 'Prik',

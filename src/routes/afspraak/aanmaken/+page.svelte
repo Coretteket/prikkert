@@ -142,26 +142,26 @@
 		</p>
 		<div class="grid gap-4 rounded-lg border p-6">
 			<label
-				class="flex cursor-pointer items-center gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
+				class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
 			>
 				<input
 					type="checkbox"
 					name="settings.allowAnonymous"
-					class="my-1.5 size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
+					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
 
 				<p class="text-balance">Sta deelnemers toe om anoniem te reageren</p>
 			</label>
 			<label
-				class="flex cursor-pointer items-center gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
+				class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
 			>
 				<input
 					type="checkbox"
 					name="settings.hideParticipants"
-					class="my-1.5 size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
+					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
 
-				<p class="text-balance">Verberg deelnemers voor elkaar</p>
+				<p class="text-balance">Toon reacties alleen aan de organisator</p>
 			</label>
 		</div>
 	</div>
