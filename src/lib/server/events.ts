@@ -1,6 +1,7 @@
 import { db, schema } from '@/lib/server/db'
 import { asc, eq, inArray } from 'drizzle-orm'
 import { encodeSHA256 } from './crypto'
+import { omit } from '../utils'
 
 export async function getEvent(eventId: string, token?: string) {
 	const event = await db.query.events.findFirst({
@@ -36,12 +37,27 @@ export async function getEvent(eventId: string, token?: string) {
 	}
 }
 
-export async function getSessions(session: App.Locals['session']) {
+export async function getEventsForSession(session: App.Locals['session']) {
 	const sessionIds = await Promise.all(session.values().map(({ id }) => id))
 
-	return db.query.sessions.findMany({
+	const data = await db.query.sessions.findMany({
 		where: inArray(schema.sessions.id, sessionIds),
-		with: { event: { with: { organizer: true } } },
-		columns: { token: false },
+		columns: {},
+		with: {
+			event: {
+				columns: { id: true, title: true, createdAt: true },
+				with: {
+					sessions: { columns: {}, with: { responses: { columns: { optionId: true } } } },
+					options: { columns: { startsAt: true }, orderBy: [asc(schema.options.startsAt)] },
+				},
+			},
+		},
 	})
+
+	return data.map(({ event }) => ({
+		...omit(event, 'options', 'sessions'),
+		firstDate: event.options.at(0)!.startsAt,
+		lastDate: event.options.at(-1)!.startsAt,
+		numberOfResponses: event.sessions.filter((s) => s.responses.length > 0).length,
+	}))
 }

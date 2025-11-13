@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types'
-import { getSessions } from '@/lib/server/events'
+import { getEventsForSession } from '@/lib/server/events'
 
 export const load: PageServerLoad = async ({ locals }) => {
-	const sessions = await getSessions(locals.session)
-	return { sessions }
+	const events = await getEventsForSession(locals.session)
+	return { events }
 }

@@ -21,9 +21,9 @@
 	let noteIssues = $derived(extractIssues('note.'))
 </script>
 
-<h1 class="font-display mb-8 text-2xl font-[550] capitalize-first">{data.event.title}</h1>
+<h1 class="font-display mb-6 text-2xl font-[550] capitalize-first">{data.event.title}</h1>
 
-<p class="-mt-4 mb-6 font-[350] text-balance text-neutral-700 dark:text-neutral-300">
+<p class="mb-10 font-[350] text-lg text-balance text-neutral-700 dark:text-neutral-300">
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
 </p>
 

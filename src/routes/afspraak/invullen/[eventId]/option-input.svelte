@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formatDateTimeRange } from '@/lib/time-format'
+	import { formatDateTimeOption } from '@/lib/time-format'
 	import type { Snippet } from 'svelte'
 	import type { InferSelectModel } from 'drizzle-orm'
 	import type { schema } from '@/lib/server/db'
@@ -47,7 +47,7 @@
 
 <div class="px-5 py-4 pr-4 text-neutral-800 dark:text-neutral-200">
 	<div class="grid items-center gap-x-6 gap-y-3 md:grid-cols-[1fr_auto]">
-		<p class="max-xs:w-60 font-[350] md:w-60">{formatDateTimeRange(option)}</p>
+		<p class="max-xs:w-60 font-[350] md:w-60">{formatDateTimeOption(option)}</p>
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
 				{@render radioButton(
@@ -80,10 +80,10 @@
 			>
 				{#if showNote}
 					<Icon icon="tabler--message-circle-x" class="size-5" />
-					<span class="sr-only">Opmerking verwijderen voor {formatDateTimeRange(option)}</span>
+					<span class="sr-only">Opmerking verwijderen voor {formatDateTimeOption(option)}</span>
 				{:else}
 					<Icon icon="tabler--message-circle" class="size-5" />
-					<span class="sr-only">Opmerking toevoegen voor {formatDateTimeRange(option)}</span>
+					<span class="sr-only">Opmerking toevoegen voor {formatDateTimeOption(option)}</span>
 				{/if}
 			</button>
 		</div>

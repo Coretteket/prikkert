@@ -1,5 +1,6 @@
 <script lang="ts">
-	type Props = { icon: string; class?: string }
+	import type { HTMLAttributes } from "svelte/elements"
+	type Props = { icon: string; class?: string } & HTMLAttributes<HTMLSpanElement>
 	let props: Props = $props()
 </script>
 

@@ -1,27 +1,35 @@
 <script lang="ts">
-	// import { formatDateTimeRange } from '@/lib/time-format'
+	import { PlainDate } from '@/lib/temporal'
+	import { formatDateTimeRange } from '@/lib/time-format.js'
+	import { capitalizeFirst } from '@/lib/utils.js'
 
 	let { data } = $props()
+
+	const events = $derived(
+		(data.events ?? []).toSorted((a, b) => PlainDate.compare(b.createdAt, a.createdAt)),
+	)
+
+	const numberResponses = (n: number) =>
+		n === 0 ? 'Geen reacties' : n === 1 ? '1 reactie' : `${n} reacties`
 </script>
 
 <div class="space-y-4">
-	<ul class="list-inside list-disc space-y-2">
-		{#each data.sessions ?? [] as session}
-			<li>
-				<a href="/afspraak/invullen/{session.event.id}" class="text-lg font-bold">
-					{session.event.title}
-				</a>
-				<span>{session.id === session.event.organizer.sessionId ? 'Eigenaar' : 'Deelnemer'}</span>
-				<!-- <ul class="ml-4 list-inside list-disc">
-					{#each event.options as option}
-						<li>
-							{formatDateTimeRange(option)}
-						</li>
-					{/each}
-				</ul> -->
-			</li>
-		{:else}
-			<li>Geen afspraken gevonden</li>
-		{/each}
-	</ul>
+	<h1 class="font-display mb-8 text-2xl font-[550]">Afspraken</h1>
+
+	{#each events as event}
+		<a
+			href="/afspraak/invullen/{event.id}"
+			class="block overflow-hidden rounded-lg border px-6 py-5 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+		>
+			<h2 class="mb-2 text-lg font-medium text-neutral-700 dark:text-neutral-300">
+				{capitalizeFirst(event.title)}
+			</h2>
+
+			<p class="text-neutral-600 dark:text-neutral-400">
+				{formatDateTimeRange(event.firstDate, event.lastDate)}
+				<span class="mx-1">·</span>
+				{numberResponses(event.numberOfResponses)}
+			</p>
+		</a>
+	{/each}
 </div>

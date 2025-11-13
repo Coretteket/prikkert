@@ -1,10 +1,16 @@
 import type { InferSelectModel } from 'drizzle-orm'
 import type { schema } from './server/db'
-import { PlainDate } from './temporal'
+import { Now, PlainDate, PlainDateTime } from './temporal'
+import { date } from 'drizzle-orm/mysql-core'
 
 export const formatOptions = {
 	date: {
 		weekday: 'long',
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	},
+	shortDate: {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric',
@@ -15,7 +21,7 @@ export const formatOptions = {
 	},
 } satisfies Record<string, Intl.DateTimeFormatOptions>
 
-export function formatDateTimeRange({
+export function formatDateTimeOption({
 	startsAt,
 	endsAt,
 }: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>): string {
@@ -27,4 +33,20 @@ export function formatDateTimeRange({
 
 	const timeEnd = endsAt.toLocaleString('nl', formatOptions.time)
 	return `${date}, ${timeStart} – ${timeEnd}`
+}
+
+export function formatDateTimeRange(
+	startsAt: PlainDate | PlainDateTime,
+	endsAt: PlainDate | PlainDateTime,
+) {
+	const start = startsAt.toLocaleString('nl', formatOptions.shortDate)
+	const end = endsAt.toLocaleString('nl', formatOptions.shortDate)
+
+	if (start === end) return start
+
+	const [startWords, endWords] = [start, end].map((d) => d.split(' ').reverse())
+	const commonCount = startWords.findIndex((w, i) => w !== endWords[i])
+	const trimmedStart = startWords.slice(commonCount).reverse().join(' ')
+
+	return `${trimmedStart} t/m ${end}`
 }
