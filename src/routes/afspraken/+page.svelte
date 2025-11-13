@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PlainDate } from '@/lib/temporal'
-	import { formatDateTimeRange } from '@/lib/time-format.js'
-	import { capitalizeFirst } from '@/lib/utils.js'
+	import { formatDateTimeRange } from '@/lib/time-format'
+	import { capitalizeFirst } from '@/lib/utils'
 
 	let { data } = $props()
 
