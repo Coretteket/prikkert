@@ -8,13 +8,13 @@ const SessionKeySchema = v.pipe(
 	v.string(),
 	v.startsWith(env.COOKIE_PREFIX),
 	v.transform((key) => key.slice(env.COOKIE_PREFIX.length)),
-	v.regex(/^[A-Za-z0-9]{12}$/),
+	v.regex(/^[A-Za-z0-9]{16}$/),
 )
 
 const SessionValueSchema = v.pipe(
 	v.string(),
-	v.regex(/^[A-Za-z0-9]{33}$/),
-	v.transform((value) => ({ id: value.slice(0, 12), token: value.slice(12) })),
+	v.regex(/^[A-Za-z0-9]{37}$/),
+	v.transform((value) => ({ id: value.slice(0, 16), token: value.slice(16) })),
 )
 
 export function setSessionCookie({

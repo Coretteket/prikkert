@@ -1,4 +1,3 @@
-import type { Actions, PageServerLoad } from './$types'
 import { db, schema } from '@/lib/server/db'
 import { error } from '@sveltejs/kit'
 import { asc, eq, sql } from 'drizzle-orm'
@@ -64,7 +63,7 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 		),
 	})
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ locals, cookies, params, request }) => {
 		const eventId = params.eventId
 
@@ -81,7 +80,7 @@ export const actions: Actions = {
 		if (parsed instanceof v.FormError) return parsed.fail()
 
 		const localsSession = locals.session.get(eventId)
-		const sessionId = localsSession?.id ?? generateNanoID(12)
+		const sessionId = localsSession?.id ?? generateNanoID(16)
 		const token = localsSession?.token ?? generateNanoID(21)
 		const encodedToken = await encodeSHA256(token)
 

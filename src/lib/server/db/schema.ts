@@ -21,8 +21,8 @@ const CASCADE = { onUpdate: 'cascade', onDelete: 'cascade' } satisfies Reference
 /* SCHEMAS */
 
 export const events = pgTable('events', {
-	id: char({ length: 12 })
-		.$default(() => generateNanoID(12))
+	id: char({ length: 16 })
+		.$default(() => generateNanoID(16))
 		.primaryKey(),
 	title: text().notNull(),
 	description: text(),
@@ -33,10 +33,10 @@ export const events = pgTable('events', {
 })
 
 export const options = pgTable('options', {
-	id: char({ length: 12 })
-		.$default(() => generateNanoID(12))
+	id: char({ length: 16 })
+		.$default(() => generateNanoID(16))
 		.primaryKey(),
-	eventId: char({ length: 12 })
+	eventId: char({ length: 16 })
 		.references(() => events.id, CASCADE)
 		.notNull(),
 	startsAt: datetime().notNull(),
@@ -45,10 +45,10 @@ export const options = pgTable('options', {
 })
 
 export const sessions = pgTable('sessions', {
-	id: char({ length: 12 })
-		.$default(() => generateNanoID(12))
+	id: char({ length: 16 })
+		.$default(() => generateNanoID(16))
 		.primaryKey(),
-	eventId: char({ length: 12 })
+	eventId: char({ length: 16 })
 		.references(() => events.id, CASCADE)
 		.notNull(),
 	token: char({ length: 44 }).notNull(),
@@ -59,10 +59,10 @@ export const sessions = pgTable('sessions', {
 export const organizers = pgTable(
 	'organizers',
 	{
-		eventId: char({ length: 12 })
+		eventId: char({ length: 16 })
 			.references(() => events.id, CASCADE)
 			.notNull(),
-		sessionId: char({ length: 12 })
+		sessionId: char({ length: 16 })
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
 	},
@@ -74,10 +74,10 @@ export const availability = pgEnum('availability', ['YES', 'NO', 'MAYBE'])
 export const responses = pgTable(
 	'responses',
 	{
-		optionId: char({ length: 12 })
+		optionId: char({ length: 16 })
 			.references(() => options.id, CASCADE)
 			.notNull(),
-		sessionId: char({ length: 12 })
+		sessionId: char({ length: 16 })
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
 		availability: availability().notNull(),
