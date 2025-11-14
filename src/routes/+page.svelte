@@ -30,7 +30,7 @@
 <section class="mb-20">
 	<h3 class="font-display mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-200"
+		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Datumprikken kan ook zonder verdienmodel. Daarom doet Prikkert vier beloftes.
 	</p>

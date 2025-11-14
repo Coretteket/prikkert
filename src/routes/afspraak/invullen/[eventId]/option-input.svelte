@@ -109,7 +109,7 @@
 	[data-note] {
 		display: grid;
 		grid-template-rows: 0fr;
-		transition: grid-template-rows 150ms ease;
+		transition: grid-template-rows 75ms ease;
 		overflow: clip;
 	}
 

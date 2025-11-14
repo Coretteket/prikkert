@@ -3,7 +3,7 @@ export const promises = [
 		icon: 'tabler--pig-money',
 		title: 'Altijd gratis',
 		description:
-			'Geen verborgen kosten, geen verrassingen. Alle functies van Prikkert blijven altijd gratis.',
+			'Alle onderdelen van Prikkert zijn en blijven altijd gratis. Geen verborgen kosten.',
 	},
 	{
 		icon: 'tabler--ad-off',
@@ -15,7 +15,7 @@ export const promises = [
 		icon: 'tabler--shield-lock',
 		title: 'Privacy voorop',
 		description:
-			'Geen account, geen zorgen. Prikkert verkoopt je gegevens nooit en slaat alles veilig op in de EU.',
+			'Prikkert geeft jou controle, verkoopt je gegevens nooit, en slaat alles veilig op in de EU.',
 	},
 	{
 		icon: 'tabler--folder-open',
