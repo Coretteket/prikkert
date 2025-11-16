@@ -33,9 +33,31 @@ services:
       - prikkert
     restart: always
 
+  drizzle-gateway:
+    image: ghcr.io/drizzle-team/gateway:latest
+    restart: always
+    ports:
+      - '4983'
+    environment:
+      - PORT=4983
+      - STORE_PATH=/app
+      - MASTERPASS=${DRIZZLE_GATEWAY_PASS}
+    volumes:
+      - drizzle-gateway:/app
+    networks:
+      - prikkert
+      - traefik
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.drizzle-gateway.rule=Host(`db.prikkert.nl`)'
+      - 'traefik.http.routers.drizzle-gateway.entrypoints=websecure'
+      - 'traefik.http.routers.drizzle-gateway.tls.certresolver=myresolver'
+      - 'traefik.http.services.drizzle-gateway.loadbalancer.server.port=4983'
+
 volumes:
   letsencrypt:
   db-data:
+  drizzle-gateway:
 
 networks:
   prikkert:
