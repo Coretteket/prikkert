@@ -19,7 +19,7 @@
 	{#each events as event}
 		<a
 			href="/afspraak/invullen/{event.id}"
-			class="block overflow-hidden rounded-lg border px-6 py-5 motion-safe:transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+			class="block overflow-hidden rounded-lg border px-6 py-5 hover:bg-neutral-50 motion-safe:transition-colors dark:hover:bg-neutral-800/50"
 		>
 			<h2 class="mb-2 text-lg font-medium text-neutral-700 dark:text-neutral-300">
 				{capitalizeFirst(event.title)}

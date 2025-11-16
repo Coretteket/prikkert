@@ -48,7 +48,10 @@
 				<Popover>
 					<div
 						class="grid min-w-40 rounded border bg-white p-2 text-sm text-neutral-700 shadow-sm dark:bg-neutral-900 dark:text-neutral-300"
-						transition:fade={{ duration: prefersReducedMotion.current ? 0 : 150, easing: cubicInOut }}
+						transition:fade={{
+							duration: prefersReducedMotion.current ? 0 : 150,
+							easing: cubicInOut,
+						}}
 					>
 						<Button
 							type="button"

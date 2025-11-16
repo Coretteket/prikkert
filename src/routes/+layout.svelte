@@ -30,7 +30,7 @@
 			href="/"
 			class="font-display flex items-center gap-3 text-xl font-medium text-neutral-800 dark:text-neutral-300"
 		>
-			<img src={icon} width={36} height={36} alt=""  />
+			<img src={icon} width={36} height={36} alt="" />
 			<span class="max-[440px]:hidden">Prikkert</span>
 		</a>
 

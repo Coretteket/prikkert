@@ -26,7 +26,7 @@
 		<p class="font-medium">Beschikbaarheid</p>
 		<button
 			type="button"
-			class="flex items-center gap-1 rounded border px-2 py-1 text-sm font-medium motion-safe:transition hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+			class="flex items-center gap-1 rounded border px-2 py-1 text-sm font-medium hover:bg-neutral-50 motion-safe:transition dark:hover:bg-neutral-800/50"
 			onclick={() => (allOpen = !allOpen)}
 			aria-pressed={allOpen}
 		>
@@ -37,13 +37,13 @@
 		{#each data.event.options as option (option.id)}
 			<details class="group" open={allOpen}>
 				<summary
-					class="flex cursor-pointer flex-col px-5 py-4 motion-safe:transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+					class="flex cursor-pointer flex-col px-5 py-4 hover:bg-neutral-50 motion-safe:transition-colors dark:hover:bg-neutral-800/50"
 				>
 					<div class="mb-3 flex w-full items-center justify-between">
 						<p>{formatDateTimeOption(option)}</p>
 						<Icon
 							icon="tabler--chevron-right"
-							class="size-5 text-neutral-500 motion-safe:transition group-open:rotate-90 dark:text-neutral-300"
+							class="size-5 text-neutral-500 group-open:rotate-90 motion-safe:transition dark:text-neutral-300"
 						/>
 					</div>
 					<div role="progressbar" class="flex divide-x overflow-hidden rounded-lg border">

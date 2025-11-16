@@ -9,7 +9,6 @@ export function deduplicate<T>(array: T[], keyFn: (item: T) => string): T[] {
 
 export const capitalizeFirst = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
-
 export function omit<T, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
 	const result = { ...obj }
 	for (const key of keys) {

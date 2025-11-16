@@ -19,7 +19,7 @@ services:
       - 'traefik.http.routers.prikkert.rule=Host(`prikkert.nl`)'
       - 'traefik.http.routers.prikkert.entrypoints=websecure'
       - 'traefik.http.routers.prikkert.tls.certresolver=letsencrypt'
-      - "traefik.http.routers.prikkert.middlewares=myratelimit@file,mycompress@file,myhsts@file,mysecurityheaders@file"
+      - 'traefik.http.routers.prikkert.middlewares=myratelimit@file,mycompress@file,myhsts@file,mysecurityheaders@file'
 
   db:
     image: postgres:alpine

@@ -93,7 +93,7 @@
 	<div class="mx-auto max-w-130">
 		{#each faq as { question, answer }, i}
 			<details
-				class="group mb-4 pb-4 motion-safe:transition not-last-of-type:border-b"
+				class="group mb-4 pb-4 not-last-of-type:border-b motion-safe:transition"
 				open={openAccordion === i}
 			>
 				<summary
