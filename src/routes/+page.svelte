@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Icon from '@/lib/components/icon.svelte'
-	import { faq, promises, steps } from './content'
 	import Button from '@/lib/components/button.svelte'
+	import Icon from '@/lib/components/icon.svelte'
+
+	import { faq, promises, steps } from './content'
 
 	let openAccordion = $state(0)
 </script>

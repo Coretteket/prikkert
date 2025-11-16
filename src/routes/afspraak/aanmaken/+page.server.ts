@@ -1,12 +1,12 @@
-import type { Actions } from './$types'
-import { db, schema } from '@/lib/server/db'
 import { redirect } from '@sveltejs/kit'
-import { Now } from '@/lib/temporal'
+
 import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
+import { db, schema } from '@/lib/server/db'
 import { setSessionCookie } from '@/lib/server/session'
-import { deduplicate } from '@/lib/utils'
 import * as v from '@/lib/server/validation'
+import { Now } from '@/lib/temporal'
 import { PlainTime } from '@/lib/temporal'
+import { deduplicate } from '@/lib/utils'
 
 const OptionTimeSchema = v.union(
 	[
@@ -53,7 +53,7 @@ const CreateEventSchema = v.object({
 	),
 })
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ cookies, request }) => {
 		const parsed = v.parseForm(CreateEventSchema, await request.formData())
 		if (parsed instanceof v.FormError) return parsed.fail()

@@ -1,5 +1,5 @@
+import { customType, type PgTimestampConfig, timestamp } from 'drizzle-orm/pg-core'
 import { Temporal } from 'temporal-polyfill'
-import { customType, timestamp, type PgTimestampConfig } from 'drizzle-orm/pg-core'
 
 /** Instant with timezone compatible with Temporal API. */
 export const instant = (name?: string) => {

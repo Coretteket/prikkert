@@ -1,18 +1,19 @@
 // For a graphical overview, see:
 // https://dbdiagram.io/d/Prikkert-690e25276735e11170c6319a
 
+import { relations } from 'drizzle-orm'
 import {
-	pgTable,
-	char,
-	text,
 	boolean,
+	char,
 	pgEnum,
+	pgTable,
 	primaryKey,
 	type ReferenceConfig,
+	text,
 } from 'drizzle-orm/pg-core'
-import { instant, datetime } from './types'
-import { relations } from 'drizzle-orm'
+
 import { generateNanoID } from '../crypto'
+import { datetime, instant } from './types'
 
 /* UTILITIES */
 

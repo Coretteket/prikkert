@@ -1,5 +1,6 @@
-import type { PlainTime } from '@/lib/temporal'
 import type { SvelteMap } from 'svelte/reactivity'
+
+import type { PlainTime } from '@/lib/temporal'
 
 export const emptySlot = [] satisfies PartialSlot
 export type PartialSlot = [startsAt?: PlainTime, endsAt?: PlainTime]

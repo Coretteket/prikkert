@@ -1,18 +1,20 @@
 <script lang="ts">
 	import {
-		useFloating,
-		flip,
 		autoUpdate,
+		flip,
 		offset,
-		useInteractions,
-		useClick,
-		useRole,
-		useDismiss,
-		useId,
 		shift,
+		useClick,
+		useDismiss,
+		useFloating,
+		useId,
+		useInteractions,
+		useRole,
 	} from '@skeletonlabs/floating-ui-svelte'
-	import { store } from '@/state.svelte'
 	import type { Snippet } from 'svelte'
+
+	import { store } from '@/state.svelte'
+
 	import Icon from './icon.svelte'
 
 	type Props = { children: Snippet }

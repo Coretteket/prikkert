@@ -1,9 +1,10 @@
-import * as v from 'valibot'
 import '@valibot/i18n/nl'
 
-import { decode } from './form'
 import { fail as kitFail } from '@sveltejs/kit'
+import * as v from 'valibot'
+
 import { PlainDate, PlainTime } from '../temporal'
+import { decode } from './form'
 
 v.setGlobalConfig({ lang: 'nl' })
 

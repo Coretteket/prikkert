@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { resolve } from '$app/paths'
 	import { PlainDate } from '@/lib/temporal'
 	import { formatDateTimeRange } from '@/lib/time-format'
 	import { capitalizeFirst } from '@/lib/utils'
+	import { resolve } from '$app/paths'
 
 	let { data } = $props()
 

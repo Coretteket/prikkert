@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { SvelteMap } from 'svelte/reactivity'
-	import DatePicker from './date-picker.svelte'
-	import type { Options } from './types'
-	import { PlainDate } from '@/lib/temporal'
-	import TimeSlot from './time-slot.svelte'
 	import { untrack } from 'svelte'
+	import { SvelteMap } from 'svelte/reactivity'
+
 	import Button from '@/lib/components/button.svelte'
-	import { enhance } from '$app/forms'
+	import { PlainDate } from '@/lib/temporal'
 	import { keys } from '@/lib/utils'
+	import { enhance } from '$app/forms'
+
+	import DatePicker from './date-picker.svelte'
+	import TimeSlot from './time-slot.svelte'
+	import type { Options } from './types'
 
 	let { form } = $props()
 

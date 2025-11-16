@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Now, PlainDate } from '@/lib/temporal'
-	import { emptySlot, type Options } from './types'
 	import Button from '@/lib/components/button.svelte'
 	import Icon from '@/lib/components/icon.svelte'
+	import { Now, PlainDate } from '@/lib/temporal'
+
+	import { emptySlot, type Options } from './types'
 
 	let { options }: { options: Options } = $props()
 

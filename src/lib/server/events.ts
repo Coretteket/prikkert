@@ -1,8 +1,10 @@
-import { db, schema } from '@/lib/server/db'
 import { asc, eq, inArray } from 'drizzle-orm'
-import { encodeSHA256 } from './crypto'
-import { omit } from '../utils'
+
+import { db, schema } from '@/lib/server/db'
+
 import { PlainDateTime } from '../temporal'
+import { omit } from '../utils'
+import { encodeSHA256 } from './crypto'
 
 export async function getEvent(eventId: string, token?: string) {
 	const event = await db.query.events.findFirst({
