@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '@/lib/components/button.svelte'
-	import Icon from '@/lib/components/icon.svelte'
+	import Button from '@/components/button.svelte'
+	import Icon from '@/components/icon.svelte'
 
 	import { faq, promises, steps } from './content'
 

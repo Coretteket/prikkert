@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '@/lib/components/button.svelte'
-	import { keys } from '@/lib/utils'
+	import Button from '@/components/button.svelte'
+	import { keys } from '@/utils'
 	import { enhance } from '$app/forms'
 
 	import OptionInput from './option-input.svelte'

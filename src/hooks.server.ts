@@ -1,8 +1,7 @@
 import type { Handle } from '@sveltejs/kit'
 
-import * as v from '@/lib/server/validation'
-
-import { parseSessionCookies } from './lib/server/session'
+import { parseSessionCookies } from '@/server/session'
+import * as v from '@/server/validation'
 
 const ThemeSchema = v.fallback(v.picklist(['light', 'dark', 'system']), 'system')
 

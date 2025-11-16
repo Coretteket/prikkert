@@ -3,11 +3,11 @@
 	import { prefersReducedMotion } from 'svelte/motion'
 	import { fade } from 'svelte/transition'
 
-	import Button from '@/lib/components/button.svelte'
-	import Icon from '@/lib/components/icon.svelte'
-	import Popover from '@/lib/components/popover.svelte'
-	import { PlainDate } from '@/lib/temporal'
+	import Button from '@/components/button.svelte'
+	import Icon from '@/components/icon.svelte'
+	import Popover from '@/components/popover.svelte'
 	import { store } from '@/state.svelte'
+	import { PlainDate } from '@/temporal'
 
 	import TimeInput from './time-input.svelte'
 	import { emptySlot, type Options, type Slot } from './types'

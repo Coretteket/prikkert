@@ -1,6 +1,6 @@
 import type { Transport } from '@sveltejs/kit'
 
-import { PlainDate, PlainDateTime } from '@/lib/temporal'
+import { PlainDate, PlainDateTime } from '@/temporal'
 
 export const transport = {
 	PlainDate: {

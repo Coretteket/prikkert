@@ -1,12 +1,12 @@
 import { redirect } from '@sveltejs/kit'
 
-import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
-import { db, schema } from '@/lib/server/db'
-import { setSessionCookie } from '@/lib/server/session'
-import * as v from '@/lib/server/validation'
-import { Now } from '@/lib/temporal'
-import { PlainTime } from '@/lib/temporal'
-import { deduplicate } from '@/lib/utils'
+import { encodeSHA256, generateNanoID } from '@/server/crypto'
+import { db, schema } from '@/server/db'
+import { setSessionCookie } from '@/server/session'
+import * as v from '@/server/validation'
+import { Now } from '@/temporal'
+import { PlainTime } from '@/temporal'
+import { deduplicate } from '@/utils'
 
 const OptionTimeSchema = v.union(
 	[

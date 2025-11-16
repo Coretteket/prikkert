@@ -1,10 +1,10 @@
 import { error } from '@sveltejs/kit'
 import { asc, eq, sql } from 'drizzle-orm'
 
-import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
-import { db, schema } from '@/lib/server/db'
-import { setSessionCookie } from '@/lib/server/session'
-import * as v from '@/lib/server/validation'
+import { encodeSHA256, generateNanoID } from '@/server/crypto'
+import { db, schema } from '@/server/db'
+import { setSessionCookie } from '@/server/session'
+import * as v from '@/server/validation'
 
 export const load = async ({ params, locals }) => {
 	const eventId = params.eventId

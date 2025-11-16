@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from '@/lib/components/button.svelte'
-	import Icon from '@/lib/components/icon.svelte'
-	import { Now, PlainDate } from '@/lib/temporal'
+	import Button from '@/components/button.svelte'
+	import Icon from '@/components/icon.svelte'
+	import { Now, PlainDate } from '@/temporal'
 
 	import { emptySlot, type Options } from './types'
 

@@ -2,9 +2,9 @@
 	import type { InferSelectModel } from 'drizzle-orm'
 	import type { Snippet } from 'svelte'
 
-	import Icon from '@/lib/components/icon.svelte'
-	import type { schema } from '@/lib/server/db'
-	import { formatDateTimeOption } from '@/lib/time-format'
+	import Icon from '@/components/icon.svelte'
+	import type { schema } from '@/server/db'
+	import { formatDateTimeOption } from '@/time-format'
 
 	type Props = {
 		option: Pick<InferSelectModel<typeof schema.options>, 'id' | 'startsAt' | 'endsAt'>

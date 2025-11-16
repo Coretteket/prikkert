@@ -3,11 +3,11 @@
 	import '@fontsource-variable/lexend'
 	import '../app.css'
 
-	import icon from '@/lib/assets/icon.svg'
-	import pattern from '@/lib/assets/pattern.svg'
-	import Button from '@/lib/components/button.svelte'
-	import Icon from '@/lib/components/icon.svelte'
-	import { toggleTheme } from '@/lib/theme'
+	import icon from '@/assets/icon.svg'
+	import pattern from '@/assets/pattern.svg'
+	import Button from '@/components/button.svelte'
+	import Icon from '@/components/icon.svelte'
+	import { toggleTheme } from '@/theme'
 	import { resolve } from '$app/paths'
 
 	let { data, children } = $props()

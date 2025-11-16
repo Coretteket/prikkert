@@ -2,9 +2,9 @@
 	import { untrack } from 'svelte'
 	import { SvelteMap } from 'svelte/reactivity'
 
-	import Button from '@/lib/components/button.svelte'
-	import { PlainDate } from '@/lib/temporal'
-	import { keys } from '@/lib/utils'
+	import Button from '@/components/button.svelte'
+	import { PlainDate } from '@/temporal'
+	import { keys } from '@/utils'
 	import { enhance } from '$app/forms'
 
 	import DatePicker from './date-picker.svelte'
