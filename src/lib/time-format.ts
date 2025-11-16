@@ -43,9 +43,9 @@ export function formatDateTimeRange(
 
 	if (start === end) return start
 
-	const [startWords, endWords] = [start, end].map((d) => d.split(' ').reverse())
-	const commonCount = startWords.findIndex((w, i) => w !== endWords[i])
-	const trimmedStart = startWords.slice(commonCount).reverse().join(' ')
+	const [startWords, endWords] = [start, end].map((d) => d.split(' ').toReversed())
+	const commonCount = startWords.findIndex((w, index) => w !== endWords[index])
+	const trimmedStart = startWords.slice(commonCount).toReversed().join(' ')
 
 	return `${trimmedStart} t/m ${end}`
 }
