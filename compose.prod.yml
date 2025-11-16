@@ -52,7 +52,7 @@ services:
       - 'traefik.http.routers.drizzle-gateway.rule=Host(`db.prikkert.nl`)'
       - 'traefik.http.routers.drizzle-gateway.entrypoints=websecure'
       - 'traefik.http.routers.drizzle-gateway.tls.certresolver=letsencrypt'
-      - 'traefik.http.routers.prikkert.middlewares=myratelimit@file,mycompress@file,myhsts@file,mysecurityheaders@file'
+      - 'traefik.http.routers.drizzle-gateway.middlewares=myratelimit@file,mycompress@file,myhsts@file,mysecurityheaders@file'
 
 volumes:
   letsencrypt:
