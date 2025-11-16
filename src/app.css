@@ -28,6 +28,22 @@
 	* {
 		@apply border-neutral-300 dark:border-neutral-700;
 	}
+
+	@supports selector(::details-content) and (not (-moz-appearance: none)) {
+		@media (prefers-reduced-motion: no-preference) {
+			::details-content {
+				height: 0;
+				transition:
+					height 150ms ease,
+					content-visibility 150ms ease allow-discrete;
+				overflow: clip;
+			}
+
+			details[open]::details-content {
+				height: auto;
+			}
+		}
+	}
 }
 
 @utility no-transition {

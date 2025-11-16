@@ -126,20 +126,3 @@
 	</a>, vrijgegeven onder de
 	<a href="https://eupl.eu/1.2/nl/" target="_blank" class="underline">EUPL</a>.
 </footer>
-
-<style>
-	/* Firefox has buggy ::details-content support, so we exclude it */
-	@supports selector(::details-content) and (not (-moz-appearance: none)) {
-		::details-content {
-			height: 0;
-			transition:
-				height 150ms ease,
-				content-visibility 150ms ease allow-discrete;
-			overflow: clip;
-		}
-
-		details[open]::details-content {
-			height: auto;
-		}
-	}
-</style>
