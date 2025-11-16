@@ -39,7 +39,8 @@
 
 	let { as, children, class: className, variant, size, ...rest }: Props = $props()
 
-	const getRestProps = () => rest as any // to avoid overly complex type issues
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const getRestProps = () => rest as any
 </script>
 
 {#if as === 'link'}

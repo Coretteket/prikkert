@@ -5,7 +5,7 @@ import * as v from '@/lib/server/validation'
 import { encodeSHA256, generateNanoID } from '@/lib/server/crypto'
 import { setSessionCookie } from '@/lib/server/session'
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ params }) => {
 	const eventId = params.eventId
 
 	if (!eventId) error(404, 'Afspraak niet gevonden')

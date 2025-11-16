@@ -46,7 +46,7 @@
 					</h4>
 				</div>
 				<p class="font-[350] text-balance text-neutral-600 dark:text-pink-50/70">
-					{@html promise.description}
+					{promise.description}
 				</p>
 			</div>
 		{/each}

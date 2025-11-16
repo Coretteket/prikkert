@@ -1,5 +1,5 @@
 import { db, schema } from '@/lib/server/db'
-import { asc, desc, eq, inArray } from 'drizzle-orm'
+import { asc, eq, inArray } from 'drizzle-orm'
 import { encodeSHA256 } from './crypto'
 import { omit } from '../utils'
 import { PlainDateTime } from '../temporal'

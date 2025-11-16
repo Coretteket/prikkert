@@ -8,6 +8,7 @@
 	import Button from '@/lib/components/button.svelte'
 	import Icon from '@/lib/components/icon.svelte'
 	import { toggleTheme } from '@/lib/theme'
+	import { resolve } from '$app/paths'
 
 	let { data, children } = $props()
 </script>
@@ -27,7 +28,7 @@
 >
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
-			href="/"
+			href={resolve('/')}
 			class="font-display flex items-center gap-3 text-xl font-medium text-neutral-800 dark:text-neutral-300"
 		>
 			<img src={icon} width={36} height={36} alt="" />
