@@ -18,7 +18,7 @@ services:
       - 'traefik.enable=true'
       - 'traefik.http.routers.prikkert.rule=Host(`prikkert.nl`)'
       - 'traefik.http.routers.prikkert.entrypoints=websecure'
-      - 'traefik.http.routers.prikkert.tls.certresolver=myresolver'
+      - 'traefik.http.routers.prikkert.tls.certresolver=letsencrypt'
       - "traefik.http.routers.prikkert.middlewares=myratelimit@file,mycompress@file,myhsts@file,mysecurityheaders@file"
 
   db:
@@ -51,7 +51,7 @@ services:
       - 'traefik.enable=true'
       - 'traefik.http.routers.drizzle-gateway.rule=Host(`db.prikkert.nl`)'
       - 'traefik.http.routers.drizzle-gateway.entrypoints=websecure'
-      - 'traefik.http.routers.drizzle-gateway.tls.certresolver=myresolver'
+      - 'traefik.http.routers.drizzle-gateway.tls.certresolver=letsencrypt'
       - 'traefik.http.services.drizzle-gateway.loadbalancer.server.port=4983'
 
 volumes:
