@@ -14,7 +14,7 @@
 	type Props = BaseProps & (T extends 'button' ? AsButtonProps : AsLinkProps)
 
 	const buttonVariants = cva({
-		base: 'w-fit flex items-center gap-1.5 transition not-disabled:cursor-pointer',
+		base: 'w-fit flex items-center gap-1.5 motion-safe:transition not-disabled:cursor-pointer',
 		variants: {
 			variant: {
 				primary:

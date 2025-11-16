@@ -8,6 +8,7 @@
 	import Popover from '@/lib/components/popover.svelte'
 	import Button from '@/lib/components/button.svelte'
 	import Icon from '@/lib/components/icon.svelte'
+	import { prefersReducedMotion } from 'svelte/motion'
 
 	type Props = { date: string; options: Options }
 
@@ -47,7 +48,7 @@
 				<Popover>
 					<div
 						class="grid min-w-40 rounded border bg-white p-2 text-sm text-neutral-700 shadow-sm dark:bg-neutral-900 dark:text-neutral-300"
-						transition:fade={{ duration: 150, easing: cubicInOut }}
+						transition:fade={{ duration: prefersReducedMotion.current ? 0 : 150, easing: cubicInOut }}
 					>
 						<Button
 							type="button"

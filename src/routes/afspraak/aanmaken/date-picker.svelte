@@ -83,7 +83,7 @@
 							onclick={() => toggleDate(day)}
 							disabled={!inMonth || isPast}
 							class={[
-								'flex aspect-square items-center justify-center rounded font-[350] tabular-nums transition',
+								'flex aspect-square items-center justify-center rounded font-[350] tabular-nums motion-safe:transition',
 								isSelected
 									? 'border border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800 dark:border-pink-700 dark:bg-pink-800'
 									: isPast
@@ -98,7 +98,7 @@
 						{#if PlainDate.compare(day, now) === 0}
 							<div
 								class={[
-									'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl transition',
+									'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl motion-safe:transition',
 									isSelected ? 'text-neutral-100' : 'text-neutral-700 dark:text-neutral-300',
 								]}
 							>

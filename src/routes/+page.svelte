@@ -93,7 +93,7 @@
 	<div class="mx-auto max-w-130">
 		{#each faq as { question, answer }, i}
 			<details
-				class="group mb-4 pb-4 transition not-last-of-type:border-b"
+				class="group mb-4 pb-4 motion-safe:transition not-last-of-type:border-b"
 				open={openAccordion === i}
 			>
 				<summary
@@ -106,7 +106,7 @@
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon
 						icon="tabler--chevron-right"
-						class="my-0.5 size-5 transition group-open:rotate-90"
+						class="my-0.5 size-5 group-open:rotate-90 motion-safe:transition"
 					/>
 				</summary>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->

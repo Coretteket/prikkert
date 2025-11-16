@@ -37,7 +37,7 @@
 			onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
 		/>
 		<span
-			class="flex items-center gap-1.5 px-3 py-2 text-sm leading-none transition-colors {classes}"
+			class="flex items-center gap-1.5 px-3 py-2 text-sm leading-none motion-safe:transition-colors {classes}"
 		>
 			<Icon {icon} class="size-5" />
 			<span class="max-xs:hidden">{label}</span>
@@ -109,8 +109,13 @@
 	[data-note] {
 		display: grid;
 		grid-template-rows: 0fr;
-		transition: grid-template-rows 75ms ease;
 		overflow: clip;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		[data-note] {
+			transition: grid-template-rows 75ms ease;
+		}
 	}
 
 	[data-note='show'] {

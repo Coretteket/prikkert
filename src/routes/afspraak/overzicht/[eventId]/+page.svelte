@@ -3,6 +3,7 @@
 	import Icon from '@/lib/components/icon.svelte'
 
 	let { data } = $props()
+	let allOpen = $state(false)
 
 	function sortResponses(responses: (typeof data)['event']['options'][number]['responses']) {
 		const order = { YES: 0, MAYBE: 1, NO: 2 }
@@ -21,14 +22,30 @@
 {/if}
 
 <div class="mb-6">
-	<p class="mb-4 block font-medium">Beschikbaarheid</p>
+	<div class="mb-4 flex items-center justify-between">
+		<p class="font-medium">Beschikbaarheid</p>
+		<button
+			type="button"
+			class="flex items-center gap-1 rounded border px-2 py-1 text-sm font-medium motion-safe:transition hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+			onclick={() => (allOpen = !allOpen)}
+			aria-pressed={allOpen}
+		>
+			{allOpen ? 'Alles inklappen' : 'Alles uitklappen'}
+		</button>
+	</div>
 	<div class="mb-4 block divide-y overflow-hidden rounded-lg border">
 		{#each data.event.options as option (option.id)}
-			<details class="group">
+			<details class="group" open={allOpen}>
 				<summary
-					class="flex cursor-pointer flex-col px-5 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+					class="flex cursor-pointer flex-col px-5 py-4 motion-safe:transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
 				>
-					<p class="mb-2">{formatDateTimeOption(option)}</p>
+					<div class="mb-3 flex w-full items-center justify-between">
+						<p>{formatDateTimeOption(option)}</p>
+						<Icon
+							icon="tabler--chevron-right"
+							class="size-5 text-neutral-500 motion-safe:transition group-open:rotate-90 dark:text-neutral-300"
+						/>
+					</div>
 					<div role="progressbar" class="flex divide-x overflow-hidden rounded-lg border">
 						{#each ['YES', 'MAYBE', 'NO'] as availability}
 							{@const number = option.responses.filter(
