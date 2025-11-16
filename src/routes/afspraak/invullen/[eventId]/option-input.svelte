@@ -32,12 +32,12 @@
 			type="radio"
 			name={availabilityName}
 			{value}
-			class="absolute opacity-0"
+			class="peer absolute opacity-0"
 			bind:group={availabilityValue}
 			onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
 		/>
 		<span
-			class="flex items-center gap-1.5 px-3 py-2 text-sm leading-none motion-safe:transition-colors {classes}"
+			class="peer-focus-visible:outline-focus relative flex items-center gap-1.5 px-3 py-2 text-sm leading-none peer-focus-visible:z-100 motion-safe:transition-colors {classes}"
 		>
 			<Icon {icon} class="size-5" />
 			<span class="max-xs:hidden">{label}</span>
@@ -89,7 +89,7 @@
 		</div>
 	</div>
 
-	<div data-note={showNote ? 'show' : 'hide'}>
+	<div data-note={showNote ? 'show' : 'hide'} class="-m-1 p-1">
 		<div>
 			<textarea
 				id={noteName}
@@ -97,6 +97,7 @@
 				class="mt-3 block min-h-12 w-full rounded-lg border px-4 py-2.5 font-[350] dark:bg-neutral-800/50"
 				placeholder="Voeg een opmerking toe..."
 				rows={1}
+				tabindex={showNote ? 0 : -1}
 				bind:value={noteValue}
 			></textarea>
 		</div>

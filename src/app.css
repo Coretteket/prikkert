@@ -25,6 +25,14 @@
 		}
 	}
 
+	:is(*, *:-moz-focusring) {
+		@apply outline-focus;
+	}
+
+	*:not(:focus-visible) {
+		@apply outline-none;
+	}
+
 	* {
 		@apply border-neutral-300 dark:border-neutral-700;
 	}
@@ -44,6 +52,11 @@
 			}
 		}
 	}
+}
+
+@utility outline-focus {
+	outline: 2px solid theme(--color-pink-500);
+	outline-offset: 2px;
 }
 
 @utility no-transition {
