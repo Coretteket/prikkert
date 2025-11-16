@@ -1,7 +1,8 @@
 import { db, schema } from '@/lib/server/db'
-import { asc, eq, inArray } from 'drizzle-orm'
+import { asc, desc, eq, inArray } from 'drizzle-orm'
 import { encodeSHA256 } from './crypto'
 import { omit } from '../utils'
+import { PlainDateTime } from '../temporal'
 
 export async function getEvent(eventId: string, token?: string) {
 	const event = await db.query.events.findFirst({
@@ -54,10 +55,12 @@ export async function getEventsForSession(session: App.Locals['session']) {
 		},
 	})
 
-	return data.map(({ event }) => ({
-		...omit(event, 'options', 'sessions'),
-		firstDate: event.options.at(0)!.startsAt,
-		lastDate: event.options.at(-1)!.startsAt,
-		numberOfResponses: event.sessions.filter((s) => s.responses.length > 0).length,
-	}))
+	return data
+		.map(({ event }) => ({
+			...omit(event, 'options', 'sessions'),
+			firstDate: event.options.at(0)!.startsAt,
+			lastDate: event.options.at(-1)!.startsAt,
+			numberOfResponses: event.sessions.filter((s) => s.responses.length > 0).length,
+		}))
+		.toSorted((a, b) => PlainDateTime.compare(b.createdAt, a.createdAt))
 }

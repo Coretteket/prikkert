@@ -19,16 +19,23 @@ const OptionTimeSchema = v.union(
 	'Ongeldig tijdslot.',
 )
 
+const MIN_TITLE_LENGTH = 3
+const MAX_TITLE_LENGTH = 100
+const MAX_DESCRIPTION_LENGTH = 500
+
 const CreateEventSchema = v.object({
 	title: v.pipe(
 		v.string('Vul een titel in.'),
-		v.minLength(3, 'Vul een titel in van minstens drie tekens.'),
-		v.maxLength(200, 'Vul een titel in van maximaal 200 tekens.'),
+		v.minLength(MIN_TITLE_LENGTH, `Vul een titel in van minstens ${MIN_TITLE_LENGTH} tekens.`),
+		v.maxLength(MAX_TITLE_LENGTH, `Vul een titel in van maximaal ${MAX_TITLE_LENGTH} tekens.`),
 	),
 	description: v.nullable(
 		v.pipe(
 			v.string(),
-			v.maxLength(2000, 'Vul een beschrijving in van maximaal 2000 tekens.'),
+			v.maxLength(
+				MAX_DESCRIPTION_LENGTH,
+				`Vul een beschrijving in van maximaal ${MAX_DESCRIPTION_LENGTH} tekens.`,
+			),
 			v.transform((val) => (val.length > 0 ? val : null)),
 		),
 	),
