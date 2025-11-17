@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte'
+
 	import {
 		autoUpdate,
 		flip,
@@ -11,7 +13,6 @@
 		useInteractions,
 		useRole,
 	} from '@skeletonlabs/floating-ui-svelte'
-	import type { Snippet } from 'svelte'
 
 	import { store } from '@/state.svelte'
 

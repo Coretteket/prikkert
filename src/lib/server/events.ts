@@ -1,8 +1,8 @@
 import { asc, eq, inArray } from 'drizzle-orm'
 
 import { encodeSHA256 } from '@/server/crypto'
-import { db, schema } from '@/server/db'
 import { PlainDateTime } from '@/temporal'
+import { db, schema } from '@/server/db'
 import { omit } from '@/utils'
 
 export async function getEvent(eventId: string, token?: string) {

@@ -1,9 +1,9 @@
-import { error } from '@sveltejs/kit'
 import { asc, eq, sql } from 'drizzle-orm'
+import { error } from '@sveltejs/kit'
 
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
-import { db, schema } from '@/server/db'
 import { setSessionCookie } from '@/server/session'
+import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
 export const load = async ({ params }) => {

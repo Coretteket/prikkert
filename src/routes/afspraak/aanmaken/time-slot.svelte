@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { cubicInOut } from 'svelte/easing'
 	import { prefersReducedMotion } from 'svelte/motion'
+	import { cubicInOut } from 'svelte/easing'
 	import { fade } from 'svelte/transition'
 
+	import Popover from '@/components/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
-	import Popover from '@/components/popover.svelte'
 	import { store } from '@/state.svelte'
 	import { PlainDate } from '@/temporal'
 
-	import TimeInput from './time-input.svelte'
 	import { emptySlot, type Options, type Slot } from './types'
+	import TimeInput from './time-input.svelte'
 
 	type Props = { date: string; options: Options }
 

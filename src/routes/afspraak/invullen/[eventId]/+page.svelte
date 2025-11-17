@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { enhance } from '$app/forms'
+
 	import Button from '@/components/button.svelte'
 	import { keys } from '@/utils'
-	import { enhance } from '$app/forms'
 
 	import OptionInput from './option-input.svelte'
 

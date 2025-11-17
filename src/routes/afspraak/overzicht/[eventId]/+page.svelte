@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Icon from '@/components/icon.svelte'
 	import { formatDateTimeOption } from '@/time-format'
+	import Icon from '@/components/icon.svelte'
 
 	let { data } = $props()
 	let allOpen = $state(false)

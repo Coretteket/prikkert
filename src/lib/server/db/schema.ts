@@ -1,7 +1,6 @@
 // For a graphical overview, see:
 // https://dbdiagram.io/d/Prikkert-690e25276735e11170c6319a
 
-import { relations } from 'drizzle-orm'
 import {
 	boolean,
 	char,
@@ -11,9 +10,10 @@ import {
 	type ReferenceConfig,
 	text,
 } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm'
 
-import { generateNanoID } from '../crypto'
 import { datetime, instant } from './types'
+import { generateNanoID } from '../crypto'
 
 /* UTILITIES */
 

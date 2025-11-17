@@ -1,13 +1,12 @@
-import { fileURLToPath } from 'node:url'
-
+import perfectionist from 'eslint-plugin-perfectionist'
 import { includeIgnoreFile } from '@eslint/compat'
-import js from '@eslint/js'
-import { defineConfig } from 'eslint/config'
 import prettier from 'eslint-config-prettier'
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import { defineConfig } from 'eslint/config'
 import svelte from 'eslint-plugin-svelte'
-import globals from 'globals'
+import { fileURLToPath } from 'node:url'
 import ts from 'typescript-eslint'
+import globals from 'globals'
+import js from '@eslint/js'
 
 import svelteConfig from './svelte.config.js'
 
@@ -21,6 +20,31 @@ export default defineConfig(
 	prettier,
 	...svelte.configs.prettier,
 	{
+		plugins: { perfectionist },
+		rules: {
+			'perfectionist/sort-imports': [
+				'error',
+				{
+					type: 'line-length',
+					order: 'desc',
+					customGroups: [{ groupName: 'svelte', elementNamePattern: '^\\$app' }],
+					groups: [
+						'side-effect',
+						'type-import',
+						['value-builtin', 'value-external'],
+						'svelte',
+						'type-internal',
+						'value-internal',
+						['type-parent', 'type-sibling', 'type-index'],
+						['value-parent', 'value-sibling', 'value-index'],
+						'ts-equals-import',
+						'unknown',
+					],
+				},
+			],
+		},
+	},
+	{
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node },
 		},
@@ -29,15 +53,6 @@ export default defineConfig(
 			// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
 			'no-undef': 'off',
 			'svelte/require-each-key': 'off',
-		},
-	},
-	{
-		plugins: {
-			'simple-import-sort': simpleImportSort,
-		},
-		rules: {
-			'simple-import-sort/imports': 'error',
-			'simple-import-sort/exports': 'error',
 		},
 	},
 	{

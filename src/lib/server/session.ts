@@ -1,9 +1,11 @@
 import type { Cookies } from '@sveltejs/kit'
 
-import * as v from '@/server/validation'
-import { dev } from '$app/environment'
-import { getRequestEvent } from '$app/server'
 import { env } from '$env/dynamic/private'
+
+import { getRequestEvent } from '$app/server'
+import { dev } from '$app/environment'
+
+import * as v from '@/server/validation'
 
 const SessionKeySchema = v.pipe(
 	v.string(),
