@@ -55,8 +55,13 @@
 }
 
 @utility outline-focus {
-	outline: 2px solid theme(--color-pink-500);
+	outline-width: 2px;
+	outline-style: solid;
 	outline-offset: 2px;
+	outline-color: theme(--color-pink-900);
+	[data-theme='dark'] & {
+		outline-color: theme(--color-pink-100);
+	}
 }
 
 @utility no-transition {

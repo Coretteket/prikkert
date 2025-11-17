@@ -58,7 +58,11 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 			v.strictObject(
 				v.entriesFromList(
 					event.options.map((o) => o.id),
-					v.optional(v.nullable(v.pipe(v.string(), v.maxLength(500, 'Opmerking is te lang.')))),
+					v.optional(
+						v.nullable(
+							v.pipe(v.string(), v.maxLength(500, 'Opmerkingen mogen maximaal 500 tekens zijn.')),
+						),
+					),
 				),
 			),
 		),

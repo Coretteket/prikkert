@@ -58,14 +58,12 @@
 			autocomplete="name"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				form?.error?.nested?.name &&
-					form.error.nested.name.length > 0 &&
-					'outline outline-pink-600 dark:outline-pink-500',
+				form?.error?.nested?.name && form.error.nested.name.length > 0 && 'ring ring-pink-500',
 			]}
 			value={data.session?.name ?? ''}
 		/>
 		{#each form?.error?.nested?.name as issue}
-			<p class="text-pink-600 dark:text-pink-500">{issue}</p>
+			<p class="font-medium text-pink-600 dark:text-pink-500">{issue}</p>
 		{/each}
 	</div>
 
@@ -74,8 +72,7 @@
 		<div
 			class={[
 				'mb-4 block divide-y rounded-lg border',
-				(availabilityIssues.size > 0 || noteIssues.size > 0) &&
-					'outline outline-pink-600 dark:outline-pink-500',
+				(availabilityIssues.size > 0 || noteIssues.size > 0) && 'ring ring-pink-500',
 			]}
 		>
 			{#each data.event.options as option (option.id)}
@@ -83,14 +80,14 @@
 					{#snippet error()}
 						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(option.id)}
 							{#each availabilityIssues.get(option.id) as issue}
-								<p class="mt-2 text-pink-600 dark:text-pink-500">
+								<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
 									{issue}
 								</p>
 							{/each}
 						{/if}
 						{#if noteIssues.has(option.id)}
 							{#each noteIssues.get(option.id) as issue}
-								<p class="mt-2 text-pink-600 dark:text-pink-500">
+								<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
 									{issue}
 								</p>
 							{/each}
@@ -100,7 +97,7 @@
 			{/each}
 		</div>
 		{#if form?.error?.nested?.availability || availabilityIssues.size > availabilityErrorThreshold}
-			<p class="text-pink-600 dark:text-pink-500">Vul je beschikbaarheid in voor alle opties.</p>
+			<p class="font-medium text-pink-600 dark:text-pink-500">Vul je beschikbaarheid in voor alle opties.</p>
 		{/if}
 	</div>
 
