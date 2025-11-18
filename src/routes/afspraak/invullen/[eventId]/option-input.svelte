@@ -19,8 +19,8 @@
 	let showNote = $state(Boolean(response?.note))
 	let noteValue = $state(response?.note ?? '')
 
-	const availabilityName = $derived(`availability.${option.id}`)
-	const noteName = $derived(`note.${option.id}`)
+	const availabilityName = $derived(`availability.option_${option.id}`)
+	const noteName = $derived(`note.option_${option.id}`)
 
 	function handleAvailabilityChange(availability: string) {
 		if (availability === 'MAYBE') showNote = true

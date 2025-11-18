@@ -1,35 +1,33 @@
 <script lang="ts">
-	import { enhance } from '$app/forms'
+	import { page } from '$app/state'
 
 	import Button from '@/components/button.svelte'
-	import { keys } from '@/utils'
 
+	import { getEventData, submitAvailability } from './page.remote'
 	import OptionInput from './option-input.svelte'
 
-	let { data, form } = $props()
+	const { event, session } = $derived(await getEventData(page.params.eventId))
+	const availabilityErrorThreshold = $derived(Math.ceil(event.options.length * 0.2))
 
-	let isSubmitting = $state(false)
+	function extractIssues(prefix: string) {
+		const entries = (submitAvailability.fields.allIssues() ?? []).flatMap((issue) => {
+			if (!issue.path?.[0]?.toString().startsWith(prefix)) return []
+			return [[issue.path![0], issue.message] as const]
+		})
+		return new Map(entries)
+	}
 
-	const availabilityErrorThreshold = $derived(Math.ceil(data.event.options.length * 0.2))
-
-	const extractIssues = (prefix: string) =>
-		new Map(
-			keys(form?.error?.nested ?? {}).flatMap((key) =>
-				key.startsWith(prefix) ? [[key.replace(prefix, ''), form!.error!.nested![key]]] : [],
-			),
-		)
-
-	let availabilityIssues = $derived(extractIssues('availability.'))
-	let noteIssues = $derived(extractIssues('note.'))
+	const availabilityIssues = $derived(extractIssues('availability'))
+	const noteIssues = $derived(extractIssues('note'))
 </script>
 
-<h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{data.event.title}</h1>
+<h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{event.title}</h1>
 
-{#if data.event.description}
+{#if event.description}
 	<p
 		class="mb-6 border-b pb-6 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300"
 	>
-		{data.event.description}
+		{event.description}
 	</p>
 {/if}
 
@@ -37,17 +35,11 @@
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
 </p>
 
-<form
-	method="POST"
-	use:enhance={() => {
-		isSubmitting = true
-		return ({ update }) => update({ reset: false }).finally(() => (isSubmitting = false))
-	}}
->
+<form {...submitAvailability}>
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Jouw naam
-			{#if data.event.allowAnonymous}
+			{#if event.allowAnonymous}
 				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 			{/if}
 		</label>
@@ -58,12 +50,12 @@
 			autocomplete="name"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				form?.error?.nested?.name && form.error.nested.name.length > 0 && 'ring ring-pink-500',
+				(submitAvailability.fields?.name?.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
 			]}
-			value={data.session?.name ?? ''}
+			value={session?.name ?? ''}
 		/>
-		{#each form?.error?.nested?.name as issue}
-			<p class="font-medium text-pink-600 dark:text-pink-500">{issue}</p>
+		{#each submitAvailability.fields?.name?.issues() ?? [] as issue}
+			<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
 		{/each}
 	</div>
 
@@ -75,38 +67,33 @@
 				(availabilityIssues.size > 0 || noteIssues.size > 0) && 'ring ring-pink-500',
 			]}
 		>
-			{#each data.event.options as option (option.id)}
-				<OptionInput {option} response={data.session?.responses.get(option.id)}>
+			{#each event.options as option (option.id)}
+				{@const availabilityName = `availability.option_${option.id}`}
+				{@const noteName = `note.option_${option.id}`}
+				<OptionInput {option} response={session?.responses.get(option.id)}>
 					{#snippet error()}
-						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(option.id)}
-							{#each availabilityIssues.get(option.id) as issue}
-								<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
-									{issue}
-								</p>
-							{/each}
+						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(availabilityName)}
+							<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
+								{availabilityIssues.get(availabilityName)}
+							</p>
 						{/if}
-						{#if noteIssues.has(option.id)}
-							{#each noteIssues.get(option.id) as issue}
-								<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
-									{issue}
-								</p>
-							{/each}
+						{#if noteIssues.has(noteName)}
+							<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
+								{noteIssues.get(noteName)}
+							</p>
 						{/if}
 					{/snippet}
 				</OptionInput>
 			{/each}
 		</div>
-		{#if form?.error?.nested?.availability || availabilityIssues.size > availabilityErrorThreshold}
-			<p class="font-medium text-pink-600 dark:text-pink-500">Vul je beschikbaarheid in voor alle opties.</p>
+		{#if (submitAvailability.fields?.availability?.issues()?.length ?? 0) > 0 || availabilityIssues.size > availabilityErrorThreshold}
+			<p class="font-medium text-pink-600 dark:text-pink-500">
+				Vul je beschikbaarheid in voor alle opties.
+			</p>
 		{/if}
 	</div>
 
-	<Button
-		type="submit"
-		variant="primary"
-		class={['ml-auto', isSubmitting && 'animate-pulse']}
-		disabled={isSubmitting}
-	>
+	<Button type="submit" variant="primary" class="ml-auto" disabled={submitAvailability.pending > 0}>
 		Beschikbaarheid opslaan
 	</Button>
 </form>

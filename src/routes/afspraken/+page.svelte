@@ -3,13 +3,10 @@
 
 	import { formatDateTimeRange } from '@/time-format'
 	import { capitalizeFirst } from '@/utils'
-	import { PlainDate } from '@/temporal'
 
-	let { data } = $props()
+	import { getEvents } from './page.remote'
 
-	const events = $derived(
-		(data.events ?? []).toSorted((a, b) => PlainDate.compare(b.createdAt, a.createdAt)),
-	)
+	const events = await getEvents()
 
 	const numberResponses = (n: number) =>
 		n === 0 ? 'Geen reacties' : n === 1 ? '1 reactie' : `${n} reacties`
@@ -20,7 +17,7 @@
 
 	{#each events as event (event.id)}
 		<a
-			href={resolve('/afspraak/invullen/[eventId]', { eventId: event.id })}
+			href={resolve(`/afspraak/invullen/${event.id}`)}
 			class="block overflow-hidden rounded-lg border px-6 py-5 hover:bg-neutral-50 motion-safe:transition-colors dark:hover:bg-neutral-800/50"
 		>
 			<h2 class="mb-2 text-lg font-medium text-neutral-700 dark:text-neutral-300">

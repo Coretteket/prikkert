@@ -1,23 +1,29 @@
 <script lang="ts">
+	import { page } from '$app/state'
+
 	import { formatDateTimeOption } from '@/time-format'
 	import Icon from '@/components/icon.svelte'
 
-	let { data } = $props()
+	import { getEventOverview } from './page.remote'
+
+	const event = $derived(await getEventOverview(page.params.eventId))
 	let allOpen = $state(false)
 
-	function sortResponses(responses: (typeof data)['event']['options'][number]['responses']) {
+	type Response = (typeof event.options)[number]['responses'][number]
+
+	function sortResponses(responses: Response[]) {
 		const order = { YES: 0, MAYBE: 1, NO: 2 }
 		return responses.toSorted((a, b) => order[a.availability] - order[b.availability])
 	}
 </script>
 
-<h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{data.event.title}</h1>
+<h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{event.title}</h1>
 
-{#if data.event.description}
+{#if event.description}
 	<p
 		class="mb-6 border-b pb-6 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300"
 	>
-		{data.event.description}
+		{event.description}
 	</p>
 {/if}
 
@@ -34,7 +40,7 @@
 		</button>
 	</div>
 	<div class="mb-4 block divide-y overflow-hidden rounded-lg border">
-		{#each data.event.options as option (option.id)}
+		{#each event.options as option (option.id)}
 			<details class="group" open={allOpen}>
 				<summary
 					class="flex cursor-pointer flex-col px-5 py-4 hover:bg-neutral-50 motion-safe:transition-colors dark:hover:bg-neutral-800/50"

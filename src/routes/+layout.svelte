@@ -11,7 +11,9 @@
 	import { toggleTheme } from '@/theme'
 	import icon from '@/assets/icon.svg'
 
-	let { data, children } = $props()
+	import { hasSession } from './layout.remote'
+
+	let { children } = $props()
 </script>
 
 <svelte:head>
@@ -41,7 +43,7 @@
 				<Icon icon="tabler--sun" class="size-5 not-dark:hidden" />
 				<Icon icon="tabler--moon" class="size-5 dark:hidden" />
 			</Button>
-			{#if data.hasSession}
+			{#if await hasSession()}
 				<Button as="link" href="/afspraken">Jouw afspraken</Button>
 			{:else}
 				<Button as="link" href="/afspraak/aanmaken">Afspraak aanmaken</Button>
