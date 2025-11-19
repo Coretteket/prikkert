@@ -29,15 +29,4 @@ export const json = <TSchema extends v.BaseSchema<object, unknown, v.BaseIssue<u
 	schema: TSchema,
 ) => v.pipe(v.string(), v.parseJson(), schema)
 
-export const checkbox = (fallback = false) =>
-	v.fallback(
-		v.optional(
-			v.pipe(
-				v.picklist(['on', 'off'], 'Vul een geldige instelling in.'),
-				v.transform((v) => v === 'on'),
-			),
-		),
-		fallback,
-	)
-
 export * from 'valibot'

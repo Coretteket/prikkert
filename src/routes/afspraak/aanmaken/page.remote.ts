@@ -10,7 +10,6 @@ import { PlainTime } from '@/temporal'
 import { deduplicate } from '@/utils'
 import { Now } from '@/temporal'
 
-import { getEventData } from '../invullen/[eventId]/page.remote'
 import { hasSession } from '../../layout.remote'
 
 const OptionTimeSchema = v.union(
@@ -53,7 +52,7 @@ const CreateEventSchema = v.object({
 	),
 	settings: v.optional(
 		v.strictObject(
-			{ allowAnonymous: v.checkbox(), hideParticipants: v.checkbox() },
+			{ allowAnonymous: v.boolean(), hideParticipants: v.boolean() },
 			'Vul een geldige instelling in.',
 		),
 	),

@@ -135,7 +135,7 @@
 				class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
 			>
 				<input
-					{...createEvent.fields.settings.allowAnonymous.as('checkbox' as 'text')}
+					{...createEvent.fields.settings.allowAnonymous.as('checkbox')}
 					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
 
@@ -145,7 +145,7 @@
 				class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
 			>
 				<input
-					{...createEvent.fields.settings.hideParticipants.as('checkbox' as 'text')}
+					{...createEvent.fields.settings.hideParticipants.as('checkbox')}
 					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
 
