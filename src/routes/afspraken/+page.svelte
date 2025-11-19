@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
 
+	import { getEvents } from '@/remote/get-events.remote'
 	import { formatDateTimeRange } from '@/time-format'
 	import { capitalizeFirst } from '@/utils'
-
-	import { getEvents } from './page.remote'
 
 	const events = await getEvents()
 

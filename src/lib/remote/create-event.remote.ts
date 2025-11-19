@@ -10,7 +10,7 @@ import { PlainTime } from '@/temporal'
 import { deduplicate } from '@/utils'
 import { Now } from '@/temporal'
 
-import { hasSession } from '../../layout.remote'
+import { hasSession } from '../../routes/layout.remote'
 
 const OptionTimeSchema = v.union(
 	[

@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state'
 
+	import { getEventResponses } from '@/remote/get-event-responses.remote'
 	import { formatDateTimeOption } from '@/time-format'
 	import Icon from '@/components/icon.svelte'
 
-	import { getEventOverview } from './page.remote'
-
-	const event = $derived(await getEventOverview(page.params.eventId))
+	const event = $derived(await getEventResponses(page.params.eventId))
 	let allOpen = $state(false)
 
 	type Response = (typeof event.options)[number]['responses'][number]

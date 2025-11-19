@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/state'
 
+	import { submitAvailability } from '@/remote/submit-availability.remote'
+	import { getEventSession } from '@/remote/get-event-session.remote'
 	import Button from '@/components/button.svelte'
 
-	import { getEventData, submitAvailability } from './page.remote'
 	import OptionInput from './option-input.svelte'
 
-	const { event, session } = $derived(await getEventData(page.params.eventId))
+	const { event, session } = $derived(await getEventSession(page.params.eventId))
 	const availabilityErrorThreshold = $derived(Math.ceil(event.options.length * 0.2))
 
 	function extractIssues(prefix: string) {

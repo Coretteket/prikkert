@@ -6,7 +6,7 @@ import { query } from '$app/server'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
-export const getEventOverview = query(v.optional(v.string()), async (eventId) => {
+export const getEventResponses = query(v.optional(v.string()), async (eventId) => {
 	if (!eventId) error(404, 'Afspraak niet gevonden')
 
 	const event = await db.query.events.findFirst({
