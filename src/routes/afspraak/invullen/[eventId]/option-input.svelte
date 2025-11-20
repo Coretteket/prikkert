@@ -46,8 +46,8 @@
 	</label>
 {/snippet}
 
-<div class="px-5 py-4 pr-4 text-neutral-800 dark:text-neutral-200">
-	<div class="grid items-center gap-x-6 gap-y-3 md:grid-cols-[1fr_auto]">
+<div class="py-4 text-neutral-800 dark:text-neutral-200">
+	<div class="grid items-center gap-x-6 gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
 		<p class="max-xs:w-60 font-[350] md:w-60">{formatDateTimeOption(option)}</p>
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
@@ -74,7 +74,7 @@
 				type="button"
 				onclick={() => {
 					showNote = !showNote
-					if (!showNote) setTimeout(() => (noteValue = ''), 150)
+					if (!showNote) setTimeout(() => (noteValue = ''), 100)
 				}}
 				class="flex cursor-pointer rounded-lg border p-2 text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
 				title={showNote ? 'Opmerking verwijderen' : 'Opmerking toevoegen'}
@@ -90,19 +90,20 @@
 		</div>
 	</div>
 
-	<div data-note={showNote ? 'show' : 'hide'} class="-m-1 p-1">
-		<div>
+	<details open={showNote}>
+		<summary class="hidden"></summary>
+		<div class="-mb-1 px-5 pt-3 pb-1">
 			<textarea
 				id={noteName}
 				name={showNote ? noteName : undefined}
-				class="mt-3 block min-h-12 w-full rounded-lg border px-4 py-2.5 font-[350] dark:bg-neutral-800/50"
+				class="block min-h-12 w-full rounded-lg border px-4 py-2.5 font-[350] dark:bg-neutral-800/50"
 				placeholder="Voeg een opmerking toe..."
 				rows={1}
 				tabindex={showNote ? 0 : -1}
 				bind:value={noteValue}
 			></textarea>
 		</div>
-	</div>
+	</details>
 
 	{#each errors.filter((e) => e !== undefined) as error}
 		<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
@@ -110,25 +111,3 @@
 		</p>
 	{/each}
 </div>
-
-<style>
-	[data-note] {
-		display: grid;
-		grid-template-rows: 0fr;
-		overflow: clip;
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
-		[data-note] {
-			transition: grid-template-rows 75ms ease-out;
-		}
-	}
-
-	[data-note='show'] {
-		grid-template-rows: 1fr;
-	}
-
-	[data-note] > div {
-		min-height: 0;
-	}
-</style>
