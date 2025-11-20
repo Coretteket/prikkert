@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state'
-
 	import { submitAvailability } from '@/remote/submit-availability.remote'
 	import { getEventSession } from '@/remote/get-event-session.remote'
 	import Button from '@/components/button.svelte'
@@ -8,7 +6,9 @@
 
 	import OptionInput from './option-input.svelte'
 
-	const { event, session } = $derived(await getEventSession(page.params.eventId))
+	let { params } = $props()
+
+	const { event, session } = $derived(await getEventSession(params.eventId))
 	const availabilityErrorThreshold = $derived(Math.ceil(event.options.length * 0.2))
 
 	function extractIssues(prefix: string) {
@@ -70,18 +70,16 @@
 			]}
 		>
 			{#each event.options as option (option.id)}
-				{@const availabilityName = `availability.option_${option.id}`}
-				{@const noteName = `note.option_${option.id}`}
 				<OptionInput {option} response={session?.responses.get(option.id)}>
 					{#snippet error()}
-						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(availabilityName)}
+						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(`availability.option_${option.id}`)}
 							<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
-								{availabilityIssues.get(availabilityName)}
+								{availabilityIssues.get(`availability.option_${option.id}`)}
 							</p>
 						{/if}
-						{#if noteIssues.has(noteName)}
+						{#if noteIssues.has(`note.option_${option.id}`)}
 							<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
-								{noteIssues.get(noteName)}
+								{noteIssues.get(`note.option_${option.id}`)}
 							</p>
 						{/if}
 					{/snippet}

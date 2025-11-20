@@ -6,9 +6,7 @@ import { query, getRequestEvent } from '$app/server'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
-export const getEventSession = query(v.optional(v.string()), async (eventId) => {
-	if (!eventId) error(404, 'Afspraak niet gevonden')
-
+export const getEventSession = query(v.string(), async (eventId) => {
 	const event = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
 		columns: { hideParticipants: false, createdAt: false, expiresAt: false },

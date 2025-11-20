@@ -5,7 +5,7 @@
 	import { formatDateTimeRange } from '@/time-format'
 	import { capitalizeFirst } from '@/utils'
 
-	const events = await getEvents()
+	const events = $derived(await getEvents())
 
 	const numberResponses = (n: number) =>
 		n === 0 ? 'Geen reacties' : n === 1 ? '1 reactie' : `${n} reacties`
