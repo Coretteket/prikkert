@@ -3,10 +3,9 @@
 	import { cubicInOut } from 'svelte/easing'
 	import { fade } from 'svelte/transition'
 
-	import Popover from '@/components/popover.svelte'
+	import Popover, { popover } from '@/components/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
-	import { store } from '@/state.svelte'
 	import { PlainDate } from '@/temporal'
 
 	import { emptySlot, type Options, type Slot } from './types'
@@ -24,7 +23,7 @@
 	}
 
 	function closePopover() {
-		store.activePopover = undefined
+		popover.active = undefined
 	}
 </script>
 

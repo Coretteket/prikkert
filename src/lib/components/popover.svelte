@@ -1,10 +1,13 @@
+<script module lang="ts">
+	export const popover: { active: string | undefined } = $state({ active: undefined })
+</script>
+
 <script lang="ts">
 	import type { Snippet } from 'svelte'
 
 	import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom'
 
 	import Icon from '@/components/icon.svelte'
-	import { store } from '@/state.svelte'
 
 	let { children }: { children: Snippet } = $props()
 
@@ -12,15 +15,15 @@
 	let referenceEl: HTMLElement | undefined
 	let floatingEl: HTMLElement | undefined
 
-	let isOpen = $derived(store.activePopover === id)
+	let isOpen = $derived(popover.active === id)
 
 	function handleClick() {
-		store.activePopover = isOpen ? undefined : id
+		popover.active = isOpen ? undefined : id
 	}
 
 	function handleOutsideClick(event: MouseEvent) {
 		if (!referenceEl?.contains(event.target as Node) && !floatingEl?.contains(event.target as Node))
-			store.activePopover = undefined
+			popover.active = undefined
 	}
 
 	function trigger(node: HTMLElement) {
