@@ -1,60 +1,90 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte'
 
-	import {
-		autoUpdate,
-		flip,
-		offset,
-		shift,
-		useClick,
-		useDismiss,
-		useFloating,
-		useId,
-		useInteractions,
-		useRole,
-	} from '@skeletonlabs/floating-ui-svelte'
+	import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom'
 
+	import Icon from '@/components/icon.svelte'
 	import { store } from '@/state.svelte'
 
-	import Icon from './icon.svelte'
+	let { children }: { children: Snippet } = $props()
 
-	type Props = { children: Snippet }
-	let { children }: Props = $props()
+	const id = crypto.randomUUID()
+	let referenceEl: HTMLElement | undefined
+	let floatingEl: HTMLElement | undefined
 
-	let id = useId()
+	let isOpen = $derived(store.activePopover === id)
 
-	const floating = useFloating({
-		placement: 'bottom-end',
-		middleware: [offset({ crossAxis: 4 }), shift(), flip()],
-		whileElementsMounted: autoUpdate,
-		onOpenChange: (v) => (store.activePopover = v ? id : undefined),
-		get open() {
-			return store.activePopover === id
-		},
+	function trigger(node: HTMLElement) {
+		referenceEl = node
+
+		function handleClick() {
+			store.activePopover = isOpen ? undefined : id
+		}
+
+		node.addEventListener('click', handleClick)
+
+		return () => {
+			node.removeEventListener('click', handleClick)
+			referenceEl = undefined
+		}
+	}
+
+	function popup(node: HTMLElement) {
+		floatingEl = node
+
+		const cleanup = autoUpdate(referenceEl!, floatingEl, async () => {
+			if (!referenceEl || !floatingEl) return
+
+			const { x, y } = await computePosition(referenceEl, floatingEl, {
+				placement: 'bottom-end',
+				middleware: [offset({ crossAxis: 4 }), shift(), flip()],
+			})
+
+			Object.assign(floatingEl.style, {
+				left: `${x}px`,
+				top: `${y}px`,
+				position: 'absolute',
+			})
+		})
+
+		return () => {
+			cleanup()
+			floatingEl = undefined
+		}
+	}
+
+	$effect(() => {
+		if (!isOpen) return
+
+		function handleOutsideClick(event: MouseEvent) {
+			if (
+				referenceEl &&
+				!referenceEl.contains(event.target as Node) &&
+				floatingEl &&
+				!floatingEl.contains(event.target as Node)
+			) {
+				store.activePopover = undefined
+			}
+		}
+
+		document.addEventListener('click', handleOutsideClick)
+		return () => document.removeEventListener('click', handleOutsideClick)
 	})
-
-	const role = useRole(floating.context, { role: 'menu' })
-	const click = useClick(floating.context)
-	const dismiss = useDismiss(floating.context)
-	const interactions = useInteractions([role, click, dismiss])
 </script>
 
 <button
 	type="button"
-	bind:this={floating.elements.reference}
+	{@attach trigger}
 	class="cursor-pointer text-neutral-600 dark:text-neutral-400"
-	{...interactions.getReferenceProps()}
+	aria-haspopup="menu"
+	aria-expanded={isOpen}
+	aria-controls={isOpen ? id : undefined}
 >
 	<Icon icon="tabler--dots-vertical" class="size-5" />
 </button>
 
-<div
-	bind:this={floating.elements.floating}
-	class={['absolute top-0 left-0 z-100 w-max p-2']}
-	style={floating.floatingStyles}
-	{...interactions.getFloatingProps()}
->
-	{#if floating.open}
+{#if isOpen}
+	<div {id} role="menu" tabindex="-1" {@attach popup} class="absolute top-0 left-0 z-100 w-max p-2">
 		{@render children()}
-	{/if}
-</div>
+	</div>
+{/if}
