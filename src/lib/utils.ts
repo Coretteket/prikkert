@@ -16,3 +16,6 @@ export function omit<T, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
 	}
 	return result
 }
+
+/** Use on remote form functions to prevent form reset on submission. */
+export const noReset = ({ submit }: { submit: () => Promise<void> }) => submit()

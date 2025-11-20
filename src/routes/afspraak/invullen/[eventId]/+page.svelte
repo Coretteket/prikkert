@@ -4,6 +4,7 @@
 	import { submitAvailability } from '@/remote/submit-availability.remote'
 	import { getEventSession } from '@/remote/get-event-session.remote'
 	import Button from '@/components/button.svelte'
+	import { noReset } from '@/utils'
 
 	import OptionInput from './option-input.svelte'
 
@@ -36,7 +37,7 @@
 	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
 </p>
 
-<form {...submitAvailability}>
+<form {...submitAvailability.enhance(noReset)}>
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Jouw naam
