@@ -19,14 +19,8 @@
 	}
 
 	function handleOutsideClick(event: MouseEvent) {
-		if (
-			referenceEl &&
-			!referenceEl.contains(event.target as Node) &&
-			floatingEl &&
-			!floatingEl.contains(event.target as Node)
-		) {
+		if (!referenceEl?.contains(event.target as Node) && !floatingEl?.contains(event.target as Node))
 			store.activePopover = undefined
-		}
 	}
 
 	function trigger(node: HTMLElement) {
