@@ -14,12 +14,23 @@
 
 	let isOpen = $derived(store.activePopover === id)
 
+	function handleClick() {
+		store.activePopover = isOpen ? undefined : id
+	}
+
+	function handleOutsideClick(event: MouseEvent) {
+		if (
+			referenceEl &&
+			!referenceEl.contains(event.target as Node) &&
+			floatingEl &&
+			!floatingEl.contains(event.target as Node)
+		) {
+			store.activePopover = undefined
+		}
+	}
+
 	function trigger(node: HTMLElement) {
 		referenceEl = node
-
-		function handleClick() {
-			store.activePopover = isOpen ? undefined : id
-		}
 
 		node.addEventListener('click', handleClick)
 
@@ -55,18 +66,6 @@
 
 	$effect(() => {
 		if (!isOpen) return
-
-		function handleOutsideClick(event: MouseEvent) {
-			if (
-				referenceEl &&
-				!referenceEl.contains(event.target as Node) &&
-				floatingEl &&
-				!floatingEl.contains(event.target as Node)
-			) {
-				store.activePopover = undefined
-			}
-		}
-
 		document.addEventListener('click', handleOutsideClick)
 		return () => document.removeEventListener('click', handleOutsideClick)
 	})
