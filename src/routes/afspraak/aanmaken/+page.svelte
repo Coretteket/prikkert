@@ -36,34 +36,40 @@
 
 <form {...createEvent}>
 	<div class="mb-8">
-		<label for="title" class="mb-4 block font-medium">Titel</label>
-		<input
-			{...createEvent.fields.title.as('text')}
-			id="title"
-			class={[
-				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				(createEvent.fields.title.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
-			]}
-		/>
+		<label>
+			<span class="mb-4 block font-medium">Titel</span>
+			<input
+				{...createEvent.fields.title.as('text')}
+				placeholder="Vul een titel in..."
+				class={[
+					'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50 placeholder:text-base placeholder:opacity-80',
+					(createEvent.fields.title.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
+				]}
+			/>
+		</label>
 		{#each createEvent.fields.title.issues() ?? [] as issue}
-			<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+			<p class="my-2 font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
 		{/each}
 	</div>
 
 	<div class="mb-8">
-		<label for="description" class="mb-4 block font-medium">
-			Beschrijving
-			<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
+		<label>
+			<div class="mb-4">
+				<span class="font-medium">Omschrijving</span>
+				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
+			</div>
+			<textarea
+				id="description"
+				{...createEvent.fields.description.as('text')}
+				rows={2}
+				placeholder="Vul een omschrijving in..."
+				class={[
+					'mb-4 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50 placeholder:opacity-80',
+					(createEvent.fields.description.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
+				]}
+			></textarea>
 		</label>
-		<textarea
-			{...createEvent.fields.description.as('text')}
-			id="description"
-			class={[
-				'mb-4 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50',
-				(createEvent.fields.description.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
-			]}
-			rows={3}
-		></textarea>
+
 		{#each createEvent.fields.description.issues() ?? [] as issue}
 			<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
 		{/each}
