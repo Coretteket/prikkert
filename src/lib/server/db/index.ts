@@ -13,4 +13,4 @@ export const db = drizzle({
 	casing: 'snake_case',
 })
 
-export { schema }
+export * as schema from './schema'

@@ -1,5 +1,5 @@
 class GlobalStore {
-	activePopover: string | null = $state(null)
+	activePopover: string | undefined = $state()
 }
 
 export const store = new GlobalStore()

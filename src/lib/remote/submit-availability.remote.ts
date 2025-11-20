@@ -94,7 +94,7 @@ export const submitAvailability = form('unchecked', async (formData, invalid) =>
 						optionId,
 						sessionId,
 						availability: availabilityValue,
-						note: parsed.note?.[key as OptionName] ?? null,
+						note: parsed.note?.[key as OptionName],
 					}
 				}),
 			)

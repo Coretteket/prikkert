@@ -39,7 +39,7 @@ const CreateEventSchema = v.object({
 				MAX_DESCRIPTION_LENGTH,
 				`Vul een beschrijving in van maximaal ${MAX_DESCRIPTION_LENGTH} tekens.`,
 			),
-			v.transform((val) => (val.length > 0 ? val : null)),
+			v.transform((val) => (val.length > 0 ? val : undefined)),
 		),
 		'',
 	),
@@ -69,7 +69,7 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 		const [event] = await db
 			.insert(schema.events)
 			.values({
-				...(parsed.settings || {}),
+				...parsed.settings,
 				title: parsed.title,
 				description: parsed.description,
 				expiresAt,

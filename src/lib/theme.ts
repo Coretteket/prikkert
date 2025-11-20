@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-document-cookie --- CookieStore not widely supported yet */
+
 export type Theme = 'light' | 'dark' | 'system'
 
 export function toggleTheme() {
@@ -8,6 +10,8 @@ export function toggleTheme() {
 	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	document.documentElement.offsetHeight
 	document.documentElement.classList.remove('no-transition')
-	const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+	const systemTheme = globalThis.matchMedia('(prefers-color-scheme: dark)').matches
+		? 'dark'
+		: 'light'
 	document.cookie = `theme=${newTheme === systemTheme ? 'system' : newTheme}; path=/; max-age=31536000`
 }

@@ -2,6 +2,7 @@ import perfectionist from 'eslint-plugin-perfectionist'
 import { includeIgnoreFile } from '@eslint/compat'
 import prettier from 'eslint-config-prettier'
 import { defineConfig } from 'eslint/config'
+import unicorn from 'eslint-plugin-unicorn'
 import svelte from 'eslint-plugin-svelte'
 import { fileURLToPath } from 'node:url'
 import ts from 'typescript-eslint'
@@ -10,13 +11,15 @@ import js from '@eslint/js'
 
 import svelteConfig from './svelte.config.js'
 
-const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url))
+const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 
 export default defineConfig(
 	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
 	...ts.configs.recommended,
 	...svelte.configs.recommended,
+	unicorn.configs.recommended,
+	{ rules: { 'unicorn/prevent-abbreviations': 'off', 'unicorn/prefer-spread': 'off' } },
 	prettier,
 	...svelte.configs.prettier,
 	{
@@ -27,7 +30,7 @@ export default defineConfig(
 				{
 					type: 'line-length',
 					order: 'desc',
-					customGroups: [{ groupName: 'svelte', elementNamePattern: '^\\$app' }],
+					customGroups: [{ groupName: 'svelte', elementNamePattern: String.raw`^\$app` }],
 					groups: [
 						'side-effect',
 						'type-import',

@@ -24,7 +24,7 @@
 	}
 
 	function closePopover() {
-		store.activePopover = null
+		store.activePopover = undefined
 	}
 </script>
 

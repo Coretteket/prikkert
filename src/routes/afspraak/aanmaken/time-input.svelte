@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PlainTime } from '@/temporal'
 
-	let { time = $bindable(undefined) }: { time?: PlainTime } = $props()
+	let { time = $bindable() }: { time?: PlainTime } = $props()
 </script>
 
 <input

@@ -27,7 +27,7 @@
 		placement: 'bottom-end',
 		middleware: [offset({ crossAxis: 4 }), shift(), flip()],
 		whileElementsMounted: autoUpdate,
-		onOpenChange: (v) => (store.activePopover = v ? id : null),
+		onOpenChange: (v) => (store.activePopover = v ? id : undefined),
 		get open() {
 			return store.activePopover === id
 		},
