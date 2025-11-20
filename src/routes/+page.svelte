@@ -107,7 +107,7 @@
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon
 						icon="tabler--chevron-right"
-						class="my-0.5 size-5 group-open:rotate-90 motion-safe:transition"
+						class="my-0.5 size-5 group-open:rotate-90 motion-safe:transition duration-100"
 					/>
 				</summary>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->

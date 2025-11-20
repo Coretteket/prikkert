@@ -42,28 +42,28 @@ export const steps = [
 
 export const faq = [
 	{
-		question: 'Wat maakt Prikkert anders dan Datumprikker.nl?',
+		question: 'Hoe verschilt Prikkert van datumprikker.nl?',
 		answer:
-			"<a href='https://datumprikker.nl' rel='nofollow noopener noreferrer' target='_blank' class='underline'>Datumprikker.nl</a> is populair, maar al die reclames maken het frustrerend om een afspraak te plannen. Bovendien sturen ze je gegevens standaard door naar honderden advertentiebedrijven. Prikkert is hét gratis en reclamevrije alternatief. Je hoeft geen account aan te maken, en kan zo aan de slag.",
+			"Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacyvriendelijke én reclamevrije alternatief. Je hoeft geen account aan te maken, en kan zo aan de slag.",
 	},
 	{
-		question: 'Hoe is Prikkert gratis en reclamevrij?',
+		question: 'Hoe blijft Prikkert gratis en reclamevrij?',
 		answer:
-			'Prikkert is geen commercieel product, maar een hobbyproject van een enthousiaste programmeur. Hij betaalt graag een paar euro per maand om Prikkert in de lucht te houden, zodat iedereen gratis, reclamevrij, en privacyvriendelijk datums kan prikken.',
-	},
-	{
-		question: 'Wie heeft Prikkert gemaakt?',
-		answer:
-			"Prikkert is een hobbyproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Als masterstudent en ontwikkelaar bouwde hij Prikkert in zijn weekenden en avonduren, omdat hij vindt dat een simpele site om datums te prikken geen verdienmodel nodig heeft.",
+			'Prikkert heeft geen winstoogmerk of verdienmodel. De techniek is eenvoudig en de kosten verwaarloosbaar, dus het is niet nodig om je lastig te vallen met reclame. Prikkert is een passieproject en zal daarom altijd gratis en reclamevrij blijven. Dat is een belofte.',
 	},
 	{
 		question: 'Hoe beschermt Prikkert je privacy?',
 		answer:
-			"Jouw persoonsgegevens zijn en blijven van jou. Dat is geen loze belofte, zo werkt Prikkert: je hebt geen account nodig en kan het zelfs anoniem gebruiken. Ook gebruikt Prikkert alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, en je wordt onder geen beding getrackt. Alle gegevens worden veilig opgeslagen binnen de Europese Unie, en niet gedeeld met derden.",
+			"Met Prikkert ben jij niet het product. Je hebt geen account nodig en kan het ook anoniem gebruiken. Prikkert gebruikt alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, dus je wordt nooit getrackt. Alle gegevens worden veilig opgeslagen binnen de EU en niet gedeeld met derden. Alle details vind je in de <a href='/privacy' class='underline'>privacyverklaring</a>.",
 	},
 	{
-		question: 'Wat betekent het dat Prikkert open source is?',
+		question: 'Waarom is Prikkert open source?',
 		answer:
-			"Open source betekent dat iedereen kan zien hoe Prikkert is gemaakt en eraan kan bijdragen. Prikkert is vrijgegeven onder de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>European Union Public License</a>, wat betekent dat iedereen onder bepaalde voorwaarden een eigen versie mag publiceren. De volledige broncode van Prikkert is te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a>.",
+			"Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt. De volledige broncode is openbaar te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a> en is vrijgegeven voor hergebruik onder de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>European Union Public License</a>.",
+	},
+	{
+		question: 'Wie heeft Prikkert gemaakt?',
+		answer:
+			"Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan.",
 	},
 ]
