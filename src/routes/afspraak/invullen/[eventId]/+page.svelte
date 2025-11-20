@@ -70,20 +70,14 @@
 			]}
 		>
 			{#each event.options as option (option.id)}
-				<OptionInput {option} response={session?.responses.get(option.id)}>
-					{#snippet error()}
-						{#if availabilityIssues.size <= availabilityErrorThreshold && availabilityIssues.has(`availability.option_${option.id}`)}
-							<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
-								{availabilityIssues.get(`availability.option_${option.id}`)}
-							</p>
-						{/if}
-						{#if noteIssues.has(`note.option_${option.id}`)}
-							<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
-								{noteIssues.get(`note.option_${option.id}`)}
-							</p>
-						{/if}
-					{/snippet}
-				</OptionInput>
+				<OptionInput
+					{option}
+					response={session?.responses.get(option.id)}
+					errors={[
+						availabilityIssues.get(`availability.option_${option.id}`),
+						noteIssues.get(`note.option_${option.id}`),
+					]}
+				/>
 			{/each}
 		</div>
 		{#if (submitAvailability.fields?.availability?.issues()?.length ?? 0) > 0 || availabilityIssues.size > availabilityErrorThreshold}

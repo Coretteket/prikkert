@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { InferSelectModel } from 'drizzle-orm'
-	import type { Snippet } from 'svelte'
 
 	import type { schema } from '@/server/db'
 
@@ -10,10 +9,10 @@
 	type Props = {
 		option: Pick<InferSelectModel<typeof schema.options>, 'id' | 'startsAt' | 'endsAt'>
 		response: InferSelectModel<typeof schema.responses> | undefined
-		error: Snippet
+		errors: Array<string | undefined>
 	}
 
-	let { option, response, error }: Props = $props()
+	let { option, response, errors }: Props = $props()
 
 	let availabilityValue = $state(response?.availability ?? '')
 	let showNote = $state(Boolean(response?.note))
@@ -105,7 +104,11 @@
 		</div>
 	</div>
 
-	{@render error()}
+	{#each errors.filter((e) => e !== undefined) as error}
+		<p class="mt-2 font-medium text-pink-600 dark:text-pink-500">
+			{error}
+		</p>
+	{/each}
 </div>
 
 <style>
@@ -117,7 +120,7 @@
 
 	@media (prefers-reduced-motion: no-preference) {
 		[data-note] {
-			transition: grid-template-rows 75ms ease;
+			transition: grid-template-rows 75ms ease-out;
 		}
 	}
 
