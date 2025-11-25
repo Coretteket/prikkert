@@ -3,6 +3,7 @@
 
 	import { createEvent } from '@/remote/create-event.remote'
 	import Button from '@/components/button.svelte'
+	import Icon from '@/components/icon.svelte'
 	import { PlainDate } from '@/temporal'
 
 	import type { Options } from './types'
@@ -13,6 +14,10 @@
 	let datePickerHeight = $state(338)
 
 	let options = new SvelteMap() satisfies Options
+
+	let showName = $state(false)
+	let showDescription = $state(false)
+	let showTimes = $state(false)
 
 	const nestedOptionsIssues = $derived.by(() => {
 		const allIssues = createEvent.fields.allIssues() ?? []
@@ -32,18 +37,21 @@
 	})
 </script>
 
-<h1 class="font-display mb-8 text-2xl font-[550]">Afspraak aanmaken</h1>
+<h1 class="font-display mb-6 text-2xl font-[550]">Afspraak aanmaken</h1>
+<p class="mb-10 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300">
+	Kies een titel en datums om te beginnen met plannen.
+</p>
 
 <form {...createEvent}>
-	<div class="mb-8">
+	<div class="mb-10">
 		<label>
-			<span class="mb-4 block font-medium">Titel</span>
+			<span class="mb-4 block text-lg font-medium">Titel</span>
 			<input
 				{...createEvent.fields.title.as('text')}
 				placeholder="Vul een titel in..."
 				class={[
-					'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50 placeholder:text-base placeholder:opacity-80',
-					(createEvent.fields.title.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
+					'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg placeholder:text-base placeholder:opacity-80 dark:bg-neutral-800/50',
+					(createEvent.fields.title.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			/>
 		</label>
@@ -52,63 +60,146 @@
 		{/each}
 	</div>
 
-	<div class="mb-8">
-		<label>
-			<div class="mb-4">
-				<span class="font-medium">Omschrijving</span>
-				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
+	{#if showName}
+		<div class="my-10">
+			<div class="mb-4 flex items-center justify-between">
+				<label for="name" class="text-lg font-medium">
+					Naam
+					<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">
+						(optioneel)
+					</span>
+				</label>
+				<Button
+					type="button"
+					variant="ghost"
+					size="icon"
+					class="-my-2"
+					onclick={() => (showName = false)}
+				>
+					<Icon icon="tabler--x" class="size-5" />
+				</Button>
+			</div>
+			<input
+				id="name"
+				{...createEvent.fields.organizerName.as('text')}
+				placeholder="Vul jouw naam in..."
+				class={[
+					'block w-full rounded-lg border px-4 py-2.5 text-lg placeholder:text-base placeholder:opacity-80 dark:bg-neutral-800/50',
+					(createEvent.fields.organizerName.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+				]}
+			/>
+			{#each createEvent.fields.organizerName.issues() ?? [] as issue}
+				<p class="my-2 font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+			{/each}
+		</div>
+	{/if}
+
+	{#if !showName || !showDescription}
+		<div class="-mt-6 flex gap-3">
+			{#if !showName}
+				<Button type="button" variant="secondary" size="sm" onclick={() => (showName = true)}>
+					Naam toevoegen
+				</Button>
+			{/if}
+			{#if !showDescription}
+				<Button
+					type="button"
+					variant="secondary"
+					size="sm"
+					onclick={() => (showDescription = true)}
+				>
+					Omschrijving toevoegen
+				</Button>
+			{/if}
+		</div>
+	{/if}
+
+	{#if showDescription}
+		<div class="my-10">
+			<div class="mb-4 flex items-center justify-between">
+				<label for="description" class="text-lg font-medium">
+					Omschrijving
+					<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">
+						(optioneel)
+					</span>
+				</label>
+				<Button
+					type="button"
+					variant="ghost"
+					size="icon"
+					class="-my-2"
+					onclick={() => (showDescription = false)}
+				>
+					<Icon icon="tabler--x" class="size-5" />
+				</Button>
 			</div>
 			<textarea
 				id="description"
 				{...createEvent.fields.description.as('text')}
-				rows={2}
+				rows={4}
 				placeholder="Vul een omschrijving in..."
 				class={[
-					'mb-4 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50 placeholder:opacity-80',
-					(createEvent.fields.description.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
+					'mb-4 block w-full rounded-lg border px-4 py-2.5 placeholder:opacity-80 dark:bg-neutral-800/50',
+					(createEvent.fields.description.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			></textarea>
-		</label>
+			{#each createEvent.fields.description.issues() ?? [] as issue}
+				<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+			{/each}
+		</div>
+	{/if}
 
-		{#each createEvent.fields.description.issues() ?? [] as issue}
+	<div class="my-10">
+		<p class="mb-4 block text-lg font-medium">
+			Datums
+			{#if options.size > 0}
+				<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">
+					({options.size} geselecteerd)
+				</span>
+			{/if}
+		</p>
+		<div
+			class={[
+				'mb-4 rounded-lg border',
+				(createEvent.fields.options.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+			]}
+			bind:clientHeight={datePickerHeight}
+		>
+			<DatePicker {options} monthsToShow={2} />
+		</div>
+
+		{#each createEvent.fields.options.issues() ?? [] as issue}
 			<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
 		{/each}
 	</div>
 
-	<div class="mb-6 grid gap-6 sm:grid-cols-2">
-		<div>
-			<p class="mb-4 block font-medium">
-				Datums
-				{#if options.size > 0}
-					<span class="font-normal text-neutral-500 dark:text-neutral-400">
-						({options.size} geselecteerd)
-					</span>
-				{/if}
-			</p>
-			<div
-				class={[
-					'mb-4 rounded-lg border p-6',
-					(createEvent.fields.options.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
-				]}
-				bind:clientHeight={datePickerHeight}
+	<div class="mb-10">
+		{#if !showTimes}
+			<Button
+				type="button"
+				variant="secondary"
+				size="sm"
+				onclick={() => (showTimes = true)}
+				class="-mt-6 mb-8 text-lg"
 			>
-				<DatePicker {options} />
+				Tijden toevoegen
+			</Button>
+		{:else}
+			<div class="mb-4 flex items-center justify-between">
+				<span class="text-lg font-medium">
+					Tijden
+					<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">
+						(optioneel)
+					</span>
+				</span>
+				<Button type="button" variant="ghost" size="icon" onclick={() => (showTimes = false)}>
+					<Icon icon="tabler--x" class="size-5" />
+				</Button>
 			</div>
-
-			{#each createEvent.fields.options.issues() ?? [] as issue}
-				<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
-			{/each}
-		</div>
-		<div>
-			<p class="mb-4 block font-medium">
-				Tijden
-				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
-			</p>
 			<div
-				style="--max-height: {datePickerHeight}px"
 				class={[
-					'gutter-stable relative mb-4 max-h-90 space-y-3 overflow-y-auto rounded-lg border p-5 sm:h-full sm:max-h-(--max-height)',
-					nestedOptionsIssues.size > 0 && 'ring ring-pink-500',
+					'relative mb-4 max-h-80 space-y-3 overflow-y-auto rounded-lg border px-6 py-5 [scrollbar-gutter:stable] sm:max-h-64',
+					nestedOptionsIssues.size > 0 && 'ring-2 ring-pink-500',
 				]}
 			>
 				{#each Array.from(options.keys()).toSorted(PlainDate.compare) as date}
@@ -126,15 +217,15 @@
 					</p>
 				{/each}
 			</div>
-		</div>
-
-		<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
+		{/if}
 	</div>
 
-	<div class="mb-6">
-		<p class="mb-4 block font-medium">
+	<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
+
+	<div class="mb-10">
+		<p class="mb-4 block text-lg font-medium">
 			Instellingen
-			<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
+			<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 		</p>
 		<div class="grid gap-4 rounded-lg border p-6">
 			<label
@@ -145,7 +236,7 @@
 					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
 
-				<p class="text-balance">Sta deelnemers toe om anoniem te reageren</p>
+				<p>Sta deelnemers toe om anoniem te reageren</p>
 			</label>
 			<label
 				class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
@@ -155,7 +246,7 @@
 					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
 				/>
 
-				<p class="text-balance">Toon reacties alleen aan de organisator</p>
+				<p>Toon reacties alleen aan de organisator</p>
 			</label>
 		</div>
 	</div>

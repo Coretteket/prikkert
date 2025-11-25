@@ -31,10 +31,10 @@
 	<nav class="flex items-center justify-between px-4 py-2">
 		<a
 			href={resolve('/')}
-			class="font-display flex items-center gap-3 text-xl font-medium text-neutral-800 dark:text-neutral-300"
+			class="font-display squircle flex items-center gap-3 text-xl font-medium text-neutral-800 dark:text-neutral-300"
 		>
 			<img src={icon} width={36} height={36} alt="" />
-			<span class="max-[440px]:hidden">Prikkert</span>
+			<span>Prikkert</span>
 		</a>
 
 		<div class="flex gap-3">
@@ -43,13 +43,19 @@
 				<Icon icon="tabler--moon" class="size-5 dark:hidden" />
 			</Button>
 			{#if await hasSession()}
-				<Button as="link" href="/afspraken">Jouw afspraken</Button>
+				<Button class="max-xs:hidden" as="link" href="/afspraken">Jouw afspraken</Button>
+				<Button class="xs:hidden" size="icon" as="link" href="/afspraken">
+					<Icon icon="tabler--calendar-user" class="size-5" />
+				</Button>
 			{:else}
-				<Button as="link" href="/afspraak/aanmaken">Afspraak aanmaken</Button>
+				<Button class="max-xs:hidden" as="link" href="/afspraak/aanmaken">Afspraak aanmaken</Button>
+				<Button class="xs:hidden" size="icon" as="link" href="/afspraak/aanmaken">
+					<Icon icon="tabler--calendar-plus" class="size-5" />
+				</Button>
 			{/if}
 		</div>
 	</nav>
-	<main class="p-4 pt-8">
+	<main class="p-4 pt-12">
 		{@render children()}
 	</main>
 </div>

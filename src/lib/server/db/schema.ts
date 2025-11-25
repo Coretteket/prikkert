@@ -26,6 +26,7 @@ export const events = pgTable('events', {
 		.$default(() => generateNanoID(16))
 		.primaryKey(),
 	title: text().notNull(),
+	organizerName: text(),
 	description: text(),
 	allowAnonymous: boolean().notNull().default(false),
 	hideParticipants: boolean().notNull().default(false),
@@ -54,21 +55,9 @@ export const sessions = pgTable('sessions', {
 		.notNull(),
 	token: char({ length: 44 }).notNull(),
 	name: text(),
+	isOwner: boolean().notNull().default(false),
 	createdAt: instant().defaultNow().notNull(),
 })
-
-export const organizers = pgTable(
-	'organizers',
-	{
-		eventId: char({ length: 16 })
-			.references(() => events.id, CASCADE)
-			.notNull(),
-		sessionId: char({ length: 16 })
-			.references(() => sessions.id, CASCADE)
-			.notNull(),
-	},
-	(t) => [primaryKey({ columns: [t.eventId, t.sessionId] })],
-)
 
 export const availability = pgEnum('availability', ['YES', 'NO', 'MAYBE'])
 
@@ -90,7 +79,6 @@ export const responses = pgTable(
 /* RELATIONS */
 
 export const eventsRelations = relations(events, ({ one, many }) => ({
-	organizer: one(organizers, { fields: [events.id], references: [organizers.eventId] }),
 	options: many(options),
 	sessions: many(sessions),
 }))
@@ -103,11 +91,6 @@ export const optionsRelations = relations(options, ({ one, many }) => ({
 export const sessionsRelations = relations(sessions, ({ one, many }) => ({
 	event: one(events, { fields: [sessions.eventId], references: [events.id] }),
 	responses: many(responses),
-}))
-
-export const organizersRelations = relations(organizers, ({ one }) => ({
-	event: one(events, { fields: [organizers.eventId], references: [events.id] }),
-	session: one(sessions, { fields: [organizers.sessionId], references: [sessions.id] }),
 }))
 
 export const responsesRelations = relations(responses, ({ one }) => ({

@@ -26,7 +26,7 @@ const MIN_TITLE_LENGTH = 3
 const MAX_TITLE_LENGTH = 100
 const MAX_DESCRIPTION_LENGTH = 500
 
-const CreateEventSchema = v.object({
+const CreateEventSchema = v.strictObject({
 	title: v.pipe(
 		v.string('Vul een titel in.'),
 		v.minLength(MIN_TITLE_LENGTH, `Vul een titel in van minstens ${MIN_TITLE_LENGTH} tekens.`),
@@ -42,6 +42,13 @@ const CreateEventSchema = v.object({
 			v.transform((val) => (val.length > 0 ? val : undefined)),
 		),
 		'',
+	),
+	organizerName: v.optional(
+		v.pipe(
+			v.string(),
+			v.maxLength(MAX_TITLE_LENGTH, `Vul een naam in van maximaal ${MAX_TITLE_LENGTH} tekens.`),
+			v.transform((val) => (val.length > 0 ? val : undefined)),
+		),
 	),
 	options: v.json(
 		v.pipe(
@@ -71,6 +78,7 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 			.values({
 				...parsed.settings,
 				title: parsed.title,
+				organizerName: parsed.organizerName,
 				description: parsed.description,
 				expiresAt,
 			})
@@ -87,16 +95,17 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 			(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
 		)
 
-		const options = db.insert(schema.options).values(uniqueOptions)
-
 		const [session] = await db
 			.insert(schema.sessions)
-			.values({ eventId: event.id, token: await encodeSHA256(token) })
+			.values({
+				eventId: event.id,
+				token: await encodeSHA256(token),
+				name: parsed.organizerName,
+				isOwner: true,
+			})
 			.returning()
 
-		const organizers = db
-			.insert(schema.organizers)
-			.values({ eventId: event.id, sessionId: session.id })
+		await db.insert(schema.options).values(uniqueOptions)
 
 		setSessionCookie({
 			cookies,
@@ -105,8 +114,6 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 			token,
 			expires: expiresAt,
 		})
-
-		await Promise.all([options, organizers])
 
 		return [event]
 	})

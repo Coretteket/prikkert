@@ -34,7 +34,11 @@
 {/if}
 
 <p class="mb-10 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300">
-	Je bent uitgenodigd om je beschikbaarheid door te geven, zodat er een datum kan worden geprikt.
+	Je bent
+	{#if event.organizerName}door <strong class="font-medium text-neutral-800 dark:text-neutral-200">
+			{event.organizerName}
+		</strong>{/if}
+	uitgenodigd om je beschikbaarheid in te vullen, zodat er een datum kan worden geprikt.
 </p>
 
 <form {...submitAvailability.enhance(noReset)}>
@@ -49,10 +53,11 @@
 			type="text"
 			id="name"
 			name="name"
+			placeholder="Vul jouw naam in..."
 			autocomplete="name"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
-				(submitAvailability.fields?.name?.issues()?.length ?? 0) > 0 && 'ring ring-pink-500',
+				(submitAvailability.fields?.name?.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 			]}
 			value={session?.name ?? ''}
 		/>
@@ -66,7 +71,7 @@
 		<div
 			class={[
 				'mb-4 block divide-y rounded-lg border',
-				(availabilityIssues.size > 0 || noteIssues.size > 0) && 'ring ring-pink-500',
+				(availabilityIssues.size > 0 || noteIssues.size > 0) && 'ring-2 ring-pink-500',
 			]}
 		>
 			{#each event.options as option (option.id)}
@@ -74,7 +79,9 @@
 					{option}
 					response={session?.responses.get(option.id)}
 					errors={[
-						availabilityIssues.get(`availability.option_${option.id}`),
+						availabilityIssues.size <= availabilityErrorThreshold
+							? availabilityIssues.get(`availability.option_${option.id}`)
+							: undefined,
 						noteIssues.get(`note.option_${option.id}`),
 					]}
 				/>

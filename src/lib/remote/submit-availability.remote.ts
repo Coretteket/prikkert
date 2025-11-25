@@ -1,5 +1,5 @@
+import { error, invalid } from '@sveltejs/kit'
 import { asc, eq, sql } from 'drizzle-orm'
-import { error } from '@sveltejs/kit'
 
 import { form, getRequestEvent } from '$app/server'
 
@@ -50,7 +50,7 @@ function handleValidationErrors(issues: [v.BaseIssue<unknown>, ...v.BaseIssue<un
 	return validationIssues
 }
 
-export const submitAvailability = form('unchecked', async (formData, invalid) => {
+export const submitAvailability = form('unchecked', async (formData) => {
 	const { locals, cookies, params } = getRequestEvent()
 	const eventId = params.eventId
 

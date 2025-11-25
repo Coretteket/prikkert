@@ -27,7 +27,7 @@
 	}
 </script>
 
-<div class="flex flex-col items-center gap-2 pb-1">
+<div class="flex max-sm:flex-col max-sm:items-center gap-2 pb-1">
 	<div class="grow py-1 font-[350] text-neutral-700 dark:text-neutral-300">
 		{PlainDate.from(date).toLocaleString('nl', {
 			weekday: 'long',
@@ -39,7 +39,7 @@
 
 	<div class="grid gap-3">
 		{#each slots as slot, i (i)}
-			<div class="-mr-4 flex gap-2">
+			<div class="flex gap-2">
 				<div class="flex items-center gap-3">
 					<TimeInput bind:time={() => slot[0], (time) => setSlot(i, [time, slot[1]])} />
 					<span class="text-neutral-500">&mdash;</span>

@@ -44,7 +44,7 @@ export const faq = [
 	{
 		question: 'Hoe verschilt Prikkert van datumprikker.nl?',
 		answer:
-			"Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacyvriendelijke én reclamevrije alternatief. Je hoeft geen account aan te maken, en kan zo aan de slag.",
+			"Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacyvriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag.",
 	},
 	{
 		question: 'Hoe blijft Prikkert gratis en reclamevrij?',

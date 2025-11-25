@@ -23,7 +23,7 @@
 		<strong class="font-semibold text-pink-700 dark:text-neutral-200">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h3>
-	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="md" class="mx-auto text-lg">
+	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="lg" class="mx-auto">
 		Afspraak aanmaken
 	</Button>
 </header>
@@ -39,7 +39,9 @@
 		{#each promises as promise}
 			<div class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:bg-linear-to-tl">
 				<div class="mb-4 flex items-center gap-4">
-					<div class="flex w-fit rounded-lg bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100">
+					<div
+						class="squircle flex w-fit bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100"
+					>
 						<Icon icon={promise.icon} class="size-6" />
 					</div>
 					<h4 class="font-display text-xl font-medium text-neutral-800 dark:text-neutral-200">
@@ -66,7 +68,7 @@
 		{#each steps as step, i}
 			<div class="mb-8 flex items-start gap-4">
 				<div
-					class="flex aspect-square h-9 w-9 items-center justify-center rounded-lg bg-pink-500/25"
+					class="squircle flex aspect-square h-9 w-9 items-center justify-center bg-pink-500/25"
 				>
 					<p class="font-semibold text-pink-700 dark:text-pink-100">
 						{i + 1}
@@ -94,11 +96,11 @@
 	<div class="mx-auto max-w-130">
 		{#each faq as { question, answer }, i}
 			<details
-				class="group mb-4 pb-4 not-last-of-type:border-b motion-safe:transition"
+				class="group mb-3 pb-3 not-last-of-type:border-b motion-safe:transition"
 				open={openAccordion === i}
 			>
 				<summary
-					class="flex cursor-pointer list-none justify-between gap-2 font-medium text-neutral-800 dark:text-neutral-200"
+					class="flex py-1 rounded cursor-pointer list-none justify-between gap-2 font-medium text-neutral-800 dark:text-neutral-200"
 					onclick={(e) => {
 						e.preventDefault()
 						openAccordion = openAccordion === i ? -1 : i
@@ -107,11 +109,11 @@
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon
 						icon="tabler--chevron-right"
-						class="my-0.5 size-5 group-open:rotate-90 motion-safe:transition duration-100"
+						class="my-0.5 size-5 duration-100 group-open:rotate-90 motion-safe:transition"
 					/>
 				</summary>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				<p class="pt-2 text-neutral-600 dark:text-neutral-300">{@html answer}</p>
+				<p class="pt-1 pb-2 text-neutral-600 dark:text-neutral-300">{@html answer}</p>
 			</details>
 		{/each}
 	</div>

@@ -58,7 +58,7 @@
 	outline-width: 2px;
 	outline-style: solid;
 	outline-offset: 2px;
-	outline-color: theme(--color-pink-900);
+	outline-color: theme(--color-pink-950);
 	[data-theme='dark'] & {
 		outline-color: theme(--color-pink-100);
 	}
@@ -77,5 +77,13 @@
 @utility capitalize-first {
 	&::first-letter {
 		text-transform: uppercase;
+	}
+}
+
+@utility squircle {
+	border-radius: theme(--radius-lg);
+	@supports (corner-shape: squircle) {
+		border-radius: theme(--radius-2xl);
+		corner-shape: squircle;
 	}
 }
