@@ -31,7 +31,7 @@ export const getEventSession = query(v.string(), async (eventId) => {
 		event,
 		session: {
 			...session,
-			responses: new Map(session.responses.map((response) => [response.optionId, response])),
+			responses: Object.fromEntries(session.responses.map((response) => [response.optionId, response])),
 		},
 	}
 })

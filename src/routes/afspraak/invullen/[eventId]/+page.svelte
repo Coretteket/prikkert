@@ -77,7 +77,7 @@
 			{#each event.options as option (option.id)}
 				<OptionInput
 					{option}
-					response={session?.responses.get(option.id)}
+					response={session?.responses[option.id]}
 					errors={[
 						availabilityIssues.size <= availabilityErrorThreshold
 							? availabilityIssues.get(`availability.option_${option.id}`)
