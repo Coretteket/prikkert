@@ -8,9 +8,6 @@
 
 	let { params } = $props()
 
-	const { event, session } = $derived(await getEventSession(params.eventId))
-	const availabilityErrorThreshold = $derived(Math.ceil(event.options.length * 0.2))
-
 	function extractIssues(prefix: string) {
 		const entries = (submitAvailability.fields.allIssues() ?? []).flatMap((issue) => {
 			if (!issue.path?.[0]?.toString().startsWith(prefix)) return []
@@ -21,6 +18,27 @@
 
 	const availabilityIssues = $derived(extractIssues('availability'))
 	const noteIssues = $derived(extractIssues('note'))
+
+	// Workaround for https://github.com/sveltejs/svelte/issues/17261
+	const getData = async () => {
+		const result = await getEventSession(params.eventId)
+		const errorThreshold = Math.ceil(result.event.options.length * 0.2)
+
+		const options = result.event.options.map((option) => ({
+			option,
+			response: result.session?.responses[option.id],
+			errors: [
+				availabilityIssues.size <= errorThreshold
+					? availabilityIssues.get(`availability.option_${option.id}`)
+					: undefined,
+				noteIssues.get(`note.option_${option.id}`),
+			],
+		}))
+
+		return { ...result, options, errorThreshold }
+	}
+
+	const { event, session, options, errorThreshold } = $derived(await getData())
 </script>
 
 <h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{event.title}</h1>
@@ -74,20 +92,11 @@
 				(availabilityIssues.size > 0 || noteIssues.size > 0) && 'ring-2 ring-pink-500',
 			]}
 		>
-			{#each event.options as option (option.id)}
-				<OptionInput
-					{option}
-					response={session?.responses[option.id]}
-					errors={[
-						availabilityIssues.size <= availabilityErrorThreshold
-							? availabilityIssues.get(`availability.option_${option.id}`)
-							: undefined,
-						noteIssues.get(`note.option_${option.id}`),
-					]}
-				/>
+			{#each options as { option, response, errors } (option.id)}
+				<OptionInput {option} {response} {errors} />
 			{/each}
 		</div>
-		{#if (submitAvailability.fields?.availability?.issues()?.length ?? 0) > 0 || availabilityIssues.size > availabilityErrorThreshold}
+		{#if (submitAvailability.fields?.availability?.issues()?.length ?? 0) > 0 || availabilityIssues.size > errorThreshold}
 			<p class="font-medium text-pink-600 dark:text-pink-500">
 				Vul je beschikbaarheid in voor alle opties.
 			</p>
