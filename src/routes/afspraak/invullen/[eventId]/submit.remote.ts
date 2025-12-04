@@ -93,7 +93,7 @@ export const submitAvailability = form('unchecked', async (formData) => {
 					optionId: key.replace(/^option_/, ''),
 					sessionId,
 					availability,
-					note: parsed.note?.[key as OptionName]?.toLocaleUpperCase(),
+					note: parsed.note?.[key as OptionName],
 				})),
 			)
 			.onConflictDoUpdate({
