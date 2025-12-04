@@ -14,9 +14,9 @@
 
 	let { option, response, errors }: Props = $props()
 
-	let availabilityValue = $state(response?.availability ?? '')
-	let showNote = $state(Boolean(response?.note))
-	let noteValue = $state(response?.note ?? '')
+	let availability = $derived(response?.availability ?? '')
+	let showNote = $derived(Boolean(response?.note))
+	let noteValue = $derived(response?.note ?? '')
 
 	const availabilityName = $derived(`availability.option_${option.id}`)
 	const noteName = $derived(`note.option_${option.id}`)
@@ -34,7 +34,7 @@
 			name={availabilityName}
 			{value}
 			class="peer absolute opacity-0"
-			bind:group={availabilityValue}
+			bind:group={availability}
 			onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
 		/>
 		<span

@@ -8,6 +8,7 @@ import { setSessionCookie } from '@/server/session'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
+import { hasSession } from '../../../data.remote'
 import { getEventSession } from './data.remote'
 
 const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
@@ -88,15 +89,12 @@ export const submitAvailability = form('unchecked', async (formData) => {
 		await db
 			.insert(schema.responses)
 			.values(
-				Object.entries(parsed.availability).map(([key, availabilityValue]) => {
-					const optionId = key.replace(/^option_/, '')
-					return {
-						optionId,
-						sessionId,
-						availability: availabilityValue,
-						note: parsed.note?.[key as OptionName],
-					}
-				}),
+				Object.entries(parsed.availability).map(([key, availability]) => ({
+					optionId: key.replace(/^option_/, ''),
+					sessionId,
+					availability,
+					note: parsed.note?.[key as OptionName]?.toLocaleUpperCase(),
+				})),
 			)
 			.onConflictDoUpdate({
 				target: [schema.responses.optionId, schema.responses.sessionId],
@@ -110,6 +108,8 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	setSessionCookie({ cookies, sessionId, eventId, token, expires: event.expiresAt })
 
 	getEventSession(eventId).refresh()
+
+	hasSession().set(true)
 
 	return { success: true }
 })
