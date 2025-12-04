@@ -3,7 +3,7 @@
 
 	import type { schema } from '@/server/db'
 
-	import { formatDateTimeOption } from '@/time-format'
+	import { formatDateTimeOption } from '@/shared/time-format'
 	import Icon from '@/components/icon.svelte'
 
 	type Props = {

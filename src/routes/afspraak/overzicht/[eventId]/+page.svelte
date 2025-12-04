@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state'
 
-	import { formatDateTimeOption } from '@/time-format'
+	import { formatDateTimeOption } from '@/shared/time-format'
 	import Icon from '@/components/icon.svelte'
 
 	import { getEventResponses } from './data.remote'

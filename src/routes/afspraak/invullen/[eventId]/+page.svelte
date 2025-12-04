@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '@/components/button.svelte'
-	import { noReset } from '@/utils'
+	import { noReset } from '@/shared/utils'
 
 	import { submitAvailability } from './submit.remote'
 	import OptionInput from './option-input.svelte'

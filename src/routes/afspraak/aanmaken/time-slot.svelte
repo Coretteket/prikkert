@@ -5,8 +5,8 @@
 
 	import Popover, { popover } from '@/components/popover.svelte'
 	import Button from '@/components/button.svelte'
+	import { PlainDate } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
-	import { PlainDate } from '@/temporal'
 
 	import { emptySlot, type Options, type Slot } from './types'
 	import TimeInput from './time-input.svelte'

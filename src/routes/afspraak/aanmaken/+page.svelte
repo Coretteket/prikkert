@@ -2,8 +2,8 @@
 	import { SvelteMap } from 'svelte/reactivity'
 
 	import Button from '@/components/button.svelte'
+	import { PlainDate } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
-	import { PlainDate } from '@/temporal'
 
 	import type { Options } from './types'
 

@@ -2,7 +2,7 @@ import type { InferSelectModel } from 'drizzle-orm'
 
 import type { schema } from '@/server/db'
 
-import { PlainDate, PlainDateTime } from '@/temporal'
+import { PlainDate, PlainDateTime } from '@/shared/temporal'
 
 export const formatOptions = {
 	date: {

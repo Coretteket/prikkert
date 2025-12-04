@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PlainTime } from '@/temporal'
+	import { PlainTime } from '@/shared/temporal'
 
 	let { time = $bindable() }: { time?: PlainTime } = $props()
 </script>

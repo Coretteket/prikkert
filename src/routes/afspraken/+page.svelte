@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
 
-	import { formatDateTimeRange } from '@/time-format'
-	import { capitalizeFirst } from '@/utils'
+	import { formatDateTimeRange } from '@/shared/time-format'
+	import { capitalizeFirst } from '@/shared/utils'
 
 	import { getEvents } from './data.remote'
 

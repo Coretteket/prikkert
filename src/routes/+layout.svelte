@@ -6,9 +6,9 @@
 	import { resolve } from '$app/paths'
 
 	import Button from '@/components/button.svelte'
+	import { toggleTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
 	import pattern from '@/assets/pattern.svg'
-	import { toggleTheme } from '@/theme'
 	import icon from '@/assets/icon.svg'
 
 	import { hasSession } from './data.remote'

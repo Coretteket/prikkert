@@ -2,9 +2,9 @@ import { asc, inArray } from 'drizzle-orm'
 
 import { query, getRequestEvent } from '$app/server'
 
-import { PlainDateTime } from '@/temporal'
+import { PlainDateTime } from '@/shared/temporal'
 import { db, schema } from '@/server/db'
-import { omit } from '@/utils'
+import { omit } from '@/shared/utils'
 
 export const getEvents = query(async () => {
 	const { locals } = getRequestEvent()

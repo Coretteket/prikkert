@@ -2,7 +2,7 @@ import '@valibot/i18n/nl'
 
 import * as v from 'valibot'
 
-import { PlainDate, PlainTime } from '@/temporal'
+import { PlainDate, PlainTime } from '@/shared/temporal'
 
 v.setGlobalConfig({ lang: 'nl' })
 
