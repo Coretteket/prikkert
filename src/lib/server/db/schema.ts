@@ -78,7 +78,7 @@ export const responses = pgTable(
 
 /* RELATIONS */
 
-export const eventsRelations = relations(events, ({ one, many }) => ({
+export const eventsRelations = relations(events, ({ many }) => ({
 	options: many(options),
 	sessions: many(sessions),
 }))

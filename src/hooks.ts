@@ -1,4 +1,4 @@
-import type { Transport } from "@sveltejs/kit";
+import type { Transport } from '@sveltejs/kit'
 
 export const transport = {
 	PlainDate: {
