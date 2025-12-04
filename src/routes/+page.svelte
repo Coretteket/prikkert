@@ -7,9 +7,9 @@
 	let openAccordion = $state(0)
 </script>
 
-<header class="mt-10 mb-24 space-y-4">
+<header class="mt-10 sm:mt-14 mb-24 sm:mb-30 space-y-4">
 	<h2
-		class="font-display mb-8 text-center text-4xl font-semibold text-neutral-900 sm:text-[2.75rem] sm:leading-tight dark:text-neutral-100"
+		class="font-display mb-8 text-center text-4xl font-semibold text-neutral-900 sm:text-5xl sm:leading-tight dark:text-neutral-100"
 	>
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
@@ -18,9 +18,9 @@
 		class="mx-auto mb-8 max-w-80 text-center text-xl font-[350] text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
 	>
 		Vind
-		<strong class="font-semibold text-pink-700 dark:text-neutral-200">gratis</strong>
+		<strong class="font-bold text-pink-700 dark:text-white">gratis</strong>
 		én
-		<strong class="font-semibold text-pink-700 dark:text-neutral-200">reclamevrij</strong>
+		<strong class="font-bold text-pink-700 dark:text-white">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h3>
 	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="lg" class="mx-auto">
@@ -37,7 +37,7 @@
 	</p>
 	<div class="mb-8 grid gap-4 sm:grid-cols-2">
 		{#each promises as promise}
-			<div class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:bg-linear-to-tl">
+			<div class="rounded-lg border from-neutral-900 to-pink-700/5 px-7 py-6.5 dark:bg-linear-to-tl">
 				<div class="mb-4 flex items-center gap-4">
 					<div class="squircle flex w-fit bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
@@ -47,7 +47,7 @@
 					</h4>
 				</div>
 				<p class="font-[350] text-balance text-neutral-600 dark:text-pink-50/70">
-					{promise.description}
+					{@html promise.description}
 				</p>
 			</div>
 		{/each}

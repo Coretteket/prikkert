@@ -8,7 +8,7 @@
 	import Button from '@/components/button.svelte'
 	import { toggleTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
-	import pattern from '@/assets/pattern.svg'
+	import Background from './background.svelte'
 	import icon from '@/assets/icon.svg'
 
 	import { hasSession } from './data.remote'
@@ -21,18 +21,15 @@
 	<title>Prikkert</title>
 </svelte:head>
 
-<div
-	class="fixed inset-0 -z-50 opacity-4 max-sm:hidden dark:invert"
-	style={`background: url("${pattern}"); background-size: 100px;`}
-></div>
+<Background />
 
 <div
-	class="dark:bg-neutral-850 bg-white p-2 sm:mx-auto sm:my-8 sm:max-w-[min(48rem,calc(100vw-3rem))] sm:rounded-lg sm:border sm:p-4"
+	class="dark:bg-neutral-850 bg-white lg:mx-auto lg:my-8 lg:max-w-4xl lg:rounded-lg lg:border lg:p-4 ring-6 ring-white dark:ring-neutral-850"
 >
-	<nav class="flex items-center justify-between px-4 py-2">
+	<nav class="flex items-center justify-between px-6 py-4">
 		<a
 			href={resolve('/')}
-			class="font-display squircle flex items-center gap-3 text-xl font-medium text-neutral-800 dark:text-neutral-300"
+			class="font-display squircle flex items-center gap-3 font-[450] text-[1.4rem] text-neutral-900 dark:text-neutral-100"
 		>
 			<img src={icon} width={36} height={36} alt="" />
 			<span>Prikkert</span>
@@ -56,7 +53,7 @@
 			{/if}
 		</div>
 	</nav>
-	<main class="p-4 pt-12">
+	<main class="p-6 pt-12">
 		{@render children()}
 	</main>
 </div>

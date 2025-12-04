@@ -11,8 +11,6 @@
 	import { createEvent } from './action.remote'
 	import TimeSlot from './time-slot.svelte'
 
-	let datePickerHeight = $state(338)
-
 	let options = new SvelteMap() satisfies Options
 
 	let showName = $state(false)
@@ -158,15 +156,12 @@
 				</span>
 			{/if}
 		</p>
-		<div
-			class={[
-				'mb-4 rounded-lg border',
-				(createEvent.fields.options.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
-			]}
-			bind:clientHeight={datePickerHeight}
-		>
-			<DatePicker {options} monthsToShow={2} />
-		</div>
+
+		<DatePicker
+			{options}
+			monthsToShow={2}
+			hasIssues={(createEvent.fields.options.issues()?.length ?? 0) > 0}
+		/>
 
 		{#each createEvent.fields.options.issues() ?? [] as issue}
 			<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
