@@ -3,8 +3,6 @@
 	import Icon from '@/components/icon.svelte'
 
 	import { faq, promises, steps } from './content'
-
-	let openAccordion = $state(0)
 </script>
 
 <header class="mt-10 sm:mt-14 mb-24 sm:mb-30 space-y-4">
@@ -37,7 +35,9 @@
 	</p>
 	<div class="mb-8 grid gap-4 sm:grid-cols-2">
 		{#each promises as promise}
-			<div class="rounded-lg border from-neutral-900 to-pink-700/5 px-7 py-6.5 dark:bg-linear-to-tl">
+			<div
+				class="rounded-lg border from-neutral-900 to-pink-700/5 px-7 py-6.5 dark:bg-linear-to-tl"
+			>
 				<div class="mb-4 flex items-center gap-4">
 					<div class="squircle flex w-fit bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
@@ -47,7 +47,7 @@
 					</h4>
 				</div>
 				<p class="font-[350] text-balance text-neutral-600 dark:text-pink-50/70">
-					{@html promise.description}
+					{promise.description}
 				</p>
 			</div>
 		{/each}
@@ -93,14 +93,11 @@
 		{#each faq as { question, answer }, i}
 			<details
 				class="group mb-3 pb-3 not-last-of-type:border-b motion-safe:transition"
-				open={openAccordion === i}
+				name="faq-item"
+				open={i === 0}
 			>
 				<summary
 					class="flex py-1 rounded cursor-pointer list-none justify-between gap-2 font-medium text-neutral-800 dark:text-neutral-200"
-					onclick={(e) => {
-						e.preventDefault()
-						openAccordion = openAccordion === i ? -1 : i
-					}}
 				>
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon
