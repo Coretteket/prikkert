@@ -34,6 +34,7 @@
 	}
 
 	* {
+		scroll-margin-top: 1rem;
 		@apply border-neutral-300 dark:border-neutral-700;
 	}
 

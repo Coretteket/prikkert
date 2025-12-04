@@ -8,8 +8,15 @@
 
 	let { params } = $props()
 
+	const issues = $derived(submitAvailability.fields.allIssues() ?? [])
+
+	$effect(() => {
+		if (issues.length === 0) return
+		document.querySelector('[data-issue]')?.parentElement?.scrollIntoView({ behavior: 'smooth' })
+	})
+
 	function extractIssues(prefix: string) {
-		const entries = (submitAvailability.fields.allIssues() ?? []).flatMap((issue) => {
+		const entries = issues.flatMap((issue) => {
 			if (!issue.path?.[0]?.toString().startsWith(prefix)) return []
 			return [[issue.path![0], issue.message] as const]
 		})
@@ -19,26 +26,21 @@
 	const availabilityIssues = $derived(extractIssues('availability'))
 	const noteIssues = $derived(extractIssues('note'))
 
+	const ISSUE_THRESHOLD = 3
+
 	// Workaround for https://github.com/sveltejs/svelte/issues/17261
 	const getData = async () => {
 		const result = await getEventSession(params.eventId)
-		const errorThreshold = Math.ceil(result.event.options.length * 0.2)
 
 		const options = result.event.options.map((option) => ({
 			option,
 			response: result.session?.responses[option.id],
-			errors: [
-				availabilityIssues.size <= errorThreshold
-					? availabilityIssues.get(`availability.option_${option.id}`)
-					: undefined,
-				noteIssues.get(`note.option_${option.id}`),
-			],
 		}))
 
-		return { ...result, options, errorThreshold }
+		return { ...result, options }
 	}
 
-	const { event, session, options, errorThreshold } = $derived(await getData())
+	const { event, session, options } = $derived(await getData())
 </script>
 
 <h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{event.title}</h1>
@@ -53,9 +55,12 @@
 
 <p class="mb-10 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300">
 	Je bent
-	{#if event.organizerName}door <strong class="font-medium text-neutral-800 dark:text-neutral-200">
+	{#if event.organizerName}
+		door
+		<strong class="font-medium text-neutral-800 dark:text-neutral-200">
 			{event.organizerName}
-		</strong>{/if}
+		</strong>
+	{/if}
 	uitgenodigd om je beschikbaarheid in te vullen, zodat er een datum kan worden geprikt.
 </p>
 
@@ -80,7 +85,7 @@
 			value={session?.name ?? ''}
 		/>
 		{#each submitAvailability.fields?.name?.issues() ?? [] as issue}
-			<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+			<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
 
@@ -92,12 +97,21 @@
 				(availabilityIssues.size > 0 || noteIssues.size > 0) && 'ring-2 ring-pink-500',
 			]}
 		>
-			{#each options as { option, response, errors } (option.id)}
-				<OptionInput {option} {response} {errors} />
+			{#each options as { option, response } (option.id)}
+				<OptionInput
+					{option}
+					{response}
+					errors={[
+						availabilityIssues.size <= ISSUE_THRESHOLD
+							? availabilityIssues.get(`availability.option_${option.id}`)
+							: undefined,
+						noteIssues.get(`note.option_${option.id}`),
+					]}
+				/>
 			{/each}
 		</div>
-		{#if (submitAvailability.fields?.availability?.issues()?.length ?? 0) > 0 || availabilityIssues.size > errorThreshold}
-			<p class="font-medium text-pink-600 dark:text-pink-500">
+		{#if (submitAvailability.fields?.availability?.issues()?.length ?? 0) > 0 || availabilityIssues.size > ISSUE_THRESHOLD}
+			<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>
 				Vul je beschikbaarheid in voor alle opties.
 			</p>
 		{/if}

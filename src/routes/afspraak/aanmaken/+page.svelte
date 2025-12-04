@@ -17,17 +17,21 @@
 	let showDescription = $state(false)
 	let showTimes = $state(false)
 
+	const issues = $derived(createEvent.fields.allIssues() ?? [])
+
+	$effect(() => {
+		if (issues.length === 0) return
+		document.querySelector('[data-issue]')?.parentElement?.scrollIntoView({ behavior: 'smooth' })
+	})
+
 	const nestedOptionsIssues = $derived.by(() => {
-		const allIssues = createEvent.fields.allIssues() ?? []
 		const optionsIssues = new SvelteMap<string, string>()
 
-		for (const issue of allIssues) {
+		for (const issue of issues) {
 			if (issue.path?.[0] === 'options' && typeof issue.path[1] === 'number') {
 				const dateIndex = issue.path[1]
 				const dates = Array.from(options.keys()).toSorted(Temporal.PlainDate.compare)
-				if (dates[dateIndex]) {
-					optionsIssues.set(dates[dateIndex], issue.message)
-				}
+				if (dates[dateIndex]) optionsIssues.set(dates[dateIndex], issue.message)
 			}
 		}
 
@@ -54,7 +58,7 @@
 			/>
 		</label>
 		{#each createEvent.fields.title.issues() ?? [] as issue}
-			<p class="my-2 font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+			<p class="my-2 font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
 
@@ -87,7 +91,7 @@
 				]}
 			/>
 			{#each createEvent.fields.organizerName.issues() ?? [] as issue}
-				<p class="my-2 font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+				<p class="my-2 font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 			{/each}
 		</div>
 	{/if}
@@ -142,7 +146,7 @@
 				]}
 			></textarea>
 			{#each createEvent.fields.description.issues() ?? [] as issue}
-				<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+				<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 			{/each}
 		</div>
 	{/if}
@@ -164,7 +168,7 @@
 		/>
 
 		{#each createEvent.fields.options.issues() ?? [] as issue}
-			<p class="font-medium text-pink-600 dark:text-pink-500">{issue.message}</p>
+			<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
 
@@ -200,7 +204,7 @@
 				{#each Array.from(options.keys()).toSorted(Temporal.PlainDate.compare) as date}
 					<TimeSlot {date} {options} />
 					{#if nestedOptionsIssues.has(date)}
-						<p class="text-center font-medium text-pink-600 dark:text-pink-500">
+						<p class="text-center font-medium text-pink-600 dark:text-pink-500" data-issue>
 							{nestedOptionsIssues.get(date)}
 						</p>
 					{/if}

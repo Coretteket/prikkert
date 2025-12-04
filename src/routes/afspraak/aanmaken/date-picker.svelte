@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte'
+
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
@@ -16,7 +17,6 @@
 	const now = Temporal.Now.plainDateISO('Europe/Amsterdam')
 
 	let view = $state(now)
-	let focusedDate = $state(now)
 
 	const firstVisible = $derived(view.with({ day: 1 }))
 	const lastVisible = $derived(
@@ -55,47 +55,38 @@
 		return Temporal.PlainDate.compare(day, now) === 0
 	}
 
-	async function handleKeydown(event: KeyboardEvent, day: Temporal.PlainDate) {
-		let newDate: Temporal.PlainDate | null = null
+	const keyActions = new Map<string, (day: Temporal.PlainDate) => Temporal.PlainDate>([
+		['ArrowLeft', (day) => day.subtract({ days: 1 })],
+		['ArrowRight', (day) => day.add({ days: 1 })],
+		['ArrowUp', (day) => day.subtract({ days: 7 })],
+		['ArrowDown', (day) => day.add({ days: 7 })],
+	])
 
-		switch (event.key) {
-			case 'ArrowLeft':
-				newDate = day.subtract({ days: 1 })
-				break
-			case 'ArrowRight':
-				newDate = day.add({ days: 1 })
-				break
-			case 'ArrowUp':
-				newDate = day.subtract({ days: 7 })
-				break
-			case 'ArrowDown':
-				newDate = day.add({ days: 7 })
-				break
-			case 'Enter':
-			case ' ':
-				if (Temporal.PlainDate.compare(day, now) >= 0) toggleDate(day)
-				break
-			default:
-				return
+	async function handleKeydown(event: KeyboardEvent, day: Temporal.PlainDate) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault()
+			if (Temporal.PlainDate.compare(day, now) >= 0) toggleDate(day)
+			return
 		}
+
+		const newDate = keyActions.get(event.key)?.(day)
+		if (!newDate) return
 
 		event.preventDefault()
 
-		if (newDate && Temporal.PlainDate.compare(newDate, now) >= 0) {
-			focusedDate = newDate
+		if (Temporal.PlainDate.compare(newDate, now) <= 0) return
 
-			if (Temporal.PlainDate.compare(newDate, firstVisible) < 0) {
-				view = view.subtract({ months: 1 })
-			} else if (Temporal.PlainDate.compare(newDate, lastVisible) > 0) {
-				view = view.add({ months: 1 })
-			}
-
-			await tick()
-
-			const target = `[data-date="${newDate.toString()}"]:not(:disabled)`
-			const button = document.querySelector<HTMLButtonElement>(target)
-			button?.focus()
+		if (Temporal.PlainDate.compare(newDate, firstVisible) < 0) {
+			view = view.subtract({ months: 1 })
+		} else if (Temporal.PlainDate.compare(newDate, lastVisible) > 0) {
+			view = view.add({ months: 1 })
 		}
+
+		await tick()
+
+		const target = `[data-date="${newDate.toString()}"]:not(:disabled)`
+		const button = document.querySelector<HTMLButtonElement>(target)
+		button?.focus()
 	}
 </script>
 
@@ -156,7 +147,6 @@
 											data-date={day.toString()}
 											onclick={() => toggleDate(day)}
 											onkeydown={(e) => handleKeydown(e, day)}
-											onfocus={() => (focusedDate = day)}
 											aria-pressed={isSelected}
 											disabled={!inMonth || isPast}
 											class={[

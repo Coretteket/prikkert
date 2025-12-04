@@ -106,7 +106,7 @@
 	</details>
 
 	{#each errors.filter((e) => e !== undefined) as error}
-		<p class="mt-2 px-5 font-medium text-pink-600 dark:text-pink-500">
+		<p class="mt-2 px-5 font-medium text-pink-600 dark:text-pink-500" data-issue>
 			{error}
 		</p>
 	{/each}

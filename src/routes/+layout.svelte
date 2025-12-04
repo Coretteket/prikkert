@@ -8,9 +8,9 @@
 	import Button from '@/components/button.svelte'
 	import { toggleTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
-	import Background from './background.svelte'
 	import icon from '@/assets/icon.svg'
 
+	import Background from './background.svelte'
 	import { hasSession } from './data.remote'
 
 	let { children } = $props()
