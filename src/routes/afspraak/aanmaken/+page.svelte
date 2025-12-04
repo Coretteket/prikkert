@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { SvelteMap } from 'svelte/reactivity'
 
-	import { createEvent } from '@/remote/create-event.remote'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
 	import { PlainDate } from '@/temporal'
@@ -9,6 +8,7 @@
 	import type { Options } from './types'
 
 	import DatePicker from './date-picker.svelte'
+	import { createEvent } from './action.remote'
 	import TimeSlot from './time-slot.svelte'
 
 	let datePickerHeight = $state(338)

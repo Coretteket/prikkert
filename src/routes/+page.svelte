@@ -39,9 +39,7 @@
 		{#each promises as promise}
 			<div class="rounded-lg border from-neutral-900 to-pink-700/5 px-6 py-5 dark:bg-linear-to-tl">
 				<div class="mb-4 flex items-center gap-4">
-					<div
-						class="squircle flex w-fit bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100"
-					>
+					<div class="squircle flex w-fit bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
 					</div>
 					<h4 class="font-display text-xl font-medium text-neutral-800 dark:text-neutral-200">
@@ -67,9 +65,7 @@
 	<div class="mx-auto max-w-130">
 		{#each steps as step, i}
 			<div class="mb-8 flex items-start gap-4">
-				<div
-					class="squircle flex aspect-square h-9 w-9 items-center justify-center bg-pink-500/25"
-				>
+				<div class="squircle flex aspect-square h-9 w-9 items-center justify-center bg-pink-500/25">
 					<p class="font-semibold text-pink-700 dark:text-pink-100">
 						{i + 1}
 					</p>

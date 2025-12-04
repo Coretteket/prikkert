@@ -8,7 +8,7 @@ import { setSessionCookie } from '@/server/session'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
-import { getEventSession } from './get-event-session.remote'
+import { getEventSession } from './data.remote'
 
 const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { submitAvailability } from '@/remote/submit-availability.remote'
-	import { getEventSession } from '@/remote/get-event-session.remote'
 	import Button from '@/components/button.svelte'
 	import { noReset } from '@/utils'
 
+	import { submitAvailability } from './submit.remote'
 	import OptionInput from './option-input.svelte'
+	import { getEventSession } from './data.remote'
 
 	let { params } = $props()
 

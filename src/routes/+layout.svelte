@@ -5,12 +5,13 @@
 
 	import { resolve } from '$app/paths'
 
-	import { hasSession } from '@/remote/has-session.remote'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
 	import pattern from '@/assets/pattern.svg'
 	import { toggleTheme } from '@/theme'
 	import icon from '@/assets/icon.svg'
+
+	import { hasSession } from './data.remote'
 
 	let { children } = $props()
 </script>

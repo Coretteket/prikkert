@@ -3,13 +3,14 @@ import { redirect } from '@sveltejs/kit'
 import { form, getRequestEvent } from '$app/server'
 
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
-import { hasSession } from '@/remote/has-session.remote'
 import { setSessionCookie } from '@/server/session'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 import { PlainTime } from '@/temporal'
 import { deduplicate } from '@/utils'
 import { Now } from '@/temporal'
+
+import { hasSession } from '../../data.remote'
 
 const OptionTimeSchema = v.union(
 	[

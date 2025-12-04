@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state'
 
-	import { getEventResponses } from '@/remote/get-event-responses.remote'
 	import { formatDateTimeOption } from '@/time-format'
 	import Icon from '@/components/icon.svelte'
+
+	import { getEventResponses } from './data.remote'
 
 	const event = $derived(await getEventResponses(page.params.eventId))
 	let allOpen = $state(false)
