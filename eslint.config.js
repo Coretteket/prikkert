@@ -56,6 +56,14 @@ export default defineConfig(
 			// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
 			'no-undef': 'off',
 			'svelte/require-each-key': 'off',
+			'no-restricted-globals': [
+				'error',
+				{
+					name: 'Temporal',
+					message:
+						'Do not use global Temporal. Import it from "@/shared/temporal" to ensure the polyfill is loaded.',
+				},
+			],
 		},
 	},
 	{

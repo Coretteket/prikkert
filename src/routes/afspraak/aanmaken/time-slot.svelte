@@ -5,7 +5,7 @@
 
 	import Popover, { popover } from '@/components/popover.svelte'
 	import Button from '@/components/button.svelte'
-	import { PlainDate } from '@/shared/temporal'
+	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
 
 	import { emptySlot, type Options, type Slot } from './types'
@@ -29,7 +29,7 @@
 
 <div class="flex max-sm:flex-col max-sm:items-center gap-2 pb-1">
 	<div class="grow py-1 font-[350] text-neutral-700 dark:text-neutral-300">
-		{PlainDate.from(date).toLocaleString('nl', {
+		{Temporal.PlainDate.from(date).toLocaleString('nl', {
 			weekday: 'long',
 			day: 'numeric',
 			month: 'long',

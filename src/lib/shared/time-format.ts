@@ -2,7 +2,7 @@ import type { InferSelectModel } from 'drizzle-orm'
 
 import type { schema } from '@/server/db'
 
-import { PlainDate, PlainDateTime } from '@/shared/temporal'
+import { Temporal } from '@/shared/temporal'
 
 export const formatOptions = {
 	date: {
@@ -27,7 +27,7 @@ export function formatDateTimeOption({
 	endsAt,
 }: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>): string {
 	const date = startsAt.toLocaleString('nl', formatOptions.date)
-	if (startsAt instanceof PlainDate) return date
+	if (startsAt instanceof Temporal.PlainDate) return date
 
 	const timeStart = startsAt.toLocaleString('nl', formatOptions.time)
 	if (!endsAt || startsAt.equals(endsAt)) return `${date}, ${timeStart}`
@@ -37,8 +37,8 @@ export function formatDateTimeOption({
 }
 
 export function formatDateTimeRange(
-	startsAt: PlainDate | PlainDateTime,
-	endsAt: PlainDate | PlainDateTime,
+	startsAt: Temporal.PlainDate | Temporal.PlainDateTime,
+	endsAt: Temporal.PlainDate | Temporal.PlainDateTime,
 ) {
 	const start = startsAt.toLocaleString('nl', formatOptions.shortDate)
 	const end = endsAt.toLocaleString('nl', formatOptions.shortDate)

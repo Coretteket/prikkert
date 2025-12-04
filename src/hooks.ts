@@ -1,5 +1,7 @@
 import type { Transport } from '@sveltejs/kit'
 
+import { Temporal } from '@/shared/temporal'
+
 export const transport = {
 	PlainDate: {
 		encode: (value) => value instanceof Temporal.PlainDate && [value.toString()],

@@ -2,7 +2,7 @@ import '@valibot/i18n/nl'
 
 import * as v from 'valibot'
 
-import { PlainDate, PlainTime } from '@/shared/temporal'
+import { Temporal } from '@/shared/temporal'
 
 v.setGlobalConfig({ lang: 'nl' })
 
@@ -22,8 +22,8 @@ export const temporal = <T>(
 		}),
 	)
 
-export const plainDate = () => temporal(PlainDate, 'Vul een geldige datum in.')
-export const plainTime = () => temporal(PlainTime, 'Vul een geldig tijdstip in.')
+export const plainDate = () => temporal(Temporal.PlainDate, 'Vul een geldige datum in.')
+export const plainTime = () => temporal(Temporal.PlainTime, 'Vul een geldig tijdstip in.')
 
 export const json = <TSchema extends v.BaseSchema<object, unknown, v.BaseIssue<unknown>>>(
 	schema: TSchema,

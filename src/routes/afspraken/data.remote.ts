@@ -2,7 +2,7 @@ import { asc, inArray } from 'drizzle-orm'
 
 import { query, getRequestEvent } from '$app/server'
 
-import { PlainDateTime } from '@/shared/temporal'
+import { Temporal } from '@/shared/temporal'
 import { db, schema } from '@/server/db'
 import { omit } from '@/shared/utils'
 
@@ -31,7 +31,7 @@ export const getEvents = query(async () => {
 			lastDate: event.options.at(-1)!.startsAt,
 			numberOfResponses: event.sessions.filter((s) => s.responses.length > 0).length,
 		}))
-		.toSorted((a, b) => PlainDateTime.compare(b.createdAt, a.createdAt))
+		.toSorted((a, b) => Temporal.PlainDateTime.compare(b.createdAt, a.createdAt))
 
 	return events
 })

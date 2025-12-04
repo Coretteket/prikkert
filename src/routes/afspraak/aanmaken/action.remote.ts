@@ -4,11 +4,10 @@ import { form, getRequestEvent } from '$app/server'
 
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
 import { setSessionCookie } from '@/server/session'
-import { PlainTime } from '@/shared/temporal'
 import { deduplicate } from '@/shared/utils'
+import { Temporal } from '@/shared/temporal'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
-import { Now } from '@/shared/temporal'
 
 import { hasSession } from '../../data.remote'
 
@@ -16,7 +15,7 @@ const OptionTimeSchema = v.union(
 	[
 		v.pipe(
 			v.tuple([v.plainTime(), v.nullable(v.plainTime())]),
-			v.check(([a, b]) => !b || PlainTime.compare(a, b) < 1, 'Ongeldig tijdslot.'),
+			v.check(([a, b]) => !b || Temporal.PlainTime.compare(a, b) < 1, 'Ongeldig tijdslot.'),
 		),
 		v.pipe(v.array(v.never()), v.length(0)),
 	],
@@ -69,7 +68,7 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 	const { cookies } = getRequestEvent()
 
 	const token = generateNanoID(21)
-	const expiresAt = Now.instant()
+	const expiresAt = Temporal.Now.instant()
 		.add({ hours: 90 * 24 })
 		.toString()
 

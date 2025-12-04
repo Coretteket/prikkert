@@ -2,7 +2,7 @@
 	import { SvelteMap } from 'svelte/reactivity'
 
 	import Button from '@/components/button.svelte'
-	import { PlainDate } from '@/shared/temporal'
+	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
 
 	import type { Options } from './types'
@@ -26,7 +26,7 @@
 		for (const issue of allIssues) {
 			if (issue.path?.[0] === 'options' && typeof issue.path[1] === 'number') {
 				const dateIndex = issue.path[1]
-				const dates = Array.from(options.keys()).toSorted(PlainDate.compare)
+				const dates = Array.from(options.keys()).toSorted(Temporal.PlainDate.compare)
 				if (dates[dateIndex]) {
 					optionsIssues.set(dates[dateIndex], issue.message)
 				}
@@ -202,7 +202,7 @@
 					nestedOptionsIssues.size > 0 && 'ring-2 ring-pink-500',
 				]}
 			>
-				{#each Array.from(options.keys()).toSorted(PlainDate.compare) as date}
+				{#each Array.from(options.keys()).toSorted(Temporal.PlainDate.compare) as date}
 					<TimeSlot {date} {options} />
 					{#if nestedOptionsIssues.has(date)}
 						<p class="text-center font-medium text-pink-600 dark:text-pink-500">

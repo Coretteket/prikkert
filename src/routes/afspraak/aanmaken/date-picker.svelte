@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Now, PlainDate } from '@/shared/temporal'
 	import Button from '@/components/button.svelte'
+	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
 
 	import { emptySlot, type Options } from './types'
@@ -8,7 +8,7 @@
 	let { options, monthsToShow = 1 }: { options: Options; monthsToShow?: 1 | 2 } = $props()
 
 	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
-	const now = Now.plainDateISO('Europe/Amsterdam')
+	const now = Temporal.Now.plainDateISO('Europe/Amsterdam')
 
 	let view = $state(now)
 
@@ -22,14 +22,14 @@
 		return result
 	})
 
-	function getMondaysForMonth(month: PlainDate) {
+	function getMondaysForMonth(month: Temporal.PlainDate) {
 		const start = month.with({ day: 1 })
 		const end = month.with({ day: start.daysInMonth })
 
-		const mondays: Array<PlainDate> = []
+		const mondays: Array<Temporal.PlainDate> = []
 		let current = start.subtract({ days: start.dayOfWeek - 1 })
 
-		while (PlainDate.compare(current, end) <= 0) {
+		while (Temporal.PlainDate.compare(current, end) <= 0) {
 			mondays.push(current)
 			current = current.add({ days: 7 })
 		}
@@ -37,7 +37,7 @@
 		return mondays
 	}
 
-	function toggleDate(date: PlainDate) {
+	function toggleDate(date: Temporal.PlainDate) {
 		const stringDate = date.toString()
 		if (options.has(stringDate)) options.delete(stringDate)
 		else options.set(stringDate, [emptySlot])
@@ -88,10 +88,10 @@
 							{#each { length: 7 }, dayIndex (dayIndex)}
 								{@const day = monday.add({ days: dayIndex })}
 								{@const inMonth = day.month === month.month}
-								{@const isPast = PlainDate.compare(day, now) < 0}
+								{@const isPast = Temporal.PlainDate.compare(day, now) < 0}
 								{@const isSelected = options
 									.keys()
-									.some((key) => PlainDate.compare(key, day) === 0)}
+									.some((key) => Temporal.PlainDate.compare(key, day) === 0)}
 
 								<td class="relative flex aspect-square">
 									<button
@@ -112,7 +112,7 @@
 									>
 										{day.day}
 									</button>
-									{#if PlainDate.compare(day, now) === 0}
+									{#if Temporal.PlainDate.compare(day, now) === 0}
 										<div
 											class={[
 												'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl motion-safe:transition',
