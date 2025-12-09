@@ -93,7 +93,7 @@
 	</div>
 
 	{#if showNote}
-		<div data-desc class="-mb-1 px-5 pt-3 pb-1">
+		<div data-desc class="-mb-1 px-5 md:px-4 pt-3 pb-1">
 			<textarea
 				id={noteName}
 				name={showNote ? noteName : undefined}
