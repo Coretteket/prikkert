@@ -24,7 +24,9 @@
 		}
 	}
 
-	beforeNavigate(() => {
+	beforeNavigate((navigation) => {
+		if (navigation.willUnload) return
+
 		// Start loading
 		clearTimeout(hideTimeout)
 		clearTimeout(showTimeout)
@@ -67,6 +69,9 @@
 		aria-valuemin={0}
 		aria-valuemax={100}
 	>
-		<div class="h-full bg-pink-600 transition-[width] duration-200 rounded-r-full" style:width="{progress}%"></div>
+		<div
+			class="h-full bg-pink-600 transition-[width] duration-200 rounded-r-full"
+			style:width="{progress}%"
+		></div>
 	</output>
 {/if}
