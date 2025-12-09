@@ -74,7 +74,7 @@
 
 		event.preventDefault()
 
-		if (Temporal.PlainDate.compare(newDate, now) <= 0) return
+		if (Temporal.PlainDate.compare(newDate, now) < 0) return
 
 		if (Temporal.PlainDate.compare(newDate, firstVisible) < 0) {
 			view = view.subtract({ months: 1 })
