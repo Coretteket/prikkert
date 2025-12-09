@@ -5,6 +5,7 @@
 
 	import { resolve } from '$app/paths'
 
+	import Loading from '@/components/loading.svelte'
 	import Button from '@/components/button.svelte'
 	import { toggleTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
@@ -21,6 +22,7 @@
 	<title>Prikkert</title>
 </svelte:head>
 
+<Loading />
 <Background />
 
 <div

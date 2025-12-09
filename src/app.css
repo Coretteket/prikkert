@@ -16,7 +16,7 @@
 	html {
 		@apply dark:bg-neutral-850 bg-white font-sans text-neutral-900 dark:text-neutral-50;
 
-		scrollbar-gutter: stable both-edges;
+		scrollbar-gutter: stable;
 		interpolate-size: allow-keywords; /* Experimental Chrome-only attribute */
 
 		color-scheme: only light;
