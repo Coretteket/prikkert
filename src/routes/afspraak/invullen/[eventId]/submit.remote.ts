@@ -15,11 +15,11 @@ const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaa
 
 type OptionName = `option_${string}`
 
-const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnonymous: boolean }) =>
+const createResponseSchema = (event: { options: Array<{ id: string }>; disallowAnonymous: boolean }) =>
 	v.object({
-		name: event.allowAnonymous
-			? v.nullable(v.string())
-			: v.pipe(v.string('Vul je naam in.'), v.minLength(1, 'Vul je naam in.')),
+		name: event.disallowAnonymous
+			? v.pipe(v.string('Vul je naam in.'), v.minLength(1, 'Vul je naam in.'))
+			: v.nullable(v.string()),
 		availability: v.strictObject(
 			v.entriesFromList(
 				event.options.map((o) => `option_${o.id}`),

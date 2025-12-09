@@ -28,7 +28,7 @@ export const events = pgTable('events', {
 	title: text().notNull(),
 	organizerName: text(),
 	description: text(),
-	allowAnonymous: boolean().notNull().default(false),
+	disallowAnonymous: boolean().notNull().default(false),
 	hideParticipants: boolean().notNull().default(false),
 	createdAt: instant().defaultNow().notNull(),
 	expiresAt: instant().notNull(),

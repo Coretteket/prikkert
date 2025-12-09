@@ -16,6 +16,7 @@
 	let showName = $state(false)
 	let showDescription = $state(false)
 	let showTimes = $state(false)
+	let showSettings = $state(false)
 
 	const issues = $derived(createEvent.fields.allIssues() ?? [])
 
@@ -45,6 +46,8 @@
 </p>
 
 <form {...createEvent}>
+	<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
+
 	<div class="mb-10">
 		<label>
 			<span class="mb-4 block text-lg font-medium">Titel</span>
@@ -173,17 +176,7 @@
 	</div>
 
 	<div class="mb-10">
-		{#if !showTimes}
-			<Button
-				type="button"
-				variant="secondary"
-				size="sm"
-				onclick={() => (showTimes = true)}
-				class="-mt-6 mb-8 text-lg"
-			>
-				Tijden toevoegen
-			</Button>
-		{:else}
+		{#if showTimes}
 			<div class="mb-4 flex items-center justify-between">
 				<span class="text-lg font-medium">
 					Tijden
@@ -219,36 +212,58 @@
 		{/if}
 	</div>
 
-	<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
-
-	<div class="mb-10">
-		<p class="mb-4 block text-lg font-medium">
-			Instellingen
-			<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
-		</p>
-		<div class="grid gap-4 rounded-lg border p-6">
-			<label
-				class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
-			>
-				<input
-					{...createEvent.fields.settings.allowAnonymous.as('checkbox')}
-					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
-				/>
-
-				<p>Sta deelnemers toe om anoniem te reageren</p>
-			</label>
-			<label
-				class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
-			>
-				<input
-					{...createEvent.fields.settings.hideParticipants.as('checkbox')}
-					class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
-				/>
-
-				<p>Toon reacties alleen aan de organisator</p>
-			</label>
+	{#if !showTimes || !showSettings}
+		<div class="-mt-6 mb-8 flex gap-3">
+			{#if !showTimes}
+				<Button type="button" variant="secondary" size="sm" onclick={() => (showTimes = true)}>
+					Tijden toevoegen
+				</Button>
+			{/if}
+			{#if !showSettings}
+				<Button type="button" variant="secondary" size="sm" onclick={() => (showSettings = true)}>
+					Instellingen aanpassen
+				</Button>
+			{/if}
 		</div>
-	</div>
+	{/if}
+
+	{#if showSettings}
+		<div class="mb-10">
+			<div class="mb-4 flex items-center justify-between">
+				<span class="text-lg font-medium">
+					Instellingen
+					<span class="text-base font-normal text-neutral-500 dark:text-neutral-400"
+						>(optioneel)</span
+					>
+				</span>
+				<Button type="button" variant="ghost" size="icon" onclick={() => (showSettings = false)}>
+					<Icon icon="tabler--x" class="size-5" />
+				</Button>
+			</div>
+			<div class="grid gap-4 rounded-lg border p-6">
+				<label
+					class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
+				>
+					<input
+						{...createEvent.fields.settings.disallowAnonymous.as('checkbox')}
+						class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
+					/>
+
+					<p>Verplicht deelnemers om hun naam in te vullen</p>
+				</label>
+				<label
+					class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
+				>
+					<input
+						{...createEvent.fields.settings.hideParticipants.as('checkbox')}
+						class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
+					/>
+
+					<p>Toon reacties alleen aan de organisator</p>
+				</label>
+			</div>
+		</div>
+	{/if}
 
 	<Button type="submit" variant="primary" class="ml-auto" disabled={createEvent.pending > 0}>
 		Afspraak aanmaken

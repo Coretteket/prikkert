@@ -58,7 +58,7 @@ const CreateEventSchema = v.strictObject({
 	),
 	settings: v.optional(
 		v.strictObject(
-			{ allowAnonymous: v.boolean(), hideParticipants: v.boolean() },
+			{ disallowAnonymous: v.boolean(), hideParticipants: v.boolean() },
 			'Vul een geldige instelling in.',
 		),
 	),

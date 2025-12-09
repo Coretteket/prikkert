@@ -68,7 +68,7 @@
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Jouw naam
-			{#if event.allowAnonymous}
+			{#if !event.disallowAnonymous}
 				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 			{/if}
 		</label>
