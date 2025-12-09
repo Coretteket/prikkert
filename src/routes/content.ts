@@ -36,7 +36,7 @@ export const steps = [
 	},
 	{
 		bold: 'Prik',
-		normal: 'het beste moment voor de afspraak, als iedereen heeft gereageerd.',
+		normal: 'het beste moment voor de afspraak wanneer iedereen heeft gereageerd.',
 	},
 ]
 

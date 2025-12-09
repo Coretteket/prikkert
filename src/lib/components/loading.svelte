@@ -62,7 +62,7 @@
 
 {#if visible}
 	<output
-		class="fixed top-0 left-0 right-0 z-50 h-[3px] overflow-hidden duration-200"
+		class="fixed top-0 right-0 left-0 z-50 h-[3px] overflow-hidden duration-200"
 		out:fade={{ duration: FADE_DURATION }}
 		role="progressbar"
 		aria-valuenow={Math.round(progress)}
@@ -70,7 +70,7 @@
 		aria-valuemax={100}
 	>
 		<div
-			class="h-full bg-pink-600 transition-[width] duration-200 rounded-r-full"
+			class="h-full rounded-r-full bg-pink-600 transition-[width] duration-200"
 			style:width="{progress}%"
 		></div>
 	</output>

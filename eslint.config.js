@@ -19,7 +19,14 @@ export default defineConfig(
 	...ts.configs.recommended,
 	...svelte.configs.recommended,
 	unicorn.configs.recommended,
-	{ rules: { 'unicorn/prevent-abbreviations': 'off', 'unicorn/prefer-spread': 'off' } },
+	{
+		rules: {
+			'unicorn/prevent-abbreviations': 'off',
+			'unicorn/prefer-spread': 'off',
+			'unicorn/no-null': 'off',
+
+		},
+	},
 	prettier,
 	...svelte.configs.prettier,
 	{
@@ -56,6 +63,7 @@ export default defineConfig(
 			// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
 			'no-undef': 'off',
 			'svelte/require-each-key': 'off',
+			'svelte/no-navigation-without-resolve': 'off',
 			'no-restricted-globals': [
 				'error',
 				{

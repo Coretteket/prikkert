@@ -1,83 +1,59 @@
 <script lang="ts">
-	import type { InferSelectModel } from 'drizzle-orm'
-
-	import { fly } from 'svelte/transition'
-
-	import type { schema } from '@/server/db'
-
 	import { formatDateTimeOption } from '@/shared/time-format'
 	import Icon from '@/components/icon.svelte'
 
+	import type { getEventForSession } from './data.remote'
+
+	import RadioButton from './option-input-button.svelte'
+
 	type Props = {
-		option: Pick<InferSelectModel<typeof schema.options>, 'id' | 'startsAt' | 'endsAt'>
-		response: InferSelectModel<typeof schema.responses> | undefined
+		option: Awaited<ReturnType<typeof getEventForSession>>['options'][number]
 		errors: Array<string | undefined>
 	}
 
-	let { option, response, errors }: Props = $props()
+	let { option, errors }: Props = $props()
 
-	let availability = $derived(response?.availability ?? '')
-	let showNote = $derived(Boolean(response?.note))
-	let noteValue = $derived(response?.note ?? '')
+	let availability = $derived(option.response?.availability ?? '')
+	let showNote = $derived(Boolean(option.response?.note))
+	let noteValue = $derived(option.response?.note ?? '')
 
 	const availabilityName = $derived(`availability.option_${option.id}`)
 	const noteName = $derived(`note.option_${option.id}`)
-
-	function handleAvailabilityChange(availability: string) {
-		if (availability === 'MAYBE') showNote = true
-		else if (noteValue.trim() === '') showNote = false
-	}
 </script>
-
-{#snippet radioButton(value: string, icon: string, label: string, classes: string)}
-	<label class="group cursor-pointer">
-		<input
-			type="radio"
-			name={availabilityName}
-			{value}
-			class="peer absolute opacity-0"
-			bind:group={availability}
-			onchange={(e) => handleAvailabilityChange(e.currentTarget.value)}
-		/>
-		<span
-			class="peer-focus-visible:outline-focus relative flex items-center gap-1.5 px-3 py-2 text-sm leading-none peer-focus-visible:z-100 motion-safe:transition-colors {classes}"
-		>
-			<Icon {icon} class="size-5" />
-			<span class="max-xs:hidden">{label}</span>
-		</span>
-	</label>
-{/snippet}
 
 <div class="py-4 text-neutral-800 dark:text-neutral-200">
 	<div class="grid items-center gap-x-6 gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
 		<p class="max-xs:w-60 font-[350] md:w-60">{formatDateTimeOption(option)}</p>
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
-				{@render radioButton(
-					'YES',
-					'tabler--check',
-					'Ja',
-					'rounded-l-lg border border-r-0 group-has-checked:bg-lime-300/75 group-has-checked:text-lime-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-lime-500/25 dark:group-has-checked:text-lime-100',
-				)}
-				{@render radioButton(
-					'MAYBE',
-					'tabler--question-mark',
-					'Misschien',
-					'border border-x-0 group-has-checked:bg-amber-300/50 group-has-checked:text-amber-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-amber-500/15 dark:group-has-checked:text-amber-100',
-				)}
-				{@render radioButton(
-					'NO',
-					'tabler--x',
-					'Nee',
-					'rounded-r-lg border border-l-0 group-has-checked:bg-red-300/75 group-has-checked:text-red-900 dark:bg-neutral-800/50 dark:group-has-checked:bg-red-500/25 dark:group-has-checked:text-red-100',
-				)}
+				<RadioButton
+					bind:availability
+					name={availabilityName}
+					value="YES"
+					icon="tabler--check"
+					label="Ja"
+					class="rounded-l-lg border-r-0 group-has-checked:bg-lime-400/60 group-has-checked:text-lime-900 dark:group-has-checked:bg-lime-500/30 dark:group-has-checked:text-lime-200"
+				/>
+				<RadioButton
+					bind:availability
+					name={availabilityName}
+					value="MAYBE"
+					icon="tabler--question-mark"
+					label="Misschien"
+					class="border-x-0 group-has-checked:bg-yellow-400/60 group-has-checked:text-yellow-900 dark:group-has-checked:bg-yellow-500/30 dark:group-has-checked:text-yellow-200"
+				/>
+				<RadioButton
+					bind:availability
+					name={availabilityName}
+					value="NO"
+					icon="tabler--x"
+					label="Nee"
+					class="rounded-r-lg border-l-0 group-has-checked:bg-red-400/60 group-has-checked:text-red-900 dark:group-has-checked:bg-red-500/30 dark:group-has-checked:text-red-200"
+				/>
 			</fieldset>
 			<button
 				type="button"
-				onclick={() => {
-					showNote = !showNote
-					if (!showNote) setTimeout(() => (noteValue = ''), 100)
-				}}
+				onclick={() => (showNote = !showNote)}
 				class="flex cursor-pointer rounded-lg border p-2 text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
 				title={showNote ? 'Opmerking verwijderen' : 'Opmerking toevoegen'}
 			>
@@ -93,7 +69,7 @@
 	</div>
 
 	{#if showNote}
-		<div data-desc class="-mb-1 px-5 md:px-4 pt-3 pb-1">
+		<div data-desc class="-mb-1 px-5 pt-3 pb-1 md:px-4">
 			<textarea
 				id={noteName}
 				name={showNote ? noteName : undefined}
@@ -101,13 +77,14 @@
 				placeholder="Voeg een opmerking toe..."
 				rows={1}
 				tabindex={showNote ? 0 : -1}
+				spellcheck={false}
 				bind:value={noteValue}
 			></textarea>
 		</div>
 	{/if}
 
 	{#each errors.filter((e) => e !== undefined) as error}
-		<p class="mt-2 px-5 font-medium text-pink-600 dark:text-pink-500" data-issue>
+		<p class="mt-2 px-5 text-pink-600 dark:text-pink-500" data-issue>
 			{error}
 		</p>
 	{/each}

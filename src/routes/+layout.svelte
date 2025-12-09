@@ -26,14 +26,14 @@
 <Background />
 
 <div
-	class="dark:bg-neutral-850 bg-white lg:mx-auto lg:my-8 lg:max-w-4xl lg:rounded-lg lg:border lg:p-4 ring-6 ring-white dark:ring-neutral-850"
+	class="dark:bg-neutral-850 dark:ring-neutral-850 bg-white ring-6 ring-white lg:mx-auto lg:my-8 lg:max-w-4xl lg:rounded-lg lg:border lg:p-4"
 >
 	<nav class="flex items-center justify-between px-6 py-4">
 		<a
 			href={resolve('/')}
-			class="font-display squircle flex items-center gap-3 font-[450] text-[1.4rem] text-neutral-900 dark:text-neutral-100"
+			class="font-display squircle flex items-center gap-3 text-[1.4rem] font-[450] text-neutral-900 dark:text-neutral-100"
 		>
-			<img src={icon} width={36} height={36} alt="" />
+			<img src={icon} width={36} height={36} alt=""  />
 			<span>Prikkert</span>
 		</a>
 

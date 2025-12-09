@@ -3,8 +3,8 @@
 	import { noReset } from '@/shared/utils'
 
 	import { submitAvailability } from './submit.remote'
+	import { getEventForSession } from './data.remote'
 	import OptionInput from './option-input.svelte'
-	import { getEventSession } from './data.remote'
 
 	let { params } = $props()
 
@@ -28,19 +28,8 @@
 
 	const ISSUE_THRESHOLD = 3
 
-	// Workaround for https://github.com/sveltejs/svelte/issues/17261
-	const getData = async () => {
-		const result = await getEventSession(params.eventId)
-
-		const options = result.event.options.map((option) => ({
-			option,
-			response: result.session?.responses[option.id],
-		}))
-
-		return { ...result, options }
-	}
-
-	const { event, session, options } = $derived(await getData())
+	// Has to be at bottom until issue fixed: https://github.com/sveltejs/svelte/issues/17261
+	const event = $derived(await getEventForSession(params.eventId))
 </script>
 
 <h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{event.title}</h1>
@@ -67,29 +56,29 @@
 <form {...submitAvailability.enhance(noReset)}>
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
-			Jouw naam
+			Naam
 			{#if !event.disallowAnonymous}
 				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 			{/if}
 		</label>
 		<input
-			type="text"
 			id="name"
+			type="text"
 			name="name"
+			value={event.responseName}
 			placeholder="Vul jouw naam in..."
 			autocomplete="name"
 			class={[
 				'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg dark:bg-neutral-800/50',
 				(submitAvailability.fields?.name?.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 			]}
-			value={session?.name ?? ''}
 		/>
 		{#each submitAvailability.fields?.name?.issues() ?? [] as issue}
 			<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
 
-	<div class="mb-6">
+	<div class="mb-8">
 		<p class="mb-4 block font-medium">Beschikbaarheid</p>
 		<div
 			class={[
@@ -97,10 +86,9 @@
 				(availabilityIssues.size > 0 || noteIssues.size > 0) && 'ring-2 ring-pink-500',
 			]}
 		>
-			{#each options as { option, response } (option.id)}
+			{#each event.options as option (option.id)}
 				<OptionInput
 					{option}
-					{response}
 					errors={[
 						availabilityIssues.size <= ISSUE_THRESHOLD
 							? availabilityIssues.get(`availability.option_${option.id}`)

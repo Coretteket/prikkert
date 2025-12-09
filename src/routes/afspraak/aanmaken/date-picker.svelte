@@ -95,7 +95,7 @@
 		{#each months as month, index (month)}
 			<div class="flex justify-center">
 				<div
-					class={['@container max-w-110 shrink-0 w-full p-4 xs:p-5', index > 0 && 'max-sm:hidden']}
+					class={['xs:p-5 @container w-full max-w-110 shrink-0 p-4', index > 0 && 'max-sm:hidden']}
 				>
 					<div class="mb-3 flex items-center justify-between">
 						<Button
@@ -155,7 +155,7 @@
 												aria-pressed={isSelected}
 												disabled={!inMonth || isPast}
 												class={[
-													'flex aspect-square items-center justify-center squircle font-[350] tabular-nums motion-safe:transition',
+													'squircle flex aspect-square items-center justify-center font-[350] tabular-nums motion-safe:transition',
 													isSelected
 														? 'border border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800 dark:border-pink-700 dark:bg-pink-800'
 														: isPast

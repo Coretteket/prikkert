@@ -5,7 +5,7 @@
 	import { faq, promises, steps } from './content'
 </script>
 
-<header class="mt-10 sm:mt-14 mb-24 sm:mb-30 space-y-4">
+<header class="mt-10 mb-24 space-y-4 sm:mt-14 sm:mb-30">
 	<h2
 		class="font-display mb-8 text-center text-4xl font-semibold text-neutral-900 sm:text-5xl sm:leading-tight dark:text-neutral-100"
 	>
@@ -39,7 +39,7 @@
 				class="rounded-lg border from-neutral-900 to-pink-700/5 px-7 py-6.5 dark:bg-linear-to-tl"
 			>
 				<div class="mb-4 flex items-center gap-4">
-					<div class="squircle flex w-fit bg-pink-500/25 p-2.5 text-pink-700 dark:text-pink-100">
+					<div class="squircle flex w-fit bg-pink-500/30 p-2.5 text-pink-700 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
 					</div>
 					<h4 class="font-display text-xl font-medium text-neutral-800 dark:text-neutral-200">
@@ -65,7 +65,7 @@
 	<div class="mx-auto max-w-130">
 		{#each steps as step, i}
 			<div class="mb-8 flex items-start gap-4">
-				<div class="squircle flex aspect-square h-9 w-9 items-center justify-center bg-pink-500/25">
+				<div class="squircle flex aspect-square size-8 items-center justify-center bg-pink-500/30">
 					<p class="font-semibold text-pink-700 dark:text-pink-100">
 						{i + 1}
 					</p>
@@ -97,7 +97,7 @@
 				open={i === 0}
 			>
 				<summary
-					class="flex py-1 rounded cursor-pointer list-none justify-between gap-2 font-medium text-neutral-800 dark:text-neutral-200"
+					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-medium text-neutral-800 dark:text-neutral-200"
 				>
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon

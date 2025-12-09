@@ -8,18 +8,24 @@ import { setSessionCookie } from '@/server/session'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
+import { getEventForSession } from './data.remote'
 import { hasSession } from '../../../data.remote'
-import { getEventSession } from './data.remote'
 
 const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
 
 type OptionName = `option_${string}`
 
-const createResponseSchema = (event: { options: Array<{ id: string }>; disallowAnonymous: boolean }) =>
+const createResponseSchema = (event: {
+	options: Array<{ id: string }>
+	disallowAnonymous: boolean
+}) =>
 	v.object({
 		name: event.disallowAnonymous
 			? v.pipe(v.string('Vul je naam in.'), v.minLength(1, 'Vul je naam in.'))
-			: v.nullable(v.string()),
+			: v.pipe(
+					v.nullable(v.string()),
+					v.transform((name) => (name?.trim() === '' ? null : name)),
+				),
 		availability: v.strictObject(
 			v.entriesFromList(
 				event.options.map((o) => `option_${o.id}`),
@@ -33,7 +39,14 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; disallowA
 					event.options.map((o) => `option_${o.id}`),
 					v.optional(
 						v.nullable(
-							v.pipe(v.string(), v.maxLength(500, 'Opmerkingen mogen maximaal 500 tekens zijn.')),
+							v.pipe(
+								v.string(),
+								v.maxLength(200, 'Opmerkingen mogen maximaal 200 tekens zijn.'),
+								v.transform((s) => {
+									const trimmed = s.replaceAll(/\s*\n\s*/g, ' ').trim()
+									return trimmed === '' ? null : trimmed
+								}),
+							),
 						),
 					),
 				),
@@ -107,7 +120,7 @@ export const submitAvailability = form('unchecked', async (formData) => {
 
 	setSessionCookie({ cookies, sessionId, eventId, token, expires: event.expiresAt })
 
-	getEventSession(eventId).refresh()
+	getEventForSession(eventId).refresh()
 
 	hasSession().set(true)
 
