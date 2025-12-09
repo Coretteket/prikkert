@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { InferSelectModel } from 'drizzle-orm'
 
+	import { fly } from 'svelte/transition'
+
 	import type { schema } from '@/server/db'
 
 	import { formatDateTimeOption } from '@/shared/time-format'
@@ -90,9 +92,8 @@
 		</div>
 	</div>
 
-	<details open={showNote}>
-		<summary class="hidden"></summary>
-		<div class="-mb-1 px-5 pt-3 pb-1">
+	{#if showNote}
+		<div data-desc class="-mb-1 px-5 pt-3 pb-1">
 			<textarea
 				id={noteName}
 				name={showNote ? noteName : undefined}
@@ -103,7 +104,7 @@
 				bind:value={noteValue}
 			></textarea>
 		</div>
-	</details>
+	{/if}
 
 	{#each errors.filter((e) => e !== undefined) as error}
 		<p class="mt-2 px-5 font-medium text-pink-600 dark:text-pink-500" data-issue>
