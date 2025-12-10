@@ -15,7 +15,7 @@ export const promises = [
 		icon: 'tabler--shield-lock',
 		title: 'Privacy voorop',
 		description:
-			'Prikkert geeft jou controle, verkoopt je gegevens nooit, en slaat alles veilig op in de EU.',
+			'Jij bent niet het product. Prikkert trackt je niet, verkoopt je gegevens nooit en werkt zonder account.',
 	},
 	{
 		icon: 'tabler--folder-open',
@@ -54,12 +54,12 @@ export const faq = [
 	{
 		question: 'Hoe beschermt Prikkert je privacy?',
 		answer:
-			"Met Prikkert ben jij niet het product. Je hebt geen account nodig en kan het ook anoniem gebruiken. Prikkert gebruikt alleen <a href='https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies' target='_blank' class='underline'>functionele cookies</a>, dus je wordt nooit getrackt. Alle gegevens worden veilig opgeslagen binnen de EU en niet gedeeld met derden. Alle details vind je in de <a href='/privacy' class='underline'>privacyverklaring</a>.",
+			"Met Prikkert ben jij niet het product. Je gegevens worden nooit verkocht en je wordt nooit getrackt. Ook blijft jouw data altijd binnen de Europese Unie. Je hebt geen account nodig, dus je kan zo aan de slag. Lees meer in de <a href='/privacy' class='underline'>privacyverklaring</a>.",
 	},
 	{
 		question: 'Waarom is Prikkert open source?',
 		answer:
-			"Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt. De volledige broncode is openbaar te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a> en is vrijgegeven voor hergebruik onder de <a href='https://eupl.eu/1.2/nl' target='_blank' class='underline'>European Union Public License</a>.",
+			"Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt. De volledige broncode is openbaar te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a> en is vrijgegeven voor hergebruik onder de <a href='https://github.com/Coretteket/prikkert/blob/main/LICENSE' target='_blank' class='underline'>European Union Public License</a>.",
 	},
 	{
 		question: 'Wie heeft Prikkert gemaakt?',

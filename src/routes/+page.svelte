@@ -114,11 +114,3 @@
 		Neem contact op
 	</Button>
 </section>
-
-<footer class="p-4 pt-12 text-center text-sm text-balance text-neutral-400">
-	Prikkert is
-	<a href="https://github.com/coretteket/prikkert" target="_blank" class="underline">
-		open source
-	</a>, vrijgegeven onder de
-	<a href="https://eupl.eu/1.2/nl/" target="_blank" class="underline">EUPL</a>.
-</footer>
