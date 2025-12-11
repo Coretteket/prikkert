@@ -138,46 +138,30 @@
 							{#each getMondaysForMonth(month) as monday (monday)}
 								<tr class="grid grid-cols-7 gap-1 @xs:gap-2">
 									{#each { length: 7 }, dayIndex (dayIndex)}
-										{@const day = monday.add({ days: dayIndex })}
-										{@const inMonth = day.month === month.month}
-										{@const isPast = Temporal.PlainDate.compare(day, now) < 0}
-										{@const isSelected = options
-											.keys()
-											.some((key) => Temporal.PlainDate.compare(key, day) === 0)}
+										{@const date = monday.add({ days: dayIndex })}
+										{@const inMonth = date.month === month.month}
+										{@const isPast = Temporal.PlainDate.compare(date, now) < 0}
 
 										<td class="relative flex aspect-square">
 											<button
 												type="button"
-												tabindex={isTabbable(day, inMonth, isPast) ? 0 : -1}
-												data-date={day.toString()}
-												onclick={() => toggleDate(day)}
-												onkeydown={(e) => handleKeydown(e, day)}
-												aria-pressed={isSelected}
+												tabindex={isTabbable(date, inMonth, isPast) ? 0 : -1}
+												data-date={date.toString()}
+												onclick={() => toggleDate(date)}
+												onkeydown={(e) => handleKeydown(e, date)}
+												aria-pressed={options.has(date.toString())}
+												data-in-month={inMonth}
 												disabled={!inMonth || isPast}
-												class={[
-													'squircle flex aspect-square items-center justify-center font-[350] tabular-nums motion-safe:transition',
-													isSelected
-														? 'border border-pink-800 bg-pink-700 font-semibold text-white hover:bg-pink-800 dark:border-pink-700 dark:bg-pink-800'
-														: isPast
-															? 'text-neutral-300 dark:text-neutral-700'
-															: 'text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 hover:dark:bg-neutral-800',
-													!isPast && 'cursor-pointer',
-													!inMonth && 'invisible',
-												]}
+												class="peer squircle flex aspect-square items-center justify-center font-[350] text-neutral-700 tabular-nums not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-800 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:hover:bg-pink-800 motion-safe:transition dark:text-neutral-300 not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:hover:dark:bg-pink-700"
 											>
-												{day.day}
+												{date.day}
 											</button>
-											{#if Temporal.PlainDate.compare(day, now) === 0}
-												<div
-													class={[
-														'pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl motion-safe:transition',
-														isSelected
-															? 'text-neutral-100'
-															: 'text-neutral-700 dark:text-neutral-300',
-													]}
+											{#if Temporal.PlainDate.compare(date, now) === 0}
+												<span
+													class="pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl text-neutral-700 peer-aria-pressed:text-neutral-100 motion-safe:transition dark:text-neutral-300"
 												>
 													&middot;
-												</div>
+												</span>
 											{/if}
 										</td>
 									{/each}
