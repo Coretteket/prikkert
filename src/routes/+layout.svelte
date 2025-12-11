@@ -31,7 +31,7 @@
 >
 	<nav class="flex items-center justify-between px-6 py-4">
 		<a
-			href={resolve('/')}
+			href="/"
 			class="font-display squircle flex items-center gap-3 text-[1.4rem] font-[450] text-neutral-900 dark:text-neutral-100"
 		>
 			<img src={icon} width={36} height={36} alt="" />
