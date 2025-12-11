@@ -14,7 +14,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const path = event.url.pathname.slice(1)
 	if (path.length === ID_LENGTH && !path.includes('/'))
-		redirect(dev ? 307 : 308, `/afspraak/invullen/` + path)
+		redirect(dev ? 307 : 308, `/afspraak/reageren/` + path)
 
 	event.locals.session = parseSessionCookies()
 
