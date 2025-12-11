@@ -7,6 +7,7 @@
 
 	import Loading from '@/components/loading.svelte'
 	import Button from '@/components/button.svelte'
+	import { getPageTitle } from '@/shared/title'
 	import { toggleTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
 	import icon from '@/assets/icon.svg'
@@ -19,7 +20,7 @@
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={icon} />
-	<title>Prikkert</title>
+	<title>{getPageTitle()}</title>
 </svelte:head>
 
 <Loading />
