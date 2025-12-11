@@ -3,7 +3,6 @@ import { customAlphabet } from 'nanoid'
 /** Generates an alphanumeric NanoID. */
 export const generateNanoID = customAlphabet(
 	'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-	16,
 )
 
 /** Encodes an input for a given encoding algorithm type (like "SHA-256").

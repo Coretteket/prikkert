@@ -5,19 +5,20 @@ import { env } from '$env/dynamic/private'
 import { getRequestEvent } from '$app/server'
 import { dev } from '$app/environment'
 
+import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
 import * as v from '@/server/validation'
 
 const SessionKeySchema = v.pipe(
 	v.string(),
 	v.startsWith(env.COOKIE_PREFIX),
 	v.transform((key) => key.slice(env.COOKIE_PREFIX.length)),
-	v.regex(/^[A-Za-z0-9]{16}$/),
+	v.regex(new RegExp(`^[A-Za-z0-9]{${ID_LENGTH}}$`)),
 )
 
 const SessionValueSchema = v.pipe(
 	v.string(),
-	v.regex(/^[A-Za-z0-9]{37}$/),
-	v.transform((value) => ({ id: value.slice(0, 16), token: value.slice(16) })),
+	v.regex(new RegExp(`^[A-Za-z0-9]{${ID_LENGTH + TOKEN_LENGTH}}$`)),
+	v.transform((value) => ({ id: value.slice(0, ID_LENGTH), token: value.slice(ID_LENGTH) })),
 )
 
 export function setSessionCookie({

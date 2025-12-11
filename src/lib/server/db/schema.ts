@@ -17,13 +17,17 @@ import { generateNanoID } from '../crypto'
 
 /* UTILITIES */
 
+export const ID_LENGTH = 16
+export const TOKEN_LENGTH = 21
+export const HASHED_TOKEN_LENGTH = 44
+
 const CASCADE = { onUpdate: 'cascade', onDelete: 'cascade' } satisfies ReferenceConfig['actions']
 
 /* SCHEMAS */
 
 export const events = pgTable('events', {
-	id: char({ length: 16 })
-		.$default(() => generateNanoID(16))
+	id: char({ length: ID_LENGTH })
+		.$default(() => generateNanoID(ID_LENGTH))
 		.primaryKey(),
 	title: text().notNull(),
 	organizerName: text(),
@@ -35,10 +39,10 @@ export const events = pgTable('events', {
 })
 
 export const options = pgTable('options', {
-	id: char({ length: 16 })
-		.$default(() => generateNanoID(16))
+	id: char({ length: ID_LENGTH })
+		.$default(() => generateNanoID(ID_LENGTH))
 		.primaryKey(),
-	eventId: char({ length: 16 })
+	eventId: char({ length: ID_LENGTH })
 		.references(() => events.id, CASCADE)
 		.notNull(),
 	startsAt: datetime().notNull(),
@@ -47,13 +51,13 @@ export const options = pgTable('options', {
 })
 
 export const sessions = pgTable('sessions', {
-	id: char({ length: 16 })
-		.$default(() => generateNanoID(16))
+	id: char({ length: ID_LENGTH })
+		.$default(() => generateNanoID(ID_LENGTH))
 		.primaryKey(),
-	eventId: char({ length: 16 })
+	eventId: char({ length: ID_LENGTH })
 		.references(() => events.id, CASCADE)
 		.notNull(),
-	token: char({ length: 44 }).notNull(),
+	token: char({ length: HASHED_TOKEN_LENGTH }).notNull(),
 	name: text(),
 	isOwner: boolean().notNull().default(false),
 	createdAt: instant().defaultNow().notNull(),
@@ -64,10 +68,10 @@ export const availability = pgEnum('availability', ['YES', 'NO', 'MAYBE'])
 export const responses = pgTable(
 	'responses',
 	{
-		optionId: char({ length: 16 })
+		optionId: char({ length: ID_LENGTH })
 			.references(() => options.id, CASCADE)
 			.notNull(),
-		sessionId: char({ length: 16 })
+		sessionId: char({ length: ID_LENGTH })
 			.references(() => sessions.id, CASCADE)
 			.notNull(),
 		availability: availability().notNull(),

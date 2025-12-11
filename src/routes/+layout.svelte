@@ -65,9 +65,10 @@
 	>
 		<a
 			href="/"
-			class="font-display flex items-center gap-2 text-base font-medium text-neutral-700/80 hover:underline dark:text-neutral-300/80"
+			class="font-display inline-flex w-fit items-center gap-2 text-base font-medium text-neutral-700/80 hover:underline dark:text-neutral-300/80"
 		>
-			<img src={icon} width={16} height={16} alt="" class="opacity-50 brightness-0 dark:invert" /> Prikkert
+			<img src={icon} width={16} height={16} alt="" class="opacity-50 brightness-0 dark:invert" />
+			Prikkert
 		</a>
 
 		<div
