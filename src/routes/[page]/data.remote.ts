@@ -43,6 +43,9 @@ export const renderMarkdown = prerender(
 	},
 	{
 		dynamic: true,
-		inputs: () => Object.keys(content).map((key) => key.match(/..\/..\/content\/(.*)\.md/)![1]),
+		inputs: () =>
+			Object.keys(content)
+				.map((key) => key.match(/.\/content\/(.*)\.md/)?.[1])
+				.filter((key) => key !== undefined),
 	},
 )
