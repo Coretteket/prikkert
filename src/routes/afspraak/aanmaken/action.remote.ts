@@ -56,12 +56,8 @@ const CreateEventSchema = v.strictObject({
 			v.minLength(1, 'Selecteer minstens 1 datum.'),
 		),
 	),
-	settings: v.optional(
-		v.strictObject(
-			{ disallowAnonymous: v.boolean(), hideParticipants: v.boolean() },
-			'Vul een geldige instelling in.',
-		),
-	),
+	allowAnonymous: v.optional(v.boolean()),
+	hideResponses: v.optional(v.boolean()),
 })
 
 export const createEvent = form(CreateEventSchema, async (parsed) => {
@@ -76,10 +72,11 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 		const [event] = await db
 			.insert(schema.events)
 			.values({
-				...parsed.settings,
 				title: parsed.title,
 				organizerName: parsed.organizerName,
 				description: parsed.description,
+				allowAnonymous: parsed.allowAnonymous,
+				hideResponses: parsed.hideResponses,
 				expiresAt,
 			})
 			.returning()

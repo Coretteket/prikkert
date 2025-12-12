@@ -232,35 +232,43 @@
 			<div class="mb-4 flex items-center justify-between">
 				<span class="text-lg font-medium">
 					Instellingen
-					<span class="text-base font-normal text-neutral-500 dark:text-neutral-400"
-						>(optioneel)</span
-					>
+					<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">
+						(optioneel)
+					</span>
 				</span>
 				<Button type="button" variant="ghost" size="icon" onclick={() => (showSettings = false)}>
 					<Icon icon="tabler--x" class="size-5" />
 				</Button>
 			</div>
 			<div class="grid gap-4 rounded-lg border p-6">
-				<label
-					class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
-				>
+				<label class="flex cursor-pointer items-start gap-3">
 					<input
-						{...createEvent.fields.settings.disallowAnonymous.as('checkbox')}
-						class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
+						{...createEvent.fields.hideResponses.as('checkbox')}
+						class="my-[3px] size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
 
-					<p>Verplicht deelnemers om hun naam in te vullen</p>
+					<p class="font-[450] text-neutral-700 dark:text-neutral-300">
+						Toon reacties van deelnemers alleen aan de organisator
+					</p>
 				</label>
-				<label
-					class="flex cursor-pointer items-start gap-3 font-[350] text-neutral-700 dark:text-neutral-300"
-				>
+
+				<label class="flex cursor-pointer items-start gap-3">
 					<input
-						{...createEvent.fields.settings.hideParticipants.as('checkbox')}
-						class="my-[3px] size-4.5 cursor-pointer accent-pink-600 dark:accent-pink-700"
+						{...createEvent.fields.allowAnonymous.as('checkbox')}
+						class="my-[3px] size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
 
-					<p>Toon reacties alleen aan de organisator</p>
+					<p class="font-[450] text-neutral-700 dark:text-neutral-300">
+						Sta deelnemers toe om anoniem te reageren
+					</p>
 				</label>
+
+				<p class="text-[15px] text-neutral-600/80 dark:text-neutral-400/80">
+					Lees meer over deze instellingen in de
+					<a href="/privacy#persoonsgegevens" target="_blank" class="underline">
+						privacyverklaring
+					</a>.
+				</p>
 			</div>
 		</div>
 	{/if}

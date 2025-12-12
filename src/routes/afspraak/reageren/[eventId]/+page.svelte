@@ -2,7 +2,7 @@
 	import Button from '@/components/button.svelte'
 	import { noReset } from '@/shared/utils'
 
-	import { submitAvailability } from './submit.remote'
+	import { submitAvailability } from './action.remote'
 	import { getEventForSession } from './data.remote'
 	import OptionInput from './option-input.svelte'
 
@@ -57,7 +57,7 @@
 	<div class="mb-8">
 		<label for="name" class="mb-4 block font-medium">
 			Naam
-			{#if !event.disallowAnonymous}
+			{#if event.allowAnonymous}
 				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
 			{/if}
 		</label>
@@ -105,7 +105,7 @@
 		{/if}
 	</div>
 
-	<Button type="submit" variant="primary" class="ml-auto" disabled={submitAvailability.pending > 0}>
+	<Button type="submit" variant="primary" disabled={submitAvailability.pending > 0} class="ml-auto">
 		Beschikbaarheid opslaan
 	</Button>
 </form>

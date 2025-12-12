@@ -10,7 +10,7 @@ import { omit } from '@/shared/utils'
 export const getEventForSession = query(v.string(), async (eventId) => {
 	const event = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
-		columns: { hideParticipants: false, createdAt: false, expiresAt: false },
+		columns: { createdAt: false, expiresAt: false },
 		with: {
 			options: {
 				columns: { eventId: false, isSelected: false },
@@ -23,33 +23,20 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 
 	const sessionId = getRequestEvent().locals.session.get(eventId)?.id
 
-	if (!sessionId)
-		return {
-			...event,
-			responseName: undefined,
-			options: event.options.map((option) => ({ ...option, response: undefined })),
-		}
-
-	const session = await db.query.sessions.findFirst({
-		where: eq(schema.sessions.id, sessionId),
-		columns: { id: true, name: true },
-		with: { responses: { columns: { optionId: true, availability: true, note: true } } },
-	})
-
-	if (!session)
-		return {
-			...event,
-			responseName: undefined,
-			options: event.options.map((option) => ({ ...option, response: undefined })),
-		}
+	const session = sessionId
+		? await db.query.sessions.findFirst({
+				where: eq(schema.sessions.id, sessionId),
+				columns: { id: true, name: true },
+				with: { responses: { columns: { optionId: true, availability: true, note: true } } },
+			})
+		: null
 
 	return {
 		...event,
-		responseName: session.name,
+		responseName: session?.name ?? null,
 		options: event.options.map((option) => {
-			const response = session.responses.find((response) => response.optionId === option.id)
-			if (response) return { ...option, response: omit(response, 'optionId') }
-			return { ...option, response: undefined }
+			const response = session?.responses.find((response) => response.optionId === option.id)
+			return { ...option, response: response ? omit(response, 'optionId') : null }
 		}),
 	}
 })
