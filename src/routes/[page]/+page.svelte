@@ -18,4 +18,10 @@
 	</p>
 
 	{@html data.body}
+
+	{#if 'lastModified' in data}
+		<p class="mt-8 font-[350] text-neutral-500 dark:text-neutral-400">
+			Deze pagina is voor het laatst gewijzigd op {data.lastModified}.
+		</p>
+	{/if}
 </article>
