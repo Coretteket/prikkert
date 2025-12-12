@@ -13,7 +13,7 @@ export const promises = [
 	},
 	{
 		icon: 'tabler--shield-lock',
-		title: 'Privacy voorop',
+		title: 'Geen tracking',
 		description:
 			'Jij bent niet het product. Prikkert trackt je niet, verkoopt je gegevens nooit en werkt zonder account.',
 	},

@@ -9,36 +9,37 @@ Prikkert is een gratis dienst van Quinten Coret ([prikkert@qntn.io](mailto:prikk
 
 # Persoonsgegevens
 
-Prikkert verwerkt alleen de volgende persoonsgegevens, die nodig zijn om het plannen van een groepsafspraak mogelijk te maken ([grondslag uitvoering overeenkomst](https://www.autoriteitpersoonsgegevens.nl/themas/basis-avg/avg-algemeen/grondslagen-avg-uitgelegd#grondslag-overeenkomst)). Je hebt geen account nodig.
+Prikkert verwerkt alleen de persoonsgegevens die nodig zijn om het plannen van een groepsafspraak mogelijk te maken ([grondslag uitvoering overeenkomst](https://www.autoriteitpersoonsgegevens.nl/themas/basis-avg/avg-algemeen/grondslagen-avg-uitgelegd#grondslag-overeenkomst)).
 
-Een organisator verstrekt een titel en datumopties. Het is optioneel om hun naam en een beschrijving toe te voegen.
+De organisator van een afspraak verstrekt een titel en datumopties, en kan er voor kiezen om een naam en beschrijving toe te voegen. Een deelnemer verstrekt een naam en hun beschikbaarheid per datumoptie.
 
-Een deelnemer verstrekt hun naam en beschikbaarheid voor de datumopties. Een organisator kan ook anonieme reacties toestaan.
-
-Om Prikkert te beveiligen worden daarnaast logs bijgehouden met IP-adressen van verzoeken ([grondslag gerechtvaardigd belang](https://www.autoriteitpersoonsgegevens.nl/themas/basis-avg/avg-algemeen/grondslagen-avg-uitgelegd#grondslag-gerechtvaardigd-belang)).
+Je hebt geen account nodig. Prikkert verwerkt geen mailadressen of wachtwoorden.
 
 # Zichtbaarheid
 
-Prikkert deelt individuele reacties van deelnemers standaard alleen met de organisator van de afspraak.
+Prikkert deelt de naam en beschikbaarheid van deelnemers standaard met iedereen die de link naar de afspraak heeft.
 
-Geanonimiseerde beschikbaarheid (aantal per datumoptie) is zichtbaar voor iedereen met de link naar de afspraak.
-
-De organisator kan ervoor kiezen om ook individuele reacties zichtbaar te maken voor iedereen met de link naar de afspraak. Dit staat in dat geval aangegeven bij het reageren.
+De organisator kan ervoor kiezen om de reacties van deelnemers te verbergen voor iedereen behalve zichzelf. De organisator kan daarnaast ook anonieme reacties toestaan.
 
 # Derden
 
-Prikkert verkoopt jouw gegevens nooit. Gegevens worden met geen enkele derde partij gedeeld, behalve met de hostingdienst of indien wettelijk verplicht.
+Jouw persoonsgegevens worden nooit verkocht. Gegevens worden niet met derde partijen gedeeld, behalve met de hostingdienst of indien wettelijk verplicht.
 
-Je wordt op geen enkele manier getrackt. Prikkert gebruikt alleen [functionele cookies](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies) om de dienst te laten werken.
+Je wordt op geen enkele manier getrackt. Prikkert maakt geen gebruik van profilering of geautomatiseerde besluitvorming.
+
+Prikkert gebruikt alleen [functionele cookies](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies) om de dienst te laten werken. Daardoor is er geen cookiebanner nodig.
 
 # Bewaren
 
 Prikkert draait op infrastructuur van Hetzner Online GmbH, waarmee een [verwerkersovereenkomst](https://www.hetzner.com/AV/DPA_en.pdf) is gesloten. Gegevens worden altijd verwerkt binnen de Europese Unie.
 
-De ontwikkelaar neemt passende maatregelen tegen misbruik, verlies en onbevoegde toegang. Gegevens worden niet langer bewaard dan nodig.
+Gegevens worden niet langer bewaard dan nodig. Een afspraak en alle bijbehorende reacties worden drie maanden na de laatste datumoptie van de afspraak automatisch verwijderd.
 
-Een afspraak en alle bijbehorende reacties worden drie maanden na de laatste datumoptie van de afspraak automatisch verwijderd.
+# Beveiliging
 
+De ontwikkelaar neemt passende maatregelen tegen misbruik, verlies en onbevoegde toegang.
+
+Om Prikkert te beveiligen worden logs met IP-adressen van verzoeken bijgehouden ([grondslag gerechtvaardigd belang](https://www.autoriteitpersoonsgegevens.nl/themas/basis-avg/avg-algemeen/grondslagen-avg-uitgelegd#grondslag-gerechtvaardigd-belang)).
 Logs met IP-adressen worden maximaal een maand bewaard.
 
 # Rechten
