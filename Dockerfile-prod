@@ -1,25 +1,34 @@
 FROM node:24-alpine AS builder
 WORKDIR /app
+
 ARG GITHUB_REPO
 ARG GITHUB_PAT
 ENV GITHUB_REPO=$GITHUB_REPO
 ENV GITHUB_PAT=$GITHUB_PAT
-RUN npm install -g corepack@latest
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
 COPY package.json pnpm-lock.yaml ./
-RUN corepack pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
 COPY . .
-RUN corepack pnpm run sync
-RUN corepack pnpm run build
-RUN corepack pnpm prune --production
+RUN pnpm run sync
+RUN pnpm run build
+RUN pnpm prune --production
 
 FROM node:24-alpine
 WORKDIR /app
+
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
+
 COPY package.json .
 COPY drizzle.config.ts .
 COPY ./src/lib/server/db ./src/lib/server/db
 COPY ./src/lib/server/crypto.ts ./src/lib/server/crypto.ts
+
 ENV NODE_ENV=production
 CMD ["node", "build"]
 
