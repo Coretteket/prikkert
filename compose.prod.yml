@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-prod
+      args:
+        GITHUB_REPO: ${GITHUB_REPO}
+        GITHUB_PAT: ${GITHUB_PAT}
     ports:
       - '3000'
     env_file:
