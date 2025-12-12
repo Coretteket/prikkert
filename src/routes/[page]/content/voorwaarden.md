@@ -13,16 +13,14 @@ Je mag Prikkert vrij gebruiken voor het plannen van afspraken. Het is niet toege
 
 # Aansprakelijkheid
 
-De ontwikkelaar van Prikkert is niet aansprakelijk voor enige schade die voortvloeit uit het gebruik van de dienst. De gebruiker is zelf volledig verantwoordelijk voor teksten die via Prikkert wordt geplaatst.
-
-# Beschikbaarheid
+De ontwikkelaar van Prikkert is niet aansprakelijk voor enige schade die voortvloeit uit het gebruik van de dienst.
 
 Prikkert wordt aangeboden zoals het is. Hoewel er gestreefd wordt naar een goede werking en beschikbaarheid, kan er geen garantie worden gegeven dat de dienst foutloos of ononderbroken werkt.
+
+De gebruiker is zelf volledig verantwoordelijk voor teksten die via Prikkert wordt geplaatst.
+
+Op deze voorwaarden is Nederlands recht van toepassing.
 
 # Wijzigingen
 
 Prikkert kan deze voorwaarden wijzigen. De dienst zelf kan ook worden aangepast of stopgezet. De volledige versiegeschiedenis van de dienst en voorwaarden is beschikbaar op [GitHub](https://github.com/coretteket/prikkert).
-
-# Toepasselijk recht
-
-Op deze voorwaarden is Nederlands recht van toepassing.
