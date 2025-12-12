@@ -27,7 +27,6 @@ const renderer = {
 		return link.replace('<a', '<a target="_blank"')
 	},
 	heading(token) {
-		token.depth++ // Title is h1, so we start from h2
 		const heading = marked.Renderer.prototype.heading.call(this, token)
 		return heading.replace('<h2', `<h2 id="${token.text.toLowerCase().replaceAll(/\s+/g, '-')}"`)
 	},
