@@ -27,6 +27,7 @@ const MAX_TITLE_LENGTH = 100
 const MAX_DESCRIPTION_LENGTH = 500
 
 const CreateEventSchema = v.strictObject({
+	id: v.optional(v.literal(0)), // Workaround for SvelteKit issue #14802
 	title: v.pipe(
 		v.string('Vul een titel in.'),
 		v.minLength(MIN_TITLE_LENGTH, `Vul een titel in van minstens ${MIN_TITLE_LENGTH} tekens.`),

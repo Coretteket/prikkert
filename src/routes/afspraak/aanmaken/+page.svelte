@@ -18,7 +18,10 @@
 	let showTimes = $state(false)
 	let showSettings = $state(false)
 
-	const issues = $derived(createEvent.fields.allIssues() ?? [])
+	// Workaround for https://github.com/sveltejs/kit/issues/14802
+	const form = createEvent.for(0)
+
+	const issues = $derived(form.fields.allIssues() ?? [])
 
 	$effect(() => {
 		if (issues.length === 0) return
@@ -45,22 +48,22 @@
 	Kies een titel en datums om te beginnen met plannen.
 </p>
 
-<form {...createEvent}>
+<form {...form}>
 	<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
 
 	<div class="mb-10">
 		<label>
 			<span class="mb-4 block text-lg font-medium">Titel</span>
 			<input
-				{...createEvent.fields.title.as('text')}
+				{...form.fields.title.as('text')}
 				placeholder="Vul een titel in..."
 				class={[
 					'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg placeholder:text-base placeholder:opacity-80 dark:bg-neutral-800/50',
-					(createEvent.fields.title.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+					(form.fields.title.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			/>
 		</label>
-		{#each createEvent.fields.title.issues() ?? [] as issue}
+		{#each form.fields.title.issues() ?? [] as issue}
 			<p class="my-2 font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
@@ -86,14 +89,14 @@
 			</div>
 			<input
 				id="name"
-				{...createEvent.fields.organizerName.as('text')}
+				{...form.fields.organizerName.as('text')}
 				placeholder="Vul jouw naam in..."
 				class={[
 					'block w-full rounded-lg border px-4 py-2.5 text-lg placeholder:text-base placeholder:opacity-80 dark:bg-neutral-800/50',
-					(createEvent.fields.organizerName.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+					(form.fields.organizerName.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			/>
-			{#each createEvent.fields.organizerName.issues() ?? [] as issue}
+			{#each form.fields.organizerName.issues() ?? [] as issue}
 				<p class="my-2 font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 			{/each}
 		</div>
@@ -140,15 +143,15 @@
 			</div>
 			<textarea
 				id="description"
-				{...createEvent.fields.description.as('text')}
+				{...form.fields.description.as('text')}
 				rows={4}
 				placeholder="Vul een omschrijving in..."
 				class={[
 					'mb-4 block w-full rounded-lg border px-4 py-2.5 placeholder:opacity-80 dark:bg-neutral-800/50',
-					(createEvent.fields.description.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+					(form.fields.description.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			></textarea>
-			{#each createEvent.fields.description.issues() ?? [] as issue}
+			{#each form.fields.description.issues() ?? [] as issue}
 				<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 			{/each}
 		</div>
@@ -167,10 +170,10 @@
 		<DatePicker
 			{options}
 			monthsToShow={2}
-			hasIssues={(createEvent.fields.options.issues()?.length ?? 0) > 0}
+			hasIssues={(form.fields.options.issues()?.length ?? 0) > 0}
 		/>
 
-		{#each createEvent.fields.options.issues() ?? [] as issue}
+		{#each form.fields.options.issues() ?? [] as issue}
 			<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
@@ -243,7 +246,7 @@
 			<div class="grid gap-4 rounded-lg border p-6">
 				<label class="flex cursor-pointer items-start gap-3">
 					<input
-						{...createEvent.fields.hideResponses.as('checkbox')}
+						{...form.fields.hideResponses.as('checkbox')}
 						class="my-[3px] size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
 
@@ -254,7 +257,7 @@
 
 				<label class="flex cursor-pointer items-start gap-3">
 					<input
-						{...createEvent.fields.allowAnonymous.as('checkbox')}
+						{...form.fields.allowAnonymous.as('checkbox')}
 						class="my-[3px] size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
 
@@ -273,7 +276,7 @@
 		</div>
 	{/if}
 
-	<Button type="submit" variant="primary" class="ml-auto" disabled={createEvent.pending > 0}>
+	<Button type="submit" variant="primary" class="ml-auto" disabled={form.pending > 0}>
 		Afspraak aanmaken
 	</Button>
 </form>
