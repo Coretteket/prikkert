@@ -6,8 +6,7 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-	--font-sans: 'Lexend Variable', ui-sans-serif, system-ui, sans-serif;
-	--font-display: 'Parkinsans Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-sans: 'Golos Text Variable', ui-sans-serif, system-ui, sans-serif;
 	--breakpoint-xs: 28rem;
 	--color-neutral-850: oklch(0.2178 0 0);
 	--color-pink-50: oklch(0.968 0.017 3.77);

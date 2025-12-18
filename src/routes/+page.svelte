@@ -5,15 +5,15 @@
 	import { faq, promises, steps } from './content'
 </script>
 
-<header class="mt-10 mb-24 space-y-4 sm:mt-14 sm:mb-30">
+<header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">
 	<h2
-		class="font-display mb-8 text-center text-4xl font-semibold text-neutral-900 sm:text-5xl sm:leading-tight dark:text-neutral-100"
+		class="mb-8 text-center text-4xl leading-[1.2] font-[650] text-neutral-900 sm:text-5xl dark:text-neutral-100"
 	>
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
 	</h2>
 	<h3
-		class="mx-auto mb-8 max-w-80 text-center text-xl font-[350] text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
+		class="mx-auto mb-8 max-w-80 text-center text-xl text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
 	>
 		Vind
 		<strong class="font-bold text-pink-700 dark:text-white">gratis</strong>
@@ -27,9 +27,9 @@
 </header>
 
 <section class="mb-20">
-	<h3 class="font-display mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
+		class="class mx-auto mb-10 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Datumprikken kan ook zonder verdienmodel. Daarom doet Prikkert vier beloftes.
 	</p>
@@ -42,11 +42,11 @@
 					<div class="squircle flex w-fit bg-pink-500/30 p-2.5 text-pink-700 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
 					</div>
-					<h4 class="font-display text-xl font-medium text-neutral-800 dark:text-neutral-200">
+					<h4 class="text-xl font-medium text-neutral-800 dark:text-neutral-200">
 						{promise.title}
 					</h4>
 				</div>
-				<p class="font-[350] text-balance text-neutral-600 dark:text-pink-50/70">
+				<p class="text-balance text-neutral-700 dark:text-pink-50/75">
 					{promise.description}
 				</p>
 			</div>
@@ -56,9 +56,9 @@
 </section>
 
 <section class="mb-20">
-	<h3 class="font-display mb-4 text-center text-xl font-semibold">Hoe gebruik je Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold">Hoe gebruik je Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
+		class="class mx-auto mb-10 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Plan jouw groepsafspraak in drie simpele stappen.
 	</p>
@@ -83,9 +83,9 @@
 </section>
 
 <section>
-	<h3 class="font-display mb-4 text-center text-xl font-semibold" id="faq">Hoe werkt Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold" id="faq">Hoe werkt Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center text-balance text-neutral-600 dark:text-neutral-300"
+		class="class mx-auto mb-10 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Vind de antwoorden op veelgestelde vragen.
 	</p>
@@ -97,7 +97,7 @@
 				open={i === 0}
 			>
 				<summary
-					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-medium text-neutral-800 dark:text-neutral-200"
+					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-semibold text-neutral-800 dark:text-neutral-200"
 				>
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon
@@ -106,7 +106,7 @@
 					/>
 				</summary>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				<p class="pt-1 pb-2 text-neutral-600 dark:text-neutral-300">{@html answer}</p>
+				<p class="pt-2 pb-2 text-neutral-800 dark:text-neutral-200">{@html answer}</p>
 			</details>
 		{/each}
 	</div>

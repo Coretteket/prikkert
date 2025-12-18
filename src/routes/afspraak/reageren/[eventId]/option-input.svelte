@@ -23,7 +23,7 @@
 
 <div class="py-4 text-neutral-800 dark:text-neutral-200">
 	<div class="grid items-center gap-x-6 gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
-		<p class="max-xs:w-60 font-[350] md:w-60">{formatDateTimeOption(option)}</p>
+		<p class="max-xs:w-60 md:w-60">{formatDateTimeOption(option)}</p>
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
 				<RadioButton
@@ -73,7 +73,7 @@
 			<textarea
 				id={noteName}
 				name={showNote ? noteName : undefined}
-				class="block min-h-12 w-full rounded-lg border px-4 py-2.5 font-[350] dark:bg-neutral-800/50"
+				class="block min-h-12 w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50"
 				placeholder="Voeg een opmerking toe..."
 				rows={1}
 				tabindex={showNote ? 0 : -1}

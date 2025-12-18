@@ -1,9 +1,6 @@
 <script lang="ts">
-	import '@fontsource-variable/parkinsans'
-	import '@fontsource-variable/lexend'
+	import '@fontsource-variable/golos-text'
 	import '../app.css'
-
-	import { resolve } from '$app/paths'
 
 	import Loading from '@/components/loading.svelte'
 	import Button from '@/components/button.svelte'
@@ -32,7 +29,7 @@
 	<nav class="flex items-center justify-between px-6 py-4">
 		<a
 			href="/"
-			class="font-display squircle flex items-center gap-3 text-[1.4rem] font-[450] text-neutral-900 dark:text-neutral-100"
+			class="squircle flex items-center gap-3 text-[1.4rem] font-[550] text-neutral-900 dark:text-neutral-100"
 		>
 			<img src={icon} width={36} height={36} alt="" />
 			<span>Prikkert</span>
@@ -66,7 +63,7 @@
 	>
 		<a
 			href="/"
-			class="font-display inline-flex w-fit items-center gap-2 text-base font-medium text-neutral-700/80 hover:underline dark:text-neutral-300/80"
+			class="inline-flex w-fit items-center gap-2 text-base font-medium text-neutral-700/80 hover:underline dark:text-neutral-300/80"
 		>
 			<img src={icon} width={16} height={16} alt="" class="opacity-50 brightness-0 dark:invert" />
 			Prikkert

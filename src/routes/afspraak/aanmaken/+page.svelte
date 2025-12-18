@@ -43,8 +43,8 @@
 	})
 </script>
 
-<h1 class="font-display mb-6 text-2xl font-[550]">Afspraak aanmaken</h1>
-<p class="mb-10 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300">
+<h1 class="mb-6 text-2xl font-semibold">Afspraak aanmaken</h1>
+<p class="mb-10 text-lg text-balance text-neutral-700 dark:text-neutral-300">
 	Kies een titel en datums om te beginnen met plannen.
 </p>
 
@@ -206,7 +206,7 @@
 					{/if}
 				{:else}
 					<p
-						class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 font-[350] p-2"
+						class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 p-2"
 					>
 						Selecteer datums om tijden toe te voegen.
 					</p>
@@ -250,7 +250,7 @@
 						class="my-[3px] size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
 
-					<p class="font-[450] text-neutral-700 dark:text-neutral-300">
+					<p class="font-medium text-neutral-700 dark:text-neutral-300">
 						Toon reacties van deelnemers alleen aan de organisator
 					</p>
 				</label>
@@ -261,7 +261,7 @@
 						class="my-[3px] size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
 
-					<p class="font-[450] text-neutral-700 dark:text-neutral-300">
+					<p class="font-medium text-neutral-700 dark:text-neutral-300">
 						Sta deelnemers toe om anoniem te reageren
 					</p>
 				</label>

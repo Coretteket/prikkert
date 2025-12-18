@@ -32,17 +32,17 @@
 	const event = $derived(await getEventForSession(params.eventId))
 </script>
 
-<h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{event.title}</h1>
+<h1 class="capitalize-first mb-6 text-2xl font-semibold">{event.title}</h1>
 
 {#if event.description}
 	<p
-		class="mb-6 border-b pb-6 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300"
+		class="mb-6 border-b pb-6 text-lg text-balance text-neutral-700 dark:text-neutral-300"
 	>
 		{event.description}
 	</p>
 {/if}
 
-<p class="mb-10 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300">
+<p class="mb-10 text-lg text-balance text-neutral-700 dark:text-neutral-300">
 	Je bent
 	{#if event.organizerName}
 		door

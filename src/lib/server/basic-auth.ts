@@ -1,10 +1,10 @@
 import { env } from '$env/dynamic/private'
 
+import { building, dev } from '$app/environment'
 import { getRequestEvent } from '$app/server'
-import { building } from '$app/environment'
 
 export function validateBasicAuth() {
-	if (env.BASIC_AUTH !== '1' || building) return true
+	if (env.BASIC_AUTH !== '1' || building || dev) return true
 	const authorization = getRequestEvent().request.headers.get('authorization')
 	if (!authorization || !authorization.startsWith('Basic ')) return false
 	const credentials = Buffer.from(authorization.slice(6), 'base64').toString('utf8')

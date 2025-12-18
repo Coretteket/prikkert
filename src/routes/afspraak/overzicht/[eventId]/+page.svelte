@@ -27,17 +27,17 @@
 	}
 </script>
 
-<h1 class="font-display capitalize-first mb-6 text-2xl font-[550]">{event.title}</h1>
+<h1 class="capitalize-first mb-6 text-2xl font-semibold">{event.title}</h1>
 
 {#if event.description}
 	<p
-		class="mb-6 border-b pb-6 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300"
+		class="mb-6 border-b pb-6 text-lg text-balance text-neutral-700 dark:text-neutral-300"
 	>
 		{event.description}
 	</p>
 {/if}
 
-<p class="mb-10 text-lg font-[350] text-balance text-neutral-700 dark:text-neutral-300">
+<p class="mb-10 text-lg text-balance text-neutral-700 dark:text-neutral-300">
 	Je bent uitgenodigd om je beschikbaarheid in te vullen, zodat er een datum kan worden geprikt.
 </p>
 
@@ -71,7 +71,7 @@
 					class="flex cursor-pointer flex-col rounded-lg px-5 pt-3.5 pb-4 hover:bg-neutral-50 motion-safe:transition-colors dark:hover:bg-neutral-800/50"
 				>
 					<div class="mb-3 flex w-full items-center justify-between">
-						<p class="font-[350] text-neutral-800 dark:text-neutral-200">
+						<p class="text-neutral-800 dark:text-neutral-200">
 							{formatDateTimeOption(option)}
 						</p>
 						<Icon
@@ -142,7 +142,7 @@
 								<p
 									class={[
 										'text-neutral-800 dark:text-neutral-200',
-										!response.session.name && 'font-[350] opacity-90',
+										!response.session.name && 'opacity-90',
 									]}
 								>
 									{response.session.name || 'Anonieme deelnemer'}

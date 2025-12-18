@@ -13,7 +13,7 @@
 </script>
 
 <div class="space-y-4">
-	<h1 class="font-display mb-8 text-2xl font-[550]">Afspraken</h1>
+	<h1 class="mb-8 text-2xl font-semibold">Afspraken</h1>
 
 	{#each events as event (event.id)}
 		<a

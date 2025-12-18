@@ -19,15 +19,15 @@
 		variants: {
 			variant: {
 				primary:
-					'font-semibold bg-pink-700 text-white shadow not-disabled:hover:bg-pink-800 dark:bg-pink-800 dark:text-neutral-100 dark:not-disabled:hover:bg-pink-700 border dark:border-pink-700 border-pink-800',
+					'font-bold bg-pink-700 text-white shadow not-disabled:hover:bg-pink-800 dark:bg-pink-800 dark:not-disabled:hover:bg-pink-700 border dark:border-pink-700 border-pink-800',
 				secondary:
-					'border bg-white text-neutral-700 not-disabled:hover:bg-neutral-50 dark:bg-neutral-800/50 dark:text-neutral-300 dark:not-disabled:hover:bg-neutral-800',
+					'font-medium border bg-white text-neutral-700 not-disabled:hover:bg-neutral-50 dark:bg-neutral-800/50 dark:text-neutral-300 dark:not-disabled:hover:bg-neutral-800',
 				tertiary:
-					'font-medium text-pink-600 not-disabled:hover:text-pink-800 dark:not-disabled:hover:text-pink-400 dark:text-pink-500',
+					'font-semibold text-pink-600 not-disabled:hover:text-pink-800 dark:not-disabled:hover:text-pink-400 dark:text-pink-500',
 				ghost: 'not-disabled:hover:bg-neutral-100 not-disabled:dark:hover:bg-neutral-800',
 			},
 			size: {
-				sm: 'px-2.5 py-1.5 text-sm rounded-lg font-[350]',
+				sm: 'px-2.5 py-1.5 text-sm rounded-lg',
 				md: 'px-3 py-1.5 squircle',
 				lg: 'px-4 py-1.5 text-lg squircle',
 				icon: 'aspect-square p-2 squircle not-dark:text-neutral-600!',
