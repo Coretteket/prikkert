@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths'
-
 	import { formatDateTimeRange } from '@/shared/time-format'
 	import { capitalizeFirst } from '@/shared/utils'
 
@@ -12,15 +10,15 @@
 		n === 0 ? 'Geen reacties' : n === 1 ? '1 reactie' : `${n} reacties`
 </script>
 
-<div class="space-y-4">
-	<h1 class="mb-8 text-2xl font-semibold">Afspraken</h1>
+<h1 class="mb-10 text-2xl font-[520] xs:text-3xl xs:font-medium">Afspraken</h1>
 
+<div class="space-y-4">
 	{#each events as event (event.id)}
 		<a
 			href="/afspraak/reageren/{event.id}"
 			class="block overflow-hidden rounded-lg border px-6 py-5 hover:bg-neutral-50 motion-safe:transition-colors dark:hover:bg-neutral-800/50"
 		>
-			<h2 class="mb-2 text-lg font-medium text-neutral-700 dark:text-neutral-300">
+			<h2 class="mb-2 text-lg font-semibold text-neutral-700 dark:text-neutral-300">
 				{capitalizeFirst(event.title)}
 			</h2>
 

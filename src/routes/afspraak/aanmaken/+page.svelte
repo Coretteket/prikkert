@@ -43,7 +43,7 @@
 	})
 </script>
 
-<h1 class="mb-6 text-2xl font-semibold">Afspraak aanmaken</h1>
+<h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">Afspraak aanmaken</h1>
 <p class="mb-10 text-lg text-balance text-neutral-700 dark:text-neutral-300">
 	Kies een titel en datums om te beginnen met plannen.
 </p>
@@ -205,9 +205,7 @@
 						</p>
 					{/if}
 				{:else}
-					<p
-						class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 p-2"
-					>
+					<p class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 p-2">
 						Selecteer datums om tijden toe te voegen.
 					</p>
 				{/each}

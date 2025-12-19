@@ -29,7 +29,7 @@
 	<nav class="flex items-center justify-between px-6 py-4">
 		<a
 			href="/"
-			class="squircle flex items-center gap-3 text-[1.4rem] font-[550] text-neutral-900 dark:text-neutral-100"
+			class="squircle flex items-center gap-3 text-xl font-[520] text-neutral-900 sm:text-[1.4rem] dark:text-neutral-100"
 		>
 			<img src={icon} width={36} height={36} alt="" />
 			<span>Prikkert</span>

@@ -9,7 +9,7 @@ function formatTitle(title: string) {
 export function getPageTitle() {
 	switch (page.route.id) {
 		case '/afspraak/aanmaken': {
-			return formatTitle('Afspraak aanmaken')
+			return formatTitle('Aanmaken')
 		}
 		case '/afspraak/reageren/[eventId]': {
 			return formatTitle('Reageren')

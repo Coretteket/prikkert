@@ -32,7 +32,7 @@
 	const event = $derived(await getEventForSession(params.eventId))
 </script>
 
-<h1 class="capitalize-first mb-6 text-2xl font-semibold">{event.title}</h1>
+<h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
 
 {#if event.description}
 	<p

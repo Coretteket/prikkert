@@ -7,7 +7,7 @@
 
 <header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">
 	<h2
-		class="mb-8 text-center text-4xl leading-[1.2] font-[650] text-neutral-900 sm:text-5xl dark:text-neutral-100"
+		class="xs:text-[2.5rem] mb-8 text-center text-[2.2rem] leading-[1.2] font-[650] text-neutral-900 sm:text-5xl dark:text-neutral-100"
 	>
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
@@ -27,9 +27,9 @@
 </header>
 
 <section class="mb-20">
-	<h3 class="mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
+		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Datumprikken kan ook zonder verdienmodel. Daarom doet Prikkert vier beloftes.
 	</p>
@@ -42,7 +42,7 @@
 					<div class="squircle flex w-fit bg-pink-500/30 p-2.5 text-pink-700 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
 					</div>
-					<h4 class="text-xl font-medium text-neutral-800 dark:text-neutral-200">
+					<h4 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
 						{promise.title}
 					</h4>
 				</div>
@@ -56,9 +56,9 @@
 </section>
 
 <section class="mb-20">
-	<h3 class="mb-4 text-center text-xl font-semibold">Hoe gebruik je Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
+		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Plan jouw groepsafspraak in drie simpele stappen.
 	</p>
@@ -83,9 +83,9 @@
 </section>
 
 <section>
-	<h3 class="mb-4 text-center text-xl font-semibold" id="faq">Hoe werkt Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl" id="faq">Hoe werkt Prikkert?</h3>
 	<p
-		class="class mx-auto mb-10 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
+		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Vind de antwoorden op veelgestelde vragen.
 	</p>
@@ -97,7 +97,7 @@
 				open={i === 0}
 			>
 				<summary
-					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-semibold text-neutral-800 dark:text-neutral-200"
+					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-semibold sm:font-medium text-neutral-800 sm:text-lg dark:text-neutral-200"
 				>
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon
