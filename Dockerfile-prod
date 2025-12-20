@@ -1,4 +1,7 @@
-FROM node:24-alpine AS builder
+FROM node:24-alpine AS node-corepack
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+FROM node-corepack AS builder
 WORKDIR /app
 
 ARG GITHUB_REPO
@@ -8,7 +11,6 @@ ENV GITHUB_PAT=$GITHUB_PAT
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
 
 COPY package.json pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
@@ -18,7 +20,7 @@ RUN pnpm run sync
 RUN pnpm run build
 RUN pnpm prune --production
 
-FROM node:24-alpine
+FROM node:24-alpine AS runtime
 WORKDIR /app
 
 COPY --from=builder /app/build build/
@@ -31,4 +33,3 @@ COPY ./src/lib/server/crypto.ts ./src/lib/server/crypto.ts
 
 ENV NODE_ENV=production
 CMD ["node", "build"]
-
