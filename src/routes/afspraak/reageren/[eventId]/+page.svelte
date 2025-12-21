@@ -32,17 +32,9 @@
 	const event = $derived(await getEventForSession(params.eventId))
 </script>
 
-<h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
+<h1 class="xs:text-3xl xs:font-medium mb-6 text-2xl font-[520]">{event.title}</h1>
 
-{#if event.description}
-	<p
-		class="mb-6 border-b pb-6 text-lg text-balance text-neutral-700 dark:text-neutral-300"
-	>
-		{event.description}
-	</p>
-{/if}
-
-<p class="mb-10 text-lg text-balance text-neutral-700 dark:text-neutral-300">
+<p class="xs:text-lg mb-10 text-[17px] text-balance text-neutral-700 dark:text-neutral-300">
 	Je bent
 	{#if event.organizerName}
 		door
@@ -53,9 +45,19 @@
 	uitgenodigd om je beschikbaarheid in te vullen, zodat er een datum kan worden geprikt.
 </p>
 
+{#if event.description}
+	<div class="mb-10">
+		<p class="text-lg font-medium">Omschrijving</p>
+
+		<p class="my-4 text-balance text-neutral-700 dark:text-neutral-300">
+			{event.description}
+		</p>
+	</div>
+{/if}
+
 <form {...submitAvailability.enhance(noReset)}>
-	<div class="mb-8">
-		<label for="name" class="mb-4 block font-medium">
+	<div class="mb-10">
+		<label for="name" class="mb-4 block text-lg font-medium">
 			Naam
 			{#if event.allowAnonymous}
 				<span class="font-normal text-neutral-500 dark:text-neutral-400">(optioneel)</span>
@@ -78,8 +80,8 @@
 		{/each}
 	</div>
 
-	<div class="mb-8">
-		<p class="mb-4 block font-medium">Beschikbaarheid</p>
+	<div class="mb-10">
+		<p class="mb-4 block text-lg font-medium">Beschikbaarheid</p>
 		<div
 			class={[
 				'mb-4 block divide-y rounded-lg border',

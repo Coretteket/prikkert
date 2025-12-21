@@ -118,5 +118,5 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 
 	hasSession().set(true)
 
-	redirect(303, `/afspraak/reageren/${event.id}`)
+	redirect(303, `/afspraak/overzicht/${event.id}`)
 })

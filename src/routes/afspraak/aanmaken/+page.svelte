@@ -43,8 +43,8 @@
 	})
 </script>
 
-<h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">Afspraak aanmaken</h1>
-<p class="mb-10 text-lg text-balance text-neutral-700 dark:text-neutral-300">
+<h1 class="xs:text-3xl xs:font-medium mb-6 text-2xl font-[520]">Afspraak aanmaken</h1>
+<p class="xs:text-lg mb-10 text-[17px] text-balance text-neutral-700 dark:text-neutral-300">
 	Kies een titel en datums om te beginnen met plannen.
 </p>
 

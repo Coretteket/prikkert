@@ -15,7 +15,7 @@
 <div class="space-y-4">
 	{#each events as event (event.id)}
 		<a
-			href="/afspraak/reageren/{event.id}"
+			href="/afspraak/overzicht/{event.id}"
 			class="block overflow-hidden rounded-lg border px-6 py-5 hover:bg-neutral-50 motion-safe:transition-colors dark:hover:bg-neutral-800/50"
 		>
 			<h2 class="mb-2 text-lg font-semibold text-neutral-700 dark:text-neutral-300">

@@ -1,4 +1,4 @@
-import { error, invalid } from '@sveltejs/kit'
+import { error, invalid, redirect } from '@sveltejs/kit'
 import { asc, eq, sql } from 'drizzle-orm'
 
 import { form, getRequestEvent } from '$app/server'
@@ -122,5 +122,5 @@ export const submitAvailability = form('unchecked', async (formData) => {
 
 	hasSession().set(true)
 
-	return { success: true }
+	redirect(303, `/afspraak/overzicht/${eventId}`)
 })
