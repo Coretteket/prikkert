@@ -8,7 +8,7 @@ import { db, schema } from '@/server/db'
 
 const checkOwnership = async (eventId: string, sessionId: string) => {
 	const result = await db
-		.select({ isOwner: schema.sessions.isOwner })
+		.select({ isOwner: schema.sessions.isOrganizer })
 		.from(schema.sessions)
 		.where(and(eq(schema.sessions.eventId, eventId), eq(schema.sessions.id, sessionId)))
 		.limit(1)

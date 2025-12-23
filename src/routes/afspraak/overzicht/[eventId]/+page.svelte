@@ -49,7 +49,7 @@
 <h1 class="xs:text-3xl xs:font-medium mb-6 text-2xl font-[520]">{event.title}</h1>
 
 <p class="xs:text-lg mb-6 text-[17px] text-balance text-neutral-700 dark:text-neutral-300">
-	{#if event.isOwner}
+	{#if event.isOrganizer}
 		Je hebt mensen uitgenodigd om hun beschikbaarheid in te vullen.
 	{:else if event.hasResponded}
 		Je hebt je beschikbaarheid ingevuld voor deze afspraak.
@@ -85,7 +85,7 @@
 			Beschikbaarheid invullen
 		</Button>
 	{/if}
-	{#if event.isOwner}
+	{#if event.isOrganizer}
 		<Button
 			variant="secondary"
 			{@attach (node) => popover.triggerHandler(node)}
@@ -162,7 +162,7 @@
 	</div>
 {/if}
 
-{#if event.isOwner}
+{#if event.isOrganizer}
 	<p class="text-lg font-medium">Uitnodigen</p>
 
 	<p class="my-4 text-balance text-neutral-700 dark:text-neutral-300">

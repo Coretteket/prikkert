@@ -29,7 +29,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 				orderBy: [asc(schema.options.startsAt)],
 			},
 			sessions: {
-				columns: { id: true, isOwner: true },
+				columns: { id: true, isOrganizer: true },
 				where: inArray(schema.sessions.id, Array.from(locals.session.values().map((s) => s.id))),
 			},
 		},
@@ -46,13 +46,13 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 			option.responses.some((response) => response.session.id === locals.session.get(eventId)!.id),
 		)
 
-	const isOwner = event.sessions.some((s) => s.isOwner) ?? false
+	const isOrganizer = event.sessions.some((s) => s.isOrganizer) ?? false
 
 	return {
 		...omit(event, 'sessions'),
 		numberOfResponses,
 		hasResponded,
-		isOwner,
+		isOrganizer,
 		options: event.options.map((option) => ({
 			...option,
 			responses: option.responses

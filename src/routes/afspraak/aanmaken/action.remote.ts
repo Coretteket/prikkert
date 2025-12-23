@@ -99,7 +99,7 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 				eventId: event.id,
 				token: await encodeSHA256(token),
 				name: parsed.organizerName,
-				isOwner: true,
+				isOrganizer: true,
 			})
 			.returning()
 

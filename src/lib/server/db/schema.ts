@@ -58,8 +58,8 @@ export const sessions = pgTable('sessions', {
 		.references(() => events.id, CASCADE)
 		.notNull(),
 	token: char({ length: HASHED_TOKEN_LENGTH }).notNull(),
+	isOrganizer: boolean().notNull().default(false),
 	name: text(),
-	isOwner: boolean().notNull().default(false),
 	createdAt: instant().defaultNow().notNull(),
 })
 
