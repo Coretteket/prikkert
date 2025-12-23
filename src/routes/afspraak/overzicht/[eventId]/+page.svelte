@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { MediaQuery } from 'svelte/reactivity'
 	import { flip } from 'svelte/animate'
 
-	import { browser, dev } from '$app/environment'
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
 
@@ -29,8 +27,6 @@
 
 	let allOpened = $state(false)
 	let linkCopied = $state(false)
-
-	let isMobile = new MediaQuery('max-width: 640px')
 
 	const event = $derived(await getEventResponses(page.params.eventId))
 	const eventLink = $derived(`${page.url.origin}/${event.id}`)
@@ -59,9 +55,9 @@
 	{:else if event.numberOfResponses === 1 && event.hasResponded}
 		Nog niemand anders heeft gereageerd.
 	{:else if event.numberOfResponses === 1}
-		Er heeft 1 persoon gereageerd.
+		Er heeft tot nu toe 1 persoon gereageerd.
 	{:else}
-		Er hebben {event.numberOfResponses} personen gereageerd.
+		Er hebben tot nu toe {event.numberOfResponses} personen gereageerd.
 	{/if}
 </p>
 
@@ -112,51 +108,52 @@
 			<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="size-4.5" />
 			Link kopiëren
 		</Button>
-		{#if browser && isMobile.current && (dev || navigator.share)}
-			<Button
-				type="button"
-				size="sm"
-				variant="secondary"
-				onclick={() => navigator.share({ url: eventLink })}
-			>
-				<Icon icon="tabler--share" class="size-4.5" />
-				Link delen
-			</Button>
-		{:else if browser}
-			<Button
-				variant="secondary"
-				size="sm"
-				as="link"
-				href="mailto:?body={encodeURIComponent(eventLink)}"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<Icon icon="tabler--mail" class="size-4.5" />
-				E-mail
-			</Button>
-			<Button
-				variant="secondary"
-				size="sm"
-				as="link"
-				href="https://wa.me/?text={encodeURIComponent(eventLink)}"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<Icon icon="tabler--brand-whatsapp" class="size-4.5" />
-				WhatsApp
-			</Button>
-			<Button
-				variant="secondary"
-				size="sm"
-				as="link"
-				href="fb-messenger://share?link={encodeURIComponent(eventLink)}"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<Icon icon="tabler--brand-messenger" class="size-4.5" />
-				Messenger
-			</Button>
-		{/if}
+		<Button
+			type="button"
+			size="sm"
+			variant="secondary"
+			onclick={() => navigator.share({ url: eventLink })}
+			class="sm:hidden"
+		>
+			<Icon icon="tabler--share" class="size-4.5" />
+			Link delen
+		</Button>
+		<Button
+			variant="secondary"
+			size="sm"
+			as="link"
+			href="mailto:?body={encodeURIComponent(eventLink)}"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="max-sm:hidden"
+		>
+			<Icon icon="tabler--mail" class="size-4.5" />
+			E-mail
+		</Button>
+		<Button
+			variant="secondary"
+			size="sm"
+			as="link"
+			href="https://wa.me/?text={encodeURIComponent(eventLink)}"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="max-sm:hidden"
+		>
+			<Icon icon="tabler--brand-whatsapp" class="size-4.5" />
+			WhatsApp
+		</Button>
+		<Button
+			variant="secondary"
+			size="sm"
+			as="link"
+			href="fb-messenger://share?link={encodeURIComponent(eventLink)}"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="max-sm:hidden"
+		>
+			<Icon icon="tabler--brand-messenger" class="size-4.5" />
+			Messenger
+		</Button>
 	</div>
 {/if}
 
@@ -223,7 +220,7 @@
 				<p class="font-[450] text-neutral-800 dark:text-neutral-200">
 					{formatDateTimeOption(option)}
 				</p>
-				<p class="text-neutral-600 dark:text-neutral-400">Nog geen reacties.</p>
+				<p class="text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
 			{:else}
 				<summary class="flex cursor-pointer flex-col px-5 pt-4 pb-4.5">
 					<div class="mb-2.5 flex w-full items-center justify-between">
