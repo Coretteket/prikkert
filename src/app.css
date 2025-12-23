@@ -48,22 +48,6 @@
 		scroll-margin-top: 1rem;
 		@apply border-neutral-300 dark:border-neutral-700;
 	}
-
-	@supports selector(::details-content) and (not (-moz-appearance: none)) {
-		@media (prefers-reduced-motion: no-preference) {
-			::details-content {
-				height: 0;
-				transition:
-					height 100ms ease,
-					content-visibility 100ms ease allow-discrete;
-				overflow: clip;
-			}
-
-			details[open]::details-content {
-				height: auto;
-			}
-		}
-	}
 }
 
 @utility outline-focus {

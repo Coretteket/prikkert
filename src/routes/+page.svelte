@@ -27,7 +27,7 @@
 </header>
 
 <section class="mb-20">
-	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h3>
+	<h3 class="xs:text-2xl mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -56,7 +56,7 @@
 </section>
 
 <section class="mb-20">
-	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h3>
+	<h3 class="xs:text-2xl mb-4 text-center text-xl font-semibold">Hoe gebruik je Prikkert?</h3>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -83,7 +83,7 @@
 </section>
 
 <section>
-	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl" id="faq">Hoe werkt Prikkert?</h3>
+	<h3 class="xs:text-2xl mb-4 text-center text-xl font-semibold" id="faq">Hoe werkt Prikkert?</h3>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -97,7 +97,7 @@
 				open={i === 0}
 			>
 				<summary
-					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-semibold sm:font-medium text-neutral-800 sm:text-lg dark:text-neutral-200"
+					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-semibold text-neutral-800 sm:text-lg sm:font-medium dark:text-neutral-200"
 				>
 					<span class="not-group-open:truncate" title={question}>{question}</span>
 					<Icon
@@ -114,3 +114,21 @@
 		Neem contact op
 	</Button>
 </section>
+
+<style>
+	@supports selector(::details-content) and (not (-moz-appearance: none)) {
+		@media (prefers-reduced-motion: no-preference) {
+			::details-content {
+				height: 0;
+				transition:
+					height 100ms ease,
+					content-visibility 100ms ease allow-discrete;
+				overflow: clip;
+			}
+
+			details[open]::details-content {
+				height: auto;
+			}
+		}
+	}
+</style>

@@ -214,7 +214,7 @@
 		<svelte:element
 			this={hasResponses ? 'details' : 'div'}
 			class={hasResponses
-				? 'has-hover:bg-neutral-50 motion-safe:transition-colors dark:has-hover:bg-neutral-800/50'
+				? 'group has-hover:bg-neutral-50 motion-safe:transition-colors dark:has-hover:bg-neutral-800/50'
 				: 'flex justify-between gap-1 p-5 max-sm:flex-col'}
 			open={hasResponses ? allOpened : undefined}
 			animate:flip={{ duration: 100 }}
@@ -233,7 +233,7 @@
 
 						<Icon
 							icon="tabler--chevron-right"
-							class="size-5 text-neutral-500 group-open:rotate-90 motion-safe:transition dark:text-neutral-300"
+							class="size-5 text-neutral-500 group-open:rotate-90 dark:text-neutral-300"
 						/>
 					</div>
 
