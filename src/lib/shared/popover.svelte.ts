@@ -51,14 +51,25 @@ export class Popover {
 		}
 	}
 
+	#handleKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape') {
+			this.close()
+			this.triggerEl?.focus()
+		}
+	}
+
 	triggerHandler(node: HTMLElement) {
 		this.triggerEl = node
 
 		const clickHandler = this.#handleClick.bind(this)
 		node.addEventListener('click', clickHandler)
 
+		const keydownHandler = this.#handleKeydown.bind(this)
+		node.addEventListener('keydown', keydownHandler)
+
 		return () => {
 			node.removeEventListener('click', clickHandler)
+			node.removeEventListener('keydown', keydownHandler)
 			this.triggerEl = undefined
 		}
 	}
@@ -78,8 +89,12 @@ export class Popover {
 			})
 		})
 
+		const keydownHandler = this.#handleKeydown.bind(this)
+		node.addEventListener('keydown', keydownHandler)
+
 		return () => {
 			cleanup()
+			node.removeEventListener('keydown', keydownHandler)
 			this.floatingEl = undefined
 		}
 	}
