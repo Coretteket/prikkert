@@ -5,7 +5,10 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			session: Map<string, { id: string; token: string }>
+			session: {
+				organizer: Map<string, import('./lib/server/session/cookies').OrganizerSession>
+				respondent: Map<string, import('./lib/server/session/cookies').RespondentSession>
+			}
 			theme: 'light' | 'dark' | 'system'
 		}
 		// interface PageData {}

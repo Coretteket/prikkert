@@ -3,7 +3,7 @@ import { redirect, type Handle } from '@sveltejs/kit'
 import { dev } from '$app/environment'
 
 import { unauthenticated, validateBasicAuth } from '@/server/basic-auth'
-import { parseSessionCookies } from '@/server/session'
+import { parseSessionCookies } from '@/server/session/cookies'
 import { ID_LENGTH } from '@/server/db/schema'
 import * as v from '@/server/validation'
 
@@ -16,7 +16,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (path.length === ID_LENGTH && !path.includes('/'))
 		redirect(dev ? 307 : 308, `/afspraak/reageren/` + path)
 
-	event.locals.session = parseSessionCookies()
+	event.locals.session = {
+		organizer: parseSessionCookies({ isOrganizer: true }),
+		respondent: parseSessionCookies({ isOrganizer: false }),
+	}
 
 	event.locals.theme = v.parse(ThemeSchema, event.cookies.get('theme'))
 

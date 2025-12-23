@@ -3,6 +3,7 @@ import { error } from '@sveltejs/kit'
 
 import { getRequestEvent, query } from '$app/server'
 
+import { validateOrganizer } from '@/server/session/validation'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 import { omit } from '@/shared/utils'
@@ -23,33 +24,33 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 				with: {
 					responses: {
 						columns: { availability: true, note: true },
-						with: { session: { columns: { id: true, name: true } } },
+						with: { respondent: { columns: { id: true, name: true } } },
 					},
 				},
 				orderBy: [asc(schema.options.startsAt)],
 			},
-			sessions: {
-				columns: { id: true, isOrganizer: true },
-				where: inArray(schema.sessions.id, Array.from(locals.session.values().map((s) => s.id))),
+			respondents: {
+				columns: { id: true },
+				where: inArray(
+					schema.respondents.id,
+					Array.from(locals.session.respondent.values().map((s) => s.respondentId)),
+				),
 			},
 		},
 	})
+
 	if (!event) error(404, 'Afspraak niet gevonden')
 
+	const isOrganizer = await validateOrganizer(eventId, locals.session.organizer.get(eventId))
+
+	const hasResponded = locals.session.respondent.has(eventId)
+
 	const numberOfResponses = new Set(
-		event.options.flatMap((option) => option.responses.map((r) => r.session.id)),
+		event.options.flatMap((option) => option.responses.map((r) => r.respondent.id)),
 	).size
 
-	const hasResponded =
-		locals.session.has(eventId) &&
-		event.options.some((option) =>
-			option.responses.some((response) => response.session.id === locals.session.get(eventId)!.id),
-		)
-
-	const isOrganizer = event.sessions.some((s) => s.isOrganizer) ?? false
-
 	return {
-		...omit(event, 'sessions'),
+		...omit(event, 'respondents'),
 		numberOfResponses,
 		hasResponded,
 		isOrganizer,
@@ -59,12 +60,12 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 				.toSorted((a, b) => {
 					const availability = order[a.availability] - order[b.availability]
 					if (availability !== 0) return availability
-					return (b.session.name ?? '').localeCompare(a.session.name ?? '')
+					return (b.respondent.name ?? '').localeCompare(a.respondent.name ?? '')
 				})
 				.map((response) => ({
 					availability: response.availability,
 					note: response.note,
-					name: response.session.name,
+					name: response.respondent.name,
 				})),
 		})),
 	}

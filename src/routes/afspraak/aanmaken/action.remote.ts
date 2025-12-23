@@ -3,7 +3,7 @@ import { redirect } from '@sveltejs/kit'
 import { form, getRequestEvent } from '$app/server'
 
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
-import { setSessionCookie } from '@/server/session'
+import { setSessionCookie } from '@/server/session/cookies'
 import { deduplicate } from '@/shared/utils'
 import { Temporal } from '@/shared/temporal'
 import { db, schema } from '@/server/db'
@@ -65,6 +65,8 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 	const { cookies } = getRequestEvent()
 
 	const token = generateNanoID(21)
+	const hashedToken = await encodeSHA256(token)
+
 	const expiresAt = Temporal.Now.instant()
 		.add({ hours: 90 * 24 })
 		.toString()
@@ -74,6 +76,7 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 			.insert(schema.events)
 			.values({
 				title: parsed.title,
+				organizerToken: hashedToken,
 				organizerName: parsed.organizerName,
 				description: parsed.description,
 				allowAnonymous: parsed.allowAnonymous,
@@ -93,22 +96,12 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 			(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
 		)
 
-		const [session] = await db
-			.insert(schema.sessions)
-			.values({
-				eventId: event.id,
-				token: await encodeSHA256(token),
-				name: parsed.organizerName,
-				isOrganizer: true,
-			})
-			.returning()
-
 		await db.insert(schema.options).values(uniqueOptions)
 
 		setSessionCookie({
 			cookies,
 			eventId: event.id,
-			sessionId: session.id,
+			isOrganizer: true,
 			token,
 			expires: expiresAt,
 		})

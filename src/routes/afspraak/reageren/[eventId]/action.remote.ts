@@ -3,9 +3,10 @@ import { asc, eq, sql } from 'drizzle-orm'
 
 import { form, getRequestEvent } from '$app/server'
 
+import { validateRespondent } from '@/server/session/validation'
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
 import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
-import { setSessionCookie } from '@/server/session'
+import { setSessionCookie } from '@/server/session/cookies'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
@@ -83,17 +84,26 @@ export const submitAvailability = form('unchecked', async (formData) => {
 
 	const parsed = result.output
 
-	const localsSession = locals.session.get(eventId)
-	const sessionId = localsSession?.id ?? generateNanoID(ID_LENGTH)
-	const token = localsSession?.token ?? generateNanoID(TOKEN_LENGTH)
+	const session = locals.session.respondent.get(eventId)
+
+	if (session) {
+		const isValid = await validateRespondent(eventId, session)
+		if (!isValid) error(403, 'Niet toegestaan.')
+	}
+
+	const { respondentId, token } =
+		session === undefined
+			? { respondentId: generateNanoID(ID_LENGTH), token: generateNanoID(TOKEN_LENGTH) }
+			: session
+
 	const encodedToken = await encodeSHA256(token)
 
 	await db.transaction(async (db) => {
 		await db
-			.insert(schema.sessions)
-			.values({ eventId, id: sessionId, token: encodedToken, name: parsed.name })
+			.insert(schema.respondents)
+			.values({ eventId, id: respondentId, token: encodedToken, name: parsed.name })
 			.onConflictDoUpdate({
-				target: schema.sessions.id,
+				target: schema.respondents.id,
 				set: { name: parsed.name },
 			})
 
@@ -102,13 +112,13 @@ export const submitAvailability = form('unchecked', async (formData) => {
 			.values(
 				Object.entries(parsed.availability).map(([key, availability]) => ({
 					optionId: key.replace(/^option_/, ''),
-					sessionId,
+					respondentId,
 					availability,
 					note: parsed.note?.[key as OptionName],
 				})),
 			)
 			.onConflictDoUpdate({
-				target: [schema.responses.optionId, schema.responses.sessionId],
+				target: [schema.responses.optionId, schema.responses.respondentId],
 				set: {
 					availability: sql.raw(`excluded.${schema.responses.availability.name}`),
 					note: sql.raw(`excluded.${schema.responses.note.name}`),
@@ -116,7 +126,14 @@ export const submitAvailability = form('unchecked', async (formData) => {
 			})
 	})
 
-	setSessionCookie({ cookies, sessionId, eventId, token, expires: event.expiresAt })
+	setSessionCookie({
+		cookies,
+		isOrganizer: false,
+		respondentId,
+		eventId,
+		token,
+		expires: event.expiresAt,
+	})
 
 	getEventForSession(eventId).refresh()
 

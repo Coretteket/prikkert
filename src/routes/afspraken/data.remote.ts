@@ -8,28 +8,30 @@ import { omit } from '@/shared/utils'
 
 export const getEvents = query(async () => {
 	const { locals } = getRequestEvent()
-	const sessionIds = await Promise.all(locals.session.values().map(({ id }) => id))
 
-	const data = await db.query.sessions.findMany({
-		where: inArray(schema.sessions.id, sessionIds),
-		columns: {},
+	const eventIds = [...locals.session.respondent.keys(), ...locals.session.organizer.keys()]
+
+	const data = await db.query.events.findMany({
+		where: inArray(schema.events.id, eventIds),
+		columns: { id: true, title: true, createdAt: true },
 		with: {
-			event: {
-				columns: { id: true, title: true, createdAt: true },
-				with: {
-					sessions: { columns: {}, with: { responses: { columns: { optionId: true } } } },
-					options: { columns: { startsAt: true }, orderBy: [asc(schema.options.startsAt)] },
-				},
+			options: {
+				columns: { startsAt: true },
+				orderBy: [asc(schema.options.startsAt)],
+			},
+			respondents: {
+				columns: {},
+				with: { responses: { columns: { availability: true } } },
 			},
 		},
 	})
 
 	const events = data
-		.map(({ event }) => ({
-			...omit(event, 'options', 'sessions'),
+		.map((event) => ({
+			...omit(event, 'options', 'respondents'),
 			firstDate: event.options.at(0)!.startsAt,
 			lastDate: event.options.at(-1)!.startsAt,
-			numberOfResponses: event.sessions.filter((s) => s.responses.length > 0).length,
+			numberOfResponses: event.respondents.filter((s) => s.responses.length > 0).length,
 		}))
 		.toSorted((a, b) => Temporal.PlainDateTime.compare(b.createdAt, a.createdAt))
 

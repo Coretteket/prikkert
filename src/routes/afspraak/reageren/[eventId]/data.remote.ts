@@ -21,11 +21,11 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 
 	if (!event) error(404, 'Afspraak niet gevonden')
 
-	const sessionId = getRequestEvent().locals.session.get(eventId)?.id
+	const respondentId = getRequestEvent().locals.session.respondent.get(eventId)?.respondentId
 
-	const session = sessionId
-		? await db.query.sessions.findFirst({
-				where: eq(schema.sessions.id, sessionId),
+	const respondent = respondentId
+		? await db.query.respondents.findFirst({
+				where: eq(schema.respondents.id, respondentId),
 				columns: { id: true, name: true },
 				with: { responses: { columns: { optionId: true, availability: true, note: true } } },
 			})
@@ -33,9 +33,9 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 
 	return {
 		...event,
-		responseName: session?.name ?? null,
+		responseName: respondent?.name ?? null,
 		options: event.options.map((option) => {
-			const response = session?.responses.find((response) => response.optionId === option.id)
+			const response = respondent?.responses.find((response) => response.optionId === option.id)
 			return { ...option, response: response ? omit(response, 'optionId') : null }
 		}),
 	}

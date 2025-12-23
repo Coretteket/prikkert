@@ -30,6 +30,7 @@ export const events = pgTable('events', {
 		.$default(() => generateNanoID(ID_LENGTH))
 		.primaryKey(),
 	title: text().notNull(),
+	organizerToken: char({ length: HASHED_TOKEN_LENGTH }).notNull(),
 	organizerName: text(),
 	description: text(),
 	allowAnonymous: boolean().notNull().default(false),
@@ -50,7 +51,7 @@ export const options = pgTable('options', {
 	isSelected: boolean().notNull().default(false),
 })
 
-export const sessions = pgTable('sessions', {
+export const respondents = pgTable('respondents', {
 	id: char({ length: ID_LENGTH })
 		.$default(() => generateNanoID(ID_LENGTH))
 		.primaryKey(),
@@ -58,7 +59,6 @@ export const sessions = pgTable('sessions', {
 		.references(() => events.id, CASCADE)
 		.notNull(),
 	token: char({ length: HASHED_TOKEN_LENGTH }).notNull(),
-	isOrganizer: boolean().notNull().default(false),
 	name: text(),
 	createdAt: instant().defaultNow().notNull(),
 })
@@ -71,20 +71,20 @@ export const responses = pgTable(
 		optionId: char({ length: ID_LENGTH })
 			.references(() => options.id, CASCADE)
 			.notNull(),
-		sessionId: char({ length: ID_LENGTH })
-			.references(() => sessions.id, CASCADE)
+		respondentId: char({ length: ID_LENGTH })
+			.references(() => respondents.id, CASCADE)
 			.notNull(),
 		availability: availability().notNull(),
 		note: text(),
 	},
-	(t) => [primaryKey({ columns: [t.optionId, t.sessionId] })],
+	(t) => [primaryKey({ columns: [t.optionId, t.respondentId] })],
 )
 
 /* RELATIONS */
 
 export const eventsRelations = relations(events, ({ many }) => ({
 	options: many(options),
-	sessions: many(sessions),
+	respondents: many(respondents),
 }))
 
 export const optionsRelations = relations(options, ({ one, many }) => ({
@@ -92,12 +92,12 @@ export const optionsRelations = relations(options, ({ one, many }) => ({
 	responses: many(responses),
 }))
 
-export const sessionsRelations = relations(sessions, ({ one, many }) => ({
-	event: one(events, { fields: [sessions.eventId], references: [events.id] }),
+export const respondentsRelations = relations(respondents, ({ one, many }) => ({
+	event: one(events, { fields: [respondents.eventId], references: [events.id] }),
 	responses: many(responses),
 }))
 
 export const responsesRelations = relations(responses, ({ one }) => ({
 	option: one(options, { fields: [responses.optionId], references: [options.id] }),
-	session: one(sessions, { fields: [responses.sessionId], references: [sessions.id] }),
+	respondent: one(respondents, { fields: [responses.respondentId], references: [respondents.id] }),
 }))
