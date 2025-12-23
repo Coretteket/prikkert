@@ -42,7 +42,7 @@
 			{event.organizerName}
 		</strong>
 	{/if}
-	uitgenodigd om je beschikbaarheid in te vullen, zodat er een datum kan worden geprikt.
+	uitgenodigd om je beschikbaarheid in te vullen.
 </p>
 
 {#if event.description}

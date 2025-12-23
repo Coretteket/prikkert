@@ -55,13 +55,13 @@
 	{/if}
 
 	{#if event.numberOfResponses === 0}
-		Nog niemand heeft gereageerd op deze afspraak.
+		Nog niemand heeft gereageerd.
 	{:else if event.numberOfResponses === 1 && event.hasResponded}
-		Nog niemand anders heeft gereageerd op deze afspraak.
+		Nog niemand anders heeft gereageerd.
 	{:else if event.numberOfResponses === 1}
-		Tot nu toe heeft 1 persoon gereageerd op deze afspraak.
+		Er heeft 1 persoon gereageerd.
 	{:else}
-		Tot nu toe hebben {event.numberOfResponses} personen gereageerd op deze afspraak.
+		Er hebben {event.numberOfResponses} personen gereageerd.
 	{/if}
 </p>
 
