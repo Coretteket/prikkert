@@ -1,14 +1,20 @@
 <script lang="ts">
+	import { prefersReducedMotion } from 'svelte/motion'
+	import * as floating from '@floating-ui/dom'
+	import { cubicInOut } from 'svelte/easing'
+	import { fade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
 
 	import { formatDateTimeOption } from '@/shared/time-format'
+	import { Popover } from '@/shared/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
 
 	import { getEventResponses } from './data.remote'
+	import { removeEvent } from './action.remote'
 
 	const SORT_KEY = 's'
 	let sortBy = $derived(page.url.searchParams.get(SORT_KEY))
@@ -27,6 +33,14 @@
 
 	let allOpened = $state(false)
 	let linkCopied = $state(false)
+
+	// svelte-ignore non_reactive_update
+	let closeDialog: HTMLDialogElement
+
+	const popover = new Popover({
+		placement: 'bottom-start',
+		middleware: [floating.offset({ mainAxis: 8 }), floating.shift(), floating.flip()],
+	})
 
 	const event = $derived(await getEventResponses(page.params.eventId))
 	const eventLink = $derived(`${page.url.origin}/${event.id}`)
@@ -72,9 +86,69 @@
 		</Button>
 	{/if}
 	{#if event.isOwner}
-		<Button as="link" href="/afspraak/bewerken/{event.id}" variant="secondary">
+		<Button
+			variant="secondary"
+			{@attach (node) => popover.triggerHandler(node)}
+			{...popover.triggerAttrs}
+		>
 			Afspraak beheren
 		</Button>
+
+		{#if popover.isOpen}
+			<div
+				{@attach (node) => popover.floatingHandler(node)}
+				{...popover.floatingAttrs}
+				class="dark:bg-neutral-850 dark:ring-neutral-850 grid min-w-40 gap-1 rounded-lg border bg-white px-1.5 py-2 text-neutral-700 ring-4 ring-white dark:text-neutral-300"
+				transition:fade={{
+					duration: prefersReducedMotion.current ? 0 : 100,
+					easing: cubicInOut,
+				}}
+			>
+				<Button
+					as="link"
+					href="/afspraak/bewerken/{event.id}"
+					variant="ghost"
+					size="sm"
+					class="w-full!"
+				>
+					<Icon icon="tabler--edit" class="mb-px size-5" />
+					Afspraak bewerken
+				</Button>
+				<Button variant="ghost" size="sm" class="w-full!">
+					<Icon icon="tabler--user-shield" class="mb-px size-5" />
+					Afspraakbeheer delen
+				</Button>
+				<Button
+					variant="ghost"
+					size="sm"
+					class="w-full! text-pink-600 dark:text-pink-400"
+					onclick={() => {
+						popover.close()
+						closeDialog.showModal()
+					}}
+				>
+					<Icon icon="tabler--trash" class="mb-px size-5" />
+					Afspraak verwijderen
+				</Button>
+			</div>
+		{/if}
+
+		<dialog
+			bind:this={closeDialog}
+			class="dark:bg-neutral-850 fixed top-1/2 left-1/2 w-full -translate-1/2 rounded-lg border bg-white p-5 backdrop:bg-black/50 sm:max-w-md sm:p-6"
+		>
+			<form {...removeEvent.for(event.id)}>
+				<p class="mb-4 text-lg font-medium">Weet je het zeker?</p>
+				<p class="mb-6 text-neutral-700 dark:text-neutral-300">
+					Als je doorgaat worden deze afspraak en alle bijbehorende reacties verwijderd. Dit kan
+					niet ongedaan worden gemaakt.
+				</p>
+				<div class="flex justify-end gap-3">
+					<Button formmethod="dialog" variant="secondary">Annuleren</Button>
+					<Button variant="primary">Verwijderen</Button>
+				</div>
+			</form>
+		</dialog>
 	{/if}
 </div>
 
