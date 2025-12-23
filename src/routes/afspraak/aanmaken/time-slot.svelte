@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { prefersReducedMotion } from 'svelte/motion'
+	import * as floating from '@floating-ui/dom'
 	import { cubicInOut } from 'svelte/easing'
 	import { fade } from 'svelte/transition'
 
-	import Popover, { popover } from '@/components/popover.svelte'
+	import { Popover } from '@/shared/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
@@ -22,9 +23,10 @@
 		options.set(date, updated)
 	}
 
-	function closePopover() {
-		popover.active = undefined
-	}
+	const popover = new Popover({
+		placement: 'bottom-end',
+		middleware: [floating.offset({ mainAxis: 8 }), floating.shift(), floating.flip()],
+	})
 </script>
 
 <div class="flex gap-2 pb-1 max-sm:flex-col max-sm:items-center">
@@ -46,9 +48,20 @@
 					<TimeInput bind:time={() => slot[1], (time) => setSlot(i, [slot[0], time])} />
 				</div>
 
-				<Popover>
+				<button
+					type="button"
+					class="flex cursor-pointer items-center text-neutral-700 dark:text-neutral-300"
+					{@attach (node) => popover.triggerHandler(node)}
+					{...popover.triggerAttrs}
+				>
+					<Icon icon="tabler--dots-vertical" class="size-5" />
+				</button>
+
+				{#if popover.isOpen}
 					<div
-						class="grid min-w-40 rounded border bg-white p-2 text-sm text-neutral-700 shadow-sm dark:bg-neutral-900 dark:text-neutral-300"
+						{@attach (node) => popover.floatingHandler(node)}
+						{...popover.floatingAttrs}
+						class="dark:bg-neutral-850 grid min-w-40 rounded border bg-white p-2 text-sm text-neutral-700 dark:text-neutral-300"
 						transition:fade={{
 							duration: prefersReducedMotion.current ? 0 : 150,
 							easing: cubicInOut,
@@ -58,10 +71,10 @@
 							type="button"
 							variant="ghost"
 							size="sm"
-							class="justify-start"
+							class="w-full!"
 							onclick={() => {
 								for (const key of options.keys()) options.set(key, slots)
-								closePopover()
+								popover.close()
 							}}
 						>
 							<Icon icon="tabler--copy" class="size-4.5" />
@@ -71,10 +84,10 @@
 							type="button"
 							variant="ghost"
 							size="sm"
-							class="justify-start"
+							class="w-full!"
 							onclick={() => {
 								options.set(date, slots.concat([emptySlot]))
-								closePopover()
+								popover.close()
 							}}
 						>
 							<Icon icon="tabler--plus" class="size-4.5" />
@@ -85,11 +98,11 @@
 								type="button"
 								variant="ghost"
 								size="sm"
-								class="justify-start"
+								class="w-full!"
 								onclick={() => {
 									const remaining = slots.filter((_, j) => j !== i)
 									options.set(date, remaining)
-									closePopover()
+									popover.close()
 								}}
 							>
 								<Icon icon="tabler--trash" class="size-4.5" />
@@ -97,7 +110,7 @@
 							</Button>
 						{/if}
 					</div>
-				</Popover>
+				{/if}
 			</div>
 		{/each}
 	</div>
