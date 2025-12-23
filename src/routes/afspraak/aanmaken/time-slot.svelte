@@ -61,9 +61,9 @@
 					<div
 						{@attach (node) => popover.floatingHandler(node)}
 						{...popover.floatingAttrs}
-						class="dark:bg-neutral-850 grid min-w-40 rounded border bg-white p-2 text-sm text-neutral-700 dark:text-neutral-300"
+						class="dark:bg-neutral-850 dark:ring-neutral-850 grid min-w-40 rounded-lg border bg-white p-2 text-sm text-neutral-700 ring-4 ring-white dark:text-neutral-300"
 						transition:fade={{
-							duration: prefersReducedMotion.current ? 0 : 150,
+							duration: prefersReducedMotion.current ? 0 : 100,
 							easing: cubicInOut,
 						}}
 					>

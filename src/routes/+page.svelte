@@ -13,12 +13,12 @@
 		<p>zo geprikt</p>
 	</h2>
 	<h3
-		class="mx-auto mb-8 max-w-80 text-center text-xl text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
+		class="mx-auto mb-8 max-w-80 text-center text-xl leading-normal text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
 	>
 		Vind
-		<strong class="font-bold text-pink-700 dark:text-white">gratis</strong>
-		én
-		<strong class="font-bold text-pink-700 dark:text-white">reclamevrij</strong>
+		<strong class="font-bold text-pink-600 dark:text-pink-50">gratis</strong>
+		en
+		<strong class="font-bold text-pink-600 dark:text-pink-50">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h3>
 	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="lg" class="mx-auto">
@@ -39,10 +39,10 @@
 				class="rounded-lg border from-neutral-900 to-pink-700/5 px-7 py-6.5 dark:bg-linear-to-tl"
 			>
 				<div class="mb-4 flex items-center gap-4">
-					<div class="squircle flex w-fit bg-pink-500/30 p-2.5 text-pink-700 dark:text-pink-100">
+					<div class="squircle flex w-fit bg-pink-500/30 p-2.5 text-pink-600 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
 					</div>
-					<h4 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+					<h4 class="text-xl font-[550] text-neutral-800 dark:text-neutral-200">
 						{promise.title}
 					</h4>
 				</div>
