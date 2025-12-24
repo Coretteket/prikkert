@@ -4,8 +4,7 @@ import { eq } from 'drizzle-orm'
 import { form, getRequestEvent, query } from '$app/server'
 
 import { deleteSessionCookie, setSessionCookie } from '@/server/session/cookies'
-import { validateOrganizer } from '@/server/session/validation'
-import { encodeSHA256 } from '@/server/crypto'
+import { validateSession } from '@/server/session/validation'
 import * as v from '@/server/validation'
 import { db, schema } from '@/server/db'
 
@@ -18,7 +17,7 @@ export const removeEvent = form(v.object({ id: v.string() }), async ({ id: event
 	const session = locals.session.organizer.get(eventId)
 	if (!session) error(403, 'Niet toegestaan.')
 
-	const isOrganizer = await validateOrganizer(session)
+	const isOrganizer = await validateSession(session)
 	if (!isOrganizer) error(403, 'Niet toegestaan.')
 
 	await db.delete(schema.events).where(eq(schema.events.id, eventId))
@@ -39,7 +38,7 @@ export const getOrganizerShareLink = query(v.string(), async (eventId) => {
 	const session = locals.session.organizer.get(eventId)
 	if (!session) error(403, 'Niet toegestaan.')
 
-	const isOrganizer = await validateOrganizer(session)
+	const isOrganizer = await validateSession(session)
 	if (!isOrganizer) error(403, 'Niet toegestaan.')
 
 	const link = `${getRequestEvent().url.origin}/afspraak/overzicht/${eventId}#organisator=${session.token}`
@@ -59,9 +58,12 @@ export const validateOrganizerShareLink = form(
 
 		if (!event) return error(404, 'Afspraak niet gevonden.')
 
-		const isValid = event.organizerToken === (await encodeSHA256(session.token))
+		const isOrganizer = await validateSession(
+			{ eventId: session.id, token: session.token },
+			event.organizerToken,
+		)
 
-		if (!isValid) return error(403, 'Ongeldige link.')
+		if (!isOrganizer) return error(403, 'Ongeldige link.')
 
 		locals.session.organizer.set(session.id, {
 			eventId: session.id,

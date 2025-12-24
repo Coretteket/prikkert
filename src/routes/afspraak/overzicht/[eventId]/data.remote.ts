@@ -1,9 +1,9 @@
-import { asc, eq, inArray } from 'drizzle-orm'
+import { asc, eq } from 'drizzle-orm'
 import { error } from '@sveltejs/kit'
 
 import { getRequestEvent, query } from '$app/server'
 
-import { validateOrganizer } from '@/server/session/validation'
+import { validateSession } from '@/server/session/validation'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 import { omit } from '@/shared/utils'
@@ -17,31 +17,33 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 
 	const event = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
-		columns: { id: true, title: true, description: true, organizerName: true },
+		columns: {
+			id: true,
+			title: true,
+			description: true,
+			organizerName: true,
+			organizerToken: true,
+		},
 		with: {
 			options: {
 				columns: { id: true, startsAt: true, endsAt: true },
+				orderBy: [asc(schema.options.startsAt)],
 				with: {
 					responses: {
 						columns: { availability: true, note: true },
 						with: { respondent: { columns: { id: true, name: true } } },
 					},
 				},
-				orderBy: [asc(schema.options.startsAt)],
-			},
-			respondents: {
-				columns: { id: true },
-				where: inArray(
-					schema.respondents.id,
-					Array.from(locals.session.respondent.values().map((s) => s.respondentId)),
-				),
 			},
 		},
 	})
 
 	if (!event) error(404, 'Afspraak niet gevonden')
 
-	const isOrganizer = await validateOrganizer(locals.session.organizer.get(eventId))
+	const isOrganizer = await validateSession(
+		locals.session.organizer.get(eventId),
+		event.organizerToken,
+	)
 
 	const hasResponded = locals.session.respondent.has(eventId)
 
@@ -50,7 +52,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 	).size
 
 	return {
-		...omit(event, 'respondents'),
+		...omit(event, 'organizerToken'),
 		numberOfResponses,
 		hasResponded,
 		isOrganizer,

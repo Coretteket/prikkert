@@ -3,8 +3,8 @@ import { asc, eq, sql } from 'drizzle-orm'
 
 import { form, getRequestEvent } from '$app/server'
 
-import { validateRespondent } from '@/server/session/validation'
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
+import { validateSession } from '@/server/session/validation'
 import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
 import { setSessionCookie } from '@/server/session/cookies'
 import { db, schema } from '@/server/db'
@@ -87,7 +87,7 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	const session = locals.session.respondent.get(eventId)
 
 	if (session) {
-		const isValid = await validateRespondent(session)
+		const isValid = await validateSession(session)
 		if (!isValid) error(403, 'Niet toegestaan.')
 	}
 
@@ -138,5 +138,12 @@ export const submitAvailability = form('unchecked', async (formData) => {
 
 	hasSession().set(true)
 
-	redirect(303, `/afspraak/overzicht/${eventId}`)
+	const isOrganizer = await validateSession(
+		locals.session.organizer.get(eventId),
+		event.organizerToken,
+	)
+
+	if (isOrganizer || !event.hideResponses) {
+		redirect(303, `/afspraak/overzicht/${eventId}`)
+	}
 })

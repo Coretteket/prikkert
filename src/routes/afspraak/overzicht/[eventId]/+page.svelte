@@ -44,8 +44,9 @@
 		middleware: [floating.offset({ mainAxis: 8 }), floating.shift(), floating.flip()],
 	})
 
+	const eventLink = $derived(`${page.url.origin}/${page.params.eventId}`)
+
 	const event = $derived(await getEventResponses(page.params.eventId))
-	const eventLink = $derived(`${page.url.origin}/${event.id}`)
 </script>
 
 <h1 class="xs:text-3xl xs:font-medium mb-6 text-2xl font-[520]">{event.title}</h1>
