@@ -24,10 +24,7 @@
 	})
 </script>
 
-<Dialog
-	open={token !== undefined}
-	class="dark:bg-neutral-850 fixed top-1/2 left-1/2 w-full -translate-1/2 rounded-lg border bg-white p-5 backdrop:bg-black/50 backdrop:backdrop-blur-[2px] sm:max-w-md sm:p-6"
->
+<Dialog open={token !== undefined}>
 	<form {...validateOrganizerShareLink.for(id)}>
 		<input type="hidden" name="token" value={token} />
 

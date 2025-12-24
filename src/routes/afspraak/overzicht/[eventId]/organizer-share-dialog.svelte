@@ -12,10 +12,7 @@
 	let output: HTMLOutputElement
 </script>
 
-<Dialog
-	bind:open
-	class="dark:bg-neutral-850 fixed top-1/2 left-1/2 w-full -translate-1/2 rounded-lg border bg-white p-5 backdrop:bg-black/50 backdrop:backdrop-blur-[2px] sm:max-w-md sm:p-6"
->
+<Dialog bind:open>
 	<form method="dialog">
 		<p class="mb-4 text-lg font-medium">Afspraakbeheer delen</p>
 		<p class="mb-6 text-neutral-700 dark:text-neutral-300">
