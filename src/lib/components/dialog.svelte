@@ -2,7 +2,7 @@
 	import type { HTMLDialogAttributes } from 'svelte/elements'
 	import type { Snippet } from 'svelte'
 
-	let element: HTMLDialogElement
+	let element: HTMLDialogElement | undefined = $state()
 
 	let {
 		open = $bindable(false),
@@ -11,8 +11,8 @@
 	}: { open: boolean; children: Snippet } & HTMLDialogAttributes = $props()
 
 	$effect(() => {
-		if (open) element.showModal()
-		else element.close()
+		if (open) element?.showModal()
+		else element?.close()
 	})
 
 	const handleClose = () => (open = false)
