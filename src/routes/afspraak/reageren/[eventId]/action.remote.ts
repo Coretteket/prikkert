@@ -64,7 +64,7 @@ function handleValidationErrors(issues: [v.BaseIssue<unknown>, ...v.BaseIssue<un
 }
 
 export const submitAvailability = form('unchecked', async (formData) => {
-	const { locals, cookies, params } = getRequestEvent()
+	const { locals, params } = getRequestEvent()
 	const eventId = params.eventId
 
 	if (!eventId) error(404, 'Afspraak niet gevonden')
@@ -87,7 +87,7 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	const session = locals.session.respondent.get(eventId)
 
 	if (session) {
-		const isValid = await validateRespondent(eventId, session)
+		const isValid = await validateRespondent(session)
 		if (!isValid) error(403, 'Niet toegestaan.')
 	}
 
@@ -127,7 +127,6 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	})
 
 	setSessionCookie({
-		cookies,
 		isOrganizer: false,
 		respondentId,
 		eventId,

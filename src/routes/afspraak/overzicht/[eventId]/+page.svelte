@@ -13,8 +13,10 @@
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
 
+	import OrganizerReceiveDialog from './organizer-receive-dialog.svelte'
+	import OrganizerShareDialog from './organizer-share-dialog.svelte'
+	import EventRemoveDialog from './event-remove-dialog.svelte'
 	import { getEventResponses } from './data.remote'
-	import { removeEvent } from './action.remote'
 
 	const SORT_KEY = 's'
 	let sortBy = $derived(page.url.searchParams.get(SORT_KEY))
@@ -34,8 +36,8 @@
 	let allOpened = $state(false)
 	let linkCopied = $state(false)
 
-	// svelte-ignore non_reactive_update
-	let closeDialog: HTMLDialogElement
+	let removeDialog = $state(false)
+	let shareOrganizerDialog = $state(false)
 
 	const popover = new Popover({
 		placement: 'bottom-start',
@@ -114,7 +116,15 @@
 					<Icon icon="tabler--edit" class="mb-px size-5" />
 					Afspraak bewerken
 				</Button>
-				<Button variant="ghost" size="sm" class="w-full!">
+				<Button
+					variant="ghost"
+					size="sm"
+					class="w-full!"
+					onclick={() => {
+						popover.close()
+						shareOrganizerDialog = true
+					}}
+				>
 					<Icon icon="tabler--user-shield" class="mb-px size-5" />
 					Afspraakbeheer delen
 				</Button>
@@ -124,7 +134,7 @@
 					class="w-full! text-pink-600 dark:text-pink-400"
 					onclick={() => {
 						popover.close()
-						closeDialog.showModal()
+						removeDialog = true
 					}}
 				>
 					<Icon icon="tabler--trash" class="mb-px size-5" />
@@ -133,23 +143,12 @@
 			</div>
 		{/if}
 
-		<dialog
-			bind:this={closeDialog}
-			class="dark:bg-neutral-850 fixed top-1/2 left-1/2 w-full -translate-1/2 rounded-lg border bg-white p-5 backdrop:bg-black/50 sm:max-w-md sm:p-6"
-		>
-			<form {...removeEvent.for(event.id)}>
-				<p class="mb-4 text-lg font-medium">Weet je het zeker?</p>
-				<p class="mb-6 text-neutral-700 dark:text-neutral-300">
-					Als je doorgaat worden deze afspraak en alle bijbehorende reacties verwijderd. Dit kan
-					niet ongedaan worden gemaakt.
-				</p>
-				<div class="flex justify-end gap-3">
-					<Button formmethod="dialog" variant="secondary">Annuleren</Button>
-					<Button variant="primary">Verwijderen</Button>
-				</div>
-			</form>
-		</dialog>
+		<EventRemoveDialog bind:open={removeDialog} id={event.id} />
+
+		<OrganizerShareDialog bind:open={shareOrganizerDialog} id={event.id} />
 	{/if}
+
+	<OrganizerReceiveDialog id={event.id} isOrganizer={event.isOrganizer} />
 </div>
 
 {#if event.description}

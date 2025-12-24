@@ -41,7 +41,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 
 	if (!event) error(404, 'Afspraak niet gevonden')
 
-	const isOrganizer = await validateOrganizer(eventId, locals.session.organizer.get(eventId))
+	const isOrganizer = await validateOrganizer(locals.session.organizer.get(eventId))
 
 	const hasResponded = locals.session.respondent.has(eventId)
 

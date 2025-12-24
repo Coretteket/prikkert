@@ -28,7 +28,7 @@
 					'font-[450] not-disabled:hover:bg-neutral-100 not-disabled:dark:hover:bg-neutral-800',
 			},
 			size: {
-				sm: 'px-2.5 py-1.5 text-[15px] rounded-lg',
+				sm: 'px-2.5 py-1.5 text-[15px] squircle',
 				md: 'px-3 py-1.5 squircle',
 				lg: 'px-4 py-1.5 text-lg squircle',
 				icon: 'aspect-square p-2 squircle not-dark:text-neutral-600!',

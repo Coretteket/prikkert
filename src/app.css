@@ -83,3 +83,9 @@
 		corner-shape: squircle;
 	}
 }
+
+/* corner-shape looks buggy inside dialogs */
+dialog .squircle {
+    border-radius: theme(--radius-lg);
+    corner-shape: initial;
+}

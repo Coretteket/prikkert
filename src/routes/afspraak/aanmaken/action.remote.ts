@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 
-import { form, getRequestEvent } from '$app/server'
+import { form } from '$app/server'
 
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
 import { setSessionCookie } from '@/server/session/cookies'
@@ -62,8 +62,6 @@ const CreateEventSchema = v.strictObject({
 })
 
 export const createEvent = form(CreateEventSchema, async (parsed) => {
-	const { cookies } = getRequestEvent()
-
 	const token = generateNanoID(21)
 	const hashedToken = await encodeSHA256(token)
 
@@ -99,7 +97,6 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 		await db.insert(schema.options).values(uniqueOptions)
 
 		setSessionCookie({
-			cookies,
 			eventId: event.id,
 			isOrganizer: true,
 			token,
