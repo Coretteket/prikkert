@@ -152,13 +152,13 @@
 												aria-pressed={options.has(date.toString())}
 												data-in-month={inMonth}
 												disabled={!inMonth || isPast}
-												class="peer squircle flex aspect-square items-center justify-center text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-800 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:hover:bg-pink-800 motion-safe:transition dark:text-neutral-300 not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:hover:dark:bg-pink-700"
+												class="peer squircle flex aspect-square items-center justify-center text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-aria-pressed:not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-900 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:not-disabled:hover:bg-pink-800 motion-safe:transition-all motion-safe:duration-100 dark:text-neutral-300 not-aria-pressed:not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:dark:not-disabled:hover:bg-pink-700"
 											>
 												{date.day}
 											</button>
 											{#if Temporal.PlainDate.compare(date, now) === 0}
 												<span
-													class="pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl text-neutral-700 peer-aria-pressed:text-neutral-100 motion-safe:transition dark:text-neutral-300"
+													class="pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl text-neutral-700 peer-aria-pressed:text-neutral-100 motion-safe:transition motion-safe:duration-100 dark:text-neutral-300"
 												>
 													&middot;
 												</span>

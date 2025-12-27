@@ -10,17 +10,6 @@
 	--font-sans: 'Golos Text Variable', ui-sans-serif, system-ui, sans-serif;
 	--breakpoint-xs: 28rem;
 	--color-neutral-850: oklch(0.2178 0 0);
-	--color-pink-50: oklch(0.968 0.017 3.77);
-	--color-pink-100: oklch(0.936 0.034 4.21);
-	--color-pink-200: oklch(0.863 0.078 3.82);
-	--color-pink-300: oklch(0.8 0.121 3.86);
-	--color-pink-400: oklch(0.738 0.17 4.31);
-	--color-pink-500: oklch(0.676 0.226 4.33);
-	--color-pink-600: oklch(0.601 0.242 4.65);
-	--color-pink-700: oklch(0.551 0.223 4.62);
-	--color-pink-800: oklch(0.401 0.161 4.54);
-	--color-pink-900: oklch(0.273 0.11 4.81);
-	--color-pink-950: oklch(0.209 0.084 4.81);
 }
 
 @layer base {
@@ -86,6 +75,6 @@
 
 /* corner-shape looks buggy inside dialogs */
 dialog .squircle {
-    border-radius: theme(--radius-lg);
-    corner-shape: initial;
+	border-radius: theme(--radius-lg);
+	corner-shape: initial;
 }
