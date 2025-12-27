@@ -16,7 +16,7 @@ export const init = async () => {
 
 	const timeZone = 'Europe/Amsterdam'
 
-	const job = CronJob.from({
+	CronJob.from({
 		cronTime: '0 5 * * *',
 		timeZone,
 		start: true,
@@ -36,8 +36,6 @@ export const init = async () => {
 			}
 		},
 	})
-
-	job.fireOnTick()
 }
 
 const ThemeSchema = v.fallback(v.picklist(['light', 'dark', 'system']), 'system')
