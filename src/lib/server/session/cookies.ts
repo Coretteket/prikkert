@@ -56,7 +56,7 @@ export function setSessionCookie(opts: SessionCookieOpts) {
 	cookies.set(key, value, {
 		path: '/',
 		httpOnly: true,
-		sameSite: 'strict',
+		sameSite: 'lax',
 		secure: !dev,
 		expires: new Date(opts.expires),
 	})
@@ -82,7 +82,7 @@ export function deleteSessionCookie(opts: { isOrganizer: boolean; eventId: strin
 	cookies.delete(key, {
 		path: '/',
 		httpOnly: true,
-		sameSite: 'strict',
+		sameSite: 'lax',
 		secure: !dev,
 	})
 
