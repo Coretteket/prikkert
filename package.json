@@ -35,6 +35,7 @@
 		"@tailwindcss/vite": "4.1.17",
 		"@types/node": "^24.10.2",
 		"@valibot/i18n": "^1.0.0",
+		"cron": "^4.4.0",
 		"cva": "1.0.0-beta.4",
 		"eslint": "^9.39.1",
 		"eslint-config-prettier": "^10.1.8",
