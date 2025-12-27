@@ -8,26 +8,6 @@ services:
       - 5432:5432
     volumes:
       - db-data:/var/lib/postgresql/data
-    networks:
-      - prikkert
-
-  drizzle-gateway:
-    image: ghcr.io/drizzle-team/gateway:latest
-    restart: unless-stopped
-    ports:
-      - '4983:4983'
-    environment:
-      - PORT=4983
-      - STORE_PATH=/app
-      - MASTERPASS=${DRIZZLE_GATEWAY_PASS}
-    volumes:
-      - drizzle-gateway:/app
-    networks:
-      - prikkert
 
 volumes:
   db-data:
-  drizzle-gateway:
-
-networks:
-  prikkert:
