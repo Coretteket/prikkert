@@ -61,15 +61,39 @@ const CreateEventSchema = v.strictObject({
 	hideResponses: v.optional(v.boolean()),
 })
 
+// Expires 90 days after the latest date option
+const getExpiryDate = (
+	options: {
+		startsAt: Temporal.PlainDate | Temporal.PlainDateTime
+		endsAt: Temporal.PlainDateTime | undefined
+	}[],
+) => {
+	let latestOption = Temporal.Now.plainDateTimeISO() as (typeof options)[number]['startsAt']
+
+	for (const option of options)
+		if (Temporal.PlainDateTime.compare(option.endsAt ?? option.startsAt, latestOption) > 0)
+			latestOption = option.endsAt ?? option.startsAt
+
+	return latestOption.toZonedDateTime('Europe/Amsterdam').add({ days: 90 }).toInstant().toString()
+}
+
 export const createEvent = form(CreateEventSchema, async (parsed) => {
 	const token = generateNanoID(21)
 	const hashedToken = await encodeSHA256(token)
 
-	const expiresAt = Temporal.Now.instant()
-		.add({ hours: 90 * 24 })
-		.toString()
-
 	const [event] = await db.transaction(async (db) => {
+		const options = deduplicate(
+			parsed.options.flatMap(([date, slots]) =>
+				slots.map(([startTime, endTime]) => ({
+					startsAt: startTime ? date.toPlainDateTime(startTime) : date,
+					endsAt: endTime ? date.toPlainDateTime(endTime) : undefined,
+				})),
+			),
+			(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
+		)
+
+		const expiresAt = getExpiryDate(options)
+
 		const [event] = await db
 			.insert(schema.events)
 			.values({
@@ -83,18 +107,9 @@ export const createEvent = form(CreateEventSchema, async (parsed) => {
 			})
 			.returning()
 
-		const uniqueOptions = deduplicate(
-			parsed.options.flatMap(([date, slots]) =>
-				slots.map(([startTime, endTime]) => ({
-					eventId: event.id,
-					startsAt: startTime ? date.toPlainDateTime(startTime) : date,
-					endsAt: endTime ? date.toPlainDateTime(endTime) : undefined,
-				})),
-			),
-			(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
-		)
-
-		await db.insert(schema.options).values(uniqueOptions)
+		await db
+			.insert(schema.options)
+			.values(options.map((option) => ({ ...option, eventId: event.id })))
 
 		setSessionCookie({
 			eventId: event.id,

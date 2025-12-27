@@ -1,3 +1,5 @@
+import type { Cookies } from '@sveltejs/kit'
+
 import { env } from '$env/dynamic/private'
 
 import { getRequestEvent } from '$app/server'
@@ -44,6 +46,13 @@ type SessionCookieOpts = {
 	token: string
 } & ({ isOrganizer: true } | { isOrganizer: false; respondentId: string })
 
+const COOKIE_OPTIONS = {
+	path: '/',
+	httpOnly: true,
+	sameSite: 'lax',
+	secure: !dev,
+} satisfies Parameters<Cookies['set']>[2]
+
 export function setSessionCookie(opts: SessionCookieOpts) {
 	const { cookies, locals } = getRequestEvent()
 
@@ -53,13 +62,7 @@ export function setSessionCookie(opts: SessionCookieOpts) {
 	v.assert(opts.isOrganizer ? OrganizerSessionKeySchema : RespondentSessionKeySchema, key)
 	v.assert(opts.isOrganizer ? OrganizerSessionValueSchema : RespondentSessionValueSchema, value)
 
-	cookies.set(key, value, {
-		path: '/',
-		httpOnly: true,
-		sameSite: 'lax',
-		secure: !dev,
-		expires: new Date(opts.expires),
-	})
+	cookies.set(key, value, { ...COOKIE_OPTIONS, expires: new Date(opts.expires) })
 
 	if (opts.isOrganizer)
 		locals.session.organizer.set(opts.eventId, {
@@ -79,12 +82,7 @@ export function deleteSessionCookie(opts: { isOrganizer: boolean; eventId: strin
 
 	const key = (opts.isOrganizer ? ORGANIZER_PREFIX : RESPONDENT_PREFIX) + opts.eventId
 
-	cookies.delete(key, {
-		path: '/',
-		httpOnly: true,
-		sameSite: 'lax',
-		secure: !dev,
-	})
+	cookies.delete(key, COOKIE_OPTIONS)
 
 	locals.session[opts.isOrganizer ? 'organizer' : 'respondent'].delete(opts.eventId)
 }

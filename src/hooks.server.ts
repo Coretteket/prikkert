@@ -1,5 +1,5 @@
 import { redirect, type Handle } from '@sveltejs/kit'
-import { sql, lt, inArray } from 'drizzle-orm'
+import { lt } from 'drizzle-orm'
 import { CronJob } from 'cron'
 
 import { building, dev } from '$app/environment'
@@ -22,17 +22,11 @@ export const init = async () => {
 		start: true,
 		onTick: async () => {
 			try {
-				const cutoff = Temporal.Now.zonedDateTimeISO(timeZone).subtract({ days: 90 })
-
-				const expiredSubquery = db
-					.select({ id: schema.options.eventId })
-					.from(schema.options)
-					.groupBy(schema.options.eventId)
-					.having(lt(sql`MAX(${schema.options.startsAt})`, cutoff.toInstant().toString()))
+				const now = Temporal.Now.instant().toString()
 
 				const result = await db
 					.delete(schema.events)
-					.where(inArray(schema.events.id, expiredSubquery))
+					.where(lt(schema.events.expiresAt, now))
 					.returning({ id: schema.events.id })
 
 				if (result.length > 0) console.log(`[CRON] Deleted ${result.length} expired events.`)
