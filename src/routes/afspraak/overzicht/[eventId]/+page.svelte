@@ -46,7 +46,8 @@
 
 
 	const event = $derived(await getEventResponses(page.params.eventId))
-	const eventLink = $derived(`${page.url.origin}/${event.id}`)
+	const eventLink = $derived(page.url.toString().replace("/afspraak/overzicht", ""))
+	// ^ for some reason `${page.url.origin}/${page.params.eventId}` doesn't work here
 </script>
 
 <h1 class="xs:text-3xl xs:font-medium mb-6 text-2xl font-[520]">{event.title}</h1>
