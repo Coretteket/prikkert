@@ -3,11 +3,14 @@ import { error } from '@sveltejs/kit'
 
 import { query, getRequestEvent } from '$app/server'
 
+import { validateSession } from '@/server/session/validation'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 import { omit } from '@/shared/utils'
 
 export const getEventForSession = query(v.string(), async (eventId) => {
+	const { locals } = getRequestEvent()
+
 	const event = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
 		columns: { createdAt: false, expiresAt: false },
@@ -21,7 +24,7 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 
 	if (!event) error(404, 'Afspraak niet gevonden')
 
-	const respondentId = getRequestEvent().locals.session.respondent.get(eventId)?.respondentId
+	const respondentId = locals.session.respondent.get(eventId)?.respondentId
 
 	const respondent = respondentId
 		? await db.query.respondents.findFirst({
@@ -31,8 +34,14 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 			})
 		: null
 
+	const isOrganizer = await validateSession(
+		locals.session.organizer.get(eventId),
+		event.organizerToken,
+	)
+
 	return {
 		...event,
+		isOrganizer,
 		responseName: respondent?.name ?? null,
 		options: event.options.map((option) => {
 			const response = respondent?.responses.find((response) => response.optionId === option.id)

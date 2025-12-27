@@ -18,14 +18,16 @@
 		if (isOrganizer) return
 		token = hash.get('organisator') ?? undefined
 	})
-
-	$effect(() => {
-		if (isOrganizer) token = undefined
-	})
 </script>
 
 <Dialog open={token !== undefined}>
-	<form {...validateOrganizerShareLink.for(id)}>
+	<form
+		{...validateOrganizerShareLink.for(id).enhance(async ({ submit }) => {
+			await submit()
+			goto(`/afspraak/overzicht/${id}`, { replaceState: true, noScroll: true })
+			token = undefined
+		})}
+	>
 		<input type="hidden" name="token" value={token} />
 
 		<p class="mb-4 text-lg font-medium">Afspraakbeheerder worden</p>

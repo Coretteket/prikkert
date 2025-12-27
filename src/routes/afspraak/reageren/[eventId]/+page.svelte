@@ -2,6 +2,7 @@
 	import Button from '@/components/button.svelte'
 	import { noReset } from '@/shared/utils'
 
+	import OrganizerReceiveDialog from '../../overzicht/[eventId]/organizer-receive-dialog.svelte'
 	import { submitAvailability } from './action.remote'
 	import { getEventForSession } from './data.remote'
 	import OptionInput from './option-input.svelte'
@@ -111,3 +112,6 @@
 		Beschikbaarheid opslaan
 	</Button>
 </form>
+
+
+	<OrganizerReceiveDialog id={event.id} isOrganizer={event.isOrganizer} />
