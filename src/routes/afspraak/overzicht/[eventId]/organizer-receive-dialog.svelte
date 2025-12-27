@@ -14,6 +14,7 @@
 
 	onMount(() => {
 		const hash = new URLSearchParams(location.hash.slice(1))
+		if (hash.has('organisator') === false) return
 		goto(`/afspraak/overzicht/${id}`, { replaceState: true, noScroll: true })
 		if (isOrganizer) return
 		token = hash.get('organisator') ?? undefined
