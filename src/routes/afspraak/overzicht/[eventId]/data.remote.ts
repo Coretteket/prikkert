@@ -23,6 +23,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 			description: true,
 			organizerName: true,
 			organizerToken: true,
+			hideResponses: true,
 		},
 		with: {
 			options: {
@@ -51,6 +52,8 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 		event.options.flatMap((option) => option.responses.map((r) => r.respondent.id)),
 	).size
 
+	const shouldHideResponses = event.hideResponses && !isOrganizer
+
 	return {
 		...omit(event, 'organizerToken'),
 		numberOfResponses,
@@ -58,7 +61,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 		isOrganizer,
 		options: event.options.map((option) => ({
 			...option,
-			responses: option.responses
+			responses: (shouldHideResponses ? [] : option.responses)
 				.toSorted((a, b) => {
 					const availability = order[a.availability] - order[b.availability]
 					if (availability !== 0) return availability
