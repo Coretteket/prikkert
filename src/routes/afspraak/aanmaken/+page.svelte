@@ -82,6 +82,7 @@
 					variant="ghost"
 					size="icon"
 					class="-my-2"
+					label="Naam verbergen"
 					onclick={() => (showName = false)}
 				>
 					<Icon icon="tabler--x" class="size-5" />
@@ -136,6 +137,7 @@
 					variant="ghost"
 					size="icon"
 					class="-my-2"
+					label="Omschrijving verbergen"
 					onclick={() => (showDescription = false)}
 				>
 					<Icon icon="tabler--x" class="size-5" />
@@ -187,7 +189,13 @@
 						(optioneel)
 					</span>
 				</span>
-				<Button type="button" variant="ghost" size="icon" onclick={() => (showTimes = false)}>
+				<Button
+					type="button"
+					variant="ghost"
+					size="icon"
+					label="Tijden verbergen"
+					onclick={() => (showTimes = false)}
+				>
 					<Icon icon="tabler--x" class="size-5" />
 				</Button>
 			</div>
@@ -237,7 +245,13 @@
 						(optioneel)
 					</span>
 				</span>
-				<Button type="button" variant="ghost" size="icon" onclick={() => (showSettings = false)}>
+				<Button
+					type="button"
+					variant="ghost"
+					size="icon"
+					label="Instellingen verbergen"
+					onclick={() => (showSettings = false)}
+				>
 					<Icon icon="tabler--x" class="size-5" />
 				</Button>
 			</div>

@@ -44,9 +44,8 @@
 		middleware: [floating.offset({ mainAxis: 8 }), floating.shift(), floating.flip()],
 	})
 
-
 	const event = $derived(await getEventResponses(page.params.eventId))
-	const eventLink = $derived(page.url.toString().replace("/afspraak/overzicht", ""))
+	const eventLink = $derived(page.url.toString().replace('/afspraak/overzicht', ''))
 	// ^ for some reason `${page.url.origin}/${page.params.eventId}` doesn't work here
 </script>
 
@@ -261,8 +260,9 @@
 				</select>
 
 				<Button
-					title={allOpened ? 'Verberg alle reacties' : 'Toon alle reacties'}
 					size="icon"
+					label={allOpened ? 'Verberg alle reacties' : 'Toon alle reacties'}
+					title={allOpened ? 'Verberg alle reacties' : 'Toon alle reacties'}
 					variant="secondary"
 					onclick={() => (allOpened = !allOpened)}
 					class="ml-auto"

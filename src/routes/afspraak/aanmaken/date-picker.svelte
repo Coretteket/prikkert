@@ -102,6 +102,7 @@
 							type="button"
 							variant="ghost"
 							size="icon"
+							label="Vorige maand"
 							onclick={() => (view = view.subtract({ months: 1 }))}
 							disabled={isFirstMonth}
 							class={['disabled:opacity-40', index === months.length - 1 && 'sm:invisible']}
@@ -115,6 +116,7 @@
 							type="button"
 							variant="ghost"
 							size="icon"
+							label="Volgende maand"
 							onclick={() => (view = view.add({ months: 1 }))}
 							class={[index === 0 && 'sm:invisible']}
 						>

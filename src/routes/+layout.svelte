@@ -36,18 +36,24 @@
 		</a>
 
 		<div class="flex gap-3">
-			<Button size="icon" onclick={() => toggleTheme()}>
+			<Button size="icon" label="Thema wisselen" onclick={() => toggleTheme()}>
 				<Icon icon="tabler--sun" class="size-5 not-dark:hidden" />
 				<Icon icon="tabler--moon" class="size-5 dark:hidden" />
 			</Button>
 			{#if await hasSession()}
 				<Button class="max-xs:hidden" as="link" href="/afspraken">Jouw afspraken</Button>
-				<Button class="xs:hidden" size="icon" as="link" href="/afspraken">
+				<Button class="xs:hidden" size="icon" label="Jouw afspraken" as="link" href="/afspraken">
 					<Icon icon="tabler--calendar-user" class="size-5" />
 				</Button>
 			{:else}
 				<Button class="max-xs:hidden" as="link" href="/afspraak/aanmaken">Afspraak aanmaken</Button>
-				<Button class="xs:hidden" size="icon" as="link" href="/afspraak/aanmaken">
+				<Button
+					class="xs:hidden"
+					size="icon"
+					label="Afspraak aanmaken"
+					as="link"
+					href="/afspraak/aanmaken"
+				>
 					<Icon icon="tabler--calendar-plus" class="size-5" />
 				</Button>
 			{/if}

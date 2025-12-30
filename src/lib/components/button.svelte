@@ -8,11 +8,21 @@
 		as?: T
 		children?: Snippet
 		class?: ClassValue
-	} & VariantProps<typeof buttonVariants>
+	}
 
-	type AsButtonProps = Omit<HTMLButtonAttributes, keyof BaseProps>
-	type AsLinkProps = Omit<HTMLAnchorAttributes, keyof BaseProps>
-	type Props = BaseProps & (T extends 'button' ? AsButtonProps : AsLinkProps)
+	type Variants = VariantProps<typeof buttonVariants>
+
+	type SizeProps =
+		| { size: 'icon'; label: string }
+		| { size?: Exclude<Variants['size'], 'icon'>; label?: string }
+
+	type AsButtonProps = Omit<HTMLButtonAttributes, keyof BaseProps | 'size' | 'label'>
+	type AsLinkProps = Omit<HTMLAnchorAttributes, keyof BaseProps | 'size' | 'label'>
+
+	type Props = BaseProps &
+		Omit<Variants, 'size'> &
+		SizeProps &
+		(T extends 'button' ? AsButtonProps : AsLinkProps)
 
 	const buttonVariants = cva({
 		base: 'w-fit flex items-center gap-2 motion-safe:transition not-disabled:cursor-pointer',
@@ -41,18 +51,28 @@
 		},
 	})
 
-	let { as, children, class: className, variant, size, ...rest }: Props = $props()
+	let { as, children, class: className, variant, size, label, ...rest }: Props = $props()
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const getRestProps = () => rest as any
 </script>
 
 {#if as === 'link'}
-	<a {...getRestProps()} class={buttonVariants({ variant, size, className })}>
+	<a
+		title={label}
+		{...getRestProps()}
+		class={buttonVariants({ variant, size, className })}
+		aria-label={label}
+	>
 		{@render children?.()}
 	</a>
 {:else}
-	<button {...getRestProps()} class={buttonVariants({ variant, size, className })}>
+	<button
+		title={label}
+		{...getRestProps()}
+		class={buttonVariants({ variant, size, className })}
+		aria-label={label}
+	>
 		{@render children?.()}
 	</button>
 {/if}
