@@ -4,12 +4,12 @@
 	import { cubicInOut } from 'svelte/easing'
 	import { fade } from 'svelte/transition'
 
+	import { emptySlot, type Options, type PartialSlot } from '@/shared/event-types'
 	import { Popover } from '@/shared/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
 
-	import { emptySlot, type Options, type Slot } from './types'
 	import TimeInput from './time-input.svelte'
 
 	type Props = { date: string; options: Options }
@@ -18,7 +18,7 @@
 
 	const slots = $derived(options.get(date) ?? [])
 
-	function setSlot(index: number, slot: Slot) {
+	function setSlot(index: number, slot: PartialSlot) {
 		const updated = slots.map((s, i) => (i === index ? slot : s))
 		options.set(date, updated)
 	}
@@ -61,7 +61,7 @@
 					<div
 						{@attach (node) => popover.floatingHandler(node)}
 						{...popover.floatingAttrs}
-						class="dark:bg-neutral-850 dark:ring-neutral-850 grid min-w-40 rounded-lg border bg-white p-2 text-sm text-neutral-700 ring-4 ring-white dark:text-neutral-300"
+						class="grid min-w-40 rounded-lg border bg-white p-2 text-sm text-neutral-700 ring-4 ring-white dark:bg-neutral-850 dark:text-neutral-300 dark:ring-neutral-850"
 						transition:fade={{
 							duration: prefersReducedMotion.current ? 0 : 100,
 							easing: cubicInOut,

@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { tick } from 'svelte'
 
+	import { emptySlot, type Options } from '@/shared/event-types'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
-
-	import { emptySlot, type Options } from './types'
 
 	let {
 		options,
@@ -95,7 +94,7 @@
 		{#each months as month, index (month)}
 			<div class="flex justify-center">
 				<div
-					class={['xs:p-5 @container w-full max-w-110 shrink-0 p-4', index > 0 && 'max-sm:hidden']}
+					class={['@container w-full max-w-110 shrink-0 p-4 xs:p-5', index > 0 && 'max-sm:hidden']}
 				>
 					<div class="mb-3 flex items-center justify-between">
 						<Button
@@ -154,7 +153,7 @@
 												aria-pressed={options.has(date.toString())}
 												data-in-month={inMonth}
 												disabled={!inMonth || isPast}
-												class="peer squircle flex aspect-square items-center justify-center text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-aria-pressed:not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-900 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:not-disabled:hover:bg-pink-800 motion-safe:transition-all motion-safe:duration-100 dark:text-neutral-300 not-aria-pressed:not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:dark:not-disabled:hover:bg-pink-700"
+												class="peer flex aspect-square items-center justify-center squircle text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-aria-pressed:not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-900 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:not-disabled:hover:bg-pink-800 motion-safe:transition-all motion-safe:duration-100 dark:text-neutral-300 not-aria-pressed:not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:dark:not-disabled:hover:bg-pink-700"
 											>
 												{date.day}
 											</button>
