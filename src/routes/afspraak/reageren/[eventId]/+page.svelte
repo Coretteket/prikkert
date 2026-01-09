@@ -33,9 +33,9 @@
 	const event = $derived(await getEventForSession(params.eventId))
 </script>
 
-<h1 class="xs:text-3xl xs:font-medium mb-6 text-2xl font-[520]">{event.title}</h1>
+<h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
 
-<p class="xs:text-lg mb-10 text-[17px] text-balance text-neutral-700 dark:text-neutral-300">
+<p class="mb-10 text-[17px] text-balance text-neutral-700 xs:text-lg dark:text-neutral-300">
 	Je bent
 	{#if event.organizerName}
 		door
@@ -113,5 +113,4 @@
 	</Button>
 </form>
 
-
-	<OrganizerReceiveDialog id={event.id} isOrganizer={event.isOrganizer} />
+<OrganizerReceiveDialog id={event.id} isOrganizer={event.isOrganizer} />

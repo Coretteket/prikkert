@@ -7,7 +7,7 @@
 
 <header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">
 	<h2
-		class="xs:text-[2.5rem] mb-8 text-center text-[2.2rem] leading-[1.2] font-[650] text-neutral-900 sm:text-5xl dark:text-neutral-100"
+		class="mb-8 text-center text-[2.2rem] leading-[1.2] font-[650] text-neutral-900 xs:text-[2.5rem] sm:text-5xl dark:text-neutral-100"
 	>
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
@@ -27,7 +27,7 @@
 </header>
 
 <section class="mb-20">
-	<h3 class="xs:text-2xl mb-4 text-center text-xl font-semibold">Waarom Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h3>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -39,7 +39,7 @@
 				class="rounded-lg border from-neutral-900 to-pink-700/5 px-7 py-6.5 dark:bg-linear-to-tl"
 			>
 				<div class="mb-4 flex items-center gap-4">
-					<div class="squircle flex w-fit bg-pink-500/30 p-2.5 text-pink-600 dark:text-pink-100">
+					<div class="flex w-fit squircle bg-pink-500/30 p-2.5 text-pink-600 dark:text-pink-100">
 						<Icon icon={promise.icon} class="size-6" />
 					</div>
 					<h4 class="text-xl font-[550] text-neutral-800 dark:text-neutral-200">
@@ -56,7 +56,7 @@
 </section>
 
 <section class="mb-20">
-	<h3 class="xs:text-2xl mb-4 text-center text-xl font-semibold">Hoe gebruik je Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h3>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -65,7 +65,7 @@
 	<div class="mx-auto max-w-130">
 		{#each steps as step, i}
 			<div class="mb-8 flex items-start gap-4">
-				<div class="squircle flex aspect-square size-8 items-center justify-center bg-pink-500/30">
+				<div class="flex aspect-square size-8 items-center justify-center squircle bg-pink-500/30">
 					<p class="font-semibold text-pink-700 dark:text-pink-100">
 						{i + 1}
 					</p>
@@ -83,7 +83,7 @@
 </section>
 
 <section>
-	<h3 class="xs:text-2xl mb-4 text-center text-xl font-semibold" id="faq">Hoe werkt Prikkert?</h3>
+	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl" id="faq">Hoe werkt Prikkert?</h3>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>

@@ -24,12 +24,12 @@
 <Background />
 
 <div
-	class="dark:bg-neutral-850 dark:ring-neutral-850 bg-white ring-6 ring-white lg:mx-auto lg:my-8 lg:max-w-4xl lg:rounded-lg lg:border lg:p-4 lg:pb-2"
+	class="bg-white ring-6 ring-white lg:mx-auto lg:my-8 lg:max-w-4xl lg:rounded-lg lg:border lg:p-4 lg:pb-2 dark:bg-neutral-850 dark:ring-neutral-850"
 >
 	<nav class="flex items-center justify-between px-6 py-4">
 		<a
 			href="/"
-			class="squircle flex items-center gap-3 text-xl font-[520] text-neutral-900 sm:text-[1.4rem] dark:text-neutral-100"
+			class="flex items-center gap-3 squircle text-xl font-[520] text-neutral-900 sm:text-[1.4rem] dark:text-neutral-100"
 		>
 			<img src={icon} width={36} height={36} alt="" />
 			<span>Prikkert</span>
@@ -76,7 +76,7 @@
 		</a>
 
 		<div
-			class="max-xs:flex-col flex flex-wrap gap-x-8 gap-y-3 text-neutral-600/80 sm:justify-end dark:text-neutral-400/80"
+			class="flex flex-wrap gap-x-8 gap-y-3 text-neutral-600/80 max-xs:flex-col sm:justify-end dark:text-neutral-400/80"
 		>
 			<a href="/privacy" class="hover:underline">Privacy</a>
 			<a href="/voorwaarden" class="hover:underline">Voorwaarden</a>

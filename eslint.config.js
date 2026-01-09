@@ -24,7 +24,6 @@ export default defineConfig(
 			'unicorn/prevent-abbreviations': 'off',
 			'unicorn/prefer-spread': 'off',
 			'unicorn/no-null': 'off',
-
 		},
 	},
 	prettier,

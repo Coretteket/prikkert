@@ -49,9 +49,9 @@
 	// ^ for some reason `${page.url.origin}/${page.params.eventId}` doesn't work here
 </script>
 
-<h1 class="xs:text-3xl xs:font-medium mb-6 text-2xl font-[520]">{event.title}</h1>
+<h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
 
-<p class="xs:text-lg mb-6 text-[17px] text-balance text-neutral-700 dark:text-neutral-300">
+<p class="mb-6 text-[17px] text-balance text-neutral-700 xs:text-lg dark:text-neutral-300">
 	{#if event.isOrganizer}
 		Je hebt mensen uitgenodigd om hun beschikbaarheid in te vullen.
 	{:else if event.hasResponded}
@@ -101,7 +101,7 @@
 			<div
 				{@attach (node) => popover.floatingHandler(node)}
 				{...popover.floatingAttrs}
-				class="dark:bg-neutral-850 dark:ring-neutral-850 grid min-w-40 gap-1 rounded-lg border bg-white px-1.5 py-2 text-neutral-700 ring-4 ring-white dark:text-neutral-300"
+				class="grid min-w-40 gap-1 rounded-lg border bg-white px-1.5 py-2 text-neutral-700 ring-4 ring-white dark:bg-neutral-850 dark:text-neutral-300 dark:ring-neutral-850"
 				transition:fade={{
 					duration: prefersReducedMotion.current ? 0 : 100,
 					easing: cubicInOut,
