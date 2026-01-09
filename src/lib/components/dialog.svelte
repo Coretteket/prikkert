@@ -14,18 +14,11 @@
 		if (open) element?.showModal()
 		else element?.close()
 	})
-
-	const handleClose = () => (open = false)
-
-	function dialogHandler(node: HTMLDialogElement) {
-		node.addEventListener('close', handleClose)
-		return () => node.removeEventListener('close', handleClose)
-	}
 </script>
 
 <dialog
 	bind:this={element}
-	{@attach dialogHandler}
+	onclose={() => (open = false)}
 	{...rest}
 	class={[
 		'dark:bg-neutral-850 fixed top-1/2 left-1/2 w-full -translate-1/2 rounded-lg border bg-white p-5 backdrop:bg-black/50 backdrop:backdrop-blur-[2px] sm:max-w-md sm:p-6',
