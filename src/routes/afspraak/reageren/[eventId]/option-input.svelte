@@ -17,13 +17,21 @@
 	let showNote = $derived(Boolean(option.response?.note))
 	let noteValue = $derived(option.response?.note ?? '')
 
+	const fomattedOption = $derived(formatDateTimeOption(option))
 	const availabilityName = $derived(`availability.option_${option.id}`)
 	const noteName = $derived(`note.option_${option.id}`)
 </script>
 
 <div class="py-4 text-neutral-800 dark:text-neutral-200">
-	<div class="grid items-center gap-x-6 gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
-		<p class="max-xs:w-60 md:w-60">{formatDateTimeOption(option)}</p>
+	<div class="gap-x-6· grid items-center gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		<p>
+			{fomattedOption.date}{#if fomattedOption.time},
+				<span class="whitespace-nowrap">
+					{fomattedOption.time}
+				</span>
+			{/if}
+		</p>
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
 				<RadioButton

@@ -25,15 +25,15 @@ export const formatOptions = {
 export function formatDateTimeOption({
 	startsAt,
 	endsAt,
-}: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>): string {
+}: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>) {
 	const date = startsAt.toLocaleString('nl', formatOptions.date)
-	if (startsAt instanceof Temporal.PlainDate) return date
+	if (startsAt instanceof Temporal.PlainDate) return { date }
 
 	const timeStart = startsAt.toLocaleString('nl', formatOptions.time)
-	if (!endsAt || startsAt.equals(endsAt)) return `${date}, ${timeStart}`
+	if (!endsAt || startsAt.equals(endsAt)) return { date, time: timeStart }
 
 	const timeEnd = endsAt.toLocaleString('nl', formatOptions.time)
-	return `${date}, ${timeStart} – ${timeEnd}`
+	return { date, time: `${timeStart} - ${timeEnd}` }
 }
 
 export function formatDateTimeRange(
