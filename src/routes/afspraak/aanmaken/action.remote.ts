@@ -19,7 +19,7 @@ export const createEvent = form(EventFormSchema, async (parsed) => {
 			parsed.options.flatMap(([date, slots]) =>
 				slots.map(([startTime, endTime]) => ({
 					startsAt: startTime ? date.toPlainDateTime(startTime) : date,
-					endsAt: endTime ? date.toPlainDateTime(endTime) : undefined,
+					endsAt: endTime ? date.toPlainDateTime(endTime) : null,
 				})),
 			),
 			(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
