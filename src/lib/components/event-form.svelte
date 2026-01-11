@@ -3,8 +3,7 @@
 
 	import { SvelteMap } from 'svelte/reactivity'
 
-	import type { Options, PartialSlot } from '@/shared/event-types'
-
+	import { emptySlot, type Options, type PartialSlot } from '@/shared/event-types'
 	import Button from '@/components/button.svelte'
 	import Dialog from '@/components/dialog.svelte'
 	import { Temporal } from '@/shared/temporal'
@@ -26,7 +25,6 @@
 	let {
 		form,
 		options = $bindable(),
-		initialOptions,
 		initialValues,
 		isEditMode = false,
 		hasResponses = false,
@@ -34,8 +32,7 @@
 	}: {
 		form: Omit<RemoteForm<FormFieldInput, unknown>, 'for'>
 		options: Options
-		initialOptions?: Options
-		initialValues?: FormFieldInput
+		initialValues?: Omit<FormFieldInput, 'options'> & { options: Map<string, Array<PartialSlot>> }
 		isEditMode?: boolean
 		hasResponses?: boolean
 		submitLabel?: string
@@ -44,17 +41,15 @@
 	let showName = $derived(Boolean(initialValues?.organizerName))
 	let showDescription = $derived(Boolean(initialValues?.description))
 	let showTimes = $derived(
-		Array.from(initialOptions?.values() ?? []).some((slots) => slots.some((s) => s[0] || s[1])),
+		Array.from(initialValues?.options.values() ?? []).some((slots) =>
+			slots.some((s) => s[0] || s[1]),
+		),
 	)
 	let showSettings = $derived(
 		Boolean(initialValues?.hideResponses) || Boolean(initialValues?.allowAnonymous),
 	)
+	const hideResponsesLocked = $derived(hasResponses && Boolean(initialValues?.hideResponses))
 
-	let showConfirmation = $state(false)
-	let formElement: HTMLFormElement | undefined = $state()
-	let confirmed = $state(false)
-
-	// Workaround for scrolling to issues
 	const issues = $derived(form.fields.allIssues() ?? [])
 
 	$effect(() => {
@@ -84,10 +79,10 @@
 		return aStart === bStart && aEnd === bEnd
 	}
 
-	function checkIfOptionsRemoved() {
-		if (!initialOptions) return false
+	function hasRemovedOptions() {
+		if (!initialValues?.options) return false
 
-		for (const [date, slots] of initialOptions) {
+		for (const [date, slots] of initialValues.options) {
 			if (!options.has(date)) return true
 			const currentSlots = options.get(date)!
 
@@ -99,28 +94,29 @@
 		return false
 	}
 
-	function handleSubmit(e: Event) {
-		if (confirmed) return
-		if (!isEditMode) return
+	let showConfirmation = $state(false)
+	let confirm: ((value: boolean) => void) | undefined = $state()
 
-		if (checkIfOptionsRemoved()) {
-			e.preventDefault()
+	function untilConfirmed() {
+		const hasRemoved = hasRemovedOptions()
+		if (!hasRemoved || !hasResponses) return Promise.resolve(true)
+		return new Promise<boolean>((resolve) => {
+			confirm = resolve
 			showConfirmation = true
-		}
+		})
 	}
-
-	function confirmSubmit() {
-		confirmed = true
-		setTimeout(() => formElement?.requestSubmit(), 0)
-		showConfirmation = false
-	}
-
-	const hideResponsesLocked = $derived(hasResponses && Boolean(initialValues?.hideResponses))
-
-	$inspect(JSON.stringify(Array.from(options.entries())))
 </script>
 
-<form {...form.enhance((form) => form.submit())} bind:this={formElement} onsubmit={handleSubmit}>
+<form
+	{...form.enhance(async (form) => {
+		if (isEditMode === false) form.submit()
+		else {
+			const confirmed = await untilConfirmed()
+			if (!confirmed) return
+			form.submit()
+		}
+	})}
+>
 	<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
 	{#if typeof form.fields['id'].value() === 'string' || typeof form.fields['id'].value() === 'number'}
 		<input type="hidden" name="id" value={String(form.fields['id'].value())} />
@@ -280,7 +276,10 @@
 					variant="ghost"
 					size="icon"
 					label="Tijden verbergen"
-					onclick={() => (showTimes = false)}
+					onclick={() => {
+						showTimes = false
+						for (const date of options.keys()) options.set(date, [emptySlot])
+					}}
 				>
 					<Icon icon="tabler--x" class="size-5" />
 				</Button>
@@ -389,15 +388,31 @@
 	<div class="space-y-4">
 		<h2 class="text-xl font-medium">Opties verwijderen?</h2>
 		<p class="text-neutral-600 dark:text-neutral-400">
-			Je hebt een of meerdere datums of tijden verwijderd. De beschikbaarheid van deelnemers voor
-			deze opties gaat verloren.
+			Je hebt een of meerdere datums of tijden verwijderd of aangepast. De beschikbaarheid van
+			deelnemers voor deze opties gaat verloren.
 		</p>
 		<p class="text-neutral-600 dark:text-neutral-400">
 			Weet je zeker dat je deze wijzigingen wilt opslaan?
 		</p>
 		<div class="flex justify-end gap-3 pt-4">
-			<Button variant="secondary" onclick={() => (showConfirmation = false)}>Annuleren</Button>
-			<Button variant="primary" onclick={confirmSubmit}>Opslaan</Button>
+			<Button
+				variant="secondary"
+				onclick={() => {
+					confirm?.(false)
+					showConfirmation = false
+				}}
+			>
+				Annuleren
+			</Button>
+			<Button
+				variant="primary"
+				onclick={() => {
+					confirm?.(true)
+					showConfirmation = false
+				}}
+			>
+				Opslaan
+			</Button>
 		</div>
 	</div>
 </Dialog>

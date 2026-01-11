@@ -2,7 +2,7 @@
 	import type { HTMLDialogAttributes } from 'svelte/elements'
 	import type { Snippet } from 'svelte'
 
-	let element: HTMLDialogElement | undefined = $state()
+	let element: HTMLDialogElement | undefined // weird bug if this is $state()
 
 	let {
 		open = $bindable(false),

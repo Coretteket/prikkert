@@ -1,3 +1,7 @@
+import type { InferSelectModel } from 'drizzle-orm'
+
+import type { schema } from '@/server/db'
+
 import { Temporal } from '@/shared/temporal'
 import * as v from '@/server/validation'
 
@@ -8,6 +12,7 @@ export const OptionTimeSchema = v.union(
 			v.check(([a, b]) => !b || Temporal.PlainTime.compare(a, b) < 1, 'Ongeldig tijdslot.'),
 		),
 		v.pipe(v.array(v.never()), v.length(0)),
+		v.pipe(v.array(v.null()), v.length(2)),
 	],
 	'Ongeldig tijdslot.',
 )
@@ -53,10 +58,7 @@ export const EventFormSchema = v.strictObject({
 
 // Expires 90 days after the latest date option
 export const getExpiryDate = (
-	options: {
-		startsAt: Temporal.PlainDate | Temporal.PlainDateTime
-		endsAt: Temporal.PlainDateTime | undefined
-	}[],
+	options: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>[],
 ) => {
 	let latestOption = Temporal.Now.plainDateTimeISO() as (typeof options)[number]['startsAt']
 

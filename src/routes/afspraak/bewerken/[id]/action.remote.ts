@@ -1,5 +1,5 @@
+import { eq, inArray, type InferSelectModel } from 'drizzle-orm'
 import { error, redirect } from '@sveltejs/kit'
-import { eq, inArray } from 'drizzle-orm'
 
 import { form, getRequestEvent } from '$app/server'
 
@@ -8,10 +8,32 @@ import { validateSession } from '@/server/session/validation'
 import { deduplicate } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
+type Option = Pick<
+	InferSelectModel<typeof schema.options>,
+	'id' | 'eventId' | 'startsAt' | 'endsAt'
+>
+
+const getOptionKey = (option: Pick<Option, 'startsAt' | 'endsAt'>) =>
+	`${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`
+
+function getOptionsDifference(existingOptions: Option[], newOptions: Omit<Option, 'id'>[]) {
+	const existingOptionMap = new Map(existingOptions.map((option) => [getOptionKey(option), option]))
+	const newOptionMap = new Map(newOptions.map((option) => [getOptionKey(option), option]))
+
+	const toDelete = Array.from(existingOptionMap.values()).flatMap((option) =>
+		newOptionMap.has(getOptionKey(option)) ? [] : [option.id],
+	)
+
+	const toInsert = Array.from(newOptionMap.values()).filter(
+		(option) => !existingOptionMap.has(getOptionKey(option)),
+	)
+
+	return { toInsert, toDelete }
+}
+
 export const updateEvent = form(EventFormSchema, async (parsed) => {
 	const { locals } = getRequestEvent()
 
-	// parsed.id is string for edit
 	if (typeof parsed.id !== 'string') error(400, 'Ongeldig ID')
 	const eventId = parsed.id
 
@@ -20,7 +42,6 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 		error(403, 'Je bent niet de organisator van deze afspraak.')
 	}
 
-	// Fetch existing event to check privacy constraints
 	const existingEvent = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
 		with: { options: { with: { responses: true } } },
@@ -30,22 +51,18 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 
 	const hasResponses = existingEvent.options.some((o) => o.responses.length > 0)
 
-	// Validate privacy constraints
 	if (hasResponses && existingEvent.hideResponses && !parsed.hideResponses) {
-		// Trying to make public when it was private
 		error(400, 'Je kunt de reacties niet openbaar maken nadat er gereageerd is.')
 	}
 
-	// Prepare options
-	const newOptionsList = deduplicate(
+	const newOptions = deduplicate(
 		parsed.options.flatMap(([date, slots]) =>
 			slots.map((slot) => {
-				// slot is [start, end] or []
 				const startTime = slot.length > 0 ? slot[0] : undefined
 				const endTime = slot.length > 0 ? slot[1] : undefined
 				return {
 					startsAt: startTime ? date.toPlainDateTime(startTime) : date,
-					endsAt: endTime ? date.toPlainDateTime(endTime) : undefined,
+					endsAt: endTime ? date.toPlainDateTime(endTime) : null,
 					eventId,
 				}
 			}),
@@ -53,10 +70,19 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 		(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
 	)
 
-	const expiresAt = getExpiryDate(newOptionsList)
+	const expiresAt = getExpiryDate(newOptions)
+
+	const { toInsert, toDelete } = getOptionsDifference(existingEvent.options, newOptions)
+
+	console.log({
+		parsed: JSON.stringify(parsed.options),
+		existingEvent: JSON.stringify(existingEvent.options),
+		newOptions: JSON.stringify(newOptions),
+		toInsert,
+		toDelete,
+	})
 
 	await db.transaction(async (db) => {
-		// Update event details
 		await db
 			.update(schema.events)
 			.set({
@@ -69,41 +95,12 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 			})
 			.where(eq(schema.events.id, eventId))
 
-		// Sync options
-		const existingOptionsMap = new Map(
-			existingEvent.options.map((o) => [
-				`${o.startsAt.toString()}-${o.endsAt?.toString() ?? 'null'}`,
-				o,
-			]),
-		)
-
-		const newOptionsSet = new Set<string>()
-		const optionsToInsert: typeof newOptionsList = []
-
-		for (const opt of newOptionsList) {
-			const key = `${opt.startsAt.toString()}-${opt.endsAt?.toString() ?? 'null'}`
-			newOptionsSet.add(key)
-			if (!existingOptionsMap.has(key)) {
-				optionsToInsert.push(opt)
-			}
+		if (toDelete.length > 0) {
+			await db.delete(schema.options).where(inArray(schema.options.id, toDelete))
 		}
 
-		const optionsToDelete = existingEvent.options.filter((o) => {
-			const key = `${o.startsAt.toString()}-${o.endsAt?.toString() ?? 'null'}`
-			return !newOptionsSet.has(key)
-		})
-
-		if (optionsToDelete.length > 0) {
-			await db.delete(schema.options).where(
-				inArray(
-					schema.options.id,
-					optionsToDelete.map((o) => o.id),
-				),
-			)
-		}
-
-		if (optionsToInsert.length > 0) {
-			await db.insert(schema.options).values(optionsToInsert)
+		if (toInsert.length > 0) {
+			await db.insert(schema.options).values(toInsert)
 		}
 	})
 

@@ -281,6 +281,7 @@
 <div class="block divide-y overflow-hidden rounded-lg border">
 	{#each sortOptions(event.options, sortBy) as option (option.id)}
 		{@const hasResponses = option.responses.length > 0}
+		{@const formattedOption = formatDateTimeOption(option)}
 
 		<!-- animate:flip needs to be top-level of await -->
 		<svelte:element
@@ -293,14 +294,22 @@
 		>
 			{#if option.responses.length === 0}
 				<p class="font-[450] text-neutral-800 dark:text-neutral-200">
-					{formatDateTimeOption(option)}
+					{formattedOption.date}{#if formattedOption.time},
+						<span class="whitespace-nowrap">
+							{formattedOption.time}
+						</span>
+					{/if}
 				</p>
 				<p class="text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
 			{:else}
 				<summary class="flex cursor-pointer flex-col px-5 pt-4 pb-4.5">
 					<div class="mb-2.5 flex w-full items-center justify-between">
 						<p class="font-[450] text-neutral-800 dark:text-neutral-200">
-							{formatDateTimeOption(option)}
+							{formattedOption.date}{#if formattedOption.time},
+								<span class="whitespace-nowrap">
+									{formattedOption.time}
+								</span>
+							{/if}
 						</p>
 
 						<Icon

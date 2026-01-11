@@ -3,8 +3,7 @@
 
 	import { page } from '$app/state'
 
-	import type { Options } from '@/shared/event-types'
-
+	import { emptySlot, type PartialSlot } from '@/shared/event-types'
 	import EventForm from '@/components/event-form.svelte'
 	import { Temporal } from '@/shared/temporal'
 
@@ -13,36 +12,47 @@
 
 	const data = $derived(await getEditEvent(page.params.id!))
 
-	const revivedOptionsEntries = $derived.by(() => {
-		return data.formData.options.map(([dateStr, slots]) => {
-			const revivedSlots = slots.map((slot) => {
-				if (slot.length === 0) return []
-				const start = slot[0] ? Temporal.PlainTime.from(slot[0]) : undefined
-				const end = slot[1] ? Temporal.PlainTime.from(slot[1]) : undefined
-				return [start, end]
-			})
-			return [dateStr, revivedSlots] as const
-		})
+	const form = $derived(updateEvent.for(data.formData.id))
+
+	const options = $derived.by(() => {
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
+		let map = new Map<string, Array<PartialSlot>>()
+
+		for (const option of data.formData.options) {
+			const date = Temporal.PlainDate.from(option.startsAt).toString()
+
+			if (
+				option.startsAt instanceof Temporal.PlainDateTime &&
+				option.endsAt instanceof Temporal.PlainDateTime
+			) {
+				const startsAt = Temporal.PlainTime.from(option.startsAt)
+				const endsAt = Temporal.PlainTime.from(option.endsAt)
+				if (map.has(date)) map.get(date)!.push([startsAt, endsAt])
+				else map.set(date, [[startsAt, endsAt]])
+			} else if (option.startsAt instanceof Temporal.PlainDateTime) {
+				const startsAt = Temporal.PlainTime.from(option.startsAt)
+				if (map.has(date)) map.get(date)!.push([startsAt])
+				else map.set(date, [[startsAt]])
+			} else {
+				map.set(date, [emptySlot])
+			}
+		}
+
+		return map
 	})
 
-	const initialValues = $derived({
-		...data.formData,
-		options: JSON.stringify(data.formData.options),
-	})
+	const initialValues = $derived({ ...data.formData, options })
 
-	const form = $derived(updateEvent.for(initialValues.id))
-	const options = $derived(new SvelteMap(revivedOptionsEntries) as Options)
-	const initialOptions = $derived(new SvelteMap(revivedOptionsEntries) as Options)
+	const editableOptions = $derived(new SvelteMap(options))
 </script>
 
 <h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">Afspraak bewerken</h1>
 
 <EventForm
 	{form}
-	{options}
-	{initialOptions}
 	{initialValues}
+	options={editableOptions}
 	isEditMode={true}
 	hasResponses={data.hasResponses}
-	submitLabel="Afspraak bijwerken"
+	submitLabel="Afspraak bewerken"
 />
