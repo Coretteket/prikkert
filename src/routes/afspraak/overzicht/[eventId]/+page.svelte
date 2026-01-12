@@ -287,7 +287,7 @@
 		<svelte:element
 			this={hasResponses ? 'details' : 'div'}
 			class={hasResponses
-				? 'group has-hover:bg-neutral-50 motion-safe:transition-colors dark:has-hover:bg-neutral-800/50'
+				? 'group has-[summary:hover]:bg-neutral-50 motion-safe:transition-colors dark:has-[summary:hover]:bg-neutral-800/50'
 				: 'flex justify-between gap-1 p-5 max-sm:flex-col'}
 			open={hasResponses ? allOpened : undefined}
 			animate:flip={{ duration: 100 }}
