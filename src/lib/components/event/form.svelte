@@ -349,7 +349,11 @@
 						class="my-0.75 size-4.5 shrink-0 cursor-pointer accent-pink-600 disabled:opacity-50 dark:accent-pink-700"
 					/>
 					{#if hideResponsesLocked}
-						<input type="hidden" name="hideResponses" value="on" />
+						<input
+							{...form.fields.hideResponses.as('checkbox')}
+							checked={initialValues?.hideResponses}
+							type="hidden"
+						/>
 					{/if}
 
 					<p class="font-medium text-neutral-700 dark:text-neutral-300">
@@ -384,4 +388,4 @@
 	</Button>
 </form>
 
-<EventEditDialog bind:open={showConfirmation} onConfirm={onConfirm} />
+<EventEditDialog bind:open={showConfirmation} {onConfirm} />
