@@ -24,7 +24,7 @@
 
 	let {
 		form,
-		options = $bindable(),
+		options,
 		initialValues,
 		isEditMode = false,
 		hasResponses = false,
@@ -253,7 +253,8 @@
 
 		<DatePicker
 			{options}
-			monthsToShow={2}
+			initialOptions={initialValues?.options}
+			maxViewMonths={2}
 			hasIssues={(form.fields['options'].issues()?.length ?? 0) > 0}
 		/>
 

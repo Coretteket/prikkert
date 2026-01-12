@@ -18,4 +18,4 @@
 	Kies een titel en datums om te beginnen met plannen.
 </p>
 
-<EventForm {form} bind:options />
+<EventForm {form} {options} />

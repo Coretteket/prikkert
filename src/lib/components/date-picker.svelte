@@ -1,16 +1,22 @@
 <script lang="ts">
 	import { tick } from 'svelte'
 
-	import { emptySlot, type Options } from '@/shared/event-types'
+	import { emptySlot, type Options, type PartialSlot } from '@/shared/event-types'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
 
 	let {
 		options,
-		monthsToShow = 1,
+		initialOptions,
+		maxViewMonths = 1,
 		hasIssues,
-	}: { options: Options; monthsToShow?: 1 | 2; hasIssues: boolean } = $props()
+	}: {
+		options: Options
+		initialOptions?: Map<string, PartialSlot[]>
+		maxViewMonths?: 1 | 2
+		hasIssues: boolean
+	} = $props()
 
 	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 	const now = Temporal.Now.plainDateISO('Europe/Amsterdam')
@@ -19,14 +25,20 @@
 
 	const firstVisible = $derived(view.with({ day: 1 }))
 	const lastVisible = $derived(
-		monthsToShow === 2
+		maxViewMonths === 2
 			? view.add({ months: 1 }).with({ day: view.add({ months: 1 }).daysInMonth })
 			: view.with({ day: view.daysInMonth }),
 	)
 
-	const isFirstMonth = $derived(firstVisible.since(now).sign <= 0)
+	const isFirstMonth = $derived(
+		firstVisible.since(
+			initialOptions && initialOptions.size > 0
+				? Temporal.PlainDate.from(Array.from(initialOptions.keys()).toSorted()[0])
+				: now,
+		).sign <= 0,
+	)
 
-	const months = $derived(monthsToShow === 2 ? [view, view.add({ months: 1 })] : [view])
+	const months = $derived(maxViewMonths === 2 ? [view, view.add({ months: 1 })] : [view])
 
 	function getMondaysForMonth(month: Temporal.PlainDate) {
 		const start = month.with({ day: 1 })
@@ -90,7 +102,7 @@
 </script>
 
 <div class={['mb-4 rounded-lg border', hasIssues && 'ring-2 ring-pink-500']}>
-	<div class={['grid', monthsToShow === 2 && 'sm:grid-cols-2 sm:divide-x']}>
+	<div class={['grid', maxViewMonths === 2 && 'sm:grid-cols-2 sm:divide-x']}>
 		{#each months as month, index (month)}
 			<div class="flex justify-center">
 				<div
@@ -142,6 +154,7 @@
 										{@const date = monday.add({ days: dayIndex })}
 										{@const inMonth = date.month === month.month}
 										{@const isPast = Temporal.PlainDate.compare(date, now) < 0}
+										{@const isInitial = initialOptions?.has(date.toString()) ?? false}
 
 										<td class="relative flex aspect-square">
 											<button
@@ -152,7 +165,7 @@
 												onkeydown={(e) => handleKeydown(e, date)}
 												aria-pressed={options.has(date.toString())}
 												data-in-month={inMonth}
-												disabled={!inMonth || isPast}
+												disabled={!inMonth || (isPast && !isInitial)}
 												class="peer flex aspect-square items-center justify-center squircle text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-aria-pressed:not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-900 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:not-disabled:hover:bg-pink-800 motion-safe:transition-all motion-safe:duration-100 dark:text-neutral-300 not-aria-pressed:not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:dark:not-disabled:hover:bg-pink-700"
 											>
 												{date.day}
