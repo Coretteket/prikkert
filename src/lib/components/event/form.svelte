@@ -117,24 +117,21 @@
 	})}
 >
 	<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
-	{#if typeof form.fields['id'].value() === 'string' || typeof form.fields['id'].value() === 'number'}
-		<input type="hidden" name="id" value={String(form.fields['id'].value())} />
-	{/if}
 
 	<div class="mb-10">
 		<label>
 			<span class="mb-4 block text-lg font-medium">Titel</span>
 			<input
-				{...form.fields['title'].as('text')}
+				{...form.fields.title.as('text')}
 				value={initialValues?.title}
 				placeholder="Vul een titel in..."
 				class={[
 					'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg placeholder:text-base placeholder:opacity-80 dark:bg-neutral-800/50',
-					(form.fields['title'].issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+					(form.fields.title.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			/>
 		</label>
-		{#each form.fields['title'].issues() ?? [] as issue}
+		{#each form.fields.title.issues() ?? [] as issue}
 			<p class="my-2 font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
@@ -156,7 +153,7 @@
 					label="Naam verbergen"
 					onclick={() => {
 						showName = false
-						const field = form.fields['organizerName']
+						const field = form.fields.organizerName
 						if (field) field.set('')
 					}}
 				>
@@ -165,15 +162,15 @@
 			</div>
 			<input
 				id="name"
-				{...form.fields['organizerName'].as('text')}
+				{...form.fields.organizerName.as('text')}
 				value={initialValues?.organizerName}
 				placeholder="Vul jouw naam in..."
 				class={[
 					'block w-full rounded-lg border px-4 py-2.5 text-lg placeholder:text-base placeholder:opacity-80 dark:bg-neutral-800/50',
-					(form.fields['organizerName'].issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+					(form.fields.organizerName.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			/>
-			{#each form.fields['organizerName'].issues() ?? [] as issue}
+			{#each form.fields.organizerName.issues() ?? [] as issue}
 				<p class="my-2 font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 			{/each}
 		</div>
@@ -216,7 +213,7 @@
 					label="Omschrijving verbergen"
 					onclick={() => {
 						showDescription = false
-						const field = form.fields['description']
+						const field = form.fields.description
 						if (field) field.set('')
 					}}
 				>
@@ -225,16 +222,16 @@
 			</div>
 			<textarea
 				id="description"
-				{...form.fields['description'].as('text')}
+				{...form.fields.description.as('text')}
 				value={initialValues?.description}
 				rows={4}
 				placeholder="Vul een omschrijving in..."
 				class={[
 					'mb-4 block w-full rounded-lg border px-4 py-2.5 placeholder:opacity-80 dark:bg-neutral-800/50',
-					(form.fields['description'].issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
+					(form.fields.description.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 			></textarea>
-			{#each form.fields['description'].issues() ?? [] as issue}
+			{#each form.fields.description.issues() ?? [] as issue}
 				<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 			{/each}
 		</div>
@@ -254,10 +251,10 @@
 			{options}
 			initialOptions={initialValues?.options}
 			maxViewMonths={2}
-			hasIssues={(form.fields['options'].issues()?.length ?? 0) > 0}
+			hasIssues={(form.fields.options.issues()?.length ?? 0) > 0}
 		/>
 
-		{#each form.fields['options'].issues() ?? [] as issue}
+		{#each form.fields.options.issues() ?? [] as issue}
 			<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 		{/each}
 	</div>
@@ -343,11 +340,13 @@
 			<div class="grid gap-4 rounded-lg border p-6">
 				<label class="flex cursor-pointer items-start gap-3">
 					<input
-						{...form.fields['hideResponses'].as('checkbox')}
+						{...form.fields.hideResponses.as('checkbox')}
 						checked={initialValues?.hideResponses}
 						disabled={hideResponsesLocked}
 						class="my-0.75 size-4.5 shrink-0 cursor-pointer accent-pink-600 disabled:opacity-50 dark:accent-pink-700"
 					/>
+
+					<!-- disabled input is not submitted, so we need a hidden input -->
 					{#if hideResponsesLocked}
 						<input
 							{...form.fields.hideResponses.as('checkbox')}
@@ -363,7 +362,7 @@
 
 				<label class="flex cursor-pointer items-start gap-3">
 					<input
-						{...form.fields['allowAnonymous'].as('checkbox')}
+						{...form.fields.allowAnonymous.as('checkbox')}
 						checked={initialValues?.allowAnonymous}
 						class="my-0.75 size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
