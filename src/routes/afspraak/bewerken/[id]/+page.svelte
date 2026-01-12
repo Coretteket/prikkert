@@ -4,7 +4,7 @@
 
 	import { page } from '$app/state'
 
-	import EventForm from '@/components/event-form.svelte'
+	import EventForm from '@/components/event/form.svelte'
 
 	import { updateEvent } from './action.remote'
 	import { getEditEvent } from './data.remote'

@@ -4,13 +4,12 @@
 	import { SvelteMap } from 'svelte/reactivity'
 
 	import { emptySlot, type Options, type PartialSlot } from '@/shared/event-types'
+	import EventEditDialog from '@/components/event/confirm-dialog.svelte'
+	import DatePicker from '@/components/event/date-picker.svelte'
+	import TimeSlot from '@/components/event/time-slot.svelte'
 	import Button from '@/components/button.svelte'
-	import Dialog from '@/components/dialog.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
-
-	import DatePicker from './date-picker.svelte'
-	import TimeSlot from './time-slot.svelte'
 
 	type FormFieldInput = {
 		id?: string | 0 | undefined
@@ -95,13 +94,13 @@
 	}
 
 	let showConfirmation = $state(false)
-	let confirm: ((value: boolean) => void) | undefined = $state()
+	let onConfirm: ((value: boolean) => void) | undefined = $state()
 
 	function untilConfirmed() {
 		const hasRemoved = hasRemovedOptions()
 		if (!hasRemoved || !hasResponses) return Promise.resolve(true)
 		return new Promise<boolean>((resolve) => {
-			confirm = resolve
+			onConfirm = resolve
 			showConfirmation = true
 		})
 	}
@@ -385,35 +384,4 @@
 	</Button>
 </form>
 
-<Dialog bind:open={showConfirmation}>
-	<div class="space-y-4">
-		<h2 class="text-xl font-medium">Opties verwijderen?</h2>
-		<p class="text-neutral-600 dark:text-neutral-400">
-			Je hebt een of meerdere datums of tijden verwijderd of aangepast. De beschikbaarheid van
-			deelnemers voor deze opties gaat verloren.
-		</p>
-		<p class="text-neutral-600 dark:text-neutral-400">
-			Weet je zeker dat je deze wijzigingen wilt opslaan?
-		</p>
-		<div class="flex justify-end gap-3 pt-4">
-			<Button
-				variant="secondary"
-				onclick={() => {
-					confirm?.(false)
-					showConfirmation = false
-				}}
-			>
-				Annuleren
-			</Button>
-			<Button
-				variant="primary"
-				onclick={() => {
-					confirm?.(true)
-					showConfirmation = false
-				}}
-			>
-				Opslaan
-			</Button>
-		</div>
-	</div>
-</Dialog>
+<EventEditDialog bind:open={showConfirmation} onConfirm={onConfirm} />

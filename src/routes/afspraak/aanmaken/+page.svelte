@@ -3,7 +3,7 @@
 
 	import type { Options } from '@/shared/event-types'
 
-	import EventForm from '@/components/event-form.svelte'
+	import EventForm from '@/components/event/form.svelte'
 
 	import { createEvent } from './action.remote'
 
