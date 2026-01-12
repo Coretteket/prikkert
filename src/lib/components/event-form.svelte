@@ -370,7 +370,7 @@
 					</p>
 				</label>
 
-				<p class="text-[15px] text-neutral-600/80 dark:text-neutral-400/80">
+				<p class="text-[15px] text-neutral-500 dark:text-neutral-400">
 					Lees meer over deze instellingen in de
 					<a href="/privacy#persoonsgegevens" target="_blank" class="underline">
 						privacyverklaring
