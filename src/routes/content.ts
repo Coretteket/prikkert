@@ -3,7 +3,7 @@ export const promises = [
 		icon: 'tabler--pig-money',
 		title: 'Altijd gratis',
 		description:
-			'Prikkert is 100% gratis en dat zal altijd zo blijven. Geen betaalde functies of verbogen kosten.',
+			'Prikkert is 100% gratis en dat zal altijd zo blijven. Geen betaalde functies of verborgen kosten.',
 	},
 	{
 		icon: 'tabler--ad-off',
@@ -21,22 +21,22 @@ export const promises = [
 		icon: 'tabler--folder-open',
 		title: 'Open source',
 		description:
-			'Iedereen kan de broncode lezen en verbeteren, want Prikkert heeft niets te verbergen.',
+			'Iedereen kan de broncode lezen en hergebruiken, want Prikkert heeft niets te verbergen.',
 	},
 ] as const
 
 export const steps = [
 	{
 		bold: 'Maak een afspraak aan',
-		normal: 'met alle datums en tijden waarvoor je mensen wil uitnodigen.',
+		normal: 'met alle datums en tijden waaruit deelnemers kunnen kiezen.',
 	},
 	{
 		bold: 'Deel de link',
-		normal: 'in een berichtje, mail of op een andere manier om mensen uit te nodigen.',
+		normal: 'om mensen uit te nodigen om hun beschikbaarheid door te geven.',
 	},
 	{
-		bold: 'Prik',
-		normal: 'het beste moment voor de afspraak wanneer iedereen heeft gereageerd.',
+		bold: 'Prik het beste moment',
+		normal: 'voor de afspraak wanneer iedereen heeft gereageerd.',
 	},
 ]
 
@@ -44,7 +44,7 @@ export const faq = [
 	{
 		question: 'Hoe verschilt Prikkert van datumprikker.nl?',
 		answer:
-			"Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacyvriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag.",
+			"Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacy&shy;vriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag.",
 	},
 	{
 		question: 'Hoe blijft Prikkert gratis en reclamevrij?',
