@@ -323,12 +323,12 @@
 							{@const number = option.responses.filter(
 								(r) => r.availability === availability,
 							).length}
-							{@const percentage = (number / option.responses.length) * 100}
+							{@const percentage = (number / event.numberOfResponses) * 100}
 							{#if percentage > 0}
 								<div
 									style="width: {percentage}%"
 									class={[
-										'@container shrink-0 px-1.5 py-0.5 text-[14px] font-semibold',
+										'@container shrink-0 grow-0 px-1.5 py-0.5 text-[14px] font-semibold',
 										{
 											'bg-lime-400/60 text-lime-900 dark:bg-lime-500/30 dark:text-lime-200':
 												availability === 'YES',
