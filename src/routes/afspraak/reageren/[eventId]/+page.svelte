@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { formatDateTimeOption } from '@/shared/time-format'
 	import Button from '@/components/button.svelte'
+	import Date from '@/components/date.svelte'
 	import { noReset } from '@/shared/utils'
 
 	import OrganizerReceiveDialog from '../../overzicht/[eventId]/organizer-receive-dialog.svelte'
@@ -38,13 +38,10 @@
 
 <p class="mb-10 text-[17px] text-balance text-neutral-700 xs:text-lg dark:text-neutral-300">
 	{#if event.selectedOption}
-		{@const formattedOption = formatDateTimeOption(event.selectedOption)}
-
 		Deze afspraak is geprikt voor
 		<strong class="font-medium text-neutral-800 dark:text-neutral-200">
-			{formattedOption.date}{#if formattedOption.time}
-				<span class="whitespace-nowrap">, {formattedOption.time}</span>{/if}</strong
-		>.
+			<Date option={event.selectedOption} />
+		</strong>.
 
 		{#if event.hasResponded}
 			Je kunt je beschikbaarheid niet meer aanpassen.

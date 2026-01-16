@@ -8,10 +8,10 @@
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
 
-	import { formatDateTimeOption } from '@/shared/time-format'
 	import { Popover } from '@/shared/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
+	import Date from '@/components/date.svelte'
 
 	import OrganizerReceiveDialog from './organizer-receive-dialog.svelte'
 	import OrganizerShareDialog from './organizer-share-dialog.svelte'
@@ -56,13 +56,11 @@
 
 <p class="mb-6 text-[17px] text-balance text-neutral-700 xs:text-lg dark:text-neutral-300">
 	{#if event.selectedOption}
-		{@const formattedOption = formatDateTimeOption(event.selectedOption)}
-
-		{#if event.isOrganizer}Je hebt deze afspraak{:else}Deze afspraak is{/if} geprikt voor
+		{#if event.isOrganizer}Je hebt deze afspraak gepland voor{:else}Deze afspraak staat gepland voor{/if}
 		<strong class="font-medium text-neutral-800 dark:text-neutral-200">
-			{formattedOption.date}{#if formattedOption.time}
-				<span class="whitespace-nowrap">, {formattedOption.time}</span>{/if}</strong
-		>.
+			<Date option={event.selectedOption} />
+		</strong>.
+
 		{#if event.selectedOption.responses.length > 1}
 			{@const total = event.selectedOption.responses.length}
 			{@const available = event.selectedOption.responses.filter(
@@ -335,7 +333,6 @@
 <div class="block divide-y overflow-hidden rounded-lg border">
 	{#each sortOptions(event.options, sortBy) as option (option.id)}
 		{@const hasResponses = option.responses.length > 0}
-		{@const formattedOption = formatDateTimeOption(option)}
 
 		<!-- animate:flip needs to be top-level of await -->
 		<svelte:element
@@ -348,22 +345,14 @@
 		>
 			{#if option.responses.length === 0}
 				<p class="font-[450] text-neutral-800 dark:text-neutral-200">
-					<span class="whitespace-nowrap">{formattedOption.date}</span>{#if formattedOption.time},
-						<span class="whitespace-nowrap">
-							{formattedOption.time}
-						</span>
-					{/if}
+					<Date {option} />
 				</p>
 				<p class="text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
 			{:else}
 				<summary class="flex cursor-pointer flex-col p-5 pt-4">
 					<div class="mb-3 flex w-full items-center justify-between">
 						<p class="font-[450] text-neutral-800 dark:text-neutral-200">
-							{formattedOption.date}{#if formattedOption.time},
-								<span class="whitespace-nowrap">
-									{formattedOption.time}
-								</span>
-							{/if}
+							<Date {option} />
 						</p>
 
 						<Icon
@@ -382,7 +371,7 @@
 								<div
 									style="width: {percentage}%"
 									class={[
-										'@container shrink-0 grow-0 px-1.5 py-0.5 text-[14px] font-semibold',
+										'@container shrink-0 grow-0 px-2 py-1 text-[14px] font-semibold',
 										{
 											'bg-lime-400/60 text-lime-900 dark:bg-lime-500/30 dark:text-lime-200':
 												availability === 'YES',

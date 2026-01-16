@@ -55,6 +55,6 @@
 			</Button>
 		</div>
 
-		<Button variant="secondary" class="ml-auto">Doorgaan</Button>
+		<Button variant="secondary" class="ml-auto" autofocus>Doorgaan</Button>
 	</form>
 </Dialog>

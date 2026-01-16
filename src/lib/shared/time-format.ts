@@ -6,12 +6,6 @@ import { Temporal } from '@/shared/temporal'
 
 export const formatOptions = {
 	date: {
-		weekday: 'long',
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-	},
-	shortDate: {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric',
@@ -26,22 +20,23 @@ export function formatDateTimeOption({
 	startsAt,
 	endsAt,
 }: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>) {
+	const weekday = startsAt.toLocaleString('nl', { weekday: 'long' })
 	const date = startsAt.toLocaleString('nl', formatOptions.date)
-	if (startsAt instanceof Temporal.PlainDate) return { date }
+	if (startsAt instanceof Temporal.PlainDate) return { weekday, date }
 
 	const timeStart = startsAt.toLocaleString('nl', formatOptions.time)
-	if (!endsAt || startsAt.equals(endsAt)) return { date, time: timeStart }
+	if (!endsAt || startsAt.equals(endsAt)) return { weekday, date, time: timeStart }
 
 	const timeEnd = endsAt.toLocaleString('nl', formatOptions.time)
-	return { date, time: `${timeStart} - ${timeEnd}` }
+	return { weekday, date, time: `${timeStart} - ${timeEnd}` }
 }
 
 export function formatDateTimeRange(
 	startsAt: Temporal.PlainDate | Temporal.PlainDateTime,
 	endsAt: Temporal.PlainDate | Temporal.PlainDateTime,
 ) {
-	const start = startsAt.toLocaleString('nl', formatOptions.shortDate)
-	const end = endsAt.toLocaleString('nl', formatOptions.shortDate)
+	const start = startsAt.toLocaleString('nl', formatOptions.date)
+	const end = endsAt.toLocaleString('nl', formatOptions.date)
 
 	if (start === end) return start
 

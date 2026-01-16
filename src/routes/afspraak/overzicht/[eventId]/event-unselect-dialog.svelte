@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { formatDateTimeOption } from '@/shared/time-format'
 	import Button from '@/components/button.svelte'
 	import Dialog from '@/components/dialog.svelte'
+	import Date from '@/components/date.svelte'
 
 	import type { getEventResponses } from './data.remote'
 
@@ -16,8 +16,6 @@
 		selectedOption: NonNullable<Awaited<ReturnType<typeof getEventResponses>>['selectedOption']>
 		open: boolean
 	} = $props()
-
-	const formattedOption = $derived(formatDateTimeOption(selectedOption))
 </script>
 
 <Dialog bind:open>
@@ -32,7 +30,7 @@
 			Als je doorgaat wordt de geprikte datum niet meer <strong
 				class="font-medium text-neutral-800 dark:text-neutral-200"
 			>
-				{formattedOption.date}{#if formattedOption.time}{formattedOption.time}{/if}
+				<Date option={selectedOption} />
 			</strong>. Je kunt later opnieuw een datum prikken.
 		</p>
 		<div class="flex justify-end gap-3">
