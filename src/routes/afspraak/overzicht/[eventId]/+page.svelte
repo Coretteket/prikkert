@@ -15,7 +15,9 @@
 
 	import OrganizerReceiveDialog from './organizer-receive-dialog.svelte'
 	import OrganizerShareDialog from './organizer-share-dialog.svelte'
+	import EventUnselectDialog from './event-unselect-dialog.svelte'
 	import EventRemoveDialog from './event-remove-dialog.svelte'
+	import EventSelectDialog from './event-select-dialog.svelte'
 	import { getEventResponses } from './data.remote'
 
 	const SORT_KEY = 's'
@@ -38,6 +40,7 @@
 
 	let removeDialog = $state(false)
 	let shareOrganizerDialog = $state(false)
+	let selectDateDialog = $state(false)
 
 	const popover = new Popover({
 		placement: 'bottom-start',
@@ -52,38 +55,62 @@
 <h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
 
 <p class="mb-6 text-[17px] text-balance text-neutral-700 xs:text-lg dark:text-neutral-300">
-	{#if event.isOrganizer}
-		Je hebt mensen uitgenodigd om hun beschikbaarheid in te vullen.
-	{:else if event.hasResponded}
-		Je hebt je beschikbaarheid ingevuld voor deze afspraak.
-	{:else}
-		Je bent
-		{#if event.organizerName}
-			door
-			<strong class="font-medium text-neutral-800 dark:text-neutral-200">
-				{event.organizerName}
-			</strong>
-		{/if}
-		uitgenodigd om je beschikbaarheid in te vullen.
-	{/if}
+	{#if event.selectedOption}
+		{@const formattedOption = formatDateTimeOption(event.selectedOption)}
 
-	{#if event.numberOfResponses === 0}
-		Nog niemand heeft gereageerd.
-	{:else if event.numberOfResponses === 1 && event.hasResponded}
-		Nog niemand anders heeft gereageerd.
-	{:else if event.numberOfResponses === 1}
-		Er heeft tot nu toe 1 persoon gereageerd.
+		{#if event.isOrganizer}Je hebt deze afspraak{:else}Deze afspraak is{/if} geprikt voor
+		<strong class="font-medium text-neutral-800 dark:text-neutral-200">
+			{formattedOption.date}{#if formattedOption.time}
+				<span class="whitespace-nowrap">, {formattedOption.time}</span>{/if}</strong
+		>.
+		{#if event.selectedOption.responses.length > 1}
+			{@const total = event.selectedOption.responses.length}
+			{@const available = event.selectedOption.responses.filter(
+				(r) => r.availability === 'YES',
+			).length}
+			{@const maybe = event.selectedOption.responses.filter(
+				(r) => r.availability === 'MAYBE',
+			).length}
+
+			Op deze datum {#if available === 1}is{:else}zijn{/if}
+			{#if available === total}alle{:else}{available} van de {total}{/if} deelnemers beschikbaar{#if maybe > 0},
+				en
+				{maybe} misschien{/if}.
+		{/if}
 	{:else}
-		Er hebben tot nu toe {event.numberOfResponses} personen gereageerd.
+		{#if event.isOrganizer}
+			Je hebt mensen uitgenodigd om hun beschikbaarheid in te vullen.
+		{:else if event.hasResponded}
+			Je hebt je beschikbaarheid ingevuld voor deze afspraak.
+		{:else}
+			Je bent
+			{#if event.organizerName}
+				door
+				<strong class="font-medium text-neutral-800 dark:text-neutral-200">
+					{event.organizerName}
+				</strong>
+			{/if}
+			uitgenodigd om je beschikbaarheid in te vullen.
+		{/if}
+
+		{#if event.numberOfResponses === 0}
+			Nog niemand heeft gereageerd.
+		{:else if event.numberOfResponses === 1 && event.hasResponded}
+			Nog niemand anders heeft gereageerd.
+		{:else if event.numberOfResponses === 1}
+			Er heeft tot nu toe 1 persoon gereageerd.
+		{:else}
+			Er hebben tot nu toe {event.numberOfResponses} personen gereageerd.
+		{/if}
 	{/if}
 </p>
 
 <div class="mb-10 flex flex-wrap gap-3">
-	{#if event.hasResponded}
+	{#if event.hasResponded && !event.selectedOption}
 		<Button as="link" href="/afspraak/reageren/{event.id}" variant="secondary">
 			Beschikbaarheid bewerken
 		</Button>
-	{:else}
+	{:else if !event.selectedOption}
 		<Button as="link" href="/afspraak/reageren/{event.id}" variant="primary">
 			Beschikbaarheid invullen
 		</Button>
@@ -107,16 +134,43 @@
 					easing: cubicInOut,
 				}}
 			>
-				<Button
-					as="link"
-					href="/afspraak/bewerken/{event.id}"
-					variant="ghost"
-					size="sm"
-					class="w-full!"
-				>
-					<Icon icon="tabler--edit" class="mb-px size-5" />
-					Afspraak bewerken
-				</Button>
+				{#if !event.selectedOption}
+					<Button
+						variant="ghost"
+						size="sm"
+						class="w-full!"
+						onclick={() => {
+							popover.close()
+							selectDateDialog = true
+						}}
+					>
+						<Icon icon="tabler--pin" class="mb-px size-5" />
+						Datum bevestigen
+					</Button>
+					<Button
+						as="link"
+						href="/afspraak/bewerken/{event.id}"
+						variant="ghost"
+						size="sm"
+						class="w-full!"
+					>
+						<Icon icon="tabler--edit" class="mb-px size-5" />
+						Afspraak bewerken
+					</Button>
+				{:else}
+					<Button
+						variant="ghost"
+						size="sm"
+						class="w-full!"
+						onclick={() => {
+							popover.close()
+							selectDateDialog = true
+						}}
+					>
+						<Icon icon="tabler--pinned-off" class="mb-px size-5" />
+						Bevestiging intrekken
+					</Button>
+				{/if}
 				<Button
 					variant="ghost"
 					size="sm"
@@ -162,7 +216,7 @@
 	</div>
 {/if}
 
-{#if event.isOrganizer}
+{#if event.isOrganizer && !event.selectedOption}
 	<p class="text-lg font-medium">Uitnodigen</p>
 
 	<p class="my-4 text-balance text-neutral-700 dark:text-neutral-300">
@@ -294,7 +348,7 @@
 		>
 			{#if option.responses.length === 0}
 				<p class="font-[450] text-neutral-800 dark:text-neutral-200">
-					{formattedOption.date}{#if formattedOption.time},
+					<span class="whitespace-nowrap">{formattedOption.date}</span>{#if formattedOption.time},
 						<span class="whitespace-nowrap">
 							{formattedOption.time}
 						</span>
@@ -302,8 +356,8 @@
 				</p>
 				<p class="text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
 			{:else}
-				<summary class="flex cursor-pointer flex-col px-5 pt-4 pb-4.5">
-					<div class="mb-2.5 flex w-full items-center justify-between">
+				<summary class="flex cursor-pointer flex-col p-5 pt-4">
+					<div class="mb-3 flex w-full items-center justify-between">
 						<p class="font-[450] text-neutral-800 dark:text-neutral-200">
 							{formattedOption.date}{#if formattedOption.time},
 								<span class="whitespace-nowrap">
@@ -356,7 +410,7 @@
 					</div>
 				</summary>
 
-				<div class="space-y-2 pb-3.5 sm:columns-2">
+				<div class="space-y-2 pb-4 sm:columns-2">
 					{#each option.responses as response}
 						<div class="flex gap-3 px-5">
 							<Icon
@@ -394,3 +448,28 @@
 		</svelte:element>
 	{/each}
 </div>
+
+{#if event.isOrganizer && !event.selectedOption}
+	<Button
+		type="submit"
+		variant="primary"
+		class="mt-10 ml-auto"
+		onclick={() => (selectDateDialog = true)}>Datum bevestigen</Button
+	>
+	<EventSelectDialog bind:open={selectDateDialog} id={event.id} options={event.options} />
+{/if}
+
+{#if event.isOrganizer && event.selectedOption}
+	<Button
+		type="submit"
+		variant="secondary"
+		class="mt-10 ml-auto"
+		onclick={() => (selectDateDialog = true)}>Bevestiging intrekken</Button
+	>
+
+	<EventUnselectDialog
+		bind:open={selectDateDialog}
+		id={event.id}
+		selectedOption={event.selectedOption}
+	/>
+{/if}

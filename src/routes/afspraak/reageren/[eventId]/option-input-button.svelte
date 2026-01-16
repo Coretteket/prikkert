@@ -8,6 +8,7 @@
 		class: string
 		availability: string
 		name: string
+		disabled?: boolean
 		// handleAvailabilityChange: (value: string) => void
 	}
 
@@ -18,15 +19,17 @@
 		class: className,
 		availability = $bindable(),
 		name,
+		disabled = false,
 		// handleAvailabilityChange,
 	}: Props = $props()
 </script>
 
-<label class="group cursor-pointer">
+<label class="group cursor-pointer has-disabled:cursor-not-allowed">
 	<input
 		type="radio"
 		{name}
 		{value}
+		{disabled}
 		checked={availability === value}
 		class="peer absolute opacity-0"
 		bind:group={availability}

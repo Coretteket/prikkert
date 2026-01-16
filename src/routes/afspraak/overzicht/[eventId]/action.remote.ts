@@ -1,5 +1,5 @@
 import { error, redirect } from '@sveltejs/kit'
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 
 import { form, getRequestEvent, query } from '$app/server'
 
@@ -30,6 +30,43 @@ export const removeEvent = form(v.object({ id: v.string() }), async ({ id: event
 	hasSession().refresh()
 
 	redirect(303, '/afspraken')
+})
+
+export const selectDate = form(
+	v.object({ id: v.string(), optionId: v.string() }),
+	async ({ id: eventId, optionId }) => {
+		const { locals } = getRequestEvent()
+
+		const session = locals.session.organizer.get(eventId)
+		if (!session) error(403, 'Niet toegestaan.')
+
+		const isOrganizer = await validateSession(session)
+		if (!isOrganizer) error(403, 'Niet toegestaan.')
+
+		await db
+			.update(schema.options)
+			.set({ isSelected: true })
+			.where(and(eq(schema.options.id, optionId), eq(schema.options.eventId, eventId)))
+
+		getEventResponses(eventId).refresh()
+	},
+)
+
+export const unselectDate = form(v.object({ id: v.string() }), async ({ id: eventId }) => {
+	const { locals } = getRequestEvent()
+
+	const session = locals.session.organizer.get(eventId)
+	if (!session) error(403, 'Niet toegestaan.')
+
+	const isOrganizer = await validateSession(session)
+	if (!isOrganizer) error(403, 'Niet toegestaan.')
+
+	await db
+		.update(schema.options)
+		.set({ isSelected: false })
+		.where(eq(schema.options.eventId, eventId))
+
+	getEventResponses(eventId).refresh()
 })
 
 export const getOrganizerShareLink = query(v.string(), async (eventId) => {

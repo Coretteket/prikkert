@@ -27,7 +27,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 		},
 		with: {
 			options: {
-				columns: { id: true, startsAt: true, endsAt: true },
+				columns: { id: true, startsAt: true, endsAt: true, isSelected: true },
 				orderBy: [asc(schema.options.startsAt)],
 				with: {
 					responses: {
@@ -46,6 +46,8 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 		event.organizerToken,
 	)
 
+	const selectedOption = event.options.find((option) => option.isSelected)
+
 	const hasResponded = locals.session.respondent.has(eventId)
 
 	const numberOfResponses = new Set(
@@ -56,8 +58,9 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 
 	return {
 		...omit(event, 'organizerToken'),
-		numberOfResponses,
+		selectedOption,
 		hasResponded,
+		numberOfResponses,
 		isOrganizer,
 		options: event.options.map((option) => ({
 			...option,

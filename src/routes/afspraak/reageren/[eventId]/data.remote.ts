@@ -16,7 +16,7 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 		columns: { createdAt: false, expiresAt: false },
 		with: {
 			options: {
-				columns: { eventId: false, isSelected: false },
+				columns: { eventId: false },
 				orderBy: [asc(schema.options.startsAt)],
 			},
 		},
@@ -34,14 +34,20 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 			})
 		: null
 
+	const hasResponded = Boolean(respondent)
+
 	const isOrganizer = await validateSession(
 		locals.session.organizer.get(eventId),
 		event.organizerToken,
 	)
 
+	const selectedOption = event.options.find((option) => option.isSelected)
+
 	return {
 		...event,
 		isOrganizer,
+		selectedOption,
+		hasResponded,
 		responseName: respondent?.name ?? null,
 		options: event.options.map((option) => {
 			const response = respondent?.responses.find((response) => response.optionId === option.id)
