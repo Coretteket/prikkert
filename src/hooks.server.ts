@@ -14,11 +14,9 @@ import { db, schema } from '@/server/db'
 export const init = async () => {
 	if (dev || building) return
 
-	const timeZone = 'Europe/Amsterdam'
-
 	CronJob.from({
 		cronTime: '0 5 * * *',
-		timeZone,
+		timeZone: 'Europe/Amsterdam',
 		start: true,
 		onTick: async () => {
 			try {

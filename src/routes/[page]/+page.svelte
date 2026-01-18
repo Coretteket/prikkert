@@ -21,7 +21,14 @@
 
 	{#if 'lastModified' in data}
 		<p class="mt-8 text-neutral-500 dark:text-neutral-400">
-			Deze pagina is voor het laatst gewijzigd op {data.lastModified}.
+			Deze pagina is voor het laatst gewijzigd op
+			<a
+				href="https://github.com/coretteket/prikkert/commit/{data.lastModifiedCommit}"
+				target="_blank"
+				class="underline"
+			>
+				{data.lastModified}
+			</a>.
 		</p>
 	{/if}
 </article>

@@ -4,9 +4,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 FROM node-corepack AS builder
 WORKDIR /app
 
-ARG GITHUB_REPO
 ARG GITHUB_PAT
-ENV GITHUB_REPO=$GITHUB_REPO
 ENV GITHUB_PAT=$GITHUB_PAT
 
 ENV PNPM_HOME="/pnpm"

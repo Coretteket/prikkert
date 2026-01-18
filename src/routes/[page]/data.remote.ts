@@ -1,5 +1,5 @@
-import { GITHUB_PAT, GITHUB_REPO } from '$env/static/private'
 import { marked, type RendererObject } from 'marked'
+import { GITHUB_PAT } from '$env/static/private'
 import parseFrontmatter from 'front-matter'
 import { error } from '@sveltejs/kit'
 
@@ -18,7 +18,7 @@ const content = import.meta.glob('./content/*.md', {
 const FrontmatterSchema = v.object({ title: v.string(), description: v.string() })
 
 const GithubAPISchema = v.array(
-	v.object({ commit: v.object({ author: v.object({ date: v.string() }) }) }),
+	v.object({ sha: v.string(), commit: v.object({ author: v.object({ date: v.string() }) }) }),
 )
 
 const renderer = {
@@ -48,7 +48,7 @@ export const renderMarkdown = prerender(
 		const { fetch } = getRequestEvent()
 
 		const response = await fetch(
-			`https://api.github.com/repos/${GITHUB_REPO}/commits?path=${encodeURIComponent(`src/routes/[page]/content/${id}.md`)}&per_page=1`,
+			`https://api.github.com/repos/coretteket/prikkert/commits?path=${encodeURIComponent(`src/routes/[page]/content/${id}.md`)}&per_page=1`,
 			{ headers: { Authorization: `Bearer ${GITHUB_PAT}` } },
 		)
 
@@ -56,15 +56,13 @@ export const renderMarkdown = prerender(
 
 		if (!parsedResponse.success) return { ...parsedFrontmatter.output, body }
 
-		const date = Temporal.Instant.from(
-			parsedResponse.output[0].commit.author.date,
-		).toZonedDateTimeISO('Europe/Amsterdam')
+		const lastModified = Temporal.Instant.from(parsedResponse.output[0].commit.author.date)
+			.toZonedDateTimeISO('Europe/Amsterdam')
+			.toLocaleString('nl', { dateStyle: 'long' })
 
-		return {
-			...parsedFrontmatter.output,
-			body,
-			lastModified: date.toLocaleString('nl', { dateStyle: 'long' }),
-		}
+		const lastModifiedCommit = parsedResponse.output[0].sha
+
+		return { ...parsedFrontmatter.output, body, lastModified, lastModifiedCommit }
 	},
 	{
 		dynamic: true,
