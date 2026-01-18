@@ -54,16 +54,16 @@ export const faq = [
 	{
 		question: 'Hoe beschermt Prikkert je privacy?',
 		answer:
-			"Met Prikkert ben jij niet het product. Je gegevens worden nooit verkocht en je wordt nooit getrackt. Ook blijft jouw data altijd binnen de Europese Unie. Je hebt geen account nodig, dus je kan zo aan de slag. Lees meer in de <a href='/privacy' class='underline'>privacyverklaring</a>.",
+			"Met Prikkert ben jij niet het product. Je gegevens worden nooit verkocht en je wordt nooit getrackt. Jouw data blijft altijd binnen de Europese Unie en wordt automatisch verwijderd wanneer je het niet meer nodig hebt. Je hebt geen account nodig, dus je kan zo aan de slag. Lees meer in de <a href='/privacy' class='underline'>privacyverklaring</a>.",
 	},
 	{
 		question: 'Waarom is Prikkert open source?',
 		answer:
-			"Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt. De volledige broncode is openbaar te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a> en is vrijgegeven voor hergebruik onder de <a href='https://github.com/Coretteket/prikkert/blob/main/LICENSE' target='_blank' class='underline'>European Union Public License</a>.",
+			"Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt. De volledige broncode is openbaar te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a> en is vrijgegeven voor hergebruik onder de <a href='https://github.com/coretteket/prikkert/blob/main/LICENSE' target='_blank' class='underline'>European Union Public License</a>.",
 	},
 	{
 		question: 'Wie heeft Prikkert gemaakt?',
 		answer:
-			"Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan.",
+			"Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan. Het is zijn kleine vorm van verzet tegen de <a href='https://nl.wikipedia.org/wiki/Platformverval' target='_blank' class='underline'>verkuttificatie</a> van het internet.",
 	},
 ]
