@@ -89,7 +89,7 @@
 				{disabled}
 				id={noteName}
 				name={showNote ? noteName : undefined}
-				class="block min-h-12 w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50 disabled:cursor-not-allowed"
+				class="block min-h-12 w-full rounded-lg border px-4 py-2.5 disabled:cursor-not-allowed dark:bg-neutral-800/50"
 				placeholder="Voeg een opmerking toe..."
 				rows={1}
 				tabindex={showNote ? 0 : -1}

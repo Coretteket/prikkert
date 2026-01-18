@@ -51,4 +51,3 @@ export async function requireOrganizerOrThrow(eventId: string) {
 
 	return session
 }
-
