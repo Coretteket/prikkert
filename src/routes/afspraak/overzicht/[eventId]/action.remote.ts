@@ -3,8 +3,8 @@ import { and, eq } from 'drizzle-orm'
 
 import { form, getRequestEvent, query } from '$app/server'
 
+import { requireOrganizerOrThrow, validateSession } from '@/server/session/validation'
 import { deleteSessionCookie, setSessionCookie } from '@/server/session/cookies'
-import { validateSession } from '@/server/session/validation'
 import * as v from '@/server/validation'
 import { db, schema } from '@/server/db'
 
@@ -12,13 +12,7 @@ import { getEventResponses } from './data.remote'
 import { hasSession } from '../../../data.remote'
 
 export const removeEvent = form(v.object({ id: v.string() }), async ({ id: eventId }) => {
-	const { locals } = getRequestEvent()
-
-	const session = locals.session.organizer.get(eventId)
-	if (!session) error(403, 'Niet toegestaan.')
-
-	const isOrganizer = await validateSession(session)
-	if (!isOrganizer) error(403, 'Niet toegestaan.')
+	await requireOrganizerOrThrow(eventId)
 
 	await db.delete(schema.events).where(eq(schema.events.id, eventId))
 
@@ -35,13 +29,7 @@ export const removeEvent = form(v.object({ id: v.string() }), async ({ id: event
 export const selectDate = form(
 	v.object({ id: v.string(), optionId: v.string() }),
 	async ({ id: eventId, optionId }) => {
-		const { locals } = getRequestEvent()
-
-		const session = locals.session.organizer.get(eventId)
-		if (!session) error(403, 'Niet toegestaan.')
-
-		const isOrganizer = await validateSession(session)
-		if (!isOrganizer) error(403, 'Niet toegestaan.')
+		await requireOrganizerOrThrow(eventId)
 
 		await db
 			.update(schema.options)
@@ -53,13 +41,7 @@ export const selectDate = form(
 )
 
 export const unselectDate = form(v.object({ id: v.string() }), async ({ id: eventId }) => {
-	const { locals } = getRequestEvent()
-
-	const session = locals.session.organizer.get(eventId)
-	if (!session) error(403, 'Niet toegestaan.')
-
-	const isOrganizer = await validateSession(session)
-	if (!isOrganizer) error(403, 'Niet toegestaan.')
+	await requireOrganizerOrThrow(eventId)
 
 	await db
 		.update(schema.options)
@@ -70,13 +52,7 @@ export const unselectDate = form(v.object({ id: v.string() }), async ({ id: even
 })
 
 export const getOrganizerShareLink = query(v.string(), async (eventId) => {
-	const { locals } = getRequestEvent()
-
-	const session = locals.session.organizer.get(eventId)
-	if (!session) error(403, 'Niet toegestaan.')
-
-	const isOrganizer = await validateSession(session)
-	if (!isOrganizer) error(403, 'Niet toegestaan.')
+	const session = await requireOrganizerOrThrow(eventId)
 
 	const link = `${getRequestEvent().url.origin}/afspraak/overzicht/${eventId}#organisator=${session.token}`
 

@@ -1,10 +1,10 @@
 import { eq, inArray, type InferSelectModel } from 'drizzle-orm'
 import { error, redirect } from '@sveltejs/kit'
 
-import { form, getRequestEvent } from '$app/server'
+import { form } from '$app/server'
 
 import { EventFormSchema, getExpiryDate } from '@/shared/event-schema'
-import { validateSession } from '@/server/session/validation'
+import { requireOrganizerOrThrow } from '@/server/session/validation'
 import { deduplicate } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
@@ -32,15 +32,10 @@ function getOptionsDifference(existingOptions: Option[], newOptions: Omit<Option
 }
 
 export const updateEvent = form(EventFormSchema, async (parsed) => {
-	const { locals } = getRequestEvent()
-
 	if (typeof parsed.id !== 'string') error(400, 'Ongeldig ID')
 	const eventId = parsed.id
 
-	const session = locals.session.organizer.get(eventId)
-	if (!session || !(await validateSession(session))) {
-		error(403, 'Je bent niet de organisator van deze afspraak.')
-	}
+	await requireOrganizerOrThrow(eventId)
 
 	const existingEvent = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
@@ -73,14 +68,6 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 	const expiresAt = getExpiryDate(newOptions)
 
 	const { toInsert, toDelete } = getOptionsDifference(existingEvent.options, newOptions)
-
-	console.log({
-		parsed: JSON.stringify(parsed.options),
-		existingEvent: JSON.stringify(existingEvent.options),
-		newOptions: JSON.stringify(newOptions),
-		toInsert,
-		toDelete,
-	})
 
 	await db.transaction(async (db) => {
 		await db
