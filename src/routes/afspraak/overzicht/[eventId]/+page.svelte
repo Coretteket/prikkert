@@ -5,6 +5,7 @@
 	import { fade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 
+	import { browser } from '$app/environment'
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
 
@@ -234,16 +235,18 @@
 			<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="size-4.5" />
 			Link kopiëren
 		</Button>
-		<Button
-			type="button"
-			size="sm"
-			variant="secondary"
-			onclick={() => navigator.share({ url: eventLink })}
-			class="sm:hidden"
-		>
-			<Icon icon="tabler--share" class="size-4.5" />
-			Link delen
-		</Button>
+		{#if !browser || navigator.share}
+			<Button
+				type="button"
+				size="sm"
+				variant="secondary"
+				onclick={() => navigator.share({ url: eventLink })}
+				class="sm:hidden"
+			>
+				<Icon icon="tabler--share" class="size-4.5" />
+				Link delen
+			</Button>
+		{/if}
 		<Button
 			variant="secondary"
 			size="sm"

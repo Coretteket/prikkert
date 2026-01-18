@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { browser } from '$app/environment'
+
 	import Dialog from '@/components/dialog.svelte'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
@@ -44,15 +46,17 @@
 				Link kopiëren
 			</Button>
 
-			<Button
-				type="button"
-				variant="secondary"
-				size="sm"
-				onclick={() => navigator.share({ url: output.textContent })}
-			>
-				<Icon icon="tabler--share" class="size-4.5" />
-				Link delen
-			</Button>
+			{#if !browser || navigator.share}
+				<Button
+					type="button"
+					variant="secondary"
+					size="sm"
+					onclick={() => navigator.share({ url: output.textContent })}
+				>
+					<Icon icon="tabler--share" class="size-4.5" />
+					Link delen
+				</Button>
+			{/if}
 		</div>
 
 		<Button variant="secondary" class="ml-auto" autofocus>Doorgaan</Button>
