@@ -353,7 +353,7 @@
 				<p class="text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
 			{:else}
 				<summary class="flex cursor-pointer flex-col p-5 pt-4">
-					<div class="mb-3 flex w-full items-center justify-between">
+					<div class="mb-3 flex w-full items-center justify-between gap-3">
 						<p class="font-[450] text-neutral-800 dark:text-neutral-200">
 							<Date {option} />
 						</p>
@@ -402,9 +402,9 @@
 					</div>
 				</summary>
 
-				<div class="space-y-2 pb-4 sm:columns-2">
+				<div class="space-y-2 px-5 pb-4 sm:columns-2">
 					{#each option.responses as response}
-						<div class="flex gap-3 px-5">
+						<div class="flex gap-3">
 							<Icon
 								title={{ YES: 'Ja', MAYBE: 'Misschien', NO: 'Nee' }[response.availability]}
 								icon={{ YES: 'tabler--check', MAYBE: 'tabler--tilde', NO: 'tabler--x' }[
