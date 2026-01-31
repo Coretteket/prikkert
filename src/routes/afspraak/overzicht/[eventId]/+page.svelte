@@ -241,48 +241,23 @@
 				size="sm"
 				variant="secondary"
 				onclick={() => navigator.share({ url: eventLink })}
-				class="sm:hidden"
 			>
 				<Icon icon="tabler--share" class="size-4.5" />
 				Link delen
 			</Button>
+		{:else}
+			<Button
+				variant="secondary"
+				size="sm"
+				as="link"
+				href="mailto:?body={encodeURIComponent(eventLink)}"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<Icon icon="tabler--mail" class="size-4.5" />
+				Delen via mail
+			</Button>
 		{/if}
-		<Button
-			variant="secondary"
-			size="sm"
-			as="link"
-			href="mailto:?body={encodeURIComponent(eventLink)}"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="max-sm:hidden"
-		>
-			<Icon icon="tabler--mail" class="size-4.5" />
-			E-mail
-		</Button>
-		<Button
-			variant="secondary"
-			size="sm"
-			as="link"
-			href="https://wa.me/?text={encodeURIComponent(eventLink)}"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="max-sm:hidden"
-		>
-			<Icon icon="tabler--brand-whatsapp" class="size-4.5" />
-			WhatsApp
-		</Button>
-		<Button
-			variant="secondary"
-			size="sm"
-			as="link"
-			href="fb-messenger://share?link={encodeURIComponent(eventLink)}"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="max-sm:hidden"
-		>
-			<Icon icon="tabler--brand-messenger" class="size-4.5" />
-			Messenger
-		</Button>
 	</div>
 {/if}
 
