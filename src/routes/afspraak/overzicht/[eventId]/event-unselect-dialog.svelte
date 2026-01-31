@@ -27,11 +27,9 @@
 	>
 		<p class="mb-4 text-lg font-medium">Bevestiging intrekken</p>
 		<p class="mb-6 text-neutral-700 dark:text-neutral-300">
-			Als je doorgaat wordt de geprikte datum niet meer <strong
-				class="font-medium text-neutral-800 dark:text-neutral-200"
-			>
-				<Date option={selectedOption} />
-			</strong>. Je kunt later opnieuw een datum prikken.
+			Als je doorgaat wordt de geprikte datum niet meer
+			<Date option={selectedOption} class="font-medium text-neutral-800 dark:text-neutral-200" />.
+			Je kunt later opnieuw een datum prikken.
 		</p>
 		<div class="flex justify-end gap-3">
 			<Button formmethod="dialog" variant="secondary">Annuleren</Button>

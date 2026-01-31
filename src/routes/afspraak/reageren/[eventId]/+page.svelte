@@ -39,9 +39,10 @@
 <p class="mb-10 text-[17px] text-balance text-neutral-700 xs:text-lg dark:text-neutral-300">
 	{#if event.selectedOption}
 		Deze afspraak is geprikt voor
-		<strong class="font-medium text-neutral-800 dark:text-neutral-200">
-			<Date option={event.selectedOption} />
-		</strong>.
+		<Date
+			option={event.selectedOption}
+			class="font-medium text-neutral-800 dark:text-neutral-200"
+		/>.
 
 		{#if event.hasResponded}
 			Je kunt je beschikbaarheid niet meer aanpassen.
