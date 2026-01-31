@@ -5,16 +5,11 @@ import { building, dev } from '$app/environment'
 import { unauthenticated, validateBasicAuth } from '@/server/basic-auth'
 import { parseSessionCookies } from '@/server/session/cookies'
 import { ID_LENGTH } from '@/server/db/schema'
-import * as v from '@/server/validation'
+import { parseTheme } from '@/server/theme'
 
 import { cron } from './cron.server'
 
-export const init = async () => {
-	if (dev || building) return
-	cron.start()
-}
-
-const ThemeSchema = v.fallback(v.picklist(['light', 'dark', 'system']), 'system')
+export const init = () => !dev && !building && cron.start()
 
 export const handle: Handle = async ({ event, resolve }) => {
 	if (!validateBasicAuth()) return unauthenticated()
@@ -23,12 +18,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (path.length === ID_LENGTH && !path.includes('/'))
 		redirect(dev ? 307 : 308, `/afspraak/reageren/` + path)
 
-	event.locals.session = {
-		organizer: parseSessionCookies({ isOrganizer: true }),
-		respondent: parseSessionCookies({ isOrganizer: false }),
-	}
-
-	event.locals.theme = v.parse(ThemeSchema, event.cookies.get('theme'))
+	event.locals.session = parseSessionCookies()
+	event.locals.theme = parseTheme()
 
 	return resolve(event, {
 		transformPageChunk: ({ html }) => html.replace('%sveltekit.theme%', event.locals.theme),

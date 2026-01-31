@@ -40,6 +40,16 @@ const OrganizerSessionValueSchema = v.pipe(
 	v.transform((value) => ({ token: value })),
 )
 
+const OrganizerSessionCookieSchema = v.object({
+	name: OrganizerSessionKeySchema,
+	value: OrganizerSessionValueSchema,
+})
+
+const RespondentSessionCookieSchema = v.object({
+	name: RespondentSessionKeySchema,
+	value: RespondentSessionValueSchema,
+})
+
 type SessionCookieOpts = {
 	eventId: string
 	expires: number | string | Date
@@ -94,31 +104,30 @@ type Session<T extends boolean> = v.InferOutput<
 export type OrganizerSession = Session<true>
 export type RespondentSession = Session<false>
 
-export function parseSessionCookies<T extends boolean>(opts: { isOrganizer: T }) {
+export function parseSessionCookies() {
 	const { cookies } = getRequestEvent()
 
-	const sessionData = new Map<string, Session<T>>()
+	const organizer = new Map<string, Session<true>>()
+	const respondent = new Map<string, Session<false>>()
 
 	for (const cookie of cookies.getAll()) {
-		const validatedKey = v.safeParse(
-			opts.isOrganizer ? OrganizerSessionKeySchema : RespondentSessionKeySchema,
-			cookie.name,
-		)
+		const organizerParse = v.safeParse(OrganizerSessionCookieSchema, cookie)
+		if (organizerParse.success) {
+			organizer.set(organizerParse.output.name, {
+				eventId: organizerParse.output.name,
+				...organizerParse.output.value,
+			})
+			continue
+		}
 
-		if (!validatedKey.success) continue
-
-		const validatedValue = v.safeParse(
-			opts.isOrganizer ? OrganizerSessionValueSchema : RespondentSessionValueSchema,
-			cookie.value,
-		)
-
-		if (!validatedValue.success) continue
-
-		sessionData.set(validatedKey.output, {
-			eventId: validatedKey.output,
-			...validatedValue.output,
-		})
+		const respondentParse = v.safeParse(RespondentSessionCookieSchema, cookie)
+		if (respondentParse.success) {
+			respondent.set(respondentParse.output.name, {
+				eventId: respondentParse.output.name,
+				...respondentParse.output.value,
+			})
+		}
 	}
 
-	return sessionData
+	return { organizer, respondent }
 }
