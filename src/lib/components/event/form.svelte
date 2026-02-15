@@ -283,7 +283,7 @@
 			</div>
 			<div
 				class={[
-					'relative mb-4 max-h-80 space-y-3 overflow-y-auto rounded-lg border px-6 py-5 [scrollbar-gutter:stable] sm:max-h-64',
+					'relative mb-4 max-h-82 min-h-37.5 divide-y overflow-y-auto rounded-lg border [scrollbar-gutter:stable]',
 					nestedOptionsIssues.size > 0 && 'ring-2 ring-pink-500',
 				]}
 			>
@@ -295,7 +295,9 @@
 						</p>
 					{/if}
 				{:else}
-					<p class="text-neutral-500 py-4 text-center text-balance dark:text-neutral-400 p-2">
+					<p
+						class="text-neutral-500 py-4 absolute left-1/2 top-1/2 -translate-1/2 text-center text-balance dark:text-neutral-400 p-2"
+					>
 						Selecteer datums om tijden toe te voegen.
 					</p>
 				{/each}

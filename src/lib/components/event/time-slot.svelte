@@ -19,8 +19,8 @@
 	}
 </script>
 
-<div class="flex gap-2 pb-1 max-sm:flex-col max-sm:items-center">
-	<div class="grow py-1 text-neutral-700 dark:text-neutral-300">
+<div class="flex gap-2 px-6 py-5 sm:py-4 max-sm:flex-col">
+	<div class="grow max-sm:pb-1 sm:pt-2 text-neutral-700 dark:text-neutral-300">
 		{Temporal.PlainDate.from(date).toLocaleString('nl', {
 			weekday: 'long',
 			day: 'numeric',
@@ -42,7 +42,7 @@
 
 				<button
 					type="button"
-					class="flex cursor-pointer items-center text-neutral-700 dark:text-neutral-300"
+					class="flex px-2 -mr-2 cursor-pointer items-center text-neutral-700 dark:text-neutral-300"
 					{@attach popover.triggerHandler}
 					{...popover.triggerAttrs}
 				>
