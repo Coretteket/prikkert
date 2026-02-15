@@ -25,7 +25,7 @@
 		(T extends 'button' ? AsButtonProps : AsLinkProps)
 
 	const buttonVariants = cva({
-		base: 'w-fit flex items-center gap-2 motion-safe:transition cursor-pointer disabled:cursor-not-allowed',
+		base: 'w-fit squircle flex items-center gap-2 motion-safe:transition cursor-pointer disabled:cursor-not-allowed',
 		variants: {
 			variant: {
 				primary:
@@ -38,10 +38,10 @@
 					'font-[450] not-disabled:hover:bg-neutral-100 not-disabled:dark:hover:bg-neutral-800',
 			},
 			size: {
-				sm: 'px-2.5 py-1.5 text-[15px] squircle',
-				md: 'px-3 py-1.5 squircle',
-				lg: 'px-4 py-1.5 text-lg squircle',
-				icon: 'aspect-square p-2 squircle not-dark:text-neutral-600!',
+				sm: 'px-2.5 py-1.5 text-[15px]',
+				md: 'px-3 py-1.5',
+				lg: 'px-3.5 py-1.5 text-lg',
+				icon: 'aspect-square p-2 not-dark:text-neutral-600!',
 			},
 		},
 		compoundVariants: [{ variant: 'secondary', size: 'sm', class: 'font-[450]!' }],
