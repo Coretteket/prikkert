@@ -73,6 +73,11 @@
 	}
 }
 
+/* Hide popovers when closed (override) */
+[popover]:not(:popover-open) {
+	display: none;
+}
+
 /* corner-shape looks buggy inside dialogs */
 dialog .squircle {
 	border-radius: theme(--radius-lg);

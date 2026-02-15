@@ -1,15 +1,11 @@
 <script lang="ts">
-	import { prefersReducedMotion } from 'svelte/motion'
-	import * as floating from '@floating-ui/dom'
-	import { cubicInOut } from 'svelte/easing'
-	import { fade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 
 	import { browser } from '$app/environment'
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
 
-	import { Popover } from '@/shared/popover.svelte'
+	import { createPopover } from '@/shared/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
 	import Date from '@/components/date.svelte'
@@ -43,10 +39,7 @@
 	let shareOrganizerDialog = $state(false)
 	let selectDateDialog = $state(false)
 
-	const popover = new Popover({
-		placement: 'bottom-start',
-		middleware: [floating.offset({ mainAxis: 8 }), floating.shift(), floating.flip()],
-	})
+	const popover = createPopover({ positionArea: 'bottom span-right' })
 
 	const event = $derived(await getEventResponses(page.params.eventId))
 	const eventLink = $derived(page.url.toString().replace('/afspraak/overzicht', ''))
@@ -118,85 +111,85 @@
 	{#if event.isOrganizer}
 		<Button
 			variant="secondary"
-			{@attach (node) => popover.triggerHandler(node)}
+			{@attach popover.triggerHandler}
 			{...popover.triggerAttrs}
 		>
 			Afspraak beheren
 		</Button>
 
-		{#if popover.isOpen}
-			<div
-				{@attach (node) => popover.floatingHandler(node)}
-				{...popover.floatingAttrs}
-				class="grid min-w-40 gap-1 rounded-lg border bg-white px-1.5 py-2 text-neutral-700 ring-4 ring-white dark:bg-neutral-850 dark:text-neutral-300 dark:ring-neutral-850"
-				transition:fade={{
-					duration: prefersReducedMotion.current ? 0 : 100,
-					easing: cubicInOut,
-				}}
-			>
-				{#if !event.selectedOption}
-					<Button
-						variant="ghost"
-						size="sm"
-						class="w-full!"
-						onclick={() => {
-							popover.close()
-							selectDateDialog = true
-						}}
-					>
-						<Icon icon="tabler--pin" class="mb-px size-5" />
-						Datum bevestigen
-					</Button>
-					<Button
-						as="link"
-						href="/afspraak/bewerken/{event.id}"
-						variant="ghost"
-						size="sm"
-						class="w-full!"
-					>
-						<Icon icon="tabler--edit" class="mb-px size-5" />
-						Afspraak bewerken
-					</Button>
-				{:else}
-					<Button
-						variant="ghost"
-						size="sm"
-						class="w-full!"
-						onclick={() => {
-							popover.close()
-							selectDateDialog = true
-						}}
-					>
-						<Icon icon="tabler--pinned-off" class="mb-px size-5" />
-						Bevestiging intrekken
-					</Button>
-				{/if}
+		<div
+			{@attach popover.floatingHandler}
+			{...popover.floatingAttrs}
+			class="grid min-w-40 gap-1 rounded-lg border bg-white px-1.5 py-2 text-neutral-700 ring-4 ring-white dark:bg-neutral-850 dark:text-neutral-300 dark:ring-neutral-850"
+		>
+			{#if !event.selectedOption}
 				<Button
 					variant="ghost"
 					size="sm"
 					class="w-full!"
+					{@attach popover.closeHandler}
+					{...popover.closeAttrs}
 					onclick={() => {
-						popover.close()
-						shareOrganizerDialog = true
+						selectDateDialog = true
 					}}
 				>
-					<Icon icon="tabler--user-shield" class="mb-px size-5" />
-					Afspraakbeheer delen
+					<Icon icon="tabler--pin" class="mb-px size-5" />
+					Datum bevestigen
 				</Button>
+				<Button
+					as="link"
+					href="/afspraak/bewerken/{event.id}"
+					variant="ghost"
+					size="sm"
+					class="w-full!"
+					{@attach popover.closeHandler}
+					{...popover.closeAttrs}
+				>
+					<Icon icon="tabler--edit" class="mb-px size-5" />
+					Afspraak bewerken
+				</Button>
+			{:else}
 				<Button
 					variant="ghost"
 					size="sm"
-					class="w-full! text-pink-600 dark:text-pink-400"
+					class="w-full!"
+					{@attach popover.closeHandler}
+					{...popover.closeAttrs}
 					onclick={() => {
-						popover.close()
-						removeDialog = true
+						selectDateDialog = true
 					}}
 				>
-					<Icon icon="tabler--trash" class="mb-px size-5" />
-					Afspraak verwijderen
+					<Icon icon="tabler--pinned-off" class="mb-px size-5" />
+					Bevestiging intrekken
 				</Button>
-			</div>
-		{/if}
+			{/if}
+			<Button
+				variant="ghost"
+				size="sm"
+				class="w-full!"
+				{@attach popover.closeHandler}
+				{...popover.closeAttrs}
+				onclick={() => {
+					shareOrganizerDialog = true
+				}}
+			>
+				<Icon icon="tabler--user-shield" class="mb-px size-5" />
+				Afspraakbeheer delen
+			</Button>
+			<Button
+				variant="ghost"
+				size="sm"
+				class="w-full! text-pink-600 dark:text-pink-400"
+				{@attach popover.closeHandler}
+				{...popover.closeAttrs}
+				onclick={() => {
+					removeDialog = true
+				}}
+			>
+				<Icon icon="tabler--trash" class="mb-px size-5" />
+				Afspraak verwijderen
+			</Button>
+		</div>
 
 		<EventRemoveDialog bind:open={removeDialog} id={event.id} />
 
@@ -346,18 +339,18 @@
 								<div
 									style="width: {percentage}%"
 									class={[
-										'@container shrink-0 grow-0 px-2 py-1 text-[14px] font-semibold',
+										'@container shrink-0 grow-0 px-2.5 py-1 text-[15px] font-medium',
 										{
 											'bg-lime-400/60 text-lime-900 dark:bg-lime-500/30 dark:text-lime-200':
 												availability === 'YES',
-											'bg-amber-400/60 text-amber-900 dark:bg-amber-500/30 dark:text-amber-200':
+											'bg-yellow-400/60 text-yellow-900 dark:bg-yellow-500/30 dark:text-yellow-200':
 												availability === 'MAYBE',
 											'bg-red-400/60 text-red-900 dark:bg-red-500/30 dark:text-red-200':
 												availability === 'NO',
 										},
 									]}
 								>
-									<span class="flex items-center gap-1.5 font-medium @max-[35px]:invisible">
+									<span class="flex items-center gap-2 font-medium @max-[35px]:invisible">
 										<Icon
 											icon={{
 												YES: 'tabler--check',
@@ -366,7 +359,7 @@
 											}[availability]!}
 											class="size-5"
 										/>
-										{number}
+										<span class="mb-0.5">{number}</span>
 									</span>
 								</div>
 							{/if}
@@ -386,7 +379,7 @@
 									'size-6',
 									{
 										'text-lime-600 dark:text-lime-400': response.availability === 'YES',
-										'text-amber-600 dark:text-amber-400': response.availability === 'MAYBE',
+										'text-yellow-600 dark:text-yellow-400': response.availability === 'MAYBE',
 										'text-red-600 dark:text-red-400': response.availability === 'NO',
 									},
 								]}
