@@ -24,7 +24,7 @@
 </script>
 
 <div class="py-4 text-neutral-800 dark:text-neutral-200">
-	<div class="gap-x-6· grid items-center gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
+	<div class="gap-x-6 grid items-center gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
 		<Date {option} />
 
 		<div class="flex gap-2">

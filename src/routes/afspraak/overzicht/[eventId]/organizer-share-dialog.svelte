@@ -24,7 +24,7 @@
 
 		<output
 			bind:this={output}
-			class="mb-4 block h-[45px] overflow-x-scroll rounded-lg border px-4 py-2.5 text-[15px] text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
+			class="mb-4 block h-11.25 overflow-x-scroll rounded-lg border px-4 py-2.5 text-[15px] text-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-300"
 		>
 			{#await getOrganizerShareLink(id) then link}
 				{link}
@@ -55,6 +55,18 @@
 				>
 					<Icon icon="tabler--share" class="size-4.5" />
 					Link delen
+				</Button>
+			{:else}
+				<Button
+					variant="secondary"
+					size="sm"
+					as="link"
+					href="mailto:?body={encodeURIComponent(output?.textContent)}"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<Icon icon="tabler--mail" class="size-4.5" />
+					Delen via mail
 				</Button>
 			{/if}
 		</div>
