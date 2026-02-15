@@ -23,9 +23,16 @@
 	const noteName = $derived(`note.option_${option.id}`)
 </script>
 
-<div class="py-4 text-neutral-800 dark:text-neutral-200">
-	<div class="gap-x-6 grid items-center gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
-		<Date {option} />
+<div class="py-4 text-neutral-800 max-md:pb-5 dark:text-neutral-200">
+	<div class="grid min-h-12 items-center gap-x-6 gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
+		<div>
+			<p>
+				<Date {option} />
+			</p>
+			<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">
+				{option.note}
+			</p>
+		</div>
 
 		<div class="flex gap-2">
 			<fieldset class="flex divide-x">
@@ -60,6 +67,7 @@
 			<Button
 				variant="secondary"
 				size="icon"
+				class="px-2.5"
 				label={showNote ? 'Opmerking verwijderen' : 'Opmerking toevoegen'}
 				type="button"
 				onclick={() => (showNote = !showNote)}

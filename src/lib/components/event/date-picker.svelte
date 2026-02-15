@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tick } from 'svelte'
 
-	import { emptySlot, type Options, type PartialSlot } from '@/shared/event-types'
+	import { emptyEntry, type Options, type Slot } from '@/shared/event/types'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
@@ -13,7 +13,7 @@
 		hasIssues,
 	}: {
 		options: Options
-		initialOptions?: Map<string, PartialSlot[]>
+		initialOptions?: Map<string, { hasTime: boolean; slots: Slot[] }>
 		maxViewMonths?: 1 | 2
 		hasIssues: boolean
 	} = $props()
@@ -58,7 +58,7 @@
 	function toggleDate(date: Temporal.PlainDate) {
 		const stringDate = date.toString()
 		if (options.has(stringDate)) options.delete(stringDate)
-		else options.set(stringDate, [emptySlot])
+		else options.set(stringDate, emptyEntry)
 	}
 
 	function isTabbable(day: Temporal.PlainDate, inMonth: boolean, isPast: boolean) {

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { SvelteMap } from 'svelte/reactivity'
 
-	import type { Options } from '@/shared/event-types'
+	import type { Options } from '@/shared/event/types'
 
 	import EventForm from '@/components/event/form.svelte'
 

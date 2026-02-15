@@ -109,11 +109,7 @@
 		</Button>
 	{/if}
 	{#if event.isOrganizer}
-		<Button
-			variant="secondary"
-			{@attach popover.triggerHandler}
-			{...popover.triggerAttrs}
-		>
+		<Button variant="secondary" {@attach popover.triggerHandler} {...popover.triggerAttrs}>
 			Afspraak beheren
 		</Button>
 
@@ -311,17 +307,27 @@
 			this={hasResponses ? 'details' : 'div'}
 			class={hasResponses
 				? 'group has-[summary:hover]:bg-neutral-50 motion-safe:transition-colors dark:has-[summary:hover]:bg-neutral-800/50'
-				: 'flex justify-between gap-1 p-5 max-sm:flex-col'}
+				: 'flex justify-between gap-1 p-5 max-sm:flex-col sm:items-center'}
 			open={hasResponses ? allOpened : undefined}
 			animate:flip={{ duration: 100 }}
 		>
 			{#if option.responses.length === 0}
-				<Date {option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
-				<p class="text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
+				<div class={[option.note && '-my-1']}>
+					<Date {option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
+					{#if option.note}
+						<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">{option.note}</p>
+					{/if}
+				</div>
+				<p class="shrink-0 font-medium text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
 			{:else}
 				<summary class="flex cursor-pointer flex-col p-5 pt-4">
-					<div class="mb-3 flex w-full items-center justify-between gap-3">
-						<Date {option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
+					<div class="mb-3 flex w-full justify-between gap-3">
+						<div>
+							<Date {option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
+							{#if option.note}
+								<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">{option.note}</p>
+							{/if}
+						</div>
 
 						<Icon
 							icon="tabler--chevron-right"

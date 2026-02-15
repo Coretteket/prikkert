@@ -2,9 +2,10 @@ import { redirect } from '@sveltejs/kit'
 
 import { form } from '$app/server'
 
-import { EventFormSchema, getExpiryDate } from '@/shared/event-schema'
+import { getExpiryDate, getOptionKey } from '@/shared/event/utils'
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
 import { setSessionCookie } from '@/server/session/cookies'
+import { EventFormSchema } from '@/shared/event/schema'
 import { deduplicate } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
@@ -16,13 +17,14 @@ export const createEvent = form(EventFormSchema, async (parsed) => {
 
 	const [event] = await db.transaction(async (db) => {
 		const options = deduplicate(
-			parsed.options.flatMap(([date, slots]) =>
-				slots.map(([startTime, endTime]) => ({
-					startsAt: startTime ? date.toPlainDateTime(startTime) : date,
-					endsAt: endTime ? date.toPlainDateTime(endTime) : null,
+			parsed.options.flatMap(([date, { slots }]) =>
+				slots.map((slot) => ({
+					startsAt: slot.startsAt ? date.toPlainDateTime(slot.startsAt) : date,
+					endsAt: slot.endsAt ? date.toPlainDateTime(slot.endsAt) : null,
+					note: slot.note || null,
 				})),
 			),
-			(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
+			getOptionKey,
 		)
 
 		const expiresAt = getExpiryDate(options)

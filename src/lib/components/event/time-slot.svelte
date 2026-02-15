@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { emptySlot, type Options, type PartialSlot } from '@/shared/event-types'
-	import { createPopover } from '@/shared/popover.svelte'
+	import { emptySlot, type Options, type Slot } from '@/shared/event/types'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
@@ -11,97 +10,111 @@
 
 	let { date, options }: Props = $props()
 
-	const slots = $derived(options.get(date) ?? [])
+	const entry = $derived(options.get(date))
+	const hasTime = $derived(entry?.hasTime ?? false)
+	const slots = $derived(
+		entry?.slots.toSorted((a, b) =>
+			a.startsAt && b.startsAt ? Temporal.PlainTime.compare(a.startsAt, b.startsAt) : 0,
+		) ?? [emptySlot],
+	)
 
-	function setSlot(index: number, slot: PartialSlot) {
-		const updated = slots.map((s, i) => (i === index ? slot : s))
-		options.set(date, updated)
+	function updateSlot(index: number, patch: Partial<Slot>) {
+		const updated = slots.map((s, i) => (i === index ? { ...s, ...patch } : s))
+		options.set(date, { hasTime, slots: updated })
 	}
 </script>
 
-<div class="flex gap-2 px-6 py-5 sm:py-4 max-sm:flex-col">
-	<div class="grow max-sm:pb-1 sm:pt-2 text-neutral-700 dark:text-neutral-300">
-		{Temporal.PlainDate.from(date).toLocaleString('nl', {
-			weekday: 'long',
-			day: 'numeric',
-			month: 'long',
-			year: 'numeric',
-		})}
-	</div>
+<div class={['grow font-medium text-neutral-700 dark:text-neutral-300']}>
+	{Temporal.PlainDate.from(date).toLocaleString('nl', {
+		weekday: 'long',
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	})}
+</div>
 
-	<div class="grid gap-3">
-		{#each slots as slot, i (i)}
-			{@const popover = createPopover({ positionArea: 'bottom span-left' })}
-
-			<div class="flex gap-2">
-				<div class="flex items-center gap-3">
-					<TimeInput bind:time={() => slot[0], (time) => setSlot(i, [time, slot[1]])} />
-					<span class="text-neutral-500">&mdash;</span>
-					<TimeInput bind:time={() => slot[1], (time) => setSlot(i, [slot[0], time])} />
+<div class={['grid gap-4', hasTime ? 'mt-3 mb-5' : 'my-4']}>
+	{#each slots as slot, i (i)}
+		<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+			{#if hasTime}
+				<div>
+					<p class="mb-2 text-[15px] text-neutral-500 dark:text-neutral-400">Starttijd</p>
+					<TimeInput bind:time={() => slot.startsAt, (time) => updateSlot(i, { startsAt: time })} />
 				</div>
-
-				<button
-					type="button"
-					class="flex px-2 -mr-2 cursor-pointer items-center text-neutral-700 dark:text-neutral-300"
-					{@attach popover.triggerHandler}
-					{...popover.triggerAttrs}
-				>
-					<Icon icon="tabler--dots-vertical" class="size-5" />
-				</button>
-
-				<div
-					{@attach popover.floatingHandler}
-					{...popover.floatingAttrs}
-					data-popover
-					class="grid min-w-40 rounded-lg border bg-white p-2 text-sm text-neutral-700 ring-4 ring-white dark:bg-neutral-850 dark:text-neutral-300 dark:ring-neutral-850"
-				>
-					<Button
-						type="button"
-						variant="ghost"
-						size="sm"
-						class="w-full!"
-						{@attach (node) => popover.closeHandler(node)}
-						{...popover.closeAttrs}
-						onclick={() => {
-							for (const key of options.keys()) options.set(key, slots)
-						}}
-					>
-						<Icon icon="tabler--copy" class="size-4.5" />
-						Kopiëren naar alle datums
-					</Button>
-					<Button
-						type="button"
-						variant="ghost"
-						size="sm"
-						class="w-full!"
-						{@attach (node) => popover.closeHandler(node)}
-						{...popover.closeAttrs}
-						onclick={() => {
-							options.set(date, slots.concat([emptySlot]))
-						}}
-					>
-						<Icon icon="tabler--plus" class="size-4.5" />
-						Nieuw tijdslot toevoegen
-					</Button>
-					{#if slots.length > 1}
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							class="w-full!"
-							{@attach (node) => popover.closeHandler(node)}
-							{...popover.closeAttrs}
-							onclick={() => {
-								const remaining = slots.filter((_, j) => j !== i)
-								options.set(date, remaining)
-							}}
-						>
-							<Icon icon="tabler--trash" class="size-4.5" />
-							Tijdslot verwijderen
-						</Button>
-					{/if}
+				<div>
+					<p class="mb-2 text-[15px] text-neutral-600 dark:text-neutral-400">Eindtijd</p>
+					<TimeInput bind:time={() => slot.endsAt, (time) => updateSlot(i, { endsAt: time })} />
 				</div>
+			{/if}
+			<div class="grow">
+				{#if hasTime}
+					<p class="mb-2 text-[15px] text-neutral-600 dark:text-neutral-400">Opmerking</p>
+				{/if}
+				<input
+					type="text"
+					class="w-full rounded-md border px-3.5 py-2 dark:bg-neutral-800/50 dark:text-neutral-300"
+					placeholder="Vul een opmerking in..."
+					value={slot.note ?? ''}
+					oninput={(e) => updateSlot(i, { note: e.currentTarget.value })}
+				/>
 			</div>
-		{/each}
-	</div>
+			{#if hasTime}
+				<Button
+					type="button"
+					variant="secondary"
+					size="icon"
+					class="self-end p-2.75"
+					onclick={() => {
+						if (slots.length === 1) {
+							options.set(date, { hasTime: false, slots: [emptySlot] })
+						} else
+							options.set(date, {
+								hasTime,
+								slots: slots.filter((_, j) => j !== i),
+							})
+					}}
+					label="Tijdoptie verwijderen"
+				>
+					<Icon icon="tabler--trash" class="size-4.5" />
+				</Button>
+			{/if}
+		</div>
+	{/each}
+</div>
+
+<div class="flex flex-wrap gap-x-3 gap-y-3">
+	{#if hasTime}
+		<Button
+			type="button"
+			variant="secondary"
+			size="sm"
+			onclick={() =>
+				options.set(date, {
+					hasTime,
+					slots: slots.concat([emptySlot]),
+				})}
+		>
+			Tijdoptie toevoegen
+		</Button>
+	{:else}
+		<Button
+			type="button"
+			variant="secondary"
+			size="sm"
+			onclick={() => options.set(date, { hasTime: true, slots })}
+		>
+			Tijden toevoegen
+		</Button>
+	{/if}
+
+	<Button
+		type="button"
+		variant="secondary"
+		size="sm"
+		onclick={() => {
+			for (const key of options.keys()) options.set(key, { hasTime, slots })
+		}}
+	>
+		Kopiëren naar alle datums
+	</Button>
 </div>

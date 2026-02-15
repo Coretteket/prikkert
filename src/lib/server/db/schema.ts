@@ -48,6 +48,7 @@ export const options = pgTable('options', {
 		.notNull(),
 	startsAt: datetime().notNull(),
 	endsAt: datetime(),
+	note: text(),
 	isSelected: boolean().notNull().default(false),
 })
 

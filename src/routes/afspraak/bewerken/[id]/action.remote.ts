@@ -3,18 +3,13 @@ import { error, redirect } from '@sveltejs/kit'
 
 import { form } from '$app/server'
 
-import { EventFormSchema, getExpiryDate } from '@/shared/event-schema'
 import { requireOrganizerOrThrow } from '@/server/session/validation'
+import { getExpiryDate, getOptionKey } from '@/shared/event/utils'
+import { EventFormSchema } from '@/shared/event/schema'
 import { deduplicate } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
-type Option = Pick<
-	InferSelectModel<typeof schema.options>,
-	'id' | 'eventId' | 'startsAt' | 'endsAt'
->
-
-const getOptionKey = (option: Pick<Option, 'startsAt' | 'endsAt'>) =>
-	`${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`
+type Option = Omit<InferSelectModel<typeof schema.options>, 'isSelected'>
 
 function getOptionsDifference(existingOptions: Option[], newOptions: Omit<Option, 'id'>[]) {
 	const existingOptionMap = new Map(existingOptions.map((option) => [getOptionKey(option), option]))
@@ -28,7 +23,13 @@ function getOptionsDifference(existingOptions: Option[], newOptions: Omit<Option
 		(option) => !existingOptionMap.has(getOptionKey(option)),
 	)
 
-	return { toInsert, toDelete }
+	const toUpdate = Array.from(newOptionMap.values()).flatMap((option) => {
+		const existing = existingOptionMap.get(getOptionKey(option))
+		if (!existing || existing.note === option.note) return []
+		return [{ id: existing.id, note: option.note }]
+	})
+
+	return { toInsert, toDelete, toUpdate }
 }
 
 export const updateEvent = form(EventFormSchema, async (parsed) => {
@@ -51,44 +52,49 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 	}
 
 	const newOptions = deduplicate(
-		parsed.options.flatMap(([date, slots]) =>
-			slots.map((slot) => {
-				const startTime = slot.length > 0 ? slot[0] : undefined
-				const endTime = slot.length > 0 ? slot[1] : undefined
-				return {
-					startsAt: startTime ? date.toPlainDateTime(startTime) : date,
-					endsAt: endTime ? date.toPlainDateTime(endTime) : null,
-					eventId,
-				}
-			}),
+		parsed.options.flatMap(([date, { slots }]) =>
+			slots.map((slot) => ({
+				startsAt: slot.startsAt ? date.toPlainDateTime(slot.startsAt) : date,
+				endsAt: slot.endsAt ? date.toPlainDateTime(slot.endsAt) : null,
+				note: slot.note || null,
+				eventId,
+			})),
 		),
-		(option) => `${option.startsAt.toString()}-${option.endsAt?.toString() ?? 'null'}`,
+		getOptionKey,
 	)
+
+	const { toInsert, toDelete, toUpdate } = getOptionsDifference(existingEvent.options, newOptions)
 
 	const expiresAt = getExpiryDate(newOptions)
 
-	const { toInsert, toDelete } = getOptionsDifference(existingEvent.options, newOptions)
-
 	await db.transaction(async (db) => {
-		await db
-			.update(schema.events)
-			.set({
-				title: parsed.title,
-				description: parsed.description ?? '',
-				organizerName: parsed.organizerName ?? '',
-				allowAnonymous: parsed.allowAnonymous ?? false,
-				hideResponses: parsed.hideResponses ?? false,
-				expiresAt,
-			})
-			.where(eq(schema.events.id, eventId))
+		const queries: Array<Promise<unknown>> = [
+			db
+				.update(schema.events)
+				.set({
+					title: parsed.title,
+					description: parsed.description ?? '',
+					organizerName: parsed.organizerName ?? '',
+					allowAnonymous: parsed.allowAnonymous ?? false,
+					hideResponses: parsed.hideResponses ?? false,
+					expiresAt,
+				})
+				.where(eq(schema.events.id, eventId)),
+		]
 
 		if (toDelete.length > 0) {
-			await db.delete(schema.options).where(inArray(schema.options.id, toDelete))
+			queries.push(db.delete(schema.options).where(inArray(schema.options.id, toDelete)))
 		}
 
 		if (toInsert.length > 0) {
-			await db.insert(schema.options).values(toInsert)
+			queries.push(db.insert(schema.options).values(toInsert))
 		}
+
+		for (const { id, note } of toUpdate) {
+			queries.push(db.update(schema.options).set({ note }).where(eq(schema.options.id, id)))
+		}
+
+		await Promise.allSettled(queries)
 	})
 
 	redirect(303, `/afspraak/overzicht/${eventId}`)

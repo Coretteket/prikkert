@@ -1,25 +1,42 @@
-import type { InferSelectModel } from 'drizzle-orm'
-
-import type { schema } from '@/server/db'
-
 import { Temporal } from '@/shared/temporal'
 import * as v from '@/server/validation'
 
-export const OptionTimeSchema = v.union(
+export const MAX_NOTE_LENGTH = 75
+export const MIN_TITLE_LENGTH = 3
+export const MAX_TITLE_LENGTH = 100
+export const MAX_DESCRIPTION_LENGTH = 500
+
+export const OptionNoteSchema = v.pipe(
+	v.string(),
+	v.maxLength(MAX_NOTE_LENGTH, `Vul een opmerking in van maximaal ${MAX_NOTE_LENGTH} tekens.`),
+)
+
+export const OptionSlotSchema = v.union(
 	[
 		v.pipe(
-			v.tuple([v.plainTime(), v.nullable(v.plainTime())]),
-			v.check(([a, b]) => !b || Temporal.PlainTime.compare(a, b) < 1, 'Ongeldig tijdslot.'),
+			v.object({
+				startsAt: v.plainTime(),
+				endsAt: v.optional(v.nullable(v.plainTime())),
+				note: v.optional(OptionNoteSchema),
+			}),
+			v.check(
+				(s) => !s.endsAt || Temporal.PlainTime.compare(s.startsAt, s.endsAt) < 1,
+				'Vul een starttijd in die eerder is dan de eindtijd.',
+			),
 		),
-		v.pipe(v.array(v.never()), v.length(0)),
-		v.pipe(v.array(v.null()), v.length(2)),
+		v.object({
+			startsAt: v.optional(v.undefined()),
+			endsAt: v.optional(v.undefined()),
+			note: v.optional(OptionNoteSchema),
+		}),
 	],
 	'Ongeldig tijdslot.',
 )
 
-export const MIN_TITLE_LENGTH = 3
-export const MAX_TITLE_LENGTH = 100
-export const MAX_DESCRIPTION_LENGTH = 500
+export const OptionSchema = v.object({
+	hasTime: v.boolean(),
+	slots: v.array(OptionSlotSchema),
+})
 
 export const EventFormSchema = v.strictObject({
 	id: v.optional(v.union([v.literal(0), v.string()])), // 0 for create (workaround), string for edit
@@ -48,23 +65,10 @@ export const EventFormSchema = v.strictObject({
 	),
 	options: v.json(
 		v.pipe(
-			v.array(v.tuple([v.plainDate(), v.array(OptionTimeSchema)])),
+			v.array(v.tuple([v.plainDate(), OptionSchema])),
 			v.minLength(1, 'Selecteer minstens 1 datum.'),
 		),
 	),
 	allowAnonymous: v.optional(v.boolean()),
 	hideResponses: v.optional(v.boolean()),
 })
-
-// Expires 90 days after the latest date option
-export const getExpiryDate = (
-	options: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>[],
-) => {
-	let latestOption = Temporal.Now.plainDateTimeISO() as (typeof options)[number]['startsAt']
-
-	for (const option of options)
-		if (Temporal.PlainDateTime.compare(option.endsAt ?? option.startsAt, latestOption) > 0)
-			latestOption = option.endsAt ?? option.startsAt
-
-	return latestOption.toZonedDateTime('Europe/Amsterdam').add({ days: 90 }).toInstant().toString()
-}

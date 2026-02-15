@@ -36,7 +36,7 @@
 	/>
 	<span
 		class={[
-			'relative flex items-center gap-1.5 border px-3 py-2 text-[15px] leading-none font-medium text-neutral-700 peer-focus-visible:z-100 peer-focus-visible:outline-focus motion-safe:transition-colors dark:bg-neutral-800/50 dark:text-neutral-300',
+			'relative flex items-center gap-1.5 border px-3.5 py-2.5 text-[15px] leading-none font-medium text-neutral-700 peer-focus-visible:z-100 peer-focus-visible:outline-focus motion-safe:transition-colors dark:bg-neutral-800/50 dark:text-neutral-300',
 			className,
 		]}
 	>

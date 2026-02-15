@@ -3,7 +3,7 @@
 
 	import { SvelteMap } from 'svelte/reactivity'
 
-	import { emptySlot, type Options, type PartialSlot } from '@/shared/event-types'
+	import { emptyEntry, type OptionEntry, type Options, type Slot } from '@/shared/event/types'
 	import EventEditDialog from '@/components/event/confirm-dialog.svelte'
 	import DatePicker from '@/components/event/date-picker.svelte'
 	import TimeSlot from '@/components/event/time-slot.svelte'
@@ -31,7 +31,7 @@
 	}: {
 		form: Omit<RemoteForm<FormFieldInput, unknown>, 'for'>
 		options: Options
-		initialValues?: Omit<FormFieldInput, 'options'> & { options: Map<string, Array<PartialSlot>> }
+		initialValues?: Omit<FormFieldInput, 'options'> & { options: Map<string, OptionEntry> }
 		isEditMode?: boolean
 		hasResponses?: boolean
 		submitLabel?: string
@@ -39,10 +39,10 @@
 
 	let showName = $derived(Boolean(initialValues?.organizerName))
 	let showDescription = $derived(Boolean(initialValues?.description))
-	let showTimes = $derived(
-		Array.from(initialValues?.options.values() ?? []).some((slots) =>
-			slots.some((s) => s[0] || s[1]),
-		),
+	let showOptions = $derived(
+		Array.from(initialValues?.options.values() ?? []).some(
+			(entry) => entry.hasTime || entry.slots.some((slot) => slot.note),
+		) ?? false,
 	)
 	let showSettings = $derived(
 		Boolean(initialValues?.hideResponses) || Boolean(initialValues?.allowAnonymous),
@@ -70,26 +70,27 @@
 		return optionsIssues
 	})
 
-	function compareSlots(a: PartialSlot, b: PartialSlot) {
-		const aStart = a[0]?.toString()
-		const bStart = b[0]?.toString()
-		const aEnd = a[1]?.toString()
-		const bEnd = b[1]?.toString()
+	function compareSlots(a: Slot, b: Slot) {
+		const aStart = a.startsAt?.toString()
+		const bStart = b.startsAt?.toString()
+		const aEnd = a.endsAt?.toString()
+		const bEnd = b.endsAt?.toString()
 		return aStart === bStart && aEnd === bEnd
 	}
 
 	function hasRemovedOptions() {
 		if (!initialValues?.options) return false
 
-		for (const [date, slots] of initialValues.options) {
+		for (const [date, entry] of initialValues.options) {
 			if (!options.has(date)) return true
-			const currentSlots = options.get(date)!
+			const currentSlots = options.get(date)!.slots
 
-			for (const slot of slots) {
+			for (const slot of entry.slots) {
 				const found = currentSlots.some((s) => compareSlots(s, slot))
 				if (!found) return true
 			}
 		}
+
 		return false
 	}
 
@@ -116,7 +117,13 @@
 		}
 	})}
 >
-	<input type="hidden" name="options" value={JSON.stringify(Array.from(options))} />
+	<input
+		type="hidden"
+		name="options"
+		value={JSON.stringify(
+			Array.from(options).toSorted(([a], [b]) => Temporal.PlainDate.compare(a, b)),
+		)}
+	/>
 
 	<div class="mb-10">
 		<label>
@@ -260,10 +267,10 @@
 	</div>
 
 	<div class="mb-10">
-		{#if showTimes}
+		{#if showOptions}
 			<div class="mb-4 flex items-center justify-between">
 				<span class="text-lg font-medium">
-					Tijden
+					Opties
 					<span class="text-base font-normal text-neutral-500 dark:text-neutral-400">
 						(optioneel)
 					</span>
@@ -274,8 +281,8 @@
 					size="icon"
 					label="Tijden verbergen"
 					onclick={() => {
-						showTimes = false
-						for (const date of options.keys()) options.set(date, [emptySlot])
+						showOptions = false
+						for (const date of options.keys()) options.set(date, emptyEntry)
 					}}
 				>
 					<Icon icon="tabler--x" class="size-5" />
@@ -283,38 +290,40 @@
 			</div>
 			<div
 				class={[
-					'relative mb-4 max-h-82 min-h-37.5 divide-y overflow-y-auto rounded-lg border [scrollbar-gutter:stable]',
+					'relative mb-4 max-h-100 min-h-48 divide-y overflow-y-auto rounded-lg border [scrollbar-gutter:stable]',
 					nestedOptionsIssues.size > 0 && 'ring-2 ring-pink-500',
 				]}
 			>
 				{#each Array.from(options.keys()).toSorted(Temporal.PlainDate.compare) as date}
-					<TimeSlot {date} {options} />
-					{#if nestedOptionsIssues.has(date)}
-						<p class="text-center font-medium text-pink-600 dark:text-pink-500" data-issue>
-							{nestedOptionsIssues.get(date)}
-						</p>
-					{/if}
+					<div class="px-6 pt-4.5 pb-5.5">
+						<TimeSlot {date} {options} />
+						{#if nestedOptionsIssues.has(date)}
+							<p class="mt-4 text-center font-medium text-pink-600 dark:text-pink-500" data-issue>
+								{nestedOptionsIssues.get(date)}
+							</p>
+						{/if}
+					</div>
 				{:else}
 					<p
-						class="text-neutral-500 py-4 absolute left-1/2 top-1/2 -translate-1/2 text-center text-balance dark:text-neutral-400 p-2"
+						class="text-neutral-500 py-4 absolute left-1/2 top-1/2 -translate-1/2 text-center text-balance dark:text-neutral-400"
 					>
-						Selecteer datums om tijden toe te voegen.
+						Selecteer datums om opties aan te passen.
 					</p>
 				{/each}
 			</div>
 		{/if}
 	</div>
 
-	{#if !showTimes || !showSettings}
+	{#if !showOptions || !showSettings}
 		<div class="-mt-6 mb-8 flex gap-3">
-			{#if !showTimes}
-				<Button type="button" variant="secondary" size="sm" onclick={() => (showTimes = true)}>
-					Tijden toevoegen
+			{#if !showOptions}
+				<Button type="button" variant="secondary" size="sm" onclick={() => (showOptions = true)}>
+					Opties aanpassen
 				</Button>
 			{/if}
 			{#if !showSettings}
 				<Button type="button" variant="secondary" size="sm" onclick={() => (showSettings = true)}>
-					Instellingen aanpassen
+					Privacy instellen
 				</Button>
 			{/if}
 		</div>

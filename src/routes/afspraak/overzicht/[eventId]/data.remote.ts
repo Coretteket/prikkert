@@ -27,7 +27,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 		},
 		with: {
 			options: {
-				columns: { id: true, startsAt: true, endsAt: true, isSelected: true },
+				columns: { eventId: false },
 				orderBy: [asc(schema.options.startsAt)],
 				with: {
 					responses: {
