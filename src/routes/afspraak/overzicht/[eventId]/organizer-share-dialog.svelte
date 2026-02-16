@@ -11,7 +11,7 @@
 
 	let linkCopied = $state(false)
 
-	let output: HTMLOutputElement
+	let output: HTMLOutputElement | undefined = $state()
 </script>
 
 <Dialog bind:open>
@@ -37,7 +37,7 @@
 				variant="secondary"
 				size="sm"
 				onclick={() => {
-					navigator.clipboard.writeText(output.textContent)
+					navigator.clipboard.writeText(output?.textContent ?? '')
 					linkCopied = true
 					setTimeout(() => (linkCopied = false), 1000)
 				}}
@@ -51,7 +51,7 @@
 					type="button"
 					variant="secondary"
 					size="sm"
-					onclick={() => navigator.share({ url: output.textContent })}
+					onclick={() => navigator.share({ url: output?.textContent })}
 				>
 					<Icon icon="tabler--share" class="size-4.5" />
 					Link delen
