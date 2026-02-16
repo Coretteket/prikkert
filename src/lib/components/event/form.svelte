@@ -294,9 +294,9 @@
 					nestedOptionsIssues.size > 0 && 'ring-2 ring-pink-500',
 				]}
 			>
-				{#each Array.from(options.keys()).toSorted(Temporal.PlainDate.compare) as date}
+				{#each Array.from(options.keys()).toSorted(Temporal.PlainDate.compare) as date, i}
 					<div class="px-6 pt-4.5 pb-5.5">
-						<TimeSlot {date} {options} />
+						<TimeSlot {date} {options} isFirst={i === 0} />
 						{#if nestedOptionsIssues.has(date)}
 							<p class="mt-4 text-center font-medium text-pink-600 dark:text-pink-500" data-issue>
 								{nestedOptionsIssues.get(date)}

@@ -6,9 +6,9 @@
 
 	import TimeInput from './time-input.svelte'
 
-	type Props = { date: string; options: Options }
+	type Props = { date: string; options: Options; isFirst: boolean }
 
-	let { date, options }: Props = $props()
+	let { date, options, isFirst }: Props = $props()
 
 	const entry = $derived(options.get(date))
 	const hasTime = $derived(entry?.hasTime ?? false)
@@ -38,7 +38,7 @@
 		<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
 			{#if hasTime}
 				<div>
-					<p class="mb-2 text-[15px] text-neutral-500 dark:text-neutral-400">Starttijd</p>
+					<p class="mb-2 text-[15px] text-neutral-600 dark:text-neutral-400">Starttijd</p>
 					<TimeInput bind:time={() => slot.startsAt, (time) => updateSlot(i, { startsAt: time })} />
 				</div>
 				<div>
@@ -107,14 +107,16 @@
 		</Button>
 	{/if}
 
-	<Button
-		type="button"
-		variant="secondary"
-		size="sm"
-		onclick={() => {
-			for (const key of options.keys()) options.set(key, { hasTime, slots })
-		}}
-	>
-		Kopiëren naar alle datums
-	</Button>
+	{#if isFirst}
+		<Button
+			type="button"
+			variant="secondary"
+			size="sm"
+			onclick={() => {
+				for (const key of options.keys()) options.set(key, { hasTime, slots })
+			}}
+		>
+			Kopiëren naar alle datums
+		</Button>
+	{/if}
 </div>
