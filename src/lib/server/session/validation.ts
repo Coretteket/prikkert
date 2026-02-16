@@ -1,5 +1,6 @@
 import { and, eq } from 'drizzle-orm'
 import { error } from '@sveltejs/kit'
+import crypto from 'node:crypto'
 
 import { getRequestEvent } from '$app/server'
 
@@ -27,6 +28,14 @@ const getRespondentToken = async (session: RespondentSession) => {
 	return respondent?.token
 }
 
+export function timingSafeEqual(a: string, b: string | undefined) {
+	try {
+		return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b ?? ''))
+	} catch {
+		return false
+	}
+}
+
 export async function validateSession(
 	session?: OrganizerSession | RespondentSession,
 	hashedToken?: string,
@@ -37,7 +46,7 @@ export async function validateSession(
 		hashedToken ??
 		(await ('respondentId' in session ? getRespondentToken(session) : getOrganizerToken(session)))
 
-	return checkToken === (await encodeSHA256(session.token))
+	return timingSafeEqual(await encodeSHA256(session.token), checkToken)
 }
 
 export async function requireOrganizerOrThrow(eventId: string) {
