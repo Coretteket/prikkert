@@ -173,7 +173,7 @@
 											{#if Temporal.PlainDate.compare(date, now) === 0 && inMonth}
 												<span
 													aria-label="Vandaag"
-													class="pointer-events-none absolute top-[45%] left-1/2 -translate-x-1/2 cursor-pointer text-xl text-neutral-700 peer-aria-pressed:text-neutral-100 motion-safe:transition motion-safe:duration-100 dark:text-neutral-300"
+													class="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 text-xl leading-none text-neutral-700 peer-aria-pressed:text-neutral-100 motion-safe:transition-colors motion-safe:duration-100 dark:text-neutral-300"
 												>
 													&middot;
 												</span>

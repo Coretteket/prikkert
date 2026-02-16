@@ -41,7 +41,7 @@
 				sm: 'px-2.5 py-1.5 text-[15px]',
 				md: 'px-3 py-1.5',
 				lg: 'px-3.5 py-1.5 text-lg',
-				icon: 'aspect-square p-2 not-dark:text-neutral-600!',
+				icon: 'aspect-square p-2 text-neutral-600 dark:text-neutral-300',
 			},
 		},
 		compoundVariants: [{ variant: 'secondary', size: 'sm', class: 'font-[450]!' }],

@@ -34,7 +34,7 @@
 			</p>
 		</div>
 
-		<div class="flex gap-2">
+		<div class="flex gap-3">
 			<fieldset class="flex divide-x">
 				<RadioButton
 					{disabled}
