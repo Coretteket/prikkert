@@ -307,7 +307,7 @@
 			this={hasResponses ? 'details' : 'div'}
 			class={hasResponses
 				? 'group has-[summary:hover]:bg-neutral-50 motion-safe:transition-colors dark:has-[summary:hover]:bg-neutral-800/50'
-				: 'flex justify-between gap-1 p-5 max-sm:flex-col sm:items-center'}
+				: 'flex justify-between gap-2 p-5 max-sm:flex-col sm:items-center'}
 			open={hasResponses ? allOpened : undefined}
 			animate:flip={{ duration: 100 }}
 		>
@@ -318,7 +318,7 @@
 						<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">{option.note}</p>
 					{/if}
 				</div>
-				<p class="shrink-0 font-medium text-neutral-600 dark:text-neutral-400">Nog geen reacties</p>
+				<p class="shrink-0 text-neutral-600 dark:text-neutral-300">Nog geen reacties</p>
 			{:else}
 				<summary class="flex cursor-pointer flex-col p-5 pt-4">
 					<div class="mb-3 flex w-full justify-between gap-3">
