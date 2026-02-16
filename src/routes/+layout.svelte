@@ -63,7 +63,7 @@
 		</a>
 
 		<div
-			class="flex flex-wrap gap-x-8 gap-y-3 text-neutral-600/80 max-xs:flex-col sm:justify-end dark:text-neutral-400/80"
+			class="flex flex-wrap gap-x-8 gap-y-3 text-neutral-500 max-xs:flex-col sm:justify-end dark:text-neutral-400"
 		>
 			<a href="/privacy" class="hover:underline">Privacy</a>
 			<a href="/voorwaarden" class="hover:underline">Voorwaarden</a>

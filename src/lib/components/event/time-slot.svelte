@@ -38,17 +38,17 @@
 		<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
 			{#if hasTime}
 				<div>
-					<p class="mb-2 text-[15px] text-neutral-600 dark:text-neutral-400">Starttijd</p>
+					<p class="mb-2 text-[15px] text-neutral-500 dark:text-neutral-400">Starttijd</p>
 					<TimeInput bind:time={() => slot.startsAt, (time) => updateSlot(i, { startsAt: time })} />
 				</div>
 				<div>
-					<p class="mb-2 text-[15px] text-neutral-600 dark:text-neutral-400">Eindtijd</p>
+					<p class="mb-2 text-[15px] text-neutral-500 dark:text-neutral-400">Eindtijd</p>
 					<TimeInput bind:time={() => slot.endsAt, (time) => updateSlot(i, { endsAt: time })} />
 				</div>
 			{/if}
 			<div class="grow">
 				{#if hasTime}
-					<p class="mb-2 text-[15px] text-neutral-600 dark:text-neutral-400">Opmerking</p>
+					<p class="mb-2 text-[15px] text-neutral-500 dark:text-neutral-400">Opmerking</p>
 				{/if}
 				<input
 					type="text"

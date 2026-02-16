@@ -366,7 +366,7 @@
 						/>
 					{/if}
 
-					<p class="font-medium text-neutral-700 dark:text-neutral-300">
+					<p class="text-neutral-700 dark:text-neutral-300">
 						Toon reacties van deelnemers alleen aan de organisator
 					</p>
 				</label>
@@ -378,16 +378,14 @@
 						class="my-0.75 size-4.5 shrink-0 cursor-pointer accent-pink-600 dark:accent-pink-700"
 					/>
 
-					<p class="font-medium text-neutral-700 dark:text-neutral-300">
+					<p class="text-neutral-700 dark:text-neutral-300">
 						Sta deelnemers toe om anoniem te reageren
 					</p>
 				</label>
 
 				<p class="text-[15px] text-neutral-500 dark:text-neutral-400">
 					Lees meer over deze instellingen in de
-					<a href="/privacy#persoonsgegevens" target="_blank" class="underline">
-						privacyverklaring
-					</a>.
+					<a href="/privacy" target="_blank" class="underline"> privacyverklaring </a>.
 				</p>
 			</div>
 		</div>
