@@ -17,6 +17,7 @@ const config = {
 				'form-action': ['self'],
 				'img-src': ['self', 'data:'],
 				'script-src': ['self'],
+				'style-src-attr': ['self', 'unsafe-inline'],
 			},
 		},
 	},
