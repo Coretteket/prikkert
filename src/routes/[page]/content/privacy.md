@@ -11,23 +11,29 @@ Prikkert is een gratis dienst van Quinten Coret ([prikkert@qntn.io](mailto:prikk
 
 Prikkert verwerkt alleen de persoonsgegevens die nodig zijn om het plannen van een groepsafspraak mogelijk te maken ([grondslag uitvoering overeenkomst](https://www.autoriteitpersoonsgegevens.nl/themas/basis-avg/avg-algemeen/grondslagen-avg-uitgelegd#grondslag-overeenkomst)).
 
-De organisator van een afspraak verstrekt een titel en datumopties, en kan er voor kiezen om een naam en beschrijving toe te voegen. Een deelnemer verstrekt een naam en hun beschikbaarheid per datumoptie.
+De organisator van een afspraak verstrekt een titel en datumopties, en kan ervoor kiezen om een naam en beschrijving toe te voegen. Een deelnemer verstrekt een naam en hun beschikbaarheid per datumoptie.
 
 Je hebt geen account nodig. Prikkert verwerkt geen mailadressen of wachtwoorden.
 
+## Cookies
+
+Prikkert gebruikt alleen [functionele cookies](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies) om de dienst te laten werken. Daardoor is er geen cookiebanner nodig.
+
+Jouw sessie als organisator of deelnemer wordt opgeslagen in een cookie. Hierdoor kun je je afspraak of beschikbaarheid alleen bewerken via het apparaat en de browser die je oorspronkelijk gebruikte.
+
+De organisator kan ervoor kiezen om het beheer van de afspraak via een link te delen met andere apparaten, browsers of personen.
+
 ## Zichtbaarheid
 
-Prikkert deelt de naam en beschikbaarheid van deelnemers standaard met iedereen die de link naar de afspraak heeft.
+Prikkert deelt de naam en beschikbaarheid van deelnemers standaard met iedereen die de link naar een afspraak heeft.
 
-De organisator kan ervoor kiezen om de reacties van deelnemers te verbergen voor iedereen behalve zichzelf. De organisator kan daarnaast ook anonieme reacties toestaan.
+De organisator kan ervoor kiezen om de reacties van deelnemers te verbergen. De reacties zijn dan alleen zichtbaar voor beheerders van de afspraak. Daarnaast kan de organisator ook anonieme reacties toestaan.
 
 ## Derden
 
 Jouw persoonsgegevens worden nooit verkocht. Gegevens worden niet met derde partijen gedeeld, behalve met de hostingdienst of indien wettelijk verplicht.
 
 Je wordt op geen enkele manier getrackt. Prikkert maakt geen gebruik van profilering of geautomatiseerde besluitvorming.
-
-Prikkert gebruikt alleen [functionele cookies](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/wat-zijn-cookies) om de dienst te laten werken. Daardoor is er geen cookiebanner nodig.
 
 ## Bewaren
 

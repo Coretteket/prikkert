@@ -9,7 +9,11 @@ Prikkert is een gratis dienst van Quinten Coret ([prikkert@qntn.io](mailto:prikk
 
 ## Gebruik
 
-Je mag Prikkert vrij gebruiken voor het plannen van afspraken. Het is niet toegestaan de dienst te gebruiken op een manier die schadelijk is voor de dienst zelf of voor anderen, zoals het plaatsen van illegale inhoud of het onredelijk belasten van de dienst.
+Je mag Prikkert vrij gebruiken voor het plannen van afspraken.
+
+Het is niet toegestaan de dienst te gebruiken op een manier die schadelijk is voor de dienst zelf of voor anderen, zoals het plaatsen van illegale inhoud of het onredelijk belasten van de dienst.
+
+Prikkert behoudt zich het recht voor om dergelijke inhoud zonder waarschuwing te verwijderen.
 
 ## Aansprakelijkheid
 
@@ -17,7 +21,7 @@ De ontwikkelaar van Prikkert is niet aansprakelijk voor enige schade die voortvl
 
 Prikkert wordt aangeboden zoals het is. Hoewel er gestreefd wordt naar een goede werking en beschikbaarheid, kan er geen garantie worden gegeven dat de dienst foutloos of ononderbroken werkt.
 
-De gebruiker is zelf volledig verantwoordelijk voor teksten die via Prikkert wordt geplaatst.
+De gebruiker is zelf volledig verantwoordelijk voor teksten die via Prikkert worden geplaatst.
 
 Op deze voorwaarden is Nederlands recht van toepassing.
 
