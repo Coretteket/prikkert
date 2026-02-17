@@ -415,10 +415,11 @@
 {#if event.isOrganizer && !event.selectedOption}
 	<Button
 		type="submit"
-		variant="primary"
+		variant={event.numberOfResponses - +event.hasResponded > 0 ? 'primary' : 'secondary'}
 		class="mt-10 ml-auto"
 		onclick={() => (selectDateDialog = true)}>Datum bevestigen</Button
 	>
+
 	<EventSelectDialog bind:open={selectDateDialog} id={event.id} options={event.options} />
 {/if}
 
