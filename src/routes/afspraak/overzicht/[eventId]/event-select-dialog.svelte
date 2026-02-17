@@ -27,7 +27,7 @@
 	>
 		<p class="mb-4 text-lg font-medium">Datum bevestigen</p>
 		<p class="mb-4 text-neutral-700 dark:text-neutral-300">
-			Selecteer een optie om de datum te prikken. Dit kan later nog worden ingetrokken.
+			Selecteer een optie om de datum te prikken.
 		</p>
 		<select
 			{...selectDate.fields.optionId.as('select')}

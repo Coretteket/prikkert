@@ -29,7 +29,7 @@
 		<p class="mb-6 text-neutral-700 dark:text-neutral-300">
 			Als je doorgaat wordt de geprikte datum niet meer
 			<Date option={selectedOption} class="font-medium text-neutral-800 dark:text-neutral-200" />.
-			Je kunt later opnieuw een datum prikken.
+			Je kunt daarna opnieuw een datum prikken.
 		</p>
 		<div class="flex justify-end gap-3">
 			<Button formmethod="dialog" variant="secondary">Annuleren</Button>
