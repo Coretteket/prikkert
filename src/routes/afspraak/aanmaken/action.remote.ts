@@ -9,6 +9,8 @@ import { EventFormSchema } from '@/shared/event/schema'
 import { deduplicate } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
+import { hasSession } from '../../data.remote'
+
 export const createEvent = form(EventFormSchema, async (parsed) => {
 	const token = generateNanoID(21)
 	const hashedToken = await encodeSHA256(token)
@@ -53,6 +55,8 @@ export const createEvent = form(EventFormSchema, async (parsed) => {
 
 		return [event]
 	})
+
+	hasSession().set(true)
 
 	redirect(303, `/afspraak/overzicht/${event.id}`)
 })

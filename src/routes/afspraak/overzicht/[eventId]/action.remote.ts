@@ -8,6 +8,7 @@ import { deleteSessionCookie, setSessionCookie } from '@/server/session/cookies'
 import * as v from '@/server/validation'
 import { db, schema } from '@/server/db'
 
+import { hasSession } from '../../../data.remote'
 import { getEventResponses } from './data.remote'
 
 export const removeEvent = form(v.object({ id: v.string() }), async ({ id: eventId }) => {
@@ -19,6 +20,8 @@ export const removeEvent = form(v.object({ id: v.string() }), async ({ id: event
 		isOrganizer: true,
 		eventId,
 	})
+
+	hasSession().refresh()
 
 	redirect(303, '/afspraken')
 })
@@ -88,6 +91,7 @@ export const validateOrganizerShareLink = form(
 		})
 
 		getEventResponses(session.id).refresh()
+		hasSession().set(true)
 
 		return true
 	},

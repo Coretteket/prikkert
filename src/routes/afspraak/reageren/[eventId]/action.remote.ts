@@ -11,6 +11,7 @@ import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
 import { getEventForSession } from './data.remote'
+import { hasSession } from '../../../data.remote'
 
 const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
 
@@ -134,6 +135,7 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	})
 
 	getEventForSession(eventId).refresh()
+	hasSession().set(true)
 
 	const isOrganizer = await validateSession(
 		locals.session.organizer.get(eventId),
