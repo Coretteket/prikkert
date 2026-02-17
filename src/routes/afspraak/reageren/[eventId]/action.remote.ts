@@ -3,10 +3,10 @@ import { asc, eq, sql } from 'drizzle-orm'
 
 import { form, getRequestEvent } from '$app/server'
 
+import { deleteSessionCookie, setSessionCookie } from '@/server/session/cookies'
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
 import { validateSession } from '@/server/session/validation'
 import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
-import { setSessionCookie } from '@/server/session/cookies'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
@@ -143,4 +143,23 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	if (isOrganizer || !event.hideResponses) {
 		redirect(303, `/afspraak/overzicht/${eventId}`)
 	}
+})
+
+export const deleteAvailability = form('unchecked', async () => {
+	const { locals, params } = getRequestEvent()
+	const eventId = params.eventId
+
+	if (!eventId) error(404, 'Afspraak niet gevonden')
+
+	const session = locals.session.respondent.get(eventId)
+	if (!session) error(403, 'Niet toegestaan.')
+
+	const isValid = await validateSession(session)
+	if (!isValid) error(403, 'Niet toegestaan.')
+
+	await db.delete(schema.respondents).where(eq(schema.respondents.id, session.respondentId))
+
+	deleteSessionCookie({ isOrganizer: false, eventId })
+
+	getEventForSession(eventId).refresh()
 })

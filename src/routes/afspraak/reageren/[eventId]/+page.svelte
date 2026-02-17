@@ -4,9 +4,12 @@
 	import { noReset } from '@/shared/utils'
 
 	import OrganizerReceiveDialog from '../../overzicht/[eventId]/organizer-receive-dialog.svelte'
+	import AvailabilityRemoveDialog from './availability-remove-dialog.svelte'
 	import { submitAvailability } from './action.remote'
 	import { getEventForSession } from './data.remote'
 	import OptionInput from './option-input.svelte'
+
+	let removeDialogOpen = $state(false)
 
 	let { params } = $props()
 
@@ -143,16 +146,28 @@
 		</div>
 
 		{#if !event.selectedOption}
-			<Button
-				type="submit"
-				variant="primary"
-				disabled={submitAvailability.pending > 0}
-				class="mt-10 ml-auto"
-			>
-				Beschikbaarheid opslaan
-			</Button>
+			<div class="mt-10 flex flex-wrap-reverse justify-end gap-3">
+				{#if event.hasResponded}
+					<Button
+						type="button"
+						variant="secondary"
+						disabled={submitAvailability.pending > 0}
+						onclick={() => (removeDialogOpen = true)}
+					>
+						Reactie verwijderen
+					</Button>
+				{/if}
+				<Button
+					type="submit"
+					variant="primary"
+					disabled={submitAvailability.pending > 0}
+				>
+					Reactie opslaan
+				</Button>
+			</div>
 		{/if}
 	</form>
 {/if}
 
+<AvailabilityRemoveDialog bind:open={removeDialogOpen} />
 <OrganizerReceiveDialog id={event.id} isOrganizer={event.isOrganizer} />
