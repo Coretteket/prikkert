@@ -8,6 +8,17 @@ const config = {
 		adapter: adapter(),
 		alias: { '@/*': './src/lib/*' },
 		experimental: { remoteFunctions: true },
+		csp: {
+			mode: 'auto',
+			directives: {
+				'default-src': ['self'],
+				'base-uri': ['self'],
+				'frame-ancestors': ['none'],
+				'form-action': ['self'],
+				'img-src': ['self', 'data:'],
+				'script-src': ['self'],
+			},
+		},
 	},
 	compilerOptions: {
 		experimental: { async: true },

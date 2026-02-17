@@ -21,7 +21,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.session = parseSessionCookies()
 	event.locals.theme = parseTheme()
 
-	return resolve(event, {
+	const response = await resolve(event, {
 		transformPageChunk: ({ html }) => html.replace('%sveltekit.theme%', event.locals.theme),
 	})
+
+	response.headers.set('Referrer-Policy', 'same-origin')
+
+	return response
 }
