@@ -1,6 +1,6 @@
 # Prikkert
 
-Prikkert is the open-source app for scheduling groep events. Always free, no ads.
+Prikkert is the open-source app for scheduling group events. Always free, no ads.
 
 ## Development
 
