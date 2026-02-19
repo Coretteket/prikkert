@@ -95,6 +95,10 @@
 		{:else}
 			Er hebben tot nu toe {event.numberOfResponses} personen gereageerd.
 		{/if}
+
+		{#if event.hideResponses}
+			Reacties zijn standaard alleen zichtbaar op dit apparaat.
+		{/if}
 	{/if}
 </p>
 
