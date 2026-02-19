@@ -2,22 +2,36 @@
 	import '@fontsource-variable/golos-text'
 	import '../app.css'
 
+	import { page } from '$app/state'
+
 	import Loading from '@/components/loading.svelte'
 	import Button from '@/components/button.svelte'
 	import { getPageTitle } from '@/shared/title'
 	import { toggleTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
 	import icon from '@/assets/icon.svg'
+	import og from '@/assets/og.png'
 
 	import Background from './background.svelte'
 	import { hasSession } from './data.remote'
 
 	let { children } = $props()
+
+	const description = 'Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak.'
 </script>
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={icon} />
 	<title>{getPageTitle()}</title>
+	<meta name="description" content={description} />
+	<meta property="og:url" content={'https://prikkert.nl' + page.url.pathname} />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content={getPageTitle()} />
+	<meta property="og:description" content={description} />
+	<meta property="og:image" content={og} />
+	<meta property="og:site_name" content="Prikkert" />
+	<meta property="og:locale" content="nl_NL" />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <Loading />
