@@ -53,7 +53,7 @@
 				<input
 					type="text"
 					class="w-full rounded-md border px-3.5 py-2 dark:bg-neutral-800/50 dark:text-neutral-300"
-					placeholder="Vul een opmerking in..."
+					placeholder="Vul een opmerking in... (optioneel)"
 					value={slot.note ?? ''}
 					oninput={(e) => updateSlot(i, { note: e.currentTarget.value })}
 				/>

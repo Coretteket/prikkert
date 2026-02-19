@@ -184,7 +184,7 @@
 	{/if}
 
 	{#if !showName || !showDescription}
-		<div class="-mt-6 flex gap-3">
+		<div class="-mt-6 flex flex-wrap gap-3">
 			{#if !showName}
 				<Button type="button" variant="secondary" size="sm" onclick={() => (showName = true)}>
 					Naam toevoegen
@@ -307,7 +307,7 @@
 					<p
 						class="text-neutral-500 py-4 absolute left-1/2 top-1/2 -translate-1/2 text-center text-balance dark:text-neutral-400"
 					>
-						Selecteer datums om opties aan te passen.
+						Selecteer datums om opmerkingen en tijden toe te voegen.
 					</p>
 				{/each}
 			</div>
@@ -315,10 +315,10 @@
 	</div>
 
 	{#if !showOptions || !showSettings}
-		<div class="-mt-6 mb-8 flex gap-3">
+		<div class="-mt-6 mb-8 flex flex-wrap gap-3">
 			{#if !showOptions}
 				<Button type="button" variant="secondary" size="sm" onclick={() => (showOptions = true)}>
-					Opties aanpassen
+					Opmerkingen en tijden toevoegen
 				</Button>
 			{/if}
 			{#if !showSettings}
