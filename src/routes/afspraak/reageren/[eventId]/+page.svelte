@@ -52,6 +52,12 @@
 		{:else}
 			Je kunt niet meer reageren.
 		{/if}
+	{:else if event.hasResponded}
+		Je hebt gereageerd op deze afspraak{#if event.organizerName}
+			van
+			<strong class="font-medium text-neutral-800 dark:text-neutral-200">
+				{event.organizerName}
+			</strong>{/if}. Je kan je beschikbaarheid nog aanpassen of verwijderen.
 	{:else}
 		Je bent
 		{#if event.organizerName}
@@ -157,11 +163,7 @@
 						Reactie verwijderen
 					</Button>
 				{/if}
-				<Button
-					type="submit"
-					variant="primary"
-					disabled={submitAvailability.pending > 0}
-				>
+				<Button type="submit" variant="primary" disabled={submitAvailability.pending > 0}>
 					Reactie opslaan
 				</Button>
 			</div>
