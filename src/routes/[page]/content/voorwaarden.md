@@ -5,7 +5,7 @@ description: Met Prikkert kan je samen afspraken plannen. Je gaat akkoord met de
 
 ## Gratis dienst
 
-Prikkert is een gratis dienst van Quinten Coret ([prikkert@qntn.io](mailto:prikkert@qntn.io)). De broncode is open source, vrijgegeven voor hergebruik onder de [European Union Public License](https://github.com/Coretteket/prikkert/blob/main/LICENSE). Het streven is dat de dienst altijd kosteloos en reclamevrij blijft voor gebruikers.
+Prikkert is een gratis dienst van Quinten Coret ([prikkert@qntn.io](mailto:prikkert@qntn.io)). De broncode is open source, vrijgegeven voor hergebruik onder de [European Union Public License](https://codeberg.org/qcoret/prikkert/blob/main/LICENSE). Het streven is dat de dienst altijd kosteloos en reclamevrij blijft voor gebruikers.
 
 ## Gebruik
 
@@ -27,4 +27,4 @@ Op deze voorwaarden is Nederlands recht van toepassing.
 
 ## Wijzigingen
 
-Prikkert kan deze voorwaarden wijzigen. De dienst zelf kan ook worden aangepast of stopgezet. De volledige versiegeschiedenis van de dienst en voorwaarden is beschikbaar op [GitHub](https://github.com/coretteket/prikkert).
+Prikkert kan deze voorwaarden wijzigen. De dienst zelf kan ook worden aangepast of stopgezet. De volledige versiegeschiedenis van de dienst en voorwaarden is beschikbaar op [Codeberg](https://codeberg.org/qcoret/prikkert).

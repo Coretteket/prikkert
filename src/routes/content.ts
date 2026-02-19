@@ -64,7 +64,7 @@ export const faq = [
 	{
 		question: 'Waarom is Prikkert open source?',
 		answer:
-			"Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt, en iedereen een eigen versie kan opzetten. De broncode is openbaar te vinden op <a href='https://github.com/coretteket/prikkert' target='_blank' class='underline'>GitHub</a> en is vrijgegeven voor hergebruik onder de <a href='https://github.com/coretteket/prikkert/blob/main/LICENSE' target='_blank' class='underline'>European Union Public License</a>.",
+			"Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt, en iedereen een eigen versie kan opzetten. De broncode is openbaar te vinden op <a href='https://codeberg.org/qcoret/prikkert' target='_blank' class='underline'>Codeberg</a> en is vrijgegeven voor hergebruik onder de <a href='https://codeberg.org/qcoret/prikkert/src/branch/main/LICENSE' target='_blank' class='underline'>European Union Public License</a>.",
 	},
 	{
 		question: 'Wie heeft Prikkert gemaakt?',

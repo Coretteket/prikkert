@@ -33,7 +33,6 @@
 
 	const ISSUE_THRESHOLD = 3
 
-	// Has to be at bottom until issue fixed: https://github.com/sveltejs/svelte/issues/17261
 	const event = $derived(await getEventForSession(params.eventId))
 </script>
 

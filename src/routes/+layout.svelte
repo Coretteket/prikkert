@@ -81,7 +81,7 @@
 		>
 			<a href="/privacy" class="hover:underline">Privacy</a>
 			<a href="/voorwaarden" class="hover:underline">Voorwaarden</a>
-			<a href="https://github.com/coretteket/prikkert" class="hover:underline" target="_blank">
+			<a href="https://codeberg.org/qcoret/prikkert" class="hover:underline" target="_blank">
 				Open source
 			</a>
 		</div>
