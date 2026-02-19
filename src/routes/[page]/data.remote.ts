@@ -1,5 +1,4 @@
 import { marked, type RendererObject } from 'marked'
-import { GITHUB_PAT } from '$env/static/private'
 import parseFrontmatter from 'front-matter'
 import { error } from '@sveltejs/kit'
 
@@ -17,9 +16,9 @@ const content = import.meta.glob('./content/*.md', {
 
 const FrontmatterSchema = v.object({ title: v.string(), description: v.string() })
 
-const GithubAPISchema = v.array(
-	v.object({ sha: v.string(), commit: v.object({ author: v.object({ date: v.string() }) }) }),
-)
+const CodebergContentsSchema = v.object({ last_commit_sha: v.string() })
+
+const CodebergCommitSchema = v.object({ sha: v.string(), created: v.string() })
 
 const renderer = {
 	link(token) {
@@ -47,20 +46,33 @@ export const renderMarkdown = prerender(
 
 		const { fetch } = getRequestEvent()
 
-		const response = await fetch(
-			`https://api.github.com/repos/coretteket/prikkert/commits?path=${encodeURIComponent(`src/routes/[page]/content/${id}.md`)}&per_page=1`,
-			{ headers: { Authorization: `Bearer ${GITHUB_PAT}` } },
+		const filePath = `src/routes/[page]/content/${id}.md`
+		const encodedPath = filePath
+			.split('/')
+			.map((e) => encodeURIComponent(e))
+			.join('/')
+
+		const contentsResponse = await fetch(
+			`https://codeberg.org/api/v1/repos/qcoret/prikkert/contents/${encodedPath}`,
 		)
 
-		const parsedResponse = v.safeParse(GithubAPISchema, await response.json())
+		const parsedContents = v.safeParse(CodebergContentsSchema, await contentsResponse.json())
 
-		if (!parsedResponse.success) return { ...parsedFrontmatter.output, body }
+		if (!parsedContents.success) return { ...parsedFrontmatter.output, body }
 
-		const lastModified = Temporal.Instant.from(parsedResponse.output[0].commit.author.date)
+		const commitResponse = await fetch(
+			`https://codeberg.org/api/v1/repos/qcoret/prikkert/git/commits/${parsedContents.output.last_commit_sha}`,
+		)
+
+		const parsedCommit = v.safeParse(CodebergCommitSchema, await commitResponse.json())
+
+		if (!parsedCommit.success) return { ...parsedFrontmatter.output, body }
+
+		const lastModified = Temporal.Instant.from(parsedCommit.output.created)
 			.toZonedDateTimeISO('Europe/Amsterdam')
 			.toLocaleString('nl', { dateStyle: 'long' })
 
-		const lastModifiedCommit = parsedResponse.output[0].sha
+		const lastModifiedCommit = parsedCommit.output.sha
 
 		return { ...parsedFrontmatter.output, body, lastModified, lastModifiedCommit }
 	},
