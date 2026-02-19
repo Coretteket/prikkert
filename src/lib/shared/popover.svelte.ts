@@ -26,7 +26,12 @@ interface Popover {
 
 class NativePopover implements Popover {
 	id: string
-	isOpen: boolean = $state(false)
+	#isOpen = $state(false)
+
+	get isOpen() {
+		return this.#isOpen
+	}
+
 	triggerAttrs: Record<string, string | number | boolean | undefined>
 	floatingAttrs: Record<string, string | number | boolean | undefined>
 	closeAttrs: Record<string, string | undefined>
@@ -64,7 +69,15 @@ class NativePopover implements Popover {
 	}
 
 	triggerHandler = () => {}
-	floatingHandler = () => {}
+
+	#handleToggle = (event: Event) =>
+		'newState' in event && (this.#isOpen = event.newState === 'open')
+
+	floatingHandler = (node: HTMLElement) => {
+		node.addEventListener('toggle', this.#handleToggle)
+		return () => node.removeEventListener('toggle', this.#handleToggle)
+	}
+
 	closeHandler = () => {}
 }
 
