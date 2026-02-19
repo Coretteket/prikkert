@@ -1,8 +1,7 @@
 <script lang="ts">
+	import { faq, promises, steps } from '@/shared/content'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
-
-	import { faq, promises, steps } from './content'
 </script>
 
 <header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">

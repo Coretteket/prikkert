@@ -6,7 +6,6 @@
 
 	import Loading from '@/components/loading.svelte'
 	import Button from '@/components/button.svelte'
-	import { getPageTitle } from '@/shared/title'
 	import { toggleTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
 	import icon from '@/assets/icon.svg'
@@ -14,10 +13,9 @@
 
 	import Background from './background.svelte'
 	import { hasSession } from './data.remote'
+	import { description, generateJSONLD, getPageTitle } from '@/shared/seo'
 
 	let { children } = $props()
-
-	const description = 'Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak.'
 </script>
 
 <svelte:head>
@@ -32,6 +30,7 @@
 	<meta property="og:site_name" content="Prikkert" />
 	<meta property="og:locale" content="nl_NL" />
 	<meta name="twitter:card" content="summary_large_image" />
+	{@html `<script type="application/ld+json">${generateJSONLD()}</script>`}
 </svelte:head>
 
 <Loading />
