@@ -59,7 +59,7 @@ export const faq = [
 	{
 		question: 'Hoe werkt Prikkert zonder account?',
 		answer:
-			"Prikkert onthoudt je via een cookie in je browser. Je kan jouw afspraak of beschikbaarheid dus aanpassen vanaf hetzelfde apparaat. Als organisator kan je het beheer via een link delen, om ook vanaf een ander apparaat of met iemand anders te beheren. Lees meer in de <a href='/privacy' class='underline'>privacyverklaring</a>.",
+			"Je hebt geen e-mail of wachtwoord nodig. Prikkert herkent je via je een cookie in je browser. Wil je later je afspraak of beschikbaarheid aanpassen? Doe dit dan op hetzelfde apparaat en in dezelfde browser. Als organisator kun je een speciale link delen om de afspraak ook op een ander apparaat, of samen met iemand anders, te beheren. Lees meer in de <a href='/privacy' class='underline'>privacyverklaring</a>.",
 	},
 	{
 		question: 'Waarom is Prikkert open source?',
