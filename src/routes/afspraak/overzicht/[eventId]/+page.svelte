@@ -71,7 +71,11 @@
 				{maybe} misschien{/if}.
 		{/if}
 	{:else}
-		{#if event.isOrganizer}
+		{#if event.isOrganizer && event.numberOfResponses === 0}
+			Vul je eigen beschikbaarheid in en nodig anderen uit om dat ook te doen.
+		{:else if event.isOrganizer && event.hasResponded && event.numberOfResponses === 1}
+			Nodig mensen uit om hun beschikbaarheid in te vullen.
+		{:else if event.isOrganizer}
 			Je hebt mensen uitgenodigd om hun beschikbaarheid in te vullen.
 		{:else if event.hasResponded}
 			Je hebt je beschikbaarheid ingevuld voor deze afspraak.
@@ -218,7 +222,7 @@
 
 	<div class="mb-10 flex flex-wrap gap-3">
 		<Button
-			variant="secondary"
+			variant={event.numberOfResponses > 1 || !event.hasResponded ? 'secondary' : 'primary'}
 			size="sm"
 			onclick={() => {
 				navigator.clipboard.writeText(eventLink)
@@ -226,7 +230,7 @@
 				setTimeout(() => (linkCopied = false), 1000)
 			}}
 		>
-			<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="size-4.5" />
+			<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="size-5 mt-px" />
 			Link kopiëren
 		</Button>
 		{#if !browser || navigator.share}
@@ -236,7 +240,7 @@
 				variant="secondary"
 				onclick={() => navigator.share({ url: eventLink })}
 			>
-				<Icon icon="tabler--share" class="size-4.5" />
+				<Icon icon="tabler--share" class="size-5 mt-px" />
 				Link delen
 			</Button>
 		{:else}
@@ -248,7 +252,7 @@
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				<Icon icon="tabler--mail" class="size-4.5" />
+				<Icon icon="tabler--mail" class="size-5 mt-px" />
 				Delen via mail
 			</Button>
 		{/if}
