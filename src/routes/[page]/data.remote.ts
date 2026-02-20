@@ -1,5 +1,6 @@
 import { marked, type RendererObject } from 'marked'
 import parseFrontmatter from 'front-matter'
+import { XMLParser } from 'fast-xml-parser'
 import { error } from '@sveltejs/kit'
 
 import { getRequestEvent, prerender } from '$app/server'
@@ -16,9 +17,13 @@ const content = import.meta.glob('./content/*.md', {
 
 const FrontmatterSchema = v.object({ title: v.string(), description: v.string() })
 
-const CodebergContentsSchema = v.object({ last_commit_sha: v.string() })
-
-const CodebergCommitSchema = v.object({ sha: v.string(), created: v.string() })
+const FeedSchema = v.object({
+	rss: v.object({
+		channel: v.object({
+			item: v.array(v.object({ link: v.string(), pubDate: v.string() })),
+		}),
+	}),
+})
 
 const renderer = {
 	link(token) {
@@ -31,50 +36,57 @@ const renderer = {
 	},
 } satisfies RendererObject
 
-export const renderMarkdown = prerender(
+async function renderMarkdown(page: string) {
+	const rawText = content[`./content/${page}.md`]
+	if (!rawText || typeof rawText !== 'string') return error(404)
+
+	const frontmatter = parseFrontmatter(rawText)
+	const parsedFrontmatter = v.safeParse(FrontmatterSchema, frontmatter.attributes)
+
+	if (!parsedFrontmatter.success) return error(500)
+
+	const body = await marked.use({ renderer }).parse(frontmatter.body)
+
+	return { ...parsedFrontmatter.output, body }
+}
+
+async function getLastCommit(page: string) {
+	const { fetch } = getRequestEvent()
+
+	const filePath = `src/routes/[page]/content/${page}.md`
+	const encodedPath = filePath
+		.split('/')
+		.map((e) => encodeURIComponent(e))
+		.join('/')
+
+	const contentsResponse = await fetch(
+		`https://codeberg.org/qcoret/prikkert/rss/branch/main/${encodedPath}`,
+	)
+
+	const parser = new XMLParser({ isArray: (name) => name === 'item' })
+
+	const feed = parser.parse(await contentsResponse.text())
+	const parsedFeed = v.safeParse(FeedSchema, feed)
+
+	if (!parsedFeed.success) return {}
+
+	const lastCommit = parsedFeed.output.rss.channel.item[0]
+
+	const lastModified = Temporal.Instant.fromEpochMilliseconds(Date.parse(lastCommit.pubDate))
+		.toZonedDateTimeISO('Europe/Amsterdam')
+		.toLocaleString('nl', { dateStyle: 'long' })
+
+	const link = `${lastCommit.link}?files=${encodedPath}`
+
+	return { lastModified, link }
+}
+
+export const getPage = prerender(
 	v.string(),
 	async (id: string) => {
-		const rawText = content[`./content/${id}.md`]
-		if (!rawText || typeof rawText !== 'string') return error(404)
-
-		const frontmatter = parseFrontmatter(rawText)
-		const parsedFrontmatter = v.safeParse(FrontmatterSchema, frontmatter.attributes)
-
-		if (!parsedFrontmatter.success) return error(500)
-
-		const body = await marked.use({ renderer }).parse(frontmatter.body)
-
-		const { fetch } = getRequestEvent()
-
-		const filePath = `src/routes/[page]/content/${id}.md`
-		const encodedPath = filePath
-			.split('/')
-			.map((e) => encodeURIComponent(e))
-			.join('/')
-
-		const contentsResponse = await fetch(
-			`https://codeberg.org/api/v1/repos/qcoret/prikkert/contents/${encodedPath}`,
-		)
-
-		const parsedContents = v.safeParse(CodebergContentsSchema, await contentsResponse.json())
-
-		if (!parsedContents.success) return { ...parsedFrontmatter.output, body }
-
-		const commitResponse = await fetch(
-			`https://codeberg.org/api/v1/repos/qcoret/prikkert/git/commits/${parsedContents.output.last_commit_sha}`,
-		)
-
-		const parsedCommit = v.safeParse(CodebergCommitSchema, await commitResponse.json())
-
-		if (!parsedCommit.success) return { ...parsedFrontmatter.output, body }
-
-		const lastModified = Temporal.Instant.from(parsedCommit.output.created)
-			.toZonedDateTimeISO('Europe/Amsterdam')
-			.toLocaleString('nl', { dateStyle: 'long' })
-
-		const lastModifiedCommit = parsedCommit.output.sha
-
-		return { ...parsedFrontmatter.output, body, lastModified, lastModifiedCommit }
+		const { body, title, description } = await renderMarkdown(id)
+		const { lastModified, link } = await getLastCommit(id)
+		return { body, title, description, lastModified, link }
 	},
 	{
 		dynamic: true,
