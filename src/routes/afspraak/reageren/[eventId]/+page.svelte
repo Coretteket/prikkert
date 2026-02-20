@@ -52,14 +52,18 @@
 			Je kunt niet meer reageren.
 		{/if}
 	{:else if event.hasResponded}
-		Je hebt gereageerd op deze afspraak{#if event.organizerName}
-			van
+		{#if event.organizerName && !event.isOrganizer}
+			Je hebt gereageerd op deze afspraak van
 			<strong class="font-medium text-neutral-800 dark:text-neutral-200">
 				{event.organizerName}
-			</strong>{/if}. Je kan je beschikbaarheid nog aanpassen of verwijderen.
+			</strong>.
+		{:else}
+			Je hebt gereageerd op deze afspraak.
+		{/if}
+		Je kan je beschikbaarheid nog aanpassen of verwijderen.
 	{:else}
 		Je bent
-		{#if event.organizerName}
+		{#if event.organizerName && !event.isOrganizer}
 			door
 			<strong class="font-medium text-neutral-800 dark:text-neutral-200">
 				{event.organizerName}
