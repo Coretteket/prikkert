@@ -4,7 +4,7 @@
 	import Icon from '@/components/icon.svelte'
 </script>
 
-<header class="mt-8 mb-24 space-y-4 sm:mt-12 sm:mb-28">
+<header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">
 	<h1
 		class="mb-8 text-center text-[2.2rem] leading-[1.2] font-[650] text-neutral-900 xs:text-[2.5rem] sm:text-5xl dark:text-neutral-100"
 	>
