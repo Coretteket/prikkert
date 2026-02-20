@@ -5,13 +5,13 @@
 </script>
 
 <header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">
-	<h2
+	<h1
 		class="mb-8 text-center text-[2.2rem] leading-[1.2] font-[650] text-neutral-900 xs:text-[2.5rem] sm:text-5xl dark:text-neutral-100"
 	>
 		<p>Samen plannen,</p>
 		<p>zo geprikt</p>
-	</h2>
-	<h3
+	</h1>
+	<h2
 		class="mx-auto mb-8 max-w-80 text-center text-xl leading-normal text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
 	>
 		Vind
@@ -19,14 +19,14 @@
 		en
 		<strong class="font-bold text-pink-600 dark:text-pink-50">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
-	</h3>
+	</h2>
 	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="lg" class="mx-auto">
 		Afspraak aanmaken
 	</Button>
 </header>
 
 <section class="mb-20">
-	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h3>
+	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -55,7 +55,7 @@
 </section>
 
 <section class="mb-20">
-	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h3>
+	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -82,7 +82,7 @@
 </section>
 
 <section>
-	<h3 class="mb-4 text-center text-xl font-semibold xs:text-2xl" id="faq">Hoe werkt Prikkert?</h3>
+	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl" id="faq">Hoe werkt Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
