@@ -22,6 +22,9 @@
 	<link rel="icon" type="image/svg+xml" href={icon} />
 	<title>{getPageTitle()}</title>
 	<meta name="description" content={description} />
+	<meta itemprop="name" content={getPageTitle()} />
+	<meta itemprop="description" content={description} />
+	<meta itemprop="image" content={og} />
 	<meta property="og:url" content={'https://prikkert.nl' + page.url.pathname} />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content={getPageTitle()} />

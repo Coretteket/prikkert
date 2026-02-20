@@ -28,7 +28,7 @@ export function getPageTitle() {
 			return formatTitle(page.params.page!)
 		}
 		default: {
-			return 'Prikkert'
+			return 'Prikkert · Samen plannen, zo geprikt'
 		}
 	}
 }
