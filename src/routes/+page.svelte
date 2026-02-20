@@ -4,7 +4,7 @@
 	import Icon from '@/components/icon.svelte'
 </script>
 
-<header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">
+<header class="mt-8 mb-24 space-y-4 sm:mt-12 sm:mb-28">
 	<h1
 		class="mb-8 text-center text-[2.2rem] leading-[1.2] font-[650] text-neutral-900 xs:text-[2.5rem] sm:text-5xl dark:text-neutral-100"
 	>
@@ -25,7 +25,7 @@
 	</Button>
 </header>
 
-<section class="mb-20">
+<section class="mb-24">
 	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
@@ -51,10 +51,9 @@
 			</div>
 		{/each}
 	</div>
-	<Button as="link" href="#faq" variant="tertiary" class="mx-auto">Hoe werkt dat?</Button>
 </section>
 
-<section class="mb-20">
+<section class="mb-24">
 	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
@@ -76,8 +75,8 @@
 			</div>
 		{/each}
 	</div>
-	<Button as="link" href="/afspraak/aanmaken" variant="tertiary" class="mx-auto">
-		Begin met plannen
+	<Button as="link" href="/afspraak/aanmaken" variant="primary" class="mt-12 mx-auto">
+		Beginnen met plannen
 	</Button>
 </section>
 
@@ -91,7 +90,7 @@
 	<div class="mx-auto max-w-130">
 		{#each faq as { question, answer }, i}
 			<details
-				class="group mb-3 pb-3 not-last-of-type:border-b motion-safe:transition"
+				class="group mb-3 not-last-of-type:pb-3 not-last-of-type:border-b motion-safe:transition"
 				name="faq-item"
 				open={i === 0}
 			>
@@ -109,8 +108,8 @@
 			</details>
 		{/each}
 	</div>
-	<Button as="link" href="mailto:prikkert@qntn.io" variant="tertiary" class="mx-auto">
-		Neem contact op
+	<Button as="link" href="mailto:prikkert@qntn.io" variant="primary" class="mt-12 mx-auto">
+		Contact opnemen
 	</Button>
 </section>
 
