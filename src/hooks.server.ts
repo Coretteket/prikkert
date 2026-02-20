@@ -10,6 +10,8 @@ import { cron } from './cron.server'
 
 export const init = () => !dev && !building && cron.start()
 
+export const PUBLIC_PATHS = ['/', '/afspraak/aanmaken', '/privacy', '/voorwaarden']
+
 export const handle: Handle = async ({ event, resolve }) => {
 	const path = event.url.pathname.slice(1)
 	if (path.length === ID_LENGTH && !path.includes('/'))
@@ -23,6 +25,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 	})
 
 	response.headers.set('Referrer-Policy', 'same-origin')
+
+	response.headers.set(
+		'X-Robots-Tag',
+		PUBLIC_PATHS.includes(event.url.pathname) ? 'all' : 'noindex, nofollow',
+	)
 
 	return response
 }
