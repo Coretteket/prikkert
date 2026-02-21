@@ -14,8 +14,9 @@ export const PUBLIC_PATHS = ['/', '/afspraak/aanmaken', '/privacy', '/voorwaarde
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const path = event.url.pathname.slice(1)
-	if (path.length === ID_LENGTH && !path.includes('/'))
-		redirect(dev ? 307 : 308, `/afspraak/overzicht/${path}`)
+	if (path.length === ID_LENGTH && !path.includes('/')) {
+		redirect(303, `/afspraak/overzicht/${path}`)
+	}
 
 	event.locals.session = parseSessionCookies()
 	event.locals.theme = parseTheme()
