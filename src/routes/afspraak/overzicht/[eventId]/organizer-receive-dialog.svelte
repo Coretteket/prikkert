@@ -12,10 +12,11 @@
 
 	let token: string | undefined = $state()
 
-	onMount(() => {
+	onMount(async () => {
 		const hash = new URLSearchParams(location.hash.slice(1))
 		if (hash.has('organisator') === false) return
-		goto(`/afspraak/overzicht/${id}`, { replaceState: true, noScroll: true })
+		// navigate to remove hash from url
+		await goto(location.pathname, { replaceState: true, noScroll: true })
 		if (isOrganizer) return
 		token = hash.get('organisator') ?? undefined
 	})
@@ -25,7 +26,7 @@
 	<form
 		{...validateOrganizerShareLink.for(id).enhance(async ({ submit }) => {
 			await submit()
-			goto(`/afspraak/overzicht/${id}`, { replaceState: true, noScroll: true })
+			await goto(`/afspraak/overzicht/${id}`, { replaceState: true, noScroll: true })
 			token = undefined
 		})}
 	>

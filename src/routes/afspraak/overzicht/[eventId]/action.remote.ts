@@ -53,10 +53,7 @@ export const unselectDate = form(v.object({ id: v.string() }), async ({ id: even
 
 export const getOrganizerShareLink = query(v.string(), async (eventId) => {
 	const session = await requireOrganizerOrThrow(eventId)
-
-	const link = `${getRequestEvent().url.origin}/afspraak/overzicht/${eventId}#organisator=${session.token}`
-
-	return link
+	return `${getRequestEvent().url.origin}/${eventId}#organisator=${session.token}`
 })
 
 export const validateOrganizerShareLink = form(
