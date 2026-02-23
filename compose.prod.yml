@@ -21,6 +21,15 @@ services:
       - 'traefik.http.routers.prikkert.tls.certresolver=letsencrypt'
       - 'traefik.http.routers.prikkert.middlewares=myratelimit@file,mycompress@file,myhsts@file,mysecurityheaders@file'
 
+      - 'traefik.http.routers.prikkert-redirect.rule=Host(`www.prikkert.nl`)'
+      - 'traefik.http.routers.prikkert-redirect.entrypoints=web,websecure'
+      - 'traefik.http.routers.prikkert-redirect.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.prikkert-redirect.middlewares=redirect-to-prikkert'
+
+      - 'traefik.http.middlewares.redirect-to-prikkert.redirectregex.regex=^https?://[^/]+(.*)'
+      - 'traefik.http.middlewares.redirect-to-prikkert.redirectregex.replacement=https://prikkert.nl$${1}'
+      - 'traefik.http.middlewares.redirect-to-prikkert.redirectregex.permanent=true'
+
   db:
     image: postgres:alpine
     env_file:
