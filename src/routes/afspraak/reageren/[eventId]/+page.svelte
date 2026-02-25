@@ -2,6 +2,7 @@
 	import Button from '@/components/button.svelte'
 	import Date from '@/components/date.svelte'
 	import { noReset } from '@/shared/utils'
+	import { url } from '@/shared/url'
 
 	import OrganizerReceiveDialog from '../../overzicht/[eventId]/organizer-receive-dialog.svelte'
 	import AvailabilityRemoveDialog from './availability-remove-dialog.svelte'
@@ -75,14 +76,14 @@
 
 {#if event.selectedOption && !event.hasResponded}
 	{#if event.hideResponses}
-		<Button variant="secondary" as="link" href="/" size="md" class="-mt-4">
+		<Button variant="secondary" as="link" href={url("/")} size="md" class="-mt-4">
 			Terug naar voorpagina
 		</Button>
 	{:else}
 		<Button
 			variant="secondary"
 			as="link"
-			href="/afspraak/overzicht/{event.id}"
+			href={url(`/afspraak/overzicht/${event.id}`)}
 			size="md"
 			class="-mt-4"
 		>

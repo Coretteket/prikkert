@@ -9,6 +9,7 @@
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
 	import Date from '@/components/date.svelte'
+	import { url } from '@/shared/url'
 
 	import OrganizerReceiveDialog from './organizer-receive-dialog.svelte'
 	import OrganizerShareDialog from './organizer-share-dialog.svelte'
@@ -44,6 +45,9 @@
 	const event = $derived(await getEventResponses(page.params.eventId))
 	const eventLink = $derived(page.url.toString().replace('/afspraak/overzicht', ''))
 	// ^ for some reason `${page.url.origin}/${page.params.eventId}` doesn't work here
+
+	const ANONYMOUS = 'Anonieme deelnemer'
+	const NO_RESPONSES = 'Nog geen reacties'
 </script>
 
 <h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
@@ -108,11 +112,11 @@
 
 <div class="mb-10 flex flex-wrap gap-3">
 	{#if event.hasResponded && !event.selectedOption}
-		<Button as="link" href="/afspraak/reageren/{event.id}" variant="secondary">
+		<Button as="link" href={url(`/afspraak/reageren/${event.id}`)} variant="secondary">
 			Beschikbaarheid bewerken
 		</Button>
 	{:else if !event.selectedOption}
-		<Button as="link" href="/afspraak/reageren/{event.id}" variant="primary">
+		<Button as="link" href={url(`/afspraak/reageren/${event.id}`)} variant="primary">
 			Beschikbaarheid invullen
 		</Button>
 	{/if}
@@ -138,11 +142,11 @@
 					}}
 				>
 					<Icon icon="tabler--pin" class="mb-px size-5" />
-					Datum bevestigen
+					<span>Datum bevestigen</span>
 				</Button>
 				<Button
 					as="link"
-					href="/afspraak/bewerken/{event.id}"
+					href={url(`/afspraak/bewerken/${event.id}`)}
 					variant="ghost"
 					size="sm"
 					class="w-full!"
@@ -150,7 +154,7 @@
 					{...popover.closeAttrs}
 				>
 					<Icon icon="tabler--edit" class="mb-px size-5" />
-					Afspraak bewerken
+					<span>Afspraak bewerken</span>
 				</Button>
 			{:else}
 				<Button
@@ -164,7 +168,7 @@
 					}}
 				>
 					<Icon icon="tabler--pinned-off" class="mb-px size-5" />
-					Bevestiging intrekken
+					<span>Bevestiging intrekken</span>
 				</Button>
 			{/if}
 			<Button
@@ -230,7 +234,7 @@
 				setTimeout(() => (linkCopied = false), 1000)
 			}}
 		>
-			<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="size-5 mt-px" />
+			<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="mt-px size-5" />
 			Link kopiëren
 		</Button>
 		{#if !browser || navigator.share}
@@ -240,7 +244,7 @@
 				variant="secondary"
 				onclick={() => navigator.share({ url: eventLink })}
 			>
-				<Icon icon="tabler--share" class="size-5 mt-px" />
+				<Icon icon="tabler--share" class="mt-px size-5" />
 				Link delen
 			</Button>
 		{:else}
@@ -252,7 +256,7 @@
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				<Icon icon="tabler--mail" class="size-5 mt-px" />
+				<Icon icon="tabler--mail" class="mt-px size-5" />
 				Delen via mail
 			</Button>
 		{/if}
@@ -326,7 +330,7 @@
 						<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">{option.note}</p>
 					{/if}
 				</div>
-				<p class="shrink-0 text-neutral-600 dark:text-neutral-300">Nog geen reacties</p>
+				<p class="shrink-0 text-neutral-600 dark:text-neutral-300">{NO_RESPONSES}</p>
 			{:else}
 				<summary class="flex cursor-pointer flex-col p-5 pt-4">
 					<div class="mb-3 flex w-full justify-between gap-3">
@@ -402,7 +406,7 @@
 								<p
 									class={['text-neutral-800 dark:text-neutral-200', !response.name && 'opacity-90']}
 								>
-									{response.name || 'Anonieme deelnemer'}
+									{response.name || ANONYMOUS}
 								</p>
 								{#if response.note}
 									<p

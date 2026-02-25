@@ -3,6 +3,7 @@ import type { InferSelectModel } from 'drizzle-orm'
 import type { schema } from '@/server/db'
 
 import { Temporal } from '@/shared/temporal'
+import { TIMEZONE } from '@/shared/utils'
 
 export const getExpiryDate = (
 	options: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>[],
@@ -13,7 +14,7 @@ export const getExpiryDate = (
 		if (Temporal.PlainDateTime.compare(option.endsAt ?? option.startsAt, latestOption) > 0)
 			latestOption = option.endsAt ?? option.startsAt
 
-	return latestOption.toZonedDateTime('Europe/Amsterdam').add({ days: 90 }).toInstant().toString()
+	return latestOption.toZonedDateTime(TIMEZONE).add({ days: 90 }).toInstant().toString()
 }
 
 export const getOptionKey = (

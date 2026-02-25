@@ -1,0 +1,748 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-22T14:35:20.418Z\n"
+"PO-Revision-Date: 2026-02-22T14:35:20.418Z\n"
+"Last-Translator: \n"
+"Language: en\n"
+"Language-Team: \n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Source-Language: nl\n"
+"MIME-Version: 1.0\n"
+
+#: src/routes/+layout.svelte
+msgid "Prikkert"
+msgstr "Prikkert"
+
+#: src/routes/+layout.svelte
+msgid "Jouw afspraken"
+msgstr "Your events"
+
+#: src/lib/components/event/form.svelte
+#: src/routes/+layout.svelte
+#: src/routes/+page.svelte
+#: src/routes/afspraak/aanmaken/+page.svelte
+#: src/routes/afspraken/+page.svelte
+msgid "Afspraak aanmaken"
+msgstr "Create event"
+
+#: src/routes/+layout.svelte
+msgid "Privacy"
+msgstr "Privacy"
+
+#: src/routes/+layout.svelte
+msgid "Voorwaarden"
+msgstr "Terms"
+
+#: src/lib/shared/content.ts
+#: src/routes/+layout.svelte
+msgid "Open source"
+msgstr "Open source"
+
+#: src/routes/+page.svelte
+msgid "Vind <0>gratis</0> en <1>reclamevrij</1> het beste moment voor elke groepsafspraak."
+msgstr "Find the best moment for every group event, <0>free</0> and <1>ad-free</1>."
+
+#: src/routes/+page.svelte
+msgid "Waarom Prikkert?"
+msgstr "Why Prikkert?"
+
+#: src/routes/+page.svelte
+msgid "Datumprikken kan ook zonder verdienmodel. Daarom doet Prikkert vier beloftes."
+msgstr "Scheduling doesn't need a business model. That's why Prikkert makes four promises."
+
+#: src/routes/+page.svelte
+msgid "Hoe gebruik je Prikkert?"
+msgstr "How do you use Prikkert?"
+
+#: src/routes/+page.svelte
+msgid "Plan jouw groepsafspraak in drie simpele stappen."
+msgstr "Plan your group event in three simple steps."
+
+#: src/routes/+page.svelte
+msgid "Beginnen met plannen"
+msgstr "Start planning"
+
+#: src/routes/+page.svelte
+msgid "Hoe werkt Prikkert?"
+msgstr "How does Prikkert work?"
+
+#: src/routes/+page.svelte
+msgid "Vind de antwoorden op veelgestelde vragen."
+msgstr "Find the answers to frequently asked questions."
+
+#: src/routes/+page.svelte
+msgid "Contact opnemen"
+msgstr "Get in touch"
+
+#: src/routes/[page]/+page.svelte
+msgid "Deze pagina is voor het laatst gewijzigd op <0/>."
+msgstr "This page was last modified on <0/>."
+
+#: src/routes/afspraken/+page.svelte
+msgid "Geen reacties"
+msgstr "No responses"
+
+#: src/lib/shared/seo/meta.ts
+#: src/routes/afspraken/+page.svelte
+msgid "Afspraken"
+msgstr "Events"
+
+#: src/routes/afspraken/+page.svelte
+msgid "Je hebt nog niet gereageerd of een afspraak aangemaakt."
+msgstr "You haven't responded or created an event yet."
+
+#: src/lib/components/event/confirm-dialog.svelte
+msgid "Opties verwijderen"
+msgstr "Remove options"
+
+#: src/lib/components/event/confirm-dialog.svelte
+msgid ""
+"Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van\n"
+"deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt."
+msgstr ""
+"You have modified one or more date options. If you continue, participants'\n"
+"availability for these options will be removed. This cannot be undone."
+
+#: src/lib/components/event/confirm-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
+#: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
+msgid "Annuleren"
+msgstr "Cancel"
+
+#: src/lib/components/event/confirm-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
+#: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
+msgid "Verwijderen"
+msgstr "Delete"
+
+#: src/lib/components/event/date-picker.svelte
+msgid "Vorige maand"
+msgstr "Previous month"
+
+#: src/lib/components/event/date-picker.svelte
+msgid "Volgende maand"
+msgstr "Next month"
+
+#: src/lib/components/event/date-picker.svelte
+msgid "Vandaag"
+msgstr "Today"
+
+#: src/lib/components/event/form.svelte
+msgid "Titel"
+msgstr "Title"
+
+#: src/lib/components/event/form.svelte
+msgid "Vul een titel in..."
+msgstr "Enter a title..."
+
+#: src/lib/components/event/form.svelte
+msgid "Naam <0>(optioneel)</0>"
+msgstr "Name <0>(optional)</0>"
+
+#: src/lib/components/event/form.svelte
+msgid "Naam verbergen"
+msgstr "Hide name"
+
+#: src/lib/components/event/form.svelte
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Vul jouw naam in..."
+msgstr "Enter your name..."
+
+#: src/lib/components/event/form.svelte
+msgid "Naam toevoegen"
+msgstr "Add name"
+
+#: src/lib/components/event/form.svelte
+msgid "Omschrijving toevoegen"
+msgstr "Add description"
+
+#: src/lib/components/event/form.svelte
+msgid "Omschrijving <0>(optioneel)</0>"
+msgstr "Description <0>(optional)</0>"
+
+#: src/lib/components/event/form.svelte
+msgid "Omschrijving verbergen"
+msgstr "Hide description"
+
+#: src/lib/components/event/form.svelte
+msgid "Vul een omschrijving in..."
+msgstr "Enter a description..."
+
+#. 0: options.size
+#: src/lib/components/event/form.svelte
+msgid "({0} geselecteerd)"
+msgstr "({0} selected)"
+
+#: src/lib/components/event/form.svelte
+msgid "Datums <0/>"
+msgstr "Dates <0/>"
+
+#: src/lib/components/event/form.svelte
+msgid "Opties <0>(optioneel)</0>"
+msgstr "Options <0>(optional)</0>"
+
+#: src/lib/components/event/form.svelte
+msgid "Tijden verbergen"
+msgstr "Hide times"
+
+#: src/lib/components/event/form.svelte
+msgid "Selecteer datums om opmerkingen en tijden toe te voegen."
+msgstr "Select dates to add notes and times."
+
+#: src/lib/components/event/form.svelte
+msgid "Opmerkingen en tijden toevoegen"
+msgstr "Add notes and times"
+
+#: src/lib/components/event/form.svelte
+msgid "Privacy instellen"
+msgstr "Configure privacy"
+
+#: src/lib/components/event/form.svelte
+msgid "Instellingen <0>(optioneel)</0>"
+msgstr "Settings <0>(optional)</0>"
+
+#: src/lib/components/event/form.svelte
+msgid "Instellingen verbergen"
+msgstr "Hide settings"
+
+#: src/lib/components/event/form.svelte
+msgid "Toon reacties van deelnemers alleen aan de organisator"
+msgstr "Only show participants' responses to the organizer"
+
+#: src/lib/components/event/form.svelte
+msgid "Sta deelnemers toe om anoniem te reageren"
+msgstr "Allow participants to respond anonymously"
+
+#: src/lib/components/event/form.svelte
+msgid "Lees meer over deze instellingen in de <0>privacyverklaring</0>."
+msgstr "Read more about these settings in the <0>privacy policy</0>."
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Starttijd"
+msgstr "Start time"
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Eindtijd"
+msgstr "End time"
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Opmerking"
+msgstr "Note"
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Vul een opmerking in... (optioneel)"
+msgstr "Enter a note... (optional)"
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Tijdoptie verwijderen"
+msgstr "Remove time option"
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Tijdoptie toevoegen"
+msgstr "Add time option"
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Tijden toevoegen"
+msgstr "Add times"
+
+#: src/lib/components/event/time-slot.svelte
+msgid "Kopiëren naar alle datums"
+msgstr "Copy to all dates"
+
+#: src/routes/afspraak/aanmaken/+page.svelte
+msgid "Kies een titel en datums om te beginnen met plannen."
+msgstr "Choose a title and dates to start planning."
+
+#: src/routes/afspraak/bewerken/[id]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Afspraak bewerken"
+msgstr "Edit event"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Je hebt deze afspraak gepland voor"
+msgstr "You have scheduled this event for"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Deze afspraak staat gepland voor"
+msgstr "This event is scheduled for"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "is"
+msgstr "is"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "zijn"
+msgstr "are"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "alle"
+msgstr "all"
+
+#. 0: available; 1: total
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "{0} van de {1}"
+msgstr "{0} out of {1}"
+
+#. 0: maybe
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid ""
+",\n"
+"en {0} misschien"
+msgstr ""
+",\n"
+"and {0} maybe"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Op deze datum <0/> <1/> deelnemers beschikbaar<2/>."
+msgstr "On this date, <1/> participants <0/> available<2/>."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Vul je eigen beschikbaarheid in en nodig anderen uit om dat ook te doen."
+msgstr "Submit your own availability and invite others to do the same."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Nodig mensen uit om hun beschikbaarheid in te vullen."
+msgstr "Invite people to submit their availability."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Je hebt mensen uitgenodigd om hun beschikbaarheid in te vullen."
+msgstr "You have invited people to submit their availability."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Je hebt je beschikbaarheid ingevuld voor deze afspraak."
+msgstr "You have submitted your availability for this event."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "door <0/>"
+msgstr "by <0/>"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Je bent <0/> uitgenodigd om je beschikbaarheid in te vullen."
+msgstr "You have been invited <0/> to submit your availability."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Nog niemand heeft gereageerd."
+msgstr "No one has responded yet."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Nog niemand anders heeft gereageerd."
+msgstr "No one else has responded yet."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Er heeft tot nu toe 1 persoon gereageerd."
+msgstr "So far, 1 person has responded."
+
+#. 0: event.numberOfResponses
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Er hebben tot nu toe {0} personen gereageerd."
+msgstr "So far, {0} people have responded."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Reacties zijn standaard alleen zichtbaar op dit apparaat."
+msgstr "By default, responses are only visible on this device."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Beschikbaarheid bewerken"
+msgstr "Edit availability"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Beschikbaarheid invullen"
+msgstr "Submit availability"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Afspraak beheren"
+msgstr "Manage event"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "<0/> Afspraakbeheer delen"
+msgstr "<0/> Share admin access"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "<0/> Afspraak verwijderen"
+msgstr "<0/> Delete event"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Omschrijving"
+msgstr "Description"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Uitnodigen"
+msgstr "Invite"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Nodig deelnemers uit door de link naar de afspraak te delen."
+msgstr "Invite participants by sharing the link to the event."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
+msgid "<0/> Link kopiëren"
+msgstr "<0/> Copy link"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
+msgid "<0/> Link delen"
+msgstr "<0/> Share link"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
+msgid "<0/> Delen via mail"
+msgstr "<0/> Share by mail"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Beschikbaarheid"
+msgstr "Availability"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Sorteren op"
+msgstr "Sort by"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Datum"
+msgstr "Date"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Verberg alle reacties"
+msgstr "Hide all responses"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Toon alle reacties"
+msgstr "Show all responses"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
+msgid "Datum bevestigen"
+msgstr "Confirm date"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
+msgid "Bevestiging intrekken"
+msgstr "Withdraw confirmation"
+
+#: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
+msgid "Afspraak verwijderen"
+msgstr "Delete event"
+
+#: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
+msgid ""
+"Als je doorgaat worden deze afspraak en alle bijbehorende reacties verwijderd. Dit kan niet\n"
+"ongedaan worden gemaakt."
+msgstr ""
+"If you continue, this event and all associated responses will be deleted. This cannot be\n"
+"undone."
+
+#: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
+msgid "Selecteer een optie om de datum te prikken."
+msgstr "Select an option to confirm the date."
+
+#: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
+msgid "Bevestigen"
+msgstr "Confirm"
+
+#: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
+msgid ""
+"Als je doorgaat wordt de geprikte datum niet meer <0/>.\n"
+"Je kunt daarna opnieuw een datum prikken."
+msgstr ""
+"If you continue, the selected date will no longer be <0/>.\n"
+"You can then select a new date."
+
+#: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
+msgid "Afspraakbeheerder worden"
+msgstr "Become event co-admin"
+
+#: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
+msgid ""
+"Als je doorgaat word je mede-beheerder van deze afspraak. Je kunt de afspraak dan bijvoorbeeld\n"
+"bewerken of verwijderen."
+msgstr ""
+"If you continue, you will become a co-admin of this event. You will then be able to\n"
+"edit or delete the event, for example."
+
+#: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
+msgid "Doorgaan"
+msgstr "Continue"
+
+#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
+msgid "Afspraakbeheer delen"
+msgstr "Share admin access"
+
+#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
+msgid ""
+"Met de onderstaande link kan deze afspraak ook op andere apparaten worden beheerd. Deel deze\n"
+"alleen met mensen die je vertrouwt."
+msgstr ""
+"With the link below, this event can also be managed from other devices. Only share this\n"
+"with people you trust."
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Je kunt je beschikbaarheid niet meer aanpassen."
+msgstr "You can no longer edit your availability."
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Je kunt niet meer reageren."
+msgstr "You can no longer respond."
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Deze afspraak is geprikt voor <0/>. <1/>"
+msgstr "This event has been scheduled for <0/>. <1/>"
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Je hebt gereageerd op deze afspraak van <0/>."
+msgstr "You have responded to this event by <0/>."
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Je hebt gereageerd op deze afspraak."
+msgstr "You have responded to this event."
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "<0/> Je kan je beschikbaarheid nog aanpassen of verwijderen."
+msgstr "<0/> You can still edit or delete your availability."
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Terug naar voorpagina"
+msgstr "Back to homepage"
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Terug naar overzicht"
+msgstr "Back to overview"
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "(optioneel)"
+msgstr "(optional)"
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Naam <0/>"
+msgstr "Name <0/>"
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Vul je beschikbaarheid in voor alle opties."
+msgstr "Select your availability for all options."
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+#: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
+msgid "Reactie verwijderen"
+msgstr "Delete response"
+
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Reactie opslaan"
+msgstr "Save response"
+
+#: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
+msgid "Als je doorgaat wordt je beschikbaarheid verwijderd. Je kunt daarna opnieuw reageren."
+msgstr "If you continue, your availability will be deleted. You can then respond again."
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Ja"
+msgstr "Yes"
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Misschien"
+msgstr "Maybe"
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Nee"
+msgstr "No"
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Opmerking verwijderen"
+msgstr "Remove note"
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Opmerking toevoegen"
+msgstr "Add note"
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Opmerking verwijderen voor <0/>"
+msgstr "Remove note for <0/>"
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Opmerking toevoegen voor <0/>"
+msgstr "Add note for <0/>"
+
+#: src/routes/afspraak/reageren/[eventId]/option-input.svelte
+msgid "Voeg een opmerking toe..."
+msgstr "Add a note..."
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.server.ts
+msgid "Afspraak niet gevonden"
+msgstr "Event not found"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Aanmaken"
+msgstr "Create"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Reageren"
+msgstr "Respond"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Overzicht"
+msgstr "Overview"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Prikkert · Samen plannen, zo geprikt"
+msgstr "Prikkert · Poll your group, pick your moment"
+
+#: src/lib/shared/content.ts
+msgid "Altijd gratis"
+msgstr "Always free"
+
+#: src/lib/shared/content.ts
+msgid "Prikkert is 100% gratis en dat zal altijd zo blijven. Geen betaalde functies of verborgen kosten."
+msgstr "Prikkert is 100% free of charge and that will never change. No paid features or hidden costs."
+
+#: src/lib/shared/content.ts
+msgid "Nooit reclame"
+msgstr "No ads"
+
+#: src/lib/shared/content.ts
+msgid "Waarom zou je langs eindeloze advertenties moeten scrollen? Prikkert houdt het reclamevrij."
+msgstr "Why should you need to scroll past endless advertising? Prikkert will always keep it ad-free."
+
+#: src/lib/shared/content.ts
+msgid "Geen tracking"
+msgstr "No tracking"
+
+#: src/lib/shared/content.ts
+msgid "Jij bent niet het product. Prikkert trackt je niet, verkoopt je gegevens nooit en werkt zonder account."
+msgstr "You are not the product. Prikkert doesn't track you, never sells your data and works without an account."
+
+#: src/lib/shared/content.ts
+msgid "Iedereen kan de broncode lezen en hergebruiken, want Prikkert heeft niets te verbergen."
+msgstr "Everyone can read and reuse the source code, because Prikkert has nothing to hide."
+
+#: src/lib/shared/content.ts
+msgid "Maak een afspraak aan"
+msgstr "Create an event"
+
+#: src/lib/shared/content.ts
+msgid "Deel de link"
+msgstr "Share the link"
+
+#: src/lib/shared/content.ts
+msgid "Prik het beste moment"
+msgstr "Pick the best moment"
+
+#: src/lib/shared/content.ts
+msgid "Hoe verschilt Prikkert van datumprikker.nl?"
+msgstr "How is Prikkert different from datumprikker.nl?"
+
+#: src/lib/shared/content.ts
+msgid "Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacy&shy;vriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag."
+msgstr "On <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> you're drowning in ads. If you're not careful, they also share your data with hundreds of advertising companies. Prikkert is the free, privacy&shy;-friendly and ad-free alternative. You don't need an account and can get started right away."
+
+#: src/lib/shared/content.ts
+msgid "Hoe blijft Prikkert gratis en reclamevrij?"
+msgstr "How does Prikkert stay free and ad-free?"
+
+#: src/lib/shared/content.ts
+msgid "Prikkert heeft geen winstoogmerk of verdienmodel. De techniek is eenvoudig en de kosten zijn verwaarloosbaar, dus het is niet nodig om je lastig te vallen met reclame. Prikkert is een passieproject en zal daarom nooit paywalls of reclames tonen. Dat is een belofte."
+msgstr "Prikkert has no profit motive or business model. The technology is simple and the costs are negligible, so there's no need to bother you with advertising. Prikkert is a passion project and will therefore never show paywalls or ads. That's a promise."
+
+#: src/lib/shared/content.ts
+msgid "Hoe beschermt Prikkert je privacy?"
+msgstr "How does Prikkert protect your privacy?"
+
+#: src/lib/shared/content.ts
+msgid "Hoe werkt Prikkert zonder account?"
+msgstr "How does Prikkert work without an account?"
+
+#: src/lib/shared/content.ts
+msgid "Waarom is Prikkert open source?"
+msgstr "Why is Prikkert open source?"
+
+#: src/lib/shared/content.ts
+msgid "Prikkert is open source zodat iedereen kan controleren wat er onder de motorkap gebeurt, en iedereen een eigen versie kan opzetten. De broncode is openbaar te vinden op <a href='https://codeberg.org/qcoret/prikkert' target='_blank' class='underline'>Codeberg</a> en is vrijgegeven voor hergebruik onder de <a href='https://codeberg.org/qcoret/prikkert/src/branch/main/LICENSE' target='_blank' class='underline'>European Union Public License</a>."
+msgstr "Prikkert is open source so that anyone can verify what happens under the hood, and anyone can set up their own version. The source code is publicly available on <a href='https://codeberg.org/qcoret/prikkert' target='_blank' class='underline'>Codeberg</a> and has been released for reuse under the <a href='https://codeberg.org/qcoret/prikkert/src/branch/main/LICENSE' target='_blank' class='underline'>European Union Public License</a>."
+
+#: src/lib/shared/content.ts
+msgid "Wie heeft Prikkert gemaakt?"
+msgstr "Who created Prikkert?"
+
+#: src/lib/shared/content.ts
+msgid "Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan. Het is zijn kleine vorm van verzet tegen de <a href='https://nl.wikipedia.org/wiki/Platformverval' target='_blank' class='underline'>verkuttificatie</a> van het internet."
+msgstr "Prikkert is a passion project by <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. He built Prikkert with the simple idea that scheduling can be done without costs, ads and tracking. It's his small act of resistance against the <a href='https://en.wikipedia.org/wiki/Enshittification' target='_blank' class='underline'>enshittification</a> of the internet."
+
+#: src/routes/+page.svelte
+msgid "Samen plannen,<0/> zo geprikt"
+msgstr "Poll your group,<0/> pick your moment"
+
+#: src/routes/afspraken/+page.svelte
+msgid "1 reactie"
+msgstr "1 response"
+
+#. 0: n
+#: src/routes/afspraken/+page.svelte
+msgid "{0} reacties"
+msgstr "{0} responses"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Anonieme deelnemer"
+msgstr "Anonymous participant"
+
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+msgid "Nog geen reacties"
+msgstr "No responses yet"
+
+#. 0: url('/privacy')
+#: src/lib/shared/content.ts
+msgid "Met Prikkert ben jij niet het product. Je gegevens worden nooit verkocht en je wordt nooit getrackt. Jouw data blijft altijd binnen de Europese Unie en wordt automatisch verwijderd wanneer je het niet meer nodig hebt. Je hebt geen account nodig, dus je kan zo aan de slag. Lees meer in de <a href='{0}' class='underline'>privacyverklaring</a>."
+msgstr "With Prikkert, you are not the product. Your data is never sold and you will never be tracked. Your data always stays within the European Union and is automatically deleted when you no longer need it. You don't need an account, so you can get started right away. Read more in the <a href='{0}' class='underline'>privacy policy</a>."
+
+#. 0: url('/privacy')
+#: src/lib/shared/content.ts
+msgid "Je hebt geen e-mail of wachtwoord nodig. Prikkert herkent je via je een cookie in je browser. Wil je later je afspraak of beschikbaarheid aanpassen? Doe dit dan op hetzelfde apparaat en in dezelfde browser. Als organisator kun je een speciale link delen om de afspraak ook op een ander apparaat, of samen met iemand anders, te beheren. Lees meer in de <a href='{0}' class='underline'>privacyverklaring</a>."
+msgstr "You don't need an email or password. Prikkert recognizes you through a cookie in your browser. Want to edit your event or availability later? Do so on the same device and in the same browser. As an organizer, you can share a special link to manage the event on another device, or together with someone else. Read more in the <a href='{0}' class='underline'>privacy policy</a>."
+
+#: src/routes/+layout.svelte
+msgid "Nederlands"
+msgstr "Nederlands"
+
+#: src/routes/+layout.svelte
+msgid "English"
+msgstr "English"
+
+#: src/routes/+layout.svelte
+msgid "Licht thema"
+msgstr "Light theme"
+
+#: src/routes/+layout.svelte
+msgid "Donker thema"
+msgstr "Dark theme"
+
+#: src/routes/+layout.svelte
+msgid "Instellingen"
+msgstr "Settings"
+
+#: src/routes/+layout.svelte
+msgid "Systeemthema"
+msgstr "System theme"
+
+#: src/lib/shared/content.ts
+msgid "met alle datums en tijden waaruit deelnemers kunnen kiezen."
+msgstr "with all the dates and times participants can choose from."
+
+#: src/lib/shared/content.ts
+msgid "om mensen uit te nodigen om hun beschikbaarheid door te geven."
+msgstr "to invite people to submit their availability."
+
+#: src/lib/shared/content.ts
+msgid "voor de afspraak wanneer iedereen heeft gereageerd."
+msgstr "for the event once everyone has responded."
+
+#: src/lib/shared/time-format.ts
+msgid "t/m"
+msgstr "to"

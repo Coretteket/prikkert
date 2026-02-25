@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/state'
+
 	import { emptySlot, type Options, type Slot } from '@/shared/event/types'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
@@ -25,7 +27,7 @@
 </script>
 
 <div class={['grow font-medium text-neutral-700 dark:text-neutral-300']}>
-	{Temporal.PlainDate.from(date).toLocaleString('nl', {
+	{Temporal.PlainDate.from(date).toLocaleString(page.data.locale, {
 		weekday: 'long',
 		day: 'numeric',
 		month: 'long',

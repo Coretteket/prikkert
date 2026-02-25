@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { tick } from 'svelte'
 
+	import { page } from '$app/state'
+
 	import { emptyEntry, type Options, type Slot } from '@/shared/event/types'
+	import { KeyType, TIMEZONE } from '@/shared/utils'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
@@ -18,8 +21,15 @@
 		hasIssues: boolean
 	} = $props()
 
-	const weekdays = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
-	const now = Temporal.Now.plainDateISO('Europe/Amsterdam')
+	const weekdays = $derived(
+		Array.from({ length: 7 }, (_, i) =>
+			Temporal.PlainDate.from('2026-02-23') // a monday
+				.add({ days: i })
+				.toLocaleString(page.data.locale, { weekday: 'short' }),
+		),
+	)
+
+	const now = Temporal.Now.plainDateISO(TIMEZONE)
 
 	let view = $state(now)
 
@@ -67,14 +77,14 @@
 	}
 
 	const keyActions = new Map<string, (day: Temporal.PlainDate) => Temporal.PlainDate>([
-		['ArrowLeft', (day) => day.subtract({ days: 1 })],
-		['ArrowRight', (day) => day.add({ days: 1 })],
-		['ArrowUp', (day) => day.subtract({ days: 7 })],
-		['ArrowDown', (day) => day.add({ days: 7 })],
+		[KeyType.ArrowLeft, (day) => day.subtract({ days: 1 })],
+		[KeyType.ArrowRight, (day) => day.add({ days: 1 })],
+		[KeyType.ArrowUp, (day) => day.subtract({ days: 7 })],
+		[KeyType.ArrowDown, (day) => day.add({ days: 7 })],
 	])
 
 	async function handleKeydown(event: KeyboardEvent, day: Temporal.PlainDate) {
-		if (event.key === 'Enter' || event.key === ' ') {
+		if (event.key === KeyType.Enter || event.key === ' ') {
 			event.preventDefault()
 			if (Temporal.PlainDate.compare(day, now) >= 0) toggleDate(day)
 			return
@@ -121,7 +131,8 @@
 							<Icon icon="tabler--chevron-left" class="size-5" />
 						</Button>
 
-						<span>{month.toLocaleString('nl', { month: 'long', year: 'numeric' })}</span>
+						<span>{month.toLocaleString(page.data.locale, { month: 'long', year: 'numeric' })}</span
+						>
 
 						<Button
 							type="button"

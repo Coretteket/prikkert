@@ -6,6 +6,7 @@ import { error } from '@sveltejs/kit'
 import { getRequestEvent, prerender } from '$app/server'
 
 import { Temporal } from '@/shared/temporal'
+import { TIMEZONE } from '@/shared/utils'
 import * as v from '@/server/validation'
 
 // Static pages (like /privacy and /voorwaarden) use content from this folder
@@ -36,8 +37,8 @@ const renderer = {
 	},
 } satisfies RendererObject
 
-async function renderMarkdown(page: string) {
-	const rawText = content[`./content/${page}.md`]
+async function renderMarkdown(page: string, locale: string) {
+	const rawText = content[`./content/${page}.${locale}.md`]
 	if (!rawText || typeof rawText !== 'string') return error(404)
 
 	const frontmatter = parseFrontmatter(rawText)
@@ -50,10 +51,10 @@ async function renderMarkdown(page: string) {
 	return { ...parsedFrontmatter.output, body }
 }
 
-async function getLastCommit(page: string) {
+async function getLastCommit(page: string, locale: string) {
 	const { fetch } = getRequestEvent()
 
-	const filePath = `src/routes/[page]/content/${page}.md`
+	const filePath = `src/routes/[page]/content/${page}.${locale}.md`
 	const encodedPath = filePath
 		.split('/')
 		.map((e) => encodeURIComponent(e))
@@ -73,8 +74,8 @@ async function getLastCommit(page: string) {
 	const lastCommit = parsedFeed.output.rss.channel.item[0]
 
 	const lastModified = Temporal.Instant.fromEpochMilliseconds(Date.parse(lastCommit.pubDate))
-		.toZonedDateTimeISO('Europe/Amsterdam')
-		.toLocaleString('nl', { dateStyle: 'long' })
+		.toZonedDateTimeISO(TIMEZONE)
+		.toLocaleString(locale, { dateStyle: 'long' })
 
 	const link = `${lastCommit.link}?files=${encodedPath}`
 
@@ -82,17 +83,18 @@ async function getLastCommit(page: string) {
 }
 
 export const getPage = prerender(
-	v.string(),
-	async (id: string) => {
-		const { body, title, description } = await renderMarkdown(id)
-		const { lastModified, link } = await getLastCommit(id)
+	v.object({ page: v.string(), locale: v.string() }),
+	async ({ page, locale }) => {
+		const { body, title, description } = await renderMarkdown(page, locale)
+		const { lastModified, link } = await getLastCommit(page, locale)
 		return { body, title, description, lastModified, link }
 	},
 	{
 		dynamic: true,
 		inputs: () =>
 			Object.keys(content)
-				.map((key) => key.match(/.\/content\/(.*)\.md/)?.[1])
-				.filter((key) => key !== undefined),
+				.map((key) => key.match(/.\/content\/(.*)\.(.*)\.md/))
+				.filter((match): match is RegExpMatchArray => !!match)
+				.map(([, page, locale]) => ({ page, locale })),
 	},
 )

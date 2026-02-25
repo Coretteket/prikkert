@@ -2,16 +2,14 @@
 
 export type Theme = 'light' | 'dark' | 'system'
 
-export function toggleTheme() {
-	const currentTheme = document.documentElement.dataset.theme
-	const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+export function setTheme(theme: Theme) {
 	document.documentElement.classList.add('no-transition')
-	document.documentElement.dataset.theme = newTheme
-	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-	document.documentElement.offsetHeight
-	document.documentElement.classList.remove('no-transition')
 	const systemTheme = globalThis.matchMedia('(prefers-color-scheme: dark)').matches
 		? 'dark'
 		: 'light'
-	document.cookie = `theme=${newTheme === systemTheme ? 'system' : newTheme}; path=/; max-age=31536000`
+	document.documentElement.dataset.theme = theme === 'system' ? systemTheme : theme
+	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+	document.documentElement.offsetHeight
+	document.documentElement.classList.remove('no-transition')
+	document.cookie = `theme=${theme === systemTheme ? 'system' : theme}; path=/; max-age=31536000`
 }

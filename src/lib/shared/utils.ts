@@ -23,3 +23,15 @@ export function omit<T, K extends keyof T>(obj: T, ...keys: K[]): Prettify<Omit<
 
 /** Use on remote form functions to prevent form reset on submission. */
 export const noReset = ({ submit }: { submit: () => Promise<void> }) => submit()
+
+/* @wc-ignore */
+export enum KeyType {
+	ArrowUp = 'ArrowUp',
+	ArrowRight = 'ArrowRight',
+	ArrowDown = 'ArrowDown',
+	ArrowLeft = 'ArrowLeft',
+	Enter = 'Enter',
+}
+
+/* @wc-ignore */
+export const TIMEZONE = 'Europe/Amsterdam'

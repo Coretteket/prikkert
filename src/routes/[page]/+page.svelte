@@ -4,7 +4,7 @@
 
 	import { getPage } from './data.remote'
 
-	let data = $derived(await getPage(page.params.page!))
+	let data = $derived(await getPage({ page: page.params.page!, locale: page.data.locale! }))
 </script>
 
 <article
@@ -19,7 +19,7 @@
 
 	{@html data.body}
 
-	{#if 'lastModified' in data}
+	{#if 'lastModified' in data && data.lastModified}
 		<p class="mt-8 text-neutral-500 dark:text-neutral-400">
 			Deze pagina is voor het laatst gewijzigd op
 			<a href={data.link} target="_blank" class="underline">

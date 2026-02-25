@@ -1,15 +1,18 @@
 <script lang="ts">
-	import { faq, promises, steps } from '@/shared/content'
 	import Button from '@/components/button.svelte'
+	import { getContent } from '@/shared/content'
 	import Icon from '@/components/icon.svelte'
+	import { url } from '@/shared/url'
+
+	const content = $derived(getContent())
 </script>
 
 <header class="mt-8 mb-24 space-y-4 sm:mt-10 sm:mb-28">
 	<h1
 		class="mb-8 text-center text-[2.2rem] leading-[1.2] font-[650] text-neutral-900 xs:text-[2.5rem] sm:text-5xl dark:text-neutral-100"
 	>
-		<p>Samen plannen,</p>
-		<p>zo geprikt</p>
+		Samen plannen,<br />
+		zo geprikt
 	</h1>
 	<h2
 		class="mx-auto mb-8 max-w-80 text-center text-xl leading-normal text-balance text-neutral-700 sm:max-w-100 dark:text-neutral-300"
@@ -20,7 +23,7 @@
 		<strong class="font-bold text-pink-600 dark:text-pink-50">reclamevrij</strong>
 		het beste moment voor elke groepsafspraak.
 	</h2>
-	<Button as="link" href="/afspraak/aanmaken" variant="primary" size="lg" class="mx-auto">
+	<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" size="lg" class="mx-auto">
 		Afspraak aanmaken
 	</Button>
 </header>
@@ -33,7 +36,7 @@
 		Datumprikken kan ook zonder verdienmodel. Daarom doet Prikkert vier beloftes.
 	</p>
 	<div class="mb-8 grid gap-4 sm:grid-cols-2">
-		{#each promises as promise}
+		{#each content.promises as promise}
 			<div
 				class="rounded-lg border from-neutral-900 to-pink-700/5 px-7 py-6.5 dark:bg-linear-to-tl"
 			>
@@ -61,21 +64,21 @@
 		Plan jouw groepsafspraak in drie simpele stappen.
 	</p>
 	<div class="mx-auto max-w-130">
-		{#each steps as step, i}
+		{#each content.steps as step, i}
 			<div class="mb-8 flex items-start gap-4">
 				<div class="flex aspect-square size-8 items-center justify-center squircle bg-pink-500/30">
 					<p class="font-semibold text-pink-700 dark:text-pink-100">
 						{i + 1}
 					</p>
 				</div>
-				<p class="text-neutral-700 sm:text-lg dark:text-neutral-300">
+				<p class="text-balance text-neutral-700 sm:text-lg dark:text-neutral-300">
 					<b class="font-semibold text-neutral-800 dark:text-neutral-200">{step.bold}</b>
 					{step.normal}
 				</p>
 			</div>
 		{/each}
 	</div>
-	<Button as="link" href="/afspraak/aanmaken" variant="primary" class="mt-12 mx-auto">
+	<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" class="mx-auto mt-12">
 		Beginnen met plannen
 	</Button>
 </section>
@@ -88,9 +91,9 @@
 		Vind de antwoorden op veelgestelde vragen.
 	</p>
 	<div class="mx-auto max-w-130">
-		{#each faq as { question, answer }, i}
+		{#each content.faq as { question, answer }, i}
 			<details
-				class="group mb-3 not-last-of-type:pb-3 not-last-of-type:border-b motion-safe:transition"
+				class="group mb-3 not-last-of-type:border-b not-last-of-type:pb-3 motion-safe:transition"
 				name="faq-item"
 				open={i === 0}
 			>
@@ -108,7 +111,7 @@
 			</details>
 		{/each}
 	</div>
-	<Button as="link" href="mailto:prikkert@qntn.io" variant="primary" class="mt-12 mx-auto">
+	<Button as="link" href="mailto:prikkert@qntn.io" variant="primary" class="mx-auto mt-12">
 		Contact opnemen
 	</Button>
 </section>

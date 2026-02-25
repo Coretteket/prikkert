@@ -10,6 +10,7 @@
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
+	import { url } from '@/shared/url'
 
 	type FormFieldInput = {
 		id?: string | 0 | undefined
@@ -385,7 +386,7 @@
 
 				<p class="text-[15px] text-neutral-500 dark:text-neutral-400">
 					Lees meer over deze instellingen in de
-					<a href="/privacy" target="_blank" class="underline"> privacyverklaring </a>.
+					<a href={url("/privacy")} target="_blank" class="underline"> privacyverklaring </a>.
 				</p>
 			</div>
 		</div>

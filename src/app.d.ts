@@ -10,8 +10,11 @@ declare global {
 				respondent: Map<string, import('./lib/server/session/cookies').RespondentSession>
 			}
 			theme: 'light' | 'dark' | 'system'
+			locale: string
 		}
-		// interface PageData {}
+		interface PageData {
+			locale: string
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

@@ -2,11 +2,12 @@ import { lt } from 'drizzle-orm'
 import { CronJob } from 'cron'
 
 import { Temporal } from '@/shared/temporal'
+import { TIMEZONE } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
 export const cron = CronJob.from({
 	cronTime: '0 5 * * *',
-	timeZone: 'Europe/Amsterdam',
+	timeZone: TIMEZONE,
 	onTick: async () => {
 		try {
 			const now = Temporal.Now.instant().toString()

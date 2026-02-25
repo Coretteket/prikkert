@@ -24,3 +24,6 @@ vite.config.ts.timestamp-*
 
 # pnpm
 .pnpm-store
+
+src/locales/.wuchale
+src/locales/*.js

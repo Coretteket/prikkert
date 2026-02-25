@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Temporal } from '@/shared/temporal'
+	import { KeyType } from '@/shared/utils'
 
 	let { time = $bindable() }: { time?: Temporal.PlainTime } = $props()
 
@@ -23,7 +24,7 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent & { currentTarget: HTMLInputElement }) {
-		if (e.key === 'Enter') return e.currentTarget.blur()
+		if (e.key === KeyType.Enter) return e.currentTarget.blur()
 		if (e.key.length > 1 || e.ctrlKey || e.metaKey || e.altKey) return
 
 		const value = e.currentTarget.value
