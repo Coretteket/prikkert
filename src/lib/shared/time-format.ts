@@ -18,6 +18,9 @@ export const formatOptions = {
 	},
 } satisfies Record<string, Intl.DateTimeFormatOptions>
 
+const toPreciseLocale = (locale: string) =>
+	locale === 'en' ? 'en-GB' : locale === 'nl' ? 'nl-NL' : locale
+
 /** Convert a ZonedDateTime to the user's timezone. PlainDate is returned as-is. */
 const toUserTimezone = (value: Temporal.ZonedDateTime | Temporal.PlainDate) =>
 	value instanceof Temporal.ZonedDateTime ? value.withTimeZone(page.data.timezone) : value
@@ -28,18 +31,18 @@ export function formatDateTimeOption({
 }: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>) {
 	const userStart = toUserTimezone(startsAt)
 
-	const weekday = userStart.toLocaleString(page.data.locale, { weekday: 'long' })
-	const date = userStart.toLocaleString(page.data.locale, formatOptions.date)
+	const weekday = userStart.toLocaleString(toPreciseLocale(page.data.locale), { weekday: 'long' })
+	const date = userStart.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.date)
 	if (userStart instanceof Temporal.PlainDate) return { weekday, date }
 
-	const timeStart = userStart.toLocaleString(page.data.locale, formatOptions.time)
+	const timeStart = userStart.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.time)
 	if (!endsAt) return { weekday, date, time: timeStart }
 
 	const userEnd = toUserTimezone(endsAt)
 	if (userEnd instanceof Temporal.ZonedDateTime && userStart.equals(userEnd))
 		return { weekday, date, time: timeStart }
 
-	const timeEnd = userEnd.toLocaleString(page.data.locale, formatOptions.time)
+	const timeEnd = userEnd.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.time)
 	return { weekday, date, time: `${timeStart} - ${timeEnd}` }
 }
 
@@ -50,8 +53,8 @@ export function formatDateTimeRange(
 	const userStart = toUserTimezone(startsAt)
 	const userEnd = toUserTimezone(endsAt)
 
-	const start = userStart.toLocaleString(page.data.locale, formatOptions.date)
-	const end = userEnd.toLocaleString(page.data.locale, formatOptions.date)
+	const start = userStart.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.date)
+	const end = userEnd.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.date)
 
 	if (start === end) return start
 
@@ -60,5 +63,5 @@ export function formatDateTimeRange(
 	const trimmedStart = startWords.slice(commonCount).toReversed().join(' ')
 
 	const joiner = /* @wc-include */ 't/m'
-	return [trimmedStart.replace(/,$/, ''), joiner, end].join(' ')
+	return [trimmedStart, joiner, end].join(' ')
 }
