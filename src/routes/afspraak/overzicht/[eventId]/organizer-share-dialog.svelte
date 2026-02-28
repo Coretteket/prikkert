@@ -9,9 +9,9 @@
 
 	let { id, open = $bindable(false) }: { id: string; open: boolean } = $props()
 
-	let linkCopied = $state(false)
+	const shareLink = $derived(open ? await getOrganizerShareLink(id) : '')
 
-	let output: HTMLOutputElement | undefined = $state()
+	let linkCopied = $state(false)
 </script>
 
 <Dialog bind:open>
@@ -23,12 +23,9 @@
 		</p>
 
 		<output
-			bind:this={output}
 			class="mb-4 block h-11.25 overflow-x-scroll rounded-lg border px-4 py-2.5 text-[15px] text-neutral-700 dark:bg-neutral-825 dark:text-neutral-300"
 		>
-			{#await getOrganizerShareLink(id) then link}
-				{link}
-			{/await}
+			{shareLink}
 		</output>
 
 		<div class="mb-4 flex gap-3">
@@ -37,7 +34,7 @@
 				variant="secondary"
 				size="sm"
 				onclick={() => {
-					navigator.clipboard.writeText(output?.textContent ?? '')
+					navigator.clipboard.writeText(shareLink)
 					linkCopied = true
 					setTimeout(() => (linkCopied = false), 1000)
 				}}
@@ -51,7 +48,7 @@
 					type="button"
 					variant="secondary"
 					size="sm"
-					onclick={() => navigator.share({ url: output?.textContent })}
+					onclick={() => navigator.share({ url: shareLink })}
 				>
 					<Icon icon="tabler--share" class="size-4.5" />
 					Link delen
@@ -61,7 +58,7 @@
 					variant="secondary"
 					size="sm"
 					as="link"
-					href="mailto:?body={encodeURIComponent(output?.textContent)}"
+					href="mailto:?body={encodeURIComponent(shareLink)}"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
