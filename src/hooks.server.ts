@@ -5,8 +5,8 @@ import { building, dev } from '$app/environment'
 
 import { parseSessionCookies } from '@/server/session/cookies'
 import { parseTheme, parseTimezone } from '@/server/cookies'
+import { getLocaleURL, PUBLIC_PATHS } from '@/shared/url'
 import { ID_LENGTH } from '@/server/db/schema'
-import { getLocaleURL } from '@/shared/url'
 
 import * as main from './locales/main.loader.server.svelte.js'
 import * as js from './locales/js.loader.server.js'
@@ -17,13 +17,6 @@ export const init = () => !dev && !building && cron.start()
 
 loadLocales(main.key, main.loadIDs, main.loadCatalog, locales)
 loadLocales(js.key, js.loadIDs, js.loadCatalog, locales)
-
-const NL_PUBLIC_PATHS = ['/', '/afspraak/aanmaken', '/privacy', '/voorwaarden', '/sitemap.xml']
-
-export const PUBLIC_PATHS = NL_PUBLIC_PATHS.flatMap((p) => {
-	const en = getLocaleURL(p, 'en')
-	return en === '/en' || en.startsWith('/en/') ? [p, en] : [p]
-})
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const cookieLocale = event.cookies.get('locale') === 'en' ? 'en' : 'nl'

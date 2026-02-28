@@ -33,7 +33,7 @@
 	<meta property="og:description" content={description} />
 	<meta property="og:image" content={og} />
 	<meta property="og:site_name" content="Prikkert" />
-	<meta property="og:locale" content="nl_NL" />
+	<meta property="og:locale" content={page.data.locale} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<link rel="canonical" href={`https://prikkert.nl${page.url.pathname}`} />
 	<link

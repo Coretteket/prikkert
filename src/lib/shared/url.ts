@@ -1,6 +1,3 @@
-/* eslint-disable unicorn/no-document-cookie --- CookieStore not widely supported yet */
-
-import { goto } from '$app/navigation'
 import { page } from '$app/state'
 
 export const routes = new Map([
@@ -13,6 +10,19 @@ export const routes = new Map([
 	['/privacy', '/en/privacy'],
 	['/', '/en'],
 ] as const)
+
+export const NL_PUBLIC_PATHS = [
+	'/',
+	'/afspraak/aanmaken',
+	'/privacy',
+	'/voorwaarden',
+	'/sitemap.xml',
+]
+
+export const PUBLIC_PATHS = NL_PUBLIC_PATHS.flatMap((p) => {
+	const en = getLocaleURL(p, 'en')
+	return en === '/en' || en.startsWith('/en/') ? [p, en] : [p]
+})
 
 type Keys<T extends Map<unknown, unknown>> = T extends Map<infer V, unknown> ? V : never
 

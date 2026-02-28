@@ -1,7 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit'
 
-import { getLocaleURL } from '../../lib/shared/url'
-import { routes } from '../../lib/shared/url'
+import { getLocaleURL, NL_PUBLIC_PATHS } from '../../lib/shared/url'
 
 function makeUrlEntry(path: string) {
 	const nl = 'https://prikkert.nl' + getLocaleURL(path, 'nl')
@@ -21,7 +20,8 @@ function makeUrlEntry(path: string) {
 }
 
 export const GET: RequestHandler = async () => {
-	const paths = Array.from(routes.keys())
+	const paths = NL_PUBLIC_PATHS.filter((path) => path !== '/sitemap.xml')
+
 	const sitemap = [
 		'<?xml version="1.0" encoding="UTF-8" ?>',
 		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',

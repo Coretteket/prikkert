@@ -1,3 +1,5 @@
+import { page } from '$app/state'
+
 import { Temporal } from '@/shared/temporal'
 
 /* @wc-ignore */
@@ -23,3 +25,6 @@ export function hasSameOffset(a: string, b: string) {
 	const now = Temporal.Now.instant()
 	return now.toZonedDateTimeISO(a).offset === now.toZonedDateTimeISO(b).offset
 }
+
+export const toUserTimezone = (value: Temporal.ZonedDateTime | Temporal.PlainDate) =>
+	value instanceof Temporal.ZonedDateTime ? value.withTimeZone(page.data.timezone) : value

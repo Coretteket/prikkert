@@ -34,3 +34,6 @@ export enum KeyType {
 }
 
 export type Theme = 'light' | 'dark' | 'system'
+
+export const toPreciseLocale = (locale: string) =>
+	locale === 'en' ? 'en-GB' : locale === 'nl' ? 'nl-NL' : locale

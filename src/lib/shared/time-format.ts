@@ -4,6 +4,8 @@ import { page } from '$app/state'
 
 import type { schema } from '@/server/db'
 
+import { toUserTimezone } from '@/shared/timezone'
+import { toPreciseLocale } from '@/shared/utils'
 import { Temporal } from '@/shared/temporal'
 
 export const formatOptions = {
@@ -17,13 +19,6 @@ export const formatOptions = {
 		minute: '2-digit',
 	},
 } satisfies Record<string, Intl.DateTimeFormatOptions>
-
-const toPreciseLocale = (locale: string) =>
-	locale === 'en' ? 'en-GB' : locale === 'nl' ? 'nl-NL' : locale
-
-/** Convert a ZonedDateTime to the user's timezone. PlainDate is returned as-is. */
-const toUserTimezone = (value: Temporal.ZonedDateTime | Temporal.PlainDate) =>
-	value instanceof Temporal.ZonedDateTime ? value.withTimeZone(page.data.timezone) : value
 
 export function formatDateTimeOption({
 	startsAt,
