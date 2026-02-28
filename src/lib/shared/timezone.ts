@@ -10,7 +10,7 @@ export function detectTimezone() {
 }
 
 export function formatTimezoneID(timezone: string) {
-	return timezone.replace('/', ', ').replaceAll('_', ' ')
+	return timezone.replaceAll('/', ', ').replaceAll('_', ' ')
 }
 
 export function formatTimezoneName(timezone: string, locale: string) {
