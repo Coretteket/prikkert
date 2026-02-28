@@ -33,7 +33,7 @@ export function setTheme(theme: Theme) {
 
 export function setLocale(locale: 'nl' | 'en') {
   document.cookie = `locale=${locale};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`
-  goto(getLocaleURL(page.url.pathname, locale), {
+  goto(getLocaleURL(page.url.pathname, locale) + page.url.search, {
     invalidateAll: true,
     replaceState: true,
     noScroll: true,
