@@ -103,6 +103,7 @@
 		</p>
 
 		<select
+			name="timezone"
 			class="mb-6 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-825"
 			value={getTimezone() ?? 'AUTOMATIC'}
 			onchange={(e) => {
