@@ -295,7 +295,7 @@
 							})
 						}
 					}
-					class="squircle border px-2 py-2 text-sm dark:bg-neutral-800/50"
+					class="squircle border px-2 py-2 text-sm dark:bg-neutral-825"
 				>
 					<option value="d" selected>Datum</option>
 					<option value="b">Beschikbaarheid</option>
@@ -328,7 +328,7 @@
 		<svelte:element
 			this={hasResponses ? 'details' : 'div'}
 			class={hasResponses
-				? 'group has-[summary:hover]:bg-neutral-50 motion-safe:transition-colors dark:has-[summary:hover]:bg-neutral-800/50'
+				? 'group has-[summary:hover]:bg-neutral-50 motion-safe:transition-colors dark:has-[summary:hover]:bg-neutral-825'
 				: 'flex justify-between gap-2 p-5 max-sm:flex-col sm:items-center'}
 			open={hasResponses ? allOpened : undefined}
 			animate:flip={{ duration: 100 }}

@@ -10,6 +10,7 @@
 @theme {
 	--font-sans: 'Golos Text Variable', ui-sans-serif, system-ui, sans-serif;
 	--breakpoint-xs: 28rem;
+	--color-neutral-825: oklch(0.2434 0 0);
 	--color-neutral-850: oklch(0.2178 0 0);
 }
 

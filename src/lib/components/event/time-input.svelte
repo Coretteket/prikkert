@@ -36,7 +36,7 @@
 <input
 	type="text"
 	inputmode="numeric"
-	class="w-20 rounded-md border px-2.5 py-2 text-center tabular-nums dark:bg-neutral-800/50 dark:text-neutral-300"
+	class="w-20 rounded-md border px-2.5 py-2 text-center tabular-nums dark:bg-neutral-825 dark:text-neutral-300"
 	value={displayValue}
 	onblur={handleBlur}
 	onkeydown={handleKeydown}

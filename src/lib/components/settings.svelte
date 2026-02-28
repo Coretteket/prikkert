@@ -103,7 +103,7 @@
 		</p>
 
 		<select
-			class="mb-6 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-800/50"
+			class="mb-6 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-825"
 			value={getTimezone() ?? 'AUTOMATIC'}
 			onchange={(e) => {
 				setTimezone(e.currentTarget.value)

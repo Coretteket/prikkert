@@ -123,7 +123,7 @@
 				placeholder="Vul jouw naam in..."
 				autocomplete="name"
 				class={[
-					'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg disabled:cursor-not-allowed dark:bg-neutral-800/50',
+					'mb-4 block w-full rounded-lg border px-4 py-2.5 text-lg disabled:cursor-not-allowed dark:bg-neutral-825',
 					(submitAvailability.fields?.name?.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
 				]}
 				disabled={Boolean(event.selectedOption)}

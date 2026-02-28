@@ -31,7 +31,7 @@
 				primary:
 					'font-semibold bg-pink-700 text-white not-disabled:hover:bg-pink-800 dark:bg-pink-800 dark:not-disabled:hover:bg-pink-700 border dark:border-pink-700 border-pink-900',
 				secondary:
-					'font-medium border bg-white text-neutral-700 not-disabled:hover:bg-neutral-100 dark:bg-neutral-800/50 dark:text-neutral-300 dark:not-disabled:hover:bg-neutral-700/50',
+					'font-medium border bg-white text-neutral-700 not-disabled:hover:bg-neutral-100 dark:bg-neutral-825 dark:text-neutral-300 dark:not-disabled:hover:bg-neutral-700/50',
 				ghost:
 					'font-[450] not-disabled:hover:bg-neutral-100 not-disabled:dark:hover:bg-neutral-800',
 			},
