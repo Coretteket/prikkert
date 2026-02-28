@@ -18,27 +18,40 @@ export const formatOptions = {
 	},
 } satisfies Record<string, Intl.DateTimeFormatOptions>
 
+/** Convert a ZonedDateTime to the user's timezone. PlainDate is returned as-is. */
+const toUserTimezone = (value: Temporal.ZonedDateTime | Temporal.PlainDate) =>
+	value instanceof Temporal.ZonedDateTime ? value.withTimeZone(page.data.timezone) : value
+
 export function formatDateTimeOption({
 	startsAt,
 	endsAt,
 }: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>) {
-	const weekday = startsAt.toLocaleString(page.data.locale, { weekday: 'long' })
-	const date = startsAt.toLocaleString(page.data.locale, formatOptions.date)
-	if (startsAt instanceof Temporal.PlainDate) return { weekday, date }
+	const userStart = toUserTimezone(startsAt)
 
-	const timeStart = startsAt.toLocaleString(page.data.locale, formatOptions.time)
-	if (!endsAt || startsAt.equals(endsAt)) return { weekday, date, time: timeStart }
+	const weekday = userStart.toLocaleString(page.data.locale, { weekday: 'long' })
+	const date = userStart.toLocaleString(page.data.locale, formatOptions.date)
+	if (userStart instanceof Temporal.PlainDate) return { weekday, date }
 
-	const timeEnd = endsAt.toLocaleString(page.data.locale, formatOptions.time)
+	const timeStart = userStart.toLocaleString(page.data.locale, formatOptions.time)
+	if (!endsAt) return { weekday, date, time: timeStart }
+
+	const userEnd = toUserTimezone(endsAt)
+	if (userEnd instanceof Temporal.ZonedDateTime && userStart.equals(userEnd))
+		return { weekday, date, time: timeStart }
+
+	const timeEnd = userEnd.toLocaleString(page.data.locale, formatOptions.time)
 	return { weekday, date, time: `${timeStart} - ${timeEnd}` }
 }
 
 export function formatDateTimeRange(
-	startsAt: Temporal.PlainDate | Temporal.PlainDateTime,
-	endsAt: Temporal.PlainDate | Temporal.PlainDateTime,
+	startsAt: Temporal.PlainDate | Temporal.ZonedDateTime,
+	endsAt: Temporal.PlainDate | Temporal.ZonedDateTime,
 ) {
-	const start = startsAt.toLocaleString(page.data.locale, formatOptions.date)
-	const end = endsAt.toLocaleString(page.data.locale, formatOptions.date)
+	const userStart = toUserTimezone(startsAt)
+	const userEnd = toUserTimezone(endsAt)
+
+	const start = userStart.toLocaleString(page.data.locale, formatOptions.date)
+	const end = userEnd.toLocaleString(page.data.locale, formatOptions.date)
 
 	if (start === end) return start
 

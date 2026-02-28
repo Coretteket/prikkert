@@ -35,12 +35,3 @@ export function getLocaleURL(path: string, locale: 'nl' | 'en') {
 
 	return path
 }
-
-export function setLocale(locale: 'nl' | 'en') {
-	document.cookie = `locale=${locale};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`
-	goto(getLocaleURL(page.url.pathname, locale), {
-		invalidateAll: true,
-		replaceState: true,
-		noScroll: true,
-	})
-}

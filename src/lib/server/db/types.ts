@@ -7,15 +7,15 @@ export const instant = (name?: string) => {
 	return name ? timestamp(name, params) : timestamp(params)
 }
 
-/** Plain date or datetime compatible with Temporal API. */
+/** Zoned datetime or plain date compatible with Temporal API. */
 export const datetime = customType<{
-	data: Temporal.PlainDateTime | Temporal.PlainDate
+	data: Temporal.ZonedDateTime | Temporal.PlainDate
 	driverData: string
 }>({
 	dataType: () => 'text',
 	toDriver: (value) => value.toString(),
 	fromDriver: (value) => {
-		if (value.includes('T')) return Temporal.PlainDateTime.from(value)
+		if (value.includes('[')) return Temporal.ZonedDateTime.from(value)
 		return Temporal.PlainDate.from(value)
 	},
 })

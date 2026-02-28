@@ -71,6 +71,6 @@
 			{/if}
 		</div>
 
-		<Button variant="secondary" class="ml-auto" autofocus>Doorgaan</Button>
+		<Button variant="secondary" class="ml-auto" autofocus>Sluiten</Button>
 	</form>
 </Dialog>

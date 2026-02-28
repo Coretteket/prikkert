@@ -6,8 +6,8 @@
 
 	import Loading from '@/components/loading.svelte'
 	import Button from '@/components/button.svelte'
-	import { setTheme } from '@/shared/theme'
 	import Icon from '@/components/icon.svelte'
+	import Settings from '@/components/settings.svelte'
 	import icon from '@/assets/icon.svg'
 	import og from '@/assets/og.png'
 
@@ -15,12 +15,9 @@
 	import { hasSession } from './data.remote'
 	import { description, getPageTitle } from '@/shared/seo/meta'
 	import { generateJSONLD } from '@/shared/seo/json'
-	import { getLocaleURL, setLocale, url } from '@/shared/url'
-	import { createPopover } from '@/shared/popover.svelte'
+	import { getLocaleURL, url } from '@/shared/url'
 
 	let { children } = $props()
-
-	const popover = createPopover({ positionArea: 'bottom span-left' })
 </script>
 
 <svelte:head>
@@ -39,8 +36,16 @@
 	<meta property="og:locale" content="nl_NL" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<link rel="canonical" href={`https://prikkert.nl${page.url.pathname}`} />
-	<link rel="alternate" href={`https://prikkert.nl${getLocaleURL(page.url.pathname, 'en')}`} hreflang="en" />
-	<link rel="alternate" href={`https://prikkert.nl${getLocaleURL(page.url.pathname, 'nl')}`} hreflang="nl" />
+	<link
+		rel="alternate"
+		href={`https://prikkert.nl${getLocaleURL(page.url.pathname, 'en')}`}
+		hreflang="en"
+	/>
+	<link
+		rel="alternate"
+		href={`https://prikkert.nl${getLocaleURL(page.url.pathname, 'nl')}`}
+		hreflang="nl"
+	/>
 	{@html `<script type="application/ld+json">${generateJSONLD()}</script>`}
 </svelte:head>
 
@@ -86,79 +91,7 @@
 				</Button>
 			{/if}
 
-			<Button
-				size="icon"
-				label="Instellingen"
-				{@attach popover.triggerHandler}
-				{...popover.triggerAttrs}
-			>
-				<Icon icon="tabler--settings" class="size-5" />
-			</Button>
-
-			<div
-				{@attach popover.floatingHandler}
-				{...popover.floatingAttrs}
-				class="grid min-w-40 gap-1 rounded-lg border bg-white px-1.5 py-2 text-neutral-700 ring-4 ring-white dark:bg-neutral-850 dark:text-neutral-300 dark:ring-neutral-850"
-			>
-				<Button
-					lang={page.data.locale === 'en' ? 'nl' : undefined}
-					variant="ghost"
-					size="sm"
-					class="w-full!"
-					{@attach popover.closeHandler}
-					{...popover.closeAttrs}
-					onclick={() => setLocale('nl')}
-				>
-					<Icon icon="tabler--cheese" class="size-5" />
-					<span>Nederlands</span>
-				</Button>
-				<Button
-					lang={page.data.locale === 'nl' ? 'en' : undefined}
-					variant="ghost"
-					size="sm"
-					class="w-full!"
-					{@attach popover.closeHandler}
-					{...popover.closeAttrs}
-					onclick={() => setLocale('en')}
-				>
-					<Icon icon="tabler--teapot" class="size-5" />
-					<span>English</span>
-				</Button>
-				<hr class="mx-2 my-1" />
-				<Button
-					variant="ghost"
-					size="sm"
-					class="w-full!"
-					{@attach popover.closeHandler}
-					{...popover.closeAttrs}
-					onclick={() => setTheme('light')}
-				>
-					<Icon icon="tabler--sun" class="size-5" />
-					<span>Licht thema</span>
-				</Button>
-				<Button
-					variant="ghost"
-					size="sm"
-					class="w-full!"
-					{@attach popover.closeHandler}
-					{...popover.closeAttrs}
-					onclick={() => setTheme('dark')}
-				>
-					<Icon icon="tabler--moon" class="size-5" />
-					<span>Donker thema</span>
-				</Button>
-				<Button
-					variant="ghost"
-					size="sm"
-					class="w-full!"
-					{@attach popover.closeHandler}
-					{...popover.closeAttrs}
-					onclick={() => setTheme('system')}
-				>
-					<Icon icon="tabler--device-desktop" class="size-5" />
-					<span>Systeemthema</span>
-				</Button>
-			</div>
+			<Settings />
 		</div>
 	</nav>
 

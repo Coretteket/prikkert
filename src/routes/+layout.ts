@@ -13,5 +13,5 @@ import { locales } from '../locales/data'
 export const load: LayoutLoad = async (e) => {
 	const locale = e.data.locale
 	if (browser && locales.includes(locale)) await loadLocale(locale)
-	return { locale }
+	return { locale, timezone: e.data.timezone }
 }

@@ -4,9 +4,9 @@ import { redirect, type Handle } from '@sveltejs/kit'
 import { building, dev } from '$app/environment'
 
 import { parseSessionCookies } from '@/server/session/cookies'
+import { parseTheme, parseTimezone } from '@/server/cookies'
 import { ID_LENGTH } from '@/server/db/schema'
 import { getLocaleURL } from '@/shared/url'
-import { parseTheme } from '@/server/theme'
 
 import * as main from './locales/main.loader.server.svelte.js'
 import * as js from './locales/js.loader.server.js'
@@ -38,6 +38,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.session = parseSessionCookies()
 	event.locals.theme = parseTheme()
+	event.locals.timezone = parseTimezone()
 	event.locals.locale = event.url.pathname.startsWith('/en') ? 'en' : 'nl'
 
 	const response = await runWithLocale(event.locals.locale, () =>

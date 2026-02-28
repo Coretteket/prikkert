@@ -1,7 +1,7 @@
 import { eq, inArray, type InferSelectModel } from 'drizzle-orm'
 import { error, redirect } from '@sveltejs/kit'
 
-import { form } from '$app/server'
+import { form, getRequestEvent } from '$app/server'
 
 import { requireOrganizerOrThrow } from '@/server/session/validation'
 import { getExpiryDate, getOptionKey } from '@/shared/event/utils'
@@ -33,6 +33,8 @@ function getOptionsDifference(existingOptions: Option[], newOptions: Omit<Option
 }
 
 export const updateEvent = form(EventFormSchema, async (parsed) => {
+	const { locals } = getRequestEvent()
+
 	if (typeof parsed.id !== 'string') error(400, 'Ongeldig ID')
 	const eventId = parsed.id
 
@@ -54,8 +56,12 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 	const newOptions = deduplicate(
 		parsed.options.flatMap(([date, { slots }]) =>
 			slots.map((slot) => ({
-				startsAt: slot.startsAt ? date.toPlainDateTime(slot.startsAt) : date,
-				endsAt: slot.endsAt ? date.toPlainDateTime(slot.endsAt) : null,
+				startsAt: slot.startsAt
+					? date.toPlainDateTime(slot.startsAt).toZonedDateTime(locals.timezone)
+					: date,
+				endsAt: slot.endsAt
+					? date.toPlainDateTime(slot.endsAt).toZonedDateTime(locals.timezone)
+					: null,
 				note: slot.note || null,
 				eventId,
 			})),

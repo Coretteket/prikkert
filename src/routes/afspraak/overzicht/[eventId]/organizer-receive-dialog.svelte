@@ -40,7 +40,7 @@
 
 		<div class="flex justify-end gap-3">
 			<Button formmethod="dialog" variant="secondary">Annuleren</Button>
-			<Button variant="primary">Doorgaan</Button>
+			<Button variant="primary">Bevestigen</Button>
 		</div>
 	</form>
 </Dialog>

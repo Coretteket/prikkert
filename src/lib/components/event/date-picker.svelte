@@ -4,10 +4,10 @@
 	import { page } from '$app/state'
 
 	import { emptyEntry, type Options, type Slot } from '@/shared/event/types'
-	import { KeyType, TIMEZONE } from '@/shared/utils'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
+	import { KeyType } from '@/shared/utils'
 
 	let {
 		options,
@@ -29,7 +29,7 @@
 		),
 	)
 
-	const now = Temporal.Now.plainDateISO(TIMEZONE)
+	const now = Temporal.Now.plainDateISO(page.data.timezone)
 
 	let view = $state(now)
 

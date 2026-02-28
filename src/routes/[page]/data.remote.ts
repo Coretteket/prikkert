@@ -5,8 +5,8 @@ import { error } from '@sveltejs/kit'
 
 import { getRequestEvent, prerender } from '$app/server'
 
+import { DEFAULT_TIMEZONE } from '@/shared/timezone'
 import { Temporal } from '@/shared/temporal'
-import { TIMEZONE } from '@/shared/utils'
 import * as v from '@/server/validation'
 
 // Static pages (like /privacy and /voorwaarden) use content from this folder
@@ -74,7 +74,7 @@ async function getLastCommit(page: string, locale: string) {
 	const lastCommit = parsedFeed.output.rss.channel.item[0]
 
 	const lastModified = Temporal.Instant.fromEpochMilliseconds(Date.parse(lastCommit.pubDate))
-		.toZonedDateTimeISO(TIMEZONE)
+		.toZonedDateTimeISO(DEFAULT_TIMEZONE)
 		.toLocaleString(locale, { dateStyle: 'long' })
 
 	const link = `${lastCommit.link}?files=${encodedPath}`

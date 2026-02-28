@@ -33,5 +33,4 @@ export enum KeyType {
 	Enter = 'Enter',
 }
 
-/* @wc-ignore */
-export const TIMEZONE = 'Europe/Amsterdam'
+export type Theme = 'light' | 'dark' | 'system'

@@ -5,6 +5,8 @@
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
 
+	import { formatTimezoneName, hasSameOffset } from '@/shared/timezone'
+	import { getEventTimezone } from '@/shared/event/utils'
 	import { createPopover } from '@/shared/popover.svelte'
 	import Button from '@/components/button.svelte'
 	import Icon from '@/components/icon.svelte'
@@ -48,6 +50,8 @@
 
 	const ANONYMOUS = 'Anonieme deelnemer'
 	const NO_RESPONSES = 'Nog geen reacties'
+
+	const eventTimezone = $derived(getEventTimezone(event.options))
 </script>
 
 <h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
@@ -263,8 +267,14 @@
 	</div>
 {/if}
 
-<div class="mb-4 flex justify-between gap-y-4 max-sm:flex-col sm:items-center">
+<div class="mb-4 grid grid-cols-1 justify-between gap-y-4 sm:grid-cols-[1fr_auto] sm:items-center">
 	<p class="text-lg font-medium">Beschikbaarheid</p>
+
+	{#if eventTimezone && !hasSameOffset(eventTimezone, page.data.timezone)}
+		<p class="mb-2 text-balance text-neutral-700 sm:[grid-area:2/1/2/3] dark:text-neutral-300">
+			Opties worden weergegeven volgens de {formatTimezoneName(page.data.timezone, page.data.locale)}.
+		</p>
+	{/if}
 
 	{#if event.numberOfResponses > 0}
 		<div class="flex flex-wrap items-center gap-3 text-sm">

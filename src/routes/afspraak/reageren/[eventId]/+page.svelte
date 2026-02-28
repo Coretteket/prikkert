@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { page } from '$app/state'
+
+	import { formatTimezoneName, hasSameOffset } from '@/shared/timezone'
+	import { getEventTimezone } from '@/shared/event/utils'
 	import Button from '@/components/button.svelte'
 	import Date from '@/components/date.svelte'
 	import { noReset } from '@/shared/utils'
@@ -35,6 +39,8 @@
 	const ISSUE_THRESHOLD = 3
 
 	const event = $derived(await getEventForSession(params.eventId))
+
+	const eventTimezone = $derived(getEventTimezone(event.options))
 </script>
 
 <h1 class="mb-6 text-2xl font-[520] xs:text-3xl xs:font-medium">{event.title}</h1>
@@ -76,7 +82,7 @@
 
 {#if event.selectedOption && !event.hasResponded}
 	{#if event.hideResponses}
-		<Button variant="secondary" as="link" href={url("/")} size="md" class="-mt-4">
+		<Button variant="secondary" as="link" href={url('/')} size="md" class="-mt-4">
 			Terug naar voorpagina
 		</Button>
 	{:else}
@@ -129,6 +135,11 @@
 
 		<div>
 			<p class="mb-4 block text-lg font-medium">Beschikbaarheid</p>
+			{#if eventTimezone && !hasSameOffset(eventTimezone, page.data.timezone)}
+				<p class="mb-6 text-balance text-neutral-700 dark:text-neutral-300">
+					Opties worden weergegeven volgens de {formatTimezoneName(page.data.timezone, page.data.locale)}.
+				</p>
+			{/if}
 			<div
 				class={[
 					'mb-4 block divide-y rounded-lg border',

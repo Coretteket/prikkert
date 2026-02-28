@@ -1,0 +1,25 @@
+import { Temporal } from '@/shared/temporal'
+
+/* @wc-ignore */
+export const DEFAULT_TIMEZONE = 'Europe/Amsterdam'
+
+export function detectTimezone() {
+	return Temporal.Now.timeZoneId()
+}
+
+export function formatTimezoneID(timezone: string) {
+	return timezone.replace('/', ', ').replaceAll('_', ' ')
+}
+
+export function formatTimezoneName(timezone: string, locale: string) {
+	return (
+		new Intl.DateTimeFormat(locale, { timeZone: timezone, timeZoneName: 'longGeneric' })
+			.formatToParts()
+			.find((part) => part.type === 'timeZoneName')?.value ?? formatTimezoneID(timezone)
+	)
+}
+
+export function hasSameOffset(a: string, b: string) {
+	const now = Temporal.Now.instant()
+	return now.toZonedDateTimeISO(a).offset === now.toZonedDateTimeISO(b).offset
+}

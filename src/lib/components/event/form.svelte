@@ -3,10 +3,13 @@
 
 	import { SvelteMap } from 'svelte/reactivity'
 
+	import { page } from '$app/state'
+
 	import { emptyEntry, type OptionEntry, type Options, type Slot } from '@/shared/event/types'
 	import EventEditDialog from '@/components/event/confirm-dialog.svelte'
 	import DatePicker from '@/components/event/date-picker.svelte'
 	import TimeSlot from '@/components/event/time-slot.svelte'
+	import { formatTimezoneID } from '@/shared/timezone'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
 	import Icon from '@/components/icon.svelte'
@@ -26,6 +29,7 @@
 		form,
 		options,
 		initialValues,
+		timezone = page.data.timezone,
 		isEditMode = false,
 		hasResponses = false,
 		submitLabel = 'Afspraak aanmaken',
@@ -33,6 +37,7 @@
 		form: Omit<RemoteForm<FormFieldInput, unknown>, 'for'>
 		options: Options
 		initialValues?: Omit<FormFieldInput, 'options'> & { options: Map<string, OptionEntry> }
+		timezone?: string
 		isEditMode?: boolean
 		hasResponses?: boolean
 		submitLabel?: string
@@ -79,6 +84,11 @@
 		return aStart === bStart && aEnd === bEnd
 	}
 
+	function hasDifferentTimezone() {
+		if (!initialValues?.options) return false
+		return timezone !== page.data.timezone
+	}
+
 	function hasRemovedOptions() {
 		if (!initialValues?.options) return false
 
@@ -96,13 +106,18 @@
 	}
 
 	let showConfirmation = $state(false)
+	let confirmMessage = $state('')
 	let onConfirm: ((value: boolean) => void) | undefined = $state()
 
 	function untilConfirmed() {
-		const hasRemoved = hasRemovedOptions()
-		if (!hasRemoved || !hasResponses) return Promise.resolve(true)
+		const confirmOptions = hasRemovedOptions()
+		const confirmTimezone = hasDifferentTimezone()
+		if ((!confirmOptions && !confirmTimezone) || !hasResponses) return Promise.resolve(true)
 		return new Promise<boolean>((resolve) => {
 			onConfirm = resolve
+			confirmMessage = confirmTimezone
+				? `Jouw tijdzone verschilt van de oorspronkelijke tijdzone van deze afspraak (${formatTimezoneID(timezone)}). Als je doorgaat wordt de beschikbaarheid van deelnemers voor alle opties met tijden verwijderd. Dit kan niet ongedaan worden gemaakt.`
+				: 'Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt.'
 			showConfirmation = true
 		})
 	}
@@ -386,7 +401,7 @@
 
 				<p class="text-[15px] text-neutral-500 dark:text-neutral-400">
 					Lees meer over deze instellingen in de
-					<a href={url("/privacy")} target="_blank" class="underline"> privacyverklaring </a>.
+					<a href={url('/privacy')} target="_blank" class="underline"> privacyverklaring </a>.
 				</p>
 			</div>
 		</div>
@@ -397,4 +412,4 @@
 	</Button>
 </form>
 
-<EventEditDialog bind:open={showConfirmation} {onConfirm} />
+<EventEditDialog bind:open={showConfirmation} message={confirmMessage} {onConfirm} />

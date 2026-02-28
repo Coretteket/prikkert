@@ -24,6 +24,7 @@
 	{options}
 	initialValues={data.initialValues}
 	hasResponses={data.hasResponses}
+	timezone={data.timezone}
 	isEditMode={true}
 	submitLabel="Afspraak bewerken"
 />

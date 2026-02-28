@@ -96,18 +96,6 @@ msgid "Je hebt nog niet gereageerd of een afspraak aangemaakt."
 msgstr "Je hebt nog niet gereageerd of een afspraak aangemaakt."
 
 #: src/lib/components/event/confirm-dialog.svelte
-msgid "Opties verwijderen"
-msgstr "Opties verwijderen"
-
-#: src/lib/components/event/confirm-dialog.svelte
-msgid ""
-"Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van\n"
-"deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt."
-msgstr ""
-"Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van\n"
-"deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt."
-
-#: src/lib/components/event/confirm-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
@@ -116,7 +104,6 @@ msgstr ""
 msgid "Annuleren"
 msgstr "Annuleren"
 
-#: src/lib/components/event/confirm-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
 #: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
 msgid "Verwijderen"
@@ -445,8 +432,10 @@ msgstr ""
 msgid "Selecteer een optie om de datum te prikken."
 msgstr "Selecteer een optie om de datum te prikken."
 
+#: src/lib/components/event/confirm-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
+#: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
 msgid "Bevestigen"
 msgstr "Bevestigen"
 
@@ -469,11 +458,6 @@ msgid ""
 msgstr ""
 "Als je doorgaat word je mede-beheerder van deze afspraak. Je kunt de afspraak dan bijvoorbeeld\n"
 "bewerken of verwijderen."
-
-#: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
-#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
-msgid "Doorgaan"
-msgstr "Doorgaan"
 
 #: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
 msgid "Afspraakbeheer delen"
@@ -707,27 +691,27 @@ msgstr "Met Prikkert ben jij niet het product. Je gegevens worden nooit verkocht
 msgid "Je hebt geen e-mail of wachtwoord nodig. Prikkert herkent je via je een cookie in je browser. Wil je later je afspraak of beschikbaarheid aanpassen? Doe dit dan op hetzelfde apparaat en in dezelfde browser. Als organisator kun je een speciale link delen om de afspraak ook op een ander apparaat, of samen met iemand anders, te beheren. Lees meer in de <a href='{0}' class='underline'>privacyverklaring</a>."
 msgstr "Je hebt geen e-mail of wachtwoord nodig. Prikkert herkent je via je een cookie in je browser. Wil je later je afspraak of beschikbaarheid aanpassen? Doe dit dan op hetzelfde apparaat en in dezelfde browser. Als organisator kun je een speciale link delen om de afspraak ook op een ander apparaat, of samen met iemand anders, te beheren. Lees meer in de <a href='{0}' class='underline'>privacyverklaring</a>."
 
-#: src/routes/+layout.svelte
+#: src/lib/components/settings.svelte
 msgid "Nederlands"
 msgstr "Nederlands"
 
-#: src/routes/+layout.svelte
+#: src/lib/components/settings.svelte
 msgid "English"
 msgstr "English"
 
-#: src/routes/+layout.svelte
+#: src/lib/components/settings.svelte
 msgid "Licht thema"
 msgstr "Licht thema"
 
-#: src/routes/+layout.svelte
+#: src/lib/components/settings.svelte
 msgid "Donker thema"
 msgstr "Donker thema"
 
-#: src/routes/+layout.svelte
+#: src/lib/components/settings.svelte
 msgid "Instellingen"
 msgstr "Instellingen"
 
-#: src/routes/+layout.svelte
+#: src/lib/components/settings.svelte
 msgid "Systeemthema"
 msgstr "Systeemthema"
 
@@ -746,3 +730,45 @@ msgstr "voor de afspraak wanneer iedereen heeft gereageerd."
 #: src/lib/shared/time-format.ts
 msgid "t/m"
 msgstr "t/m"
+
+#: src/lib/components/settings.svelte
+msgid "Tijdzone..."
+msgstr "Tijdzone..."
+
+#: src/lib/components/settings.svelte
+msgid "Tijdzone"
+msgstr "Tijdzone"
+
+#: src/lib/components/settings.svelte
+msgid "Kies de tijdzone waarin je tijden wilt weergeven."
+msgstr "Kies de tijdzone waarin je tijden wilt weergeven."
+
+#. 0: formatTimezoneID(detectTimezone())
+#: src/lib/components/settings.svelte
+msgid "Automatisch ({0})"
+msgstr "Automatisch ({0})"
+
+#: src/lib/components/settings.svelte
+#: src/routes/afspraak/overzicht/[eventId]/organizer-share-dialog.svelte
+msgid "Sluiten"
+msgstr "Sluiten"
+
+#. 0: formatTimezoneName(page.data.timezone, page.data.locale)
+#. 0: formatTimezoneName(page.data.timezone, page.data.locale)
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/reageren/[eventId]/+page.svelte
+msgid "Opties worden weergegeven volgens de {0}."
+msgstr "Opties worden weergegeven volgens de {0}."
+
+#. 0: formatTimezoneID(timezone)
+#: src/lib/components/event/form.svelte
+msgid "Jouw tijdzone verschilt van de oorspronkelijke tijdzone van deze afspraak ({0}). Als je doorgaat wordt de beschikbaarheid van deelnemers voor alle opties met tijden verwijderd. Dit kan niet ongedaan worden gemaakt."
+msgstr "Jouw tijdzone verschilt van de oorspronkelijke tijdzone van deze afspraak ({0}). Als je doorgaat wordt de beschikbaarheid van deelnemers voor alle opties met tijden verwijderd. Dit kan niet ongedaan worden gemaakt."
+
+#: src/lib/components/event/confirm-dialog.svelte
+msgid "Waarschuwing"
+msgstr "Waarschuwing"
+
+#: src/lib/components/event/form.svelte
+msgid "Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt."
+msgstr "Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt."

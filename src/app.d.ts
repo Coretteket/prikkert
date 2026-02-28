@@ -11,9 +11,11 @@ declare global {
 			}
 			theme: 'light' | 'dark' | 'system'
 			locale: string
+			timezone: string
 		}
 		interface PageData {
 			locale: string
+			timezone: string
 		}
 		// interface PageState {}
 		// interface Platform {}
