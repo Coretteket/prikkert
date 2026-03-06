@@ -9,7 +9,6 @@ export const routes = new Map([
 	['/voorwaarden', '/en/terms'],
 	['/privacy', '/en/privacy'],
 	['/vs/datumprikker', '/en/vs/cally'],
-	['/vs/doodle', '/en/vs/doodle'],
 	['/vs/plennur', '/en/vs/plennur'],
 	['/', '/en'],
 ] as const)
@@ -20,6 +19,8 @@ export const NL_PUBLIC_PATHS = [
 	'/privacy',
 	'/voorwaarden',
 	'/sitemap.xml',
+	'/vs/datumprikker',
+	'/vs/plennur',
 ]
 
 export const PUBLIC_PATHS = NL_PUBLIC_PATHS.flatMap((p) => {
