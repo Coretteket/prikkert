@@ -1,12 +1,13 @@
 // @wc-ignore-file
 import { page } from '$app/state'
 
-import { description, getPageTitle } from './meta'
+import { getPageMeta } from './meta'
 import { getContent } from '../content'
 
 export function generateJSONLD() {
 	const isHome = page.url.pathname === '/'
 	const { promises, faq } = getContent()
+	const meta = getPageMeta()
 
 	const baseSchema: {
 		'@context': string
@@ -18,7 +19,7 @@ export function generateJSONLD() {
 				'@type': 'WebSite',
 				'@id': 'https://prikkert.nl/#website',
 				name: 'Prikkert',
-				description: description,
+				description: meta.description,
 				url: 'https://prikkert.nl',
 				publisher: { '@type': 'Person', name: 'Quinten Coret', url: 'https://quintencoret.nl' },
 			},
@@ -26,7 +27,7 @@ export function generateJSONLD() {
 				'@type': 'SoftwareApplication',
 				'@id': 'https://prikkert.nl/#software',
 				name: 'Prikkert',
-				description: description,
+				description: meta.description,
 				operatingSystem: 'All',
 				applicationCategory: 'UtilitiesApplication',
 				offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
@@ -42,7 +43,7 @@ export function generateJSONLD() {
 				'@type': 'WebPage',
 				'@id': 'https://prikkert.nl/#webpage',
 				url: 'https://prikkert.nl',
-				name: getPageTitle(),
+				name: meta.title,
 				inLanguage: 'nl-NL',
 				potentialAction: {
 					'@type': 'CreateAction',
@@ -69,7 +70,7 @@ export function generateJSONLD() {
 		baseSchema['@graph'].push({
 			'@type': 'WebPage',
 			'@id': `https://prikkert.nl${page.url.pathname}/#webpage`,
-			name: getPageTitle(),
+			name: meta.title,
 			url: `https://prikkert.nl${page.url.pathname}`,
 			isPartOf: { '@id': 'https://prikkert.nl/#website' },
 		})

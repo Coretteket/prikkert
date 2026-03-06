@@ -12,7 +12,7 @@ export function getContent() {
 			icon: 'tabler--ad-off',
 			title: 'Nooit reclame',
 			description:
-				'Waarom zou je langs eindeloze advertenties moeten scrollen? Prikkert houdt het reclamevrij.',
+				'Waarom zou je langs eindeloze advertenties moeten scrollen? Met Prikkert plan je zonder reclame.',
 		},
 		{
 			icon: 'tabler--shield-lock',
@@ -45,9 +45,9 @@ export function getContent() {
 
 	const faq = [
 		{
-			question: 'Hoe verschilt Prikkert van datumprikker.nl?',
+			question: 'Hoe verschilt Prikkert van Datumprikker?',
 			answer:
-				"Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacy&shy;vriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag.",
+				'Met Datumprikker verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacy&shy;vriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag.',
 		},
 		{
 			question: 'Hoe blijft Prikkert gratis en reclamevrij?',

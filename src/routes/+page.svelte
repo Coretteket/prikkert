@@ -1,7 +1,9 @@
 <script lang="ts">
+	import FaqItem from '@/components/faq-item.svelte'
 	import Button from '@/components/button.svelte'
 	import { getContent } from '@/shared/content'
 	import Icon from '@/components/icon.svelte'
+	import Step from '@/components/step.svelte'
 	import { url } from '@/shared/url'
 
 	const content = $derived(getContent())
@@ -29,7 +31,7 @@
 </header>
 
 <section class="mb-24">
-	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h2>
+	<h2 class="mb-6 text-center text-xl font-semibold xs:text-2xl">Waarom Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -57,34 +59,24 @@
 </section>
 
 <section class="mb-24">
-	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h2>
+	<h2 class="mb-6 text-center text-xl font-semibold xs:text-2xl">Hoe gebruik je Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
 		Plan jouw groepsafspraak in drie simpele stappen.
 	</p>
-	<div class="mx-auto max-w-130">
+	<div class="mx-auto max-w-120">
 		{#each content.steps as step, i}
-			<div class="mb-8 flex items-start gap-4">
-				<div class="flex aspect-square size-8 items-center justify-center squircle bg-pink-500/30">
-					<p class="font-semibold text-pink-700 dark:text-pink-100">
-						{i + 1}
-					</p>
-				</div>
-				<p class="text-balance text-neutral-700 sm:text-lg dark:text-neutral-300">
-					<b class="font-semibold text-neutral-800 dark:text-neutral-200">{step.bold}</b>
-					{step.normal}
-				</p>
-			</div>
+			<Step n={i + 1} bold={step.bold} normal={step.normal} />
 		{/each}
 	</div>
 	<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" class="mx-auto mt-12">
-		Beginnen met plannen
+		Begin met plannen
 	</Button>
 </section>
 
 <section>
-	<h2 class="mb-4 text-center text-xl font-semibold xs:text-2xl" id="faq">Hoe werkt Prikkert?</h2>
+	<h2 class="mb-6 text-center text-xl font-semibold xs:text-2xl" id="faq">Hoe werkt Prikkert?</h2>
 	<p
 		class="mx-auto mb-12 max-w-100 text-center font-medium text-balance text-neutral-600 dark:text-neutral-300"
 	>
@@ -92,44 +84,19 @@
 	</p>
 	<div class="mx-auto max-w-130">
 		{#each content.faq as { question, answer }, i}
-			<details
-				class="group mb-3 not-last-of-type:border-b not-last-of-type:pb-3 motion-safe:transition"
-				name="faq-item"
-				open={i === 0}
-			>
-				<summary
-					class="flex cursor-pointer list-none justify-between gap-2 rounded py-1 font-semibold text-neutral-800 sm:text-lg sm:font-medium dark:text-neutral-200"
-				>
-					<span class="not-group-open:truncate" title={question}>{question}</span>
-					<Icon
-						icon="tabler--chevron-right"
-						class="my-0.5 size-5 duration-100 group-open:rotate-90 motion-safe:transition"
-					/>
-				</summary>
+			<FaqItem {question} open={i === 0}>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				<p class="pt-2 pb-2 text-neutral-800 dark:text-neutral-200">{@html answer}</p>
-			</details>
+				{@html answer}
+			</FaqItem>
 		{/each}
 	</div>
-	<Button as="link" href="mailto:prikkert@qntn.io" variant="primary" class="mx-auto mt-12">
-		Contact opnemen
-	</Button>
+
+	<div class="mx-auto flex w-fit flex-wrap gap-4">
+		<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" class="mx-auto mt-12">
+			Afspraak aanmaken
+		</Button>
+		<Button as="link" href="mailto:prikkert@qntn.io" variant="secondary" class="mx-auto mt-12">
+			Contact opnemen
+		</Button>
+	</div>
 </section>
-
-<style>
-	@supports selector(::details-content) and (not (-moz-appearance: none)) {
-		@media (prefers-reduced-motion: no-preference) {
-			::details-content {
-				height: 0;
-				transition:
-					height 100ms ease,
-					content-visibility 100ms ease allow-discrete;
-				overflow: clip;
-			}
-
-			details[open]::details-content {
-				height: auto;
-			}
-		}
-	}
-</style>

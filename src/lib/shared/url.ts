@@ -8,6 +8,9 @@ export const routes = new Map([
 	['/afspraken', '/en/events'],
 	['/voorwaarden', '/en/terms'],
 	['/privacy', '/en/privacy'],
+	['/vs/datumprikker', '/en/vs/cally'],
+	['/vs/doodle', '/en/vs/doodle'],
+	['/vs/plennur', '/en/vs/plennur'],
 	['/', '/en'],
 ] as const)
 

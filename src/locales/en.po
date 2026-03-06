@@ -14,6 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 #: src/routes/+layout.svelte
+#: src/routes/footer.svelte
 msgid "Prikkert"
 msgstr "Prikkert"
 
@@ -22,23 +23,29 @@ msgid "Jouw afspraken"
 msgstr "Your events"
 
 #: src/lib/components/event/form.svelte
+#: src/lib/shared/seo/meta.ts
 #: src/routes/+layout.svelte
 #: src/routes/+page.svelte
 #: src/routes/afspraak/aanmaken/+page.svelte
 #: src/routes/afspraken/+page.svelte
+#: src/routes/vs/datumprikker/+page.svelte
+#: src/routes/vs/plennur/+page.svelte
 msgid "Afspraak aanmaken"
 msgstr "Create event"
 
 #: src/routes/+layout.svelte
+#: src/routes/footer.svelte
 msgid "Privacy"
 msgstr "Privacy"
 
 #: src/routes/+layout.svelte
+#: src/routes/footer.svelte
 msgid "Voorwaarden"
 msgstr "Terms"
 
 #: src/lib/shared/content.ts
 #: src/routes/+layout.svelte
+#: src/routes/footer.svelte
 msgid "Open source"
 msgstr "Open source"
 
@@ -75,6 +82,8 @@ msgid "Vind de antwoorden op veelgestelde vragen."
 msgstr "Find the answers to frequently asked questions."
 
 #: src/routes/+page.svelte
+#: src/routes/vs/datumprikker/+page.svelte
+#: src/routes/vs/plennur/+page.svelte
 msgid "Contact opnemen"
 msgstr "Get in touch"
 
@@ -561,6 +570,7 @@ msgid "Voeg een opmerking toe..."
 msgstr "Add a note..."
 
 #: src/routes/afspraak/overzicht/[eventId]/+page.server.ts
+#: src/routes/afspraak/reageren/[eventId]/+page.server.ts
 msgid "Afspraak niet gevonden"
 msgstr "Event not found"
 
@@ -613,6 +623,7 @@ msgid "Maak een afspraak aan"
 msgstr "Create an event"
 
 #: src/lib/shared/content.ts
+#: src/routes/vs/datumprikker/+page.svelte
 msgid "Deel de link"
 msgstr "Share the link"
 
@@ -772,3 +783,379 @@ msgstr "Warning"
 #: src/lib/components/event/form.svelte
 msgid "Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt."
 msgstr "You changed one or more date options. If you continue, the availability of participants will be deleted for these options. This cannot be undone."
+
+#: src/routes/+page.svelte
+#: src/routes/vs/plennur/+page.svelte
+msgid "Begin met plannen"
+msgstr "Start planning"
+
+#: src/routes/footer.svelte
+msgid "Datumprikker alternatief"
+msgstr "Cally alternative"
+
+#: src/routes/footer.svelte
+msgid "Plennur alternatief"
+msgstr "Plennur alternative"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Kies alle datums"
+msgstr "Select all dates"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Bekijk het overzicht"
+msgstr "View the overview"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Datumprikker alternatief<0/> zonder reclame"
+msgstr "Cally alternative<0/> without ads"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Prikkert is het <0>reclamevrije</0> alternatief voor Datumprikker.<1/> Plan <2>gratis</2> elke groepsafspraak."
+msgstr "Prikkert is the <0>ad-free</0> alternative to Cally.<1/> Plan every group event <2>for free</2>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Prikkert of Datumprikker?"
+msgstr "Prikkert or Cally?"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Allebei helpen je datums te prikken, maar Prikkert toont je nooit reclame."
+msgstr "Both help you schedule dates, but Prikkert never shows you ads."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Prikkert is <0>100% gratis</0> en dat zal altijd zo blijven."
+msgstr "Prikkert is <0>100% free</0> and that will never change."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Datumprikker is <0>niet gratis</0>. Je betaalt met je geld of met je data."
+msgstr "Cally is <0>not free</0>. You pay with your money or with your data."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Met Prikkert plan je altijd <0>zonder reclame</0>."
+msgstr "With Prikkert you always plan <0>without ads</0>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Op Datumprikker verdrink je in irritante <0>reclame en popups</0>."
+msgstr "On Cally you're drowning in annoying <0>ads and popups</0>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"Prikkert <0>trackt je niet</0> en\n"
+"verkoopt je gegevens nooit."
+msgstr ""
+"Prikkert <0>doesn't track you</0> and\n"
+"never sells your data."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Als je niet oplet, deelt Datumprikker jouw gegevens met <0>414 bedrijven</0>."
+msgstr "If you're not careful, Cally shares your data with <0>414 companies</0>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"Prikkert is <0>transparant</0>.\n"
+"Iedereen kan de code lezen en verbeteren."
+msgstr ""
+"Prikkert is <0>transparent</0>.\n"
+"Anyone can read and improve the code."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"Datumprikker is een <0>black box</0>,\n"
+"dus je bent afhankelijk van hun bedrijf."
+msgstr ""
+"Cally is a <0>black box</0>,\n"
+"so you depend on their company."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Zo werkt Prikkert"
+msgstr "How Prikkert works"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "In drie simpele stappen plan je jouw groepsafspraak."
+msgstr "Plan your group event in three simple steps."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Begin met prikken"
+msgstr "Start scheduling"
+
+#: src/routes/vs/datumprikker/+page.svelte
+#: src/routes/vs/plennur/+page.svelte
+msgid "Veelgestelde vragen"
+msgstr "Frequently asked questions"
+
+#: src/routes/vs/datumprikker/+page.svelte
+#: src/routes/vs/plennur/+page.svelte
+msgid "Alle antwoorden over hoe Prikkert werkt."
+msgstr "All the answers about how Prikkert works."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Hoe verdient Prikkert geld?"
+msgstr "How does Prikkert make money?"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"Geld verdienen is niet het doel van Prikkert. Dit passieproject draait op verwaarloosbare\n"
+"kosten en heeft daarom geen enkele vorm van reclame of betaalmuren nodig. Prikkert garandeert\n"
+"iedereen een volledig gratis en advertentievrije ervaring."
+msgstr ""
+"Making money is not the goal of Prikkert. This passion project runs on negligible\n"
+"costs and therefore doesn't need any form of advertising or paywalls. Prikkert guarantees\n"
+"everyone a completely free and ad-free experience."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Wat doet Prikkert met mijn gegevens?"
+msgstr "What does Prikkert do with my data?"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"Jij bent bij Prikkert niet het product. Prikkert verkoopt je gegevens nooit en trackt je niet.\n"
+"Jouw data blijft altijd binnen de Europese Unie en verdwijnt automatisch zodra je deze niet\n"
+"meer nodig hebt. Omdat je geen account aanmaakt kan je direct starten. Lees meer in de <0>privacyverklaring</0>."
+msgstr ""
+"With Prikkert, you are not the product. Prikkert never sells your data and doesn't track you.\n"
+"Your data always stays within the European Union and is automatically deleted once you no\n"
+"longer need it. Since you don't need an account, you can get started right away. Read more in the <0>privacy policy</0>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Heb ik een account nodig voor Prikkert?"
+msgstr "Do I need an account for Prikkert?"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"Nee, Prikkert vraagt niet om een e-mail of wachtwoord, maar herkent je via een cookie in je\n"
+"browser. Wil je later je afspraak of beschikbaarheid aanpassen? Doe dit dan op hetzelfde\n"
+"apparaat en in dezelfde browser. Als organisator deel je een speciale link om de afspraak ook\n"
+"op een ander apparaat, of samen met iemand anders, te beheren. Lees meer in de <0>privacyverklaring</0>."
+msgstr ""
+"No, Prikkert doesn't ask for an email or password, but recognizes you through a cookie in your\n"
+"browser. Want to edit your event or availability later? Do so on the same\n"
+"device and in the same browser. As an organizer, you can share a special link to manage the event\n"
+"on another device, or together with someone else. Read more in the <0>privacy policy</0>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+#: src/routes/vs/plennur/+page.svelte
+msgid "Is Prikkert open source?"
+msgstr "Is Prikkert open source?"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"Ja. Prikkert is open source zodat iedereen de techniek onder de motorkap kan controleren. De\n"
+"broncode staat openbaar op <0>Codeberg</0> en mag door iedereen worden hergebruikt onder de <1>European Union Public License</1>."
+msgstr ""
+"Yes. Prikkert is open source so that anyone can verify the technology under the hood. The\n"
+"source code is publicly available on <0>Codeberg</0> and can be reused by anyone under the <1>European Union Public License</1>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Wie heeft Prikkert ontwikkeld?"
+msgstr "Who developed Prikkert?"
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid ""
+"<0>Quinten Coret</0> bouwde Prikkert\n"
+"als passieproject. Hij ontwikkelde de tool met het simpele idee dat datumprikken prima zonder kosten,\n"
+"reclame en tracking kan. Prikkert is zijn kleine vorm van verzet tegen de verkuttificatie van het\n"
+"internet."
+msgstr ""
+"<0>Quinten Coret</0> built Prikkert\n"
+"as a passion project. He developed the tool with the simple idea that scheduling works just fine without costs,\n"
+"ads and tracking. Prikkert is his small act of resistance against the enshittification of the\n"
+"internet."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Maak een afspraak"
+msgstr "Create an event"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Verstuur de link"
+msgstr "Send the link"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Bekijk het resultaat"
+msgstr "View the result"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Plennur alternatief<0/> zonder prijskaartje"
+msgstr "Plennur alternative<0/> without the price tag"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Prikkert is het <0>gratis</0> alternatief voor Plennur.<1/> Plan elke groepsafspraak <2>zonder reclame</2>."
+msgstr "Prikkert is the <0>free</0> alternative to Plennur.<1/> Plan every group event <2>without ads</2>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Prikkert of Plennur?"
+msgstr "Prikkert or Plennur?"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Beide helpen je met plannen, maar met Prikkert doe je dat gratis."
+msgstr "Both help you schedule, but with Prikkert you do it for free."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Prikkert heeft geen paywall en <0>geen verborgen kosten</0>."
+msgstr "Prikkert has no paywall and <0>no hidden costs</0>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"Plennur is <0>kost geld</0> zodra je\n"
+"meer dan 5 mensen uitnodigt."
+msgstr ""
+"Plennur <0>costs money</0> as soon as you\n"
+"invite more than 5 people."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Prikkert hoeft je email niet. Je hebt <0>geen account nodig</0>."
+msgstr "Prikkert doesn't need your email. You need <0>no account</0>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Plennur <0>vereist een account</0> om een datumprikker aan te maken."
+msgstr "Plennur <0>requires an account</0> to create a scheduling poll."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"Prikkert is <0>open</0>. Iedereen kan de\n"
+"broncode inzien en hergebruiken."
+msgstr ""
+"Prikkert is <0>open</0>. Anyone can\n"
+"view and reuse the source code."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"Plennur is een <0>black box</0>, dus\n"
+"je kan niet zonder hun bedrijf."
+msgstr ""
+"Plennur is a <0>black box</0>, so\n"
+"you can't do without their company."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Aan de slag in drie stappen"
+msgstr "Get started in three steps"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Je kan zonder account meteen beginnen met plannen."
+msgstr "You can start planning right away without an account."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Wat is het verdienmodel van Prikkert?"
+msgstr "What is Prikkert's business model?"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"Prikkert hoeft geen geld te verdienen. Het is een passieproject met verwaarloosbare kosten,\n"
+"waardoor het geen advertenties of betaalmuren nodig heeft. Prikkert is en blijft dus gratis en\n"
+"reclamevrij voor iedereen."
+msgstr ""
+"Prikkert doesn't need to make money. It's a passion project with negligible costs,\n"
+"so it doesn't need any advertising or paywalls. Prikkert is and will remain free and\n"
+"ad-free for everyone."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Hoe veilig is mijn data bij Prikkert?"
+msgstr "How safe is my data with Prikkert?"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"Prikkert weigert je gegevens te verkopen en houdt geen surfgedrag bij. Jouw informatie wordt\n"
+"alleen opgeslagen binnen de Europese Unie en wordt automatisch gewist na de bewaartermijn. Je\n"
+"kan zonder account of zelfs volledig anononiem meteen aan de slag. Lees meer in de <0>privacyverklaring</0>."
+msgstr ""
+"Prikkert refuses to sell your data and doesn't track your browsing behavior. Your information is\n"
+"only stored within the European Union and is automatically deleted after the retention period. You\n"
+"can get started right away without an account, or even completely anonymously. Read more in the <0>privacy policy</0>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Werkt Prikkert zonder account?"
+msgstr "Does Prikkert work without an account?"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"Ja. Prikkert vraagt nergens om een e-mailadres of wachtwoord. Pas je planning later eenvoudig\n"
+"aan via precies hetzelfde apparaat en dezelfde browser. Deel je als organisator de beheerlink?\n"
+"Dan bewerk je de afspraak moeiteloos vanaf andere schermen of samen met vrienden. Lees meer in\n"
+"de <0>privacyverklaring</0>."
+msgstr ""
+"Yes. Prikkert never asks for an email address or password. Easily edit your planning later\n"
+"on the same device and in the same browser. Share the admin link as an organizer?\n"
+"Then you can manage the event effortlessly from other devices or together with friends. Read more in\n"
+"the <0>privacy policy</0>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"Zeker weten. Prikkert is open source software, waardoor iedereen het systeem tot in detail kan\n"
+"inspecteren. Vind de complete broncode direct terug op <0>Codeberg</0> en hergebruik deze vrijuit volgens de voorwaarden van de <1>European Union Public License</1>."
+msgstr ""
+"Absolutely. Prikkert is open source software, so anyone can inspect the system in full detail.\n"
+"Find the complete source code on <0>Codeberg</0> and reuse it freely under the terms of the <1>European Union Public License</1>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Wie is de maker van Prikkert?"
+msgstr "Who is the creator of Prikkert?"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid ""
+"<0>Quinten Coret</0> lanceerde\n"
+"Prikkert als passieproject. Hij bouwde de website vanuit de ijzersterke overtuiging dat een datum\n"
+"plannen gratis, advertentievrij en privacyvriendelijk hoort te zijn. Prikkert vormt zo zijn kleine\n"
+"protest tegen de verkuttificatie van het internet."
+msgstr ""
+"<0>Quinten Coret</0> launched\n"
+"Prikkert as a passion project. He built the website with the firm conviction that scheduling\n"
+"should be free, ad-free and privacy-friendly. Prikkert is his small\n"
+"protest against the enshittification of the internet."
+
+#: src/lib/shared/content.ts
+msgid "Waarom zou je langs eindeloze advertenties moeten scrollen? Met Prikkert plan je zonder reclame."
+msgstr "Why should you need to scroll past endless advertising? With Prikkert you plan without ads."
+
+#: src/lib/shared/content.ts
+msgid "Hoe verschilt Prikkert van Datumprikker?"
+msgstr "How is Prikkert different from Cally?"
+
+#: src/lib/shared/content.ts
+msgid "Met Datumprikker verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacy&shy;vriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag."
+msgstr "On Cally you're drowning in ads. If you're not careful, they also share your data with hundreds of advertising&shy; companies. Prikkert is the free, privacy&shy;-friendly and ad-free alternative. You don't need an account and can get started right away."
+
+#: src/lib/shared/seo/meta.ts
+msgid "Beschikbaarheid doorgeven"
+msgstr "Submit availability"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Afspraakoverzicht"
+msgstr "Event overview"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Gratis Plennur alternatief"
+msgstr "Free Plennur alternative"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Prikkert is het gratis alternatief voor Plennur. Plan elke groepsafspraak zonder account, reclame of verborgen kosten."
+msgstr "Prikkert is the free alternative to Plennur. Plan every group event without an account, ads or hidden costs."
+
+#: src/lib/shared/seo/meta.ts
+msgid "Datumprikker alternatief zonder reclame"
+msgstr "Cally alternative without ads"
+
+#: src/lib/shared/seo/meta.ts
+msgid "Prikkert is het reclamevrije alternatief voor Datumprikker. Plan gratis elke groepsafspraak zonder tracking of advertenties."
+msgstr "Prikkert is the ad-free alternative to Cally. Plan every group event for free without tracking or advertising."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "en tijden waarop de afspraak zou kunnen plaatsvinden."
+msgstr "and times the appointment could take place."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "zodat iedereen hun beschikbaarheid kan doorgeven."
+msgstr "so everyone can share their availability."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "en prik het moment dat het beste uitkomt."
+msgstr "and pick the moment that works best."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "met de datums en tijden die je wil voorstellen."
+msgstr "with the dates and times you want to propose."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "zodat deelnemers hun beschikbaarheid kunnen doorgeven."
+msgstr "so participants can share their availability."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "en kies samen de beste datum voor de afspraak."
+msgstr "and choose the best date for the appointment together."

@@ -12,25 +12,29 @@
 	import og from '@/assets/og.png'
 
 	import Background from './background.svelte'
+	import Footer from './footer.svelte'
 	import { hasSession } from './data.remote'
-	import { description, getPageTitle } from '@/shared/seo/meta'
+	import { getPageMeta } from '@/shared/seo/meta'
 	import { generateJSONLD } from '@/shared/seo/json'
 	import { getLocaleURL, url } from '@/shared/url'
+	import { setLocale } from '@/client/cookies'
 
 	let { children } = $props()
+
+	const meta = $derived(getPageMeta())
 </script>
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={icon} />
-	<title>{getPageTitle()}</title>
-	<meta name="description" content={description} />
-	<meta itemprop="name" content={getPageTitle()} />
-	<meta itemprop="description" content={description} />
+	<title>{meta.title}</title>
+	<meta name="description" content={meta.description} />
+	<meta itemprop="name" content={meta.title} />
+	<meta itemprop="description" content={meta.description} />
 	<meta itemprop="image" content={og} />
 	<meta property="og:url" content={'https://prikkert.nl' + page.url.pathname} />
 	<meta property="og:type" content="website" />
-	<meta property="og:title" content={getPageTitle()} />
-	<meta property="og:description" content={description} />
+	<meta property="og:title" content={meta.title} />
+	<meta property="og:description" content={meta.description} />
 	<meta property="og:image" content={og} />
 	<meta property="og:site_name" content="Prikkert" />
 	<meta property="og:locale" content={page.data.locale} />
@@ -99,25 +103,5 @@
 		{@render children()}
 	</main>
 
-	<footer
-		class="mx-6 mt-12 flex justify-between gap-x-8 gap-y-4 border-t py-8 text-[15px] max-sm:flex-col"
-	>
-		<a
-			href={url('/')}
-			class="inline-flex w-fit items-center gap-2 text-base font-medium text-neutral-700/80 hover:underline dark:text-neutral-300/80"
-		>
-			<img src={icon} width={16} height={16} alt="" class="opacity-50 brightness-0 dark:invert" />
-			<span>Prikkert</span>
-		</a>
-
-		<div
-			class="flex flex-wrap gap-x-8 gap-y-3 text-neutral-500 max-xs:flex-col sm:justify-end dark:text-neutral-400"
-		>
-			<a href={url('/privacy')} class="hover:underline">Privacy</a>
-			<a href={url('/voorwaarden')} class="hover:underline">Voorwaarden</a>
-			<a href="https://codeberg.org/qcoret/prikkert" class="hover:underline" target="_blank">
-				Open source
-			</a>
-		</div>
-	</footer>
+	<Footer />
 </div>
