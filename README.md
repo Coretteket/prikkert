@@ -23,7 +23,7 @@ Production runs as a Docker container behind an external Traefik instance:
 docker compose -f compose.prod.yml up -d --build
 ```
 
-This spins up the app, Postgres, and a Drizzle Gateway. You'll need to tweak the Traefik labels and `.env` to match your setup.
+This spins up a Node server and Postgres. You'll need to tweak the Traefik labels and `.env` to match your setup.
 
 ## License
 
