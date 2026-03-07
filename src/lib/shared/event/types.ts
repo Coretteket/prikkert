@@ -1,5 +1,7 @@
 import type { SvelteMap } from 'svelte/reactivity'
 
+import type { Temporal } from '../temporal';
+
 export type Slot = { startsAt?: Temporal.PlainTime; endsAt?: Temporal.PlainTime; note?: string }
 export const emptySlot: Slot = {}
 
