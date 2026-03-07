@@ -28,11 +28,11 @@
 		Datumprikker alternatief<br /> zonder reclame
 	</h1>
 	<h2
-		class="mx-auto mb-8 text-center text-xl leading-normal text-balance text-neutral-700 dark:text-neutral-300"
+		class="mx-auto mb-8 max-w-120 text-center text-xl leading-normal text-balance text-neutral-700 dark:text-neutral-300"
 	>
 		Prikkert is het <strong class="font-bold text-pink-600 dark:text-pink-50">reclamevrije</strong>
-		alternatief voor Datumprikker.<br />
-		Plan <strong class="font-bold text-pink-600 dark:text-pink-50">gratis</strong> elke groepsafspraak.
+		alternatief voor Datumprikker. Plan
+		<strong class="font-bold text-pink-600 dark:text-pink-50">gratis</strong> elke groepsafspraak.
 	</h2>
 	<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" size="lg" class="mx-auto">
 		Afspraak aanmaken
