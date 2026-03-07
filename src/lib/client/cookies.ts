@@ -38,4 +38,5 @@ export function setLocale(locale: 'nl' | 'en') {
     replaceState: true,
     noScroll: true,
   })
+  document.documentElement.lang = locale
 }
