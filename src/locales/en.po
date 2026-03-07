@@ -33,18 +33,15 @@ msgstr "Your events"
 msgid "Afspraak aanmaken"
 msgstr "Create event"
 
-#: src/routes/+layout.svelte
 #: src/routes/footer.svelte
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/routes/+layout.svelte
 #: src/routes/footer.svelte
 msgid "Voorwaarden"
 msgstr "Terms"
 
 #: src/lib/shared/content.ts
-#: src/routes/+layout.svelte
 #: src/routes/footer.svelte
 msgid "Open source"
 msgstr "Open source"
@@ -68,10 +65,6 @@ msgstr "How do you use Prikkert?"
 #: src/routes/+page.svelte
 msgid "Plan jouw groepsafspraak in drie simpele stappen."
 msgstr "Plan your group event in three simple steps."
-
-#: src/routes/+page.svelte
-msgid "Beginnen met plannen"
-msgstr "Start planning"
 
 #: src/routes/+page.svelte
 msgid "Hoe werkt Prikkert?"
@@ -575,18 +568,6 @@ msgid "Afspraak niet gevonden"
 msgstr "Event not found"
 
 #: src/lib/shared/seo/meta.ts
-msgid "Aanmaken"
-msgstr "Create"
-
-#: src/lib/shared/seo/meta.ts
-msgid "Reageren"
-msgstr "Respond"
-
-#: src/lib/shared/seo/meta.ts
-msgid "Overzicht"
-msgstr "Overview"
-
-#: src/lib/shared/seo/meta.ts
 msgid "Prikkert · Samen plannen, zo geprikt"
 msgstr "Prikkert · Poll your group, pick your moment"
 
@@ -601,10 +582,6 @@ msgstr "Prikkert is 100% free of charge and that will never change. No paid feat
 #: src/lib/shared/content.ts
 msgid "Nooit reclame"
 msgstr "No ads"
-
-#: src/lib/shared/content.ts
-msgid "Waarom zou je langs eindeloze advertenties moeten scrollen? Prikkert houdt het reclamevrij."
-msgstr "Why should you need to scroll past endless advertising? Prikkert will always keep it ad-free."
 
 #: src/lib/shared/content.ts
 msgid "Geen tracking"
@@ -630,14 +607,6 @@ msgstr "Share the link"
 #: src/lib/shared/content.ts
 msgid "Prik het beste moment"
 msgstr "Pick the best moment"
-
-#: src/lib/shared/content.ts
-msgid "Hoe verschilt Prikkert van datumprikker.nl?"
-msgstr "How is Prikkert different from datumprikker.nl?"
-
-#: src/lib/shared/content.ts
-msgid "Op <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> verdrink je in de reclame. Als je niet oplet, delen ze je gegevens bovendien met honderden advertentie&shy;bedrijven. Prikkert is het gratis, privacy&shy;vriendelijke én reclamevrije alternatief. Je hebt geen account nodig, en kan zo aan de slag."
-msgstr "On <a href='https://datumprikker.nl' rel='nofollow noopener' target='_blank' class='underline'>datumprikker.nl</a> you're drowning in ads. If you're not careful, they also share your data with hundreds of advertising companies. Prikkert is the free, privacy&shy;-friendly and ad-free alternative. You don't need an account and can get started right away."
 
 #: src/lib/shared/content.ts
 msgid "Hoe blijft Prikkert gratis en reclamevrij?"
@@ -810,10 +779,6 @@ msgid "Datumprikker alternatief<0/> zonder reclame"
 msgstr "Cally alternative<0/> without ads"
 
 #: src/routes/vs/datumprikker/+page.svelte
-msgid "Prikkert is het <0>reclamevrije</0> alternatief voor Datumprikker.<1/> Plan <2>gratis</2> elke groepsafspraak."
-msgstr "Prikkert is the <0>ad-free</0> alternative to Cally.<1/> Plan every group event <2>for free</2>."
-
-#: src/routes/vs/datumprikker/+page.svelte
 msgid "Prikkert of Datumprikker?"
 msgstr "Prikkert or Cally?"
 
@@ -975,10 +940,6 @@ msgstr "View the result"
 #: src/routes/vs/plennur/+page.svelte
 msgid "Plennur alternatief<0/> zonder prijskaartje"
 msgstr "Plennur alternative<0/> without the price tag"
-
-#: src/routes/vs/plennur/+page.svelte
-msgid "Prikkert is het <0>gratis</0> alternatief voor Plennur.<1/> Plan elke groepsafspraak <2>zonder reclame</2>."
-msgstr "Prikkert is the <0>free</0> alternative to Plennur.<1/> Plan every group event <2>without ads</2>."
 
 #: src/routes/vs/plennur/+page.svelte
 msgid "Prikkert of Plennur?"
@@ -1159,3 +1120,21 @@ msgstr "so participants can share their availability."
 #: src/routes/vs/plennur/+page.svelte
 msgid "en kies samen de beste datum voor de afspraak."
 msgstr "and choose the best date for the appointment together."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Prikkert is het <0>reclamevrije</0> alternatief voor Datumprikker. Plan <1>gratis</1> elke groepsafspraak."
+msgstr "Prikkert is the <0>ad-free</0> alternative to Cally. Plan every group event <1>for free</1>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Prikkert is het <0>gratis</0> alternatief voor Plennur. Plan elke groepsafspraak <1>zonder reclame</1>."
+msgstr "Prikkert is the <0>free</0> alternative to Plennur. Plan every group event <1>without ads</1>."
+
+#: src/lib/shared/content.ts
+#: src/lib/shared/seo/meta.ts
+msgid "Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak."
+msgstr "Find the best time for any group event for free and without ads."
+
+#: src/lib/shared/content.ts
+#: src/lib/shared/seo/meta.ts
+msgid "Samen plannen zonder gedoe: deel één link met de groep en zie snel wanneer iedereen kan met Prikkert."
+msgstr "Plan together without hassle: share one link with the group and quickly see when everyone is available with Prikkert."

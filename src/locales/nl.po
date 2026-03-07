@@ -797,14 +797,6 @@ msgstr "Als je niet oplet, deelt Datumprikker jouw gegevens met <0>414 bedrijven
 msgid "Plennur <0>vereist een account</0> om een datumprikker aan te maken."
 msgstr "Plennur <0>vereist een account</0> om een datumprikker aan te maken."
 
-#: src/routes/vs/plennur/+page.svelte
-msgid "Prikkert is het <0>gratis</0> alternatief voor Plennur.<1/> Plan elke groepsafspraak <2>zonder reclame</2>."
-msgstr "Prikkert is het <0>gratis</0> alternatief voor Plennur.<1/> Plan elke groepsafspraak <2>zonder reclame</2>."
-
-#: src/routes/vs/datumprikker/+page.svelte
-msgid "Prikkert is het <0>reclamevrije</0> alternatief voor Datumprikker.<1/> Plan <2>gratis</2> elke groepsafspraak."
-msgstr "Prikkert is het <0>reclamevrije</0> alternatief voor Datumprikker.<1/> Plan <2>gratis</2> elke groepsafspraak."
-
 #: src/routes/footer.svelte
 msgid "Datumprikker alternatief"
 msgstr "Datumprikker alternatief"
@@ -1128,3 +1120,21 @@ msgstr "zodat deelnemers hun beschikbaarheid kunnen doorgeven."
 #: src/routes/vs/plennur/+page.svelte
 msgid "en kies samen de beste datum voor de afspraak."
 msgstr "en kies samen de beste datum voor de afspraak."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Prikkert is het <0>reclamevrije</0> alternatief voor Datumprikker. Plan <1>gratis</1> elke groepsafspraak."
+msgstr "Prikkert is het <0>reclamevrije</0> alternatief voor Datumprikker. Plan <1>gratis</1> elke groepsafspraak."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Prikkert is het <0>gratis</0> alternatief voor Plennur. Plan elke groepsafspraak <1>zonder reclame</1>."
+msgstr "Prikkert is het <0>gratis</0> alternatief voor Plennur. Plan elke groepsafspraak <1>zonder reclame</1>."
+
+#: src/lib/shared/content.ts
+#: src/lib/shared/seo/meta.ts
+msgid "Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak."
+msgstr "Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak."
+
+#: src/lib/shared/content.ts
+#: src/lib/shared/seo/meta.ts
+msgid "Samen plannen zonder gedoe: deel één link met de groep en zie snel wanneer iedereen kan met Prikkert."
+msgstr "Samen plannen zonder gedoe: deel één link met de groep en zie snel wanneer iedereen kan met Prikkert."
