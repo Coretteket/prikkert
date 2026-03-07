@@ -1,19 +1,15 @@
 import { page } from '$app/state'
 
 import { capitalizeFirst } from '../utils'
-
-export const shortDescription =
-	'Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak.'
-
-export const defaultDescription =
-	shortDescription +
-	' Samen plannen hoeft geen gedoe te zijn. Met Prikkert deel je een link en plan je snel daarna.'
+import { getContent } from '../content'
 
 function formatTitle(title: string) {
 	return `${capitalizeFirst(title)} · Prikkert`
 }
 
 export function getPageMeta() {
+	const { defaultDescription } = getContent()
+
 	switch (page.route.id) {
 		case '/afspraak/aanmaken': {
 			return { title: formatTitle('Afspraak aanmaken'), description: defaultDescription }

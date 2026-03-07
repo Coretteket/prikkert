@@ -1,6 +1,14 @@
 import { url } from './url'
 
 export function getContent() {
+	const shortDescription =
+		'Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak.'
+
+	const defaultDescription =
+		shortDescription +
+		' ' +
+		'Samen plannen zonder gedoe: deel één link met de groep en zie snel wanneer iedereen kan met Prikkert.'
+
 	const promises = [
 		{
 			icon: 'tabler--pig-money',
@@ -74,5 +82,5 @@ export function getContent() {
 		},
 	]
 
-	return { promises, steps, faq }
+	return { defaultDescription, shortDescription, promises, steps, faq }
 }
