@@ -1,5 +1,6 @@
 import { loadLocales, runWithLocale } from 'wuchale/load-utils/server'
 import { redirect, type Handle } from '@sveltejs/kit'
+import { env } from '$env/dynamic/public'
 
 import { building, dev } from '$app/environment'
 
@@ -47,7 +48,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	response.headers.set(
 		'X-Robots-Tag',
-		PUBLIC_PATHS.includes(event.url.pathname) ? 'all' : 'noindex, nofollow',
+		env.PUBLIC_NO_INDEX === '1' || !PUBLIC_PATHS.includes(event.url.pathname)
+			? 'noindex, nofollow'
+			: 'all',
 	)
 
 	return response

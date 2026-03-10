@@ -1,13 +1,16 @@
 // @wc-ignore-file
+import { env } from '$env/dynamic/public'
+
 import { page } from '$app/state'
 
-import { getPageMeta } from './meta'
 import { getContent } from '../content'
+import { getPageMeta } from './meta'
 
 export function generateJSONLD() {
 	const isHome = page.url.pathname === '/'
 	const { promises, faq } = getContent()
 	const meta = getPageMeta()
+	const origin = env.PUBLIC_ORIGIN
 
 	const baseSchema: {
 		'@context': string
@@ -17,15 +20,15 @@ export function generateJSONLD() {
 		'@graph': [
 			{
 				'@type': 'WebSite',
-				'@id': 'https://prikkert.nl/#website',
+				'@id': `${origin}/#website`,
 				name: 'Prikkert',
 				description: meta.description,
-				url: 'https://prikkert.nl',
+				url: origin,
 				publisher: { '@type': 'Person', name: 'Quinten Coret', url: 'https://quintencoret.nl' },
 			},
 			{
 				'@type': 'SoftwareApplication',
-				'@id': 'https://prikkert.nl/#software',
+				'@id': `${origin}/#software`,
 				name: 'Prikkert',
 				description: meta.description,
 				operatingSystem: 'All',
@@ -41,19 +44,19 @@ export function generateJSONLD() {
 		const homeExtras = [
 			{
 				'@type': 'WebPage',
-				'@id': 'https://prikkert.nl/#webpage',
-				url: 'https://prikkert.nl',
+				'@id': `${origin}/#webpage`,
+				url: origin,
 				name: meta.title,
 				inLanguage: 'nl-NL',
 				potentialAction: {
 					'@type': 'CreateAction',
 					name: 'Afspraak aanmaken',
-					target: { '@type': 'EntryPoint', urlTemplate: 'https://prikkert.nl/afspraak/aanmaken' },
+					target: { '@type': 'EntryPoint', urlTemplate: `${origin}/afspraak/aanmaken` },
 				},
 			},
 			{
 				'@type': 'FAQPage',
-				'@id': 'https://prikkert.nl/#faq',
+				'@id': `${origin}/#faq`,
 				mainEntity: faq.map((f) => ({
 					'@type': 'Question',
 					name: f.question,
@@ -69,10 +72,10 @@ export function generateJSONLD() {
 	} else {
 		baseSchema['@graph'].push({
 			'@type': 'WebPage',
-			'@id': `https://prikkert.nl${page.url.pathname}/#webpage`,
+			'@id': `${origin}${page.url.pathname}/#webpage`,
 			name: meta.title,
-			url: `https://prikkert.nl${page.url.pathname}`,
-			isPartOf: { '@id': 'https://prikkert.nl/#website' },
+			url: `${origin}${page.url.pathname}`,
+			isPartOf: { '@id': `${origin}/#website` },
 		})
 	}
 

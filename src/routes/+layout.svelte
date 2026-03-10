@@ -2,6 +2,8 @@
 	import '@fontsource-variable/golos-text'
 	import '../app.css'
 
+	import { env } from '$env/dynamic/public'
+
 	import { page } from '$app/state'
 
 	import Loading from '@/components/loading.svelte'
@@ -31,7 +33,7 @@
 	<meta itemprop="name" content={meta.title} />
 	<meta itemprop="description" content={meta.description} />
 	<meta itemprop="image" content={og} />
-	<meta property="og:url" content={'https://prikkert.nl' + page.url.pathname} />
+	<meta property="og:url" content={env.PUBLIC_ORIGIN + page.url.pathname} />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content={meta.title} />
 	<meta property="og:description" content={meta.description} />
@@ -39,15 +41,15 @@
 	<meta property="og:site_name" content="Prikkert" />
 	<meta property="og:locale" content={page.data.locale} />
 	<meta name="twitter:card" content="summary_large_image" />
-	<link rel="canonical" href={`https://prikkert.nl${page.url.pathname}`} />
+	<link rel="canonical" href={`${env.PUBLIC_ORIGIN}${page.url.pathname}`} />
 	<link
 		rel="alternate"
-		href={`https://prikkert.nl${getLocaleURL(page.url.pathname, 'en')}`}
+		href={`${env.PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'en')}`}
 		hreflang="en"
 	/>
 	<link
 		rel="alternate"
-		href={`https://prikkert.nl${getLocaleURL(page.url.pathname, 'nl')}`}
+		href={`${env.PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'nl')}`}
 		hreflang="nl"
 	/>
 	{@html `<script type="application/ld+json">${generateJSONLD()}</script>`}
