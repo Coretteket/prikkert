@@ -171,7 +171,7 @@
 		<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" class="mx-auto mt-12">
 			Afspraak aanmaken
 		</Button>
-		<Button as="link" href="mailto:prikkert@qntn.io" variant="secondary" class="mx-auto mt-12">
+		<Button as="link" href={url('/contact')} variant="secondary" class="mx-auto mt-12">
 			Contact opnemen
 		</Button>
 	</div>
