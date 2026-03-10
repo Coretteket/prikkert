@@ -23,7 +23,7 @@
 		</p>
 
 		<output
-			class="mb-4 block h-11.25 overflow-x-scroll rounded-lg border px-4 py-2.5 text-[15px] text-neutral-700 dark:bg-neutral-825 dark:text-neutral-300"
+			class="mb-4 block h-auto rounded-lg border px-4 py-2.5 text-[15px] wrap-anywhere text-neutral-700 dark:bg-neutral-825 dark:text-neutral-300"
 		>
 			{shareLink}
 		</output>
