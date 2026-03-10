@@ -6,6 +6,7 @@ export const routes = new Map([
 	['/afspraak/bewerken', '/en/event/edit'],
 	['/afspraak/reageren', '/en/event/respond'],
 	['/afspraken', '/en/events'],
+	['/contact', '/en/contact'],
 	['/voorwaarden', '/en/terms'],
 	['/privacy', '/en/privacy'],
 	['/vs/datumprikker', '/en/vs/cally'],

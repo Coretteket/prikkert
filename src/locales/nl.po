@@ -1138,3 +1138,7 @@ msgstr "Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak.
 #: src/lib/shared/seo/meta.ts
 msgid "Samen plannen zonder gedoe: deel één link met de groep en zie snel wanneer iedereen kan met Prikkert."
 msgstr "Samen plannen zonder gedoe: deel één link met de groep en zie snel wanneer iedereen kan met Prikkert."
+
+#: src/routes/footer.svelte
+msgid "Contact"
+msgstr "Contact"

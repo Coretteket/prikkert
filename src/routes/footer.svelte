@@ -26,6 +26,7 @@
 		</div>
 
 		<div class="flex flex-wrap gap-x-8 gap-y-3 font-[450]">
+			<a href={url('/contact')} class="hover:underline">Contact</a>
 			<a href={url('/privacy')} class="hover:underline">Privacy</a>
 			<a href={url('/voorwaarden')} class="hover:underline">Voorwaarden</a>
 			<a href="https://codeberg.org/qcoret/prikkert" class="hover:underline" target="_blank">
