@@ -17,6 +17,7 @@ export const routes = new Map([
 export const NL_PUBLIC_PATHS = [
 	'/',
 	'/afspraak/aanmaken',
+	'/contact',
 	'/privacy',
 	'/voorwaarden',
 	'/sitemap.xml',
