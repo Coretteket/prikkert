@@ -4,7 +4,7 @@
 	let {
 		question,
 		open = false,
-		children
+		children,
 	}: { question: string; open?: boolean; children: import('svelte').Snippet } = $props()
 </script>
 

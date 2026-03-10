@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@source not "./locales/";
+@source not './locales/';
 
 @plugin '@iconify/tailwind4' {
 	prefixes: 'tabler';

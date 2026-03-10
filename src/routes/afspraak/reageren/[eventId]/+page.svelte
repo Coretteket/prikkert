@@ -137,7 +137,10 @@
 			<p class="mb-4 block text-lg font-medium">Beschikbaarheid</p>
 			{#if eventTimezone && !hasSameOffset(eventTimezone, page.data.timezone)}
 				<p class="mb-6 text-balance text-neutral-700 dark:text-neutral-300">
-					Opties worden weergegeven volgens de {formatTimezoneName(page.data.timezone, page.data.locale)}.
+					Opties worden weergegeven volgens de {formatTimezoneName(
+						page.data.timezone,
+						page.data.locale,
+					)}.
 				</p>
 			{/if}
 			<div

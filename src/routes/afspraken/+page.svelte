@@ -42,6 +42,12 @@
 	{/each}
 </div>
 
-<Button variant="primary" as="link" href={url("/afspraak/aanmaken")} size="md" class="mt-10 ml-auto">
+<Button
+	variant="primary"
+	as="link"
+	href={url('/afspraak/aanmaken')}
+	size="md"
+	class="mt-10 ml-auto"
+>
 	Afspraak aanmaken
 </Button>

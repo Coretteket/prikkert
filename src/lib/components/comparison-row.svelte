@@ -29,7 +29,7 @@
 		</p>
 	</div>
 
-	<div class="flex items-center px-6 sm:px-10 py-6.5 sm:pl-14 dark:bg-linear-to-tl">
+	<div class="flex items-center px-6 py-6.5 sm:px-10 sm:pl-14 dark:bg-linear-to-tl">
 		<p
 			class="w-full text-right text-balance text-neutral-700 sm:text-center dark:text-neutral-50/75"
 		>

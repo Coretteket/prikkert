@@ -272,7 +272,10 @@
 
 	{#if eventTimezone && !hasSameOffset(eventTimezone, page.data.timezone)}
 		<p class="mb-2 text-balance text-neutral-700 sm:[grid-area:2/1/2/3] dark:text-neutral-300">
-			Opties worden weergegeven volgens de {formatTimezoneName(page.data.timezone, page.data.locale)}.
+			Opties worden weergegeven volgens de {formatTimezoneName(
+				page.data.timezone,
+				page.data.locale,
+			)}.
 		</p>
 	{/if}
 

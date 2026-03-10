@@ -6,20 +6,19 @@
 
 	import { page } from '$app/state'
 
-	import Loading from '@/components/loading.svelte'
-	import Button from '@/components/button.svelte'
-	import Icon from '@/components/icon.svelte'
 	import Settings from '@/components/settings.svelte'
+	import { generateJSONLD } from '@/shared/seo/json'
+	import Loading from '@/components/loading.svelte'
+	import { getLocaleURL, url } from '@/shared/url'
+	import Button from '@/components/button.svelte'
+	import { getPageMeta } from '@/shared/seo/meta'
+	import Icon from '@/components/icon.svelte'
 	import icon from '@/assets/icon.svg'
 	import og from '@/assets/og.png'
 
 	import Background from './background.svelte'
-	import Footer from './footer.svelte'
 	import { hasSession } from './data.remote'
-	import { getPageMeta } from '@/shared/seo/meta'
-	import { generateJSONLD } from '@/shared/seo/json'
-	import { getLocaleURL, url } from '@/shared/url'
-	import { setLocale } from '@/client/cookies'
+	import Footer from './footer.svelte'
 
 	let { children } = $props()
 
@@ -52,7 +51,8 @@
 		href={`${env.PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'nl')}`}
 		hreflang="nl"
 	/>
-	{@html `<script type="application/ld+json">${generateJSONLD()}</script>`}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html `<script type="application/ld+json">${generateJSONLD()}<` + `/script>`}
 </svelte:head>
 
 <Loading />
