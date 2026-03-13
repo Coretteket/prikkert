@@ -65,7 +65,7 @@ function handleValidationErrors(issues: [v.BaseIssue<unknown>, ...v.BaseIssue<un
 
 export const submitAvailability = form('unchecked', async (formData) => {
 	const { locals, url } = getRequestEvent()
-	const eventId = url.pathname.split('/').at(-1!)
+	const eventId = url.pathname.split('/').at(-1)
 
 	if (!eventId) error(404, 'Afspraak niet gevonden')
 
