@@ -59,6 +59,7 @@ class NativePopover implements Popover {
 				`position-try-fallbacks: flip-block, flip-inline`,
 				`margin: 8px 0`,
 				`width: max-content`,
+				`height: auto`
 			].join('; '),
 		}
 
