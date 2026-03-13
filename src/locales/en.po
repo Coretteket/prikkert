@@ -14,10 +14,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 #: src/routes/+layout.svelte
+#: src/routes/+layout.svelte
 #: src/routes/footer.svelte
 msgid "Prikkert"
 msgstr "Prikkert"
 
+#: src/routes/+layout.svelte
 #: src/routes/+layout.svelte
 msgid "Jouw afspraken"
 msgstr "Your events"
@@ -25,10 +27,14 @@ msgstr "Your events"
 #: src/lib/components/event/form.svelte
 #: src/lib/shared/seo/meta.ts
 #: src/routes/+layout.svelte
+#: src/routes/+layout.svelte
+#: src/routes/+page.svelte
 #: src/routes/+page.svelte
 #: src/routes/afspraak/aanmaken/+page.svelte
 #: src/routes/afspraken/+page.svelte
 #: src/routes/vs/datumprikker/+page.svelte
+#: src/routes/vs/datumprikker/+page.svelte
+#: src/routes/vs/plennur/+page.svelte
 #: src/routes/vs/plennur/+page.svelte
 msgid "Afspraak aanmaken"
 msgstr "Create event"
@@ -250,6 +256,7 @@ msgid "Kies een titel en datums om te beginnen met plannen."
 msgstr "Choose a title and dates to start planning."
 
 #: src/routes/afspraak/bewerken/[id]/+page.svelte
+#: src/routes/afspraak/bewerken/[id]/+page.svelte
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 msgid "Afspraak bewerken"
 msgstr "Edit event"
@@ -388,6 +395,7 @@ msgid "<0/> Delen via mail"
 msgstr "<0/> Share by mail"
 
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/+page.svelte
 msgid "Beschikbaarheid"
 msgstr "Availability"
@@ -401,18 +409,22 @@ msgid "Datum"
 msgstr "Date"
 
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 msgid "Verberg alle reacties"
 msgstr "Hide all responses"
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 msgid "Toon alle reacties"
 msgstr "Show all responses"
 
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
 msgid "Datum bevestigen"
 msgstr "Confirm date"
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
 msgid "Bevestiging intrekken"
@@ -562,8 +574,16 @@ msgstr "Add note for <0/>"
 msgid "Voeg een opmerking toe..."
 msgstr "Add a note..."
 
+#: src/routes/afspraak/bewerken/[id]/action.remote.ts
+#: src/routes/afspraak/bewerken/[id]/data.remote.ts
 #: src/routes/afspraak/overzicht/[eventId]/+page.server.ts
+#: src/routes/afspraak/overzicht/[eventId]/data.remote.ts
+#: src/routes/afspraak/overzicht/[eventId]/data.remote.ts
 #: src/routes/afspraak/reageren/[eventId]/+page.server.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/data.remote.ts
 msgid "Afspraak niet gevonden"
 msgstr "Event not found"
 
@@ -733,8 +753,8 @@ msgstr "Automatic ({0})"
 msgid "Sluiten"
 msgstr "Close"
 
-#. 0: formatTimezoneName(page.data.timezone, page.data.locale)
-#. 0: formatTimezoneName(page.data.timezone, page.data.locale)
+#. 0: formatTimezoneName( page.data.timezone, page.data.locale, )
+#. 0: formatTimezoneName( page.data.timezone, page.data.locale, )
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/+page.svelte
 msgid "Opties worden weergegeven volgens de {0}."
@@ -1130,15 +1150,48 @@ msgid "Prikkert is het <0>gratis</0> alternatief voor Plennur. Plan elke groepsa
 msgstr "Prikkert is the <0>free</0> alternative to Plennur. Plan every group event <1>without ads</1>."
 
 #: src/lib/shared/content.ts
-#: src/lib/shared/seo/meta.ts
 msgid "Gratis en reclamevrij het beste moment prikken voor elke groepsafspraak."
 msgstr "Find the best time for any group event for free and without ads."
 
 #: src/lib/shared/content.ts
-#: src/lib/shared/seo/meta.ts
 msgid "Samen plannen zonder gedoe: deel één link met de groep en zie snel wanneer iedereen kan met Prikkert."
 msgstr "Plan together without hassle: share one link with the group and quickly see when everyone is available with Prikkert."
 
 #: src/routes/footer.svelte
 msgid "Contact"
 msgstr "Contact"
+
+#: src/routes/afspraak/bewerken/[id]/action.remote.ts
+msgid "Ongeldig ID"
+msgstr "Invalid ID"
+
+#: src/routes/afspraak/bewerken/[id]/action.remote.ts
+msgid "Je kunt de reacties niet openbaar maken nadat er gereageerd is."
+msgstr "You cannot make responses public after someone has responded."
+
+#: src/routes/afspraak/overzicht/[eventId]/action.remote.ts
+msgid "Afspraak niet gevonden."
+msgstr "Event not found."
+
+#: src/routes/afspraak/overzicht/[eventId]/action.remote.ts
+msgid "Ongeldige link."
+msgstr "Invalid link."
+
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+msgid "Vul je beschikbaarheid in."
+msgstr "Select your availability."
+
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+msgid "Vul je naam in."
+msgstr "Enter your name."
+
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+msgid "Opmerkingen mogen maximaal 200 tekens zijn."
+msgstr "Comments cannot be longer than 200 characters."
+
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+msgid "Niet toegestaan."
+msgstr "Not allowed."
