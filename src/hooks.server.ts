@@ -1,5 +1,5 @@
 import { loadLocales, runWithLocale } from 'wuchale/load-utils/server'
-import { redirect, type Handle } from '@sveltejs/kit'
+import { type Handle } from '@sveltejs/kit'
 import { env } from '$env/dynamic/public'
 
 import { building, dev } from '$app/environment'
@@ -19,21 +19,32 @@ export const init = () => !dev && !building && cron.start()
 loadLocales(main.key, main.loadIDs, main.loadCatalog, locales)
 loadLocales(js.key, js.loadIDs, js.loadCatalog, locales)
 
+const redirect = (location: string) =>
+	new Response(null, { status: 303, headers: { Location: location, 'Cache-Control': 'no-store' } })
+
 export const handle: Handle = async ({ event, resolve }) => {
-	const cookieLocale = event.cookies.get('locale') === 'en' ? 'en' : 'nl'
+	const cookieLocale = event.cookies.get('locale') ?? ''
+	const acceptLanguage = event.request.headers.get('accept-language') ?? ''
+
+	const locale = locales.includes(cookieLocale)
+		? (cookieLocale as 'nl' | 'en')
+		: acceptLanguage?.includes('nl')
+			? 'nl'
+			: 'en'
 
 	if (event.url.pathname.length === ID_LENGTH + 1 && !event.url.pathname.slice(1).includes('/')) {
-		redirect(303, getLocaleURL(`/afspraak/overzicht/${event.url.pathname.slice(1)}`, cookieLocale))
+		return redirect(getLocaleURL(`/afspraak/overzicht/${event.url.pathname.slice(1)}`, locale))
 	}
 
-	if (event.url.pathname === '/' && cookieLocale === 'en') {
-		redirect(303, '/en')
+	const localeURL = getLocaleURL(event.url.pathname, locale)
+	if (cookieLocale !== '' && localeURL !== event.url.pathname) {
+		return redirect(localeURL + event.url.search)
 	}
 
 	event.locals.session = parseSessionCookies()
 	event.locals.theme = parseTheme()
 	event.locals.timezone = parseTimezone()
-	event.locals.locale = event.url.pathname.startsWith('/en') ? 'en' : 'nl'
+	event.locals.locale = locale
 
 	const response = await runWithLocale(event.locals.locale, () =>
 		resolve(event, {
