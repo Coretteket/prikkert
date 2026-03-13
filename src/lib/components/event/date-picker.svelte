@@ -177,7 +177,7 @@
 												aria-pressed={options.has(date.toString())}
 												data-in-month={inMonth}
 												disabled={!inMonth || (isPast && !isInitial)}
-												class="peer flex aspect-square items-center justify-center squircle text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-aria-pressed:not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-900 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:not-disabled:hover:bg-pink-800 motion-safe:transition-all motion-safe:duration-100 dark:text-neutral-300 not-aria-pressed:not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:dark:not-disabled:hover:bg-pink-700"
+												class="peer flex aspect-square grow items-center justify-center squircle text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-aria-pressed:not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-900 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:not-disabled:hover:bg-pink-800 motion-safe:transition-all motion-safe:duration-100 dark:text-neutral-300 not-aria-pressed:not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:dark:not-disabled:hover:bg-pink-700"
 											>
 												{date.day}
 											</button>
