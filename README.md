@@ -7,7 +7,7 @@ Prikkert is the open-source app for scheduling group events. It makes four core 
 - **No tracking**: no analytics, no data selling, no accounts
 - **Open source**: anyone can read, modify, and self-host the code
 
-Built with [SvelteKit](https://svelte.dev/docs/kit) (frontend framework), [Tailwind CSS](https://tailwindcss.com) (styling), [Drizzle ORM](https://orm.drizzle.team) (ORM), and [Wuchale](https://wuchale.com) (i18n).
+Built with [SvelteKit](https://svelte.dev) (frontend framework), [Tailwind CSS](https://tailwindcss.com) (styling), [Drizzle ORM](https://orm.drizzle.team) (ORM), and [Wuchale](https://wuchale.dev) (i18n).
 
 ## Contributing
 
