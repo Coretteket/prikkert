@@ -50,7 +50,7 @@
 					bind:availability
 					name={availabilityName}
 					value="MAYBE"
-					icon="tabler--question-mark"
+					icon="tabler--tilde"
 					label="Misschien"
 					class="border-x-0 group-has-checked:bg-yellow-400/60 group-has-checked:text-yellow-900 dark:group-has-checked:bg-yellow-500/30 dark:group-has-checked:text-yellow-200"
 				/>
