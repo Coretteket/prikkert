@@ -37,3 +37,5 @@ export type Theme = 'light' | 'dark' | 'system'
 
 export const toPreciseLocale = (locale: string) =>
 	locale === 'en' ? 'en-GB' : locale === 'nl' ? 'nl-NL' : locale
+
+export const isLocale = (value: string): value is 'nl' | 'en' => value === 'nl' || value === 'en'

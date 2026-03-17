@@ -51,3 +51,6 @@ export function getLocaleURL(path: string, locale: 'nl' | 'en') {
 
 	return path
 }
+
+export const getLocaleFromURL = (pathname: string) =>
+	pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'nl'

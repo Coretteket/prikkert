@@ -1,13 +1,15 @@
 import { loadLocales, runWithLocale } from 'wuchale/load-utils/server'
 import { type Handle } from '@sveltejs/kit'
 import { env } from '$env/dynamic/public'
+import { isbot } from 'isbot'
 
 import { building, dev } from '$app/environment'
 
+import { getLocaleURL, getLocaleFromURL, PUBLIC_PATHS } from '@/shared/url'
 import { parseSessionCookies } from '@/server/session/cookies'
 import { parseTheme, parseTimezone } from '@/server/cookies'
-import { getLocaleURL, PUBLIC_PATHS } from '@/shared/url'
 import { ID_LENGTH } from '@/server/db/schema'
+import { isLocale } from '@/shared/utils.js'
 
 import * as main from './locales/main.loader.server.svelte.js'
 import * as js from './locales/js.loader.server.js'
@@ -25,19 +27,23 @@ const redirect = (location: string) =>
 export const handle: Handle = async ({ event, resolve }) => {
 	const cookieLocale = event.cookies.get('locale') ?? ''
 	const acceptLanguage = event.request.headers.get('accept-language') ?? ''
+	const userAgent = event.request.headers.get('user-agent') ?? ''
+	const isBot = isbot(userAgent)
 
-	const locale = locales.includes(cookieLocale)
-		? (cookieLocale as 'nl' | 'en')
-		: acceptLanguage?.includes('nl')
-			? 'nl'
-			: 'en'
+	const locale = isBot
+		? getLocaleFromURL(event.url.pathname)
+		: isLocale(cookieLocale)
+			? cookieLocale
+			: acceptLanguage?.includes('nl')
+				? 'nl'
+				: 'en'
 
 	if (event.url.pathname.length === ID_LENGTH + 1 && !event.url.pathname.slice(1).includes('/')) {
 		return redirect(getLocaleURL(`/afspraak/overzicht/${event.url.pathname.slice(1)}`, locale))
 	}
 
 	const localeURL = getLocaleURL(event.url.pathname, locale)
-	if (cookieLocale !== '' && localeURL !== event.url.pathname) {
+	if (!isBot && cookieLocale !== '' && localeURL !== event.url.pathname) {
 		return redirect(localeURL + event.url.search)
 	}
 
