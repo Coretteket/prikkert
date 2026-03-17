@@ -52,34 +52,38 @@ async function renderMarkdown(page: string, locale: string) {
 }
 
 async function getLastCommit(page: string, locale: string) {
-	const { fetch } = getRequestEvent()
+	try {
+		const { fetch } = getRequestEvent()
 
-	const filePath = `src/routes/[page]/content/${page}.${locale}.md`
-	const encodedPath = filePath
-		.split('/')
-		.map((e) => encodeURIComponent(e))
-		.join('/')
+		const filePath = `src/routes/[page]/content/${page}.${locale}.md`
+		const encodedPath = filePath
+			.split('/')
+			.map((e) => encodeURIComponent(e))
+			.join('/')
 
-	const contentsResponse = await fetch(
-		`https://codeberg.org/qcoret/prikkert/rss/branch/main/${encodedPath}`,
-	)
+		const contentsResponse = await fetch(
+			`https://codeberg.org/qcoret/prikkert/rss/branch/main/${encodedPath}`,
+		)
 
-	const parser = new XMLParser({ isArray: (name) => name === 'item' })
+		const parser = new XMLParser({ isArray: (name) => name === 'item' })
 
-	const feed = parser.parse(await contentsResponse.text())
-	const parsedFeed = v.safeParse(FeedSchema, feed)
+		const feed = parser.parse(await contentsResponse.text())
+		const parsedFeed = v.safeParse(FeedSchema, feed)
 
-	if (!parsedFeed.success) return {}
+		if (!parsedFeed.success) return {}
 
-	const lastCommit = parsedFeed.output.rss.channel.item[0]
+		const lastCommit = parsedFeed.output.rss.channel.item[0]
 
-	const lastModified = Temporal.Instant.fromEpochMilliseconds(Date.parse(lastCommit.pubDate))
-		.toZonedDateTimeISO(DEFAULT_TIMEZONE)
-		.toLocaleString(locale, { dateStyle: 'long' })
+		const lastModified = Temporal.Instant.fromEpochMilliseconds(Date.parse(lastCommit.pubDate))
+			.toZonedDateTimeISO(DEFAULT_TIMEZONE)
+			.toLocaleString(locale, { dateStyle: 'long' })
 
-	const link = `${lastCommit.link}?files=${encodedPath}`
+		const link = `${lastCommit.link}?files=${encodedPath}`
 
-	return { lastModified, link }
+		return { lastModified, link }
+	} catch {
+		return {}
+	}
 }
 
 export const getPage = prerender(
