@@ -40,6 +40,13 @@ cp .env.example .env
 docker compose -f compose.prod.yml up -d --build
 ```
 
+You can also use [docker-rollout](https://github.com/Wowu/docker-rollout) for zero-downtime deployments.
+
+```bash
+docker compose -f compose.prod.yml build app
+docker rollout -f compose.prod.yml app
+```
+
 When self-hosting, please set `PUBLIC_NO_INDEX=1` or use your own branding, to avoid confusing search engines. Note that the [EUPL license](LICENSE) has a network use clause: if you run a modified version as a public service, please release your source code.
 
 Set `PUBLIC_ORIGIN` in `.env` to your domain (e.g. `https://example.com`). See `.env.example` for all options.
