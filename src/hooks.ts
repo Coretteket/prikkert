@@ -17,6 +17,10 @@ export const transport = {
 		encode: (value) => value instanceof Temporal.PlainDate && [value.toString()],
 		decode: (value) => Temporal.PlainDate.from(value[0]),
 	},
+	PlainTime: {
+		encode: (value) => value instanceof Temporal.PlainTime && [value.toString()],
+		decode: (value) => Temporal.PlainTime.from(value[0]),
+	},
 	ZonedDateTime: {
 		encode: (value) => value instanceof Temporal.ZonedDateTime && [value.toString()],
 		decode: (value) => Temporal.ZonedDateTime.from(value[0]),
