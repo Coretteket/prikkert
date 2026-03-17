@@ -215,7 +215,9 @@
 	<div class="mb-10">
 		<p class="text-lg font-medium">Omschrijving</p>
 
-		<p class="my-4 text-balance whitespace-pre-line text-neutral-700 dark:text-neutral-300">
+		<p
+			class="my-4 text-balance wrap-anywhere whitespace-pre-line text-neutral-700 dark:text-neutral-300"
+		>
 			{event.description}
 		</p>
 	</div>
