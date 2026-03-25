@@ -1081,3 +1081,7 @@ msgstr "Zeker weten. Prikkert is open source software, waardoor iedereen het sys
 #: src/routes/vs/plennur/+page.svelte
 msgid "<0>Quinten Coret</0> lanceerde Prikkert als passieproject. Hij bouwde de website vanuit de ijzersterke overtuiging dat een datum plannen gratis, advertentievrij en privacyvriendelijk hoort te zijn. Prikkert vormt zo zijn kleine protest tegen de verkuttificatie van het internet."
 msgstr "<0>Quinten Coret</0> lanceerde Prikkert als passieproject. Hij bouwde de website vanuit de ijzersterke overtuiging dat een datum plannen gratis, advertentievrij en privacyvriendelijk hoort te zijn. Prikkert vormt zo zijn kleine protest tegen de verkuttificatie van het internet."
+
+#: src/routes/footer.svelte
+msgid "Doneren"
+msgstr "Doneren"
