@@ -6,12 +6,12 @@ import { loadLocale } from 'wuchale/load-utils'
 
 import { browser } from '$app/environment'
 
-import type { LayoutLoad } from './$types'
+import { isLocale } from '@/shared/utils'
 
-import { locales } from '../locales/data'
+import type { LayoutLoad } from './$types'
 
 export const load: LayoutLoad = async (e) => {
 	const locale = e.data.locale
-	if (browser && locales.includes(locale)) await loadLocale(locale)
+	if (browser && isLocale(locale)) await loadLocale(locale)
 	return { locale, timezone: e.data.timezone }
 }

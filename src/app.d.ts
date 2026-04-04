@@ -1,5 +1,8 @@
 /* eslint-disable unicorn/require-module-specifiers */
 // See https://svelte.dev/docs/kit/types#app.d.ts
+
+import type { Locale } from './locales/data'
+
 // for information about these interfaces
 declare global {
 	namespace App {
@@ -10,11 +13,11 @@ declare global {
 				respondent: Map<string, import('./lib/server/session/cookies').RespondentSession>
 			}
 			theme: 'light' | 'dark' | 'system'
-			locale: string
+			locale: Locale
 			timezone: string
 		}
 		interface PageData {
-			locale: string
+			locale: Locale
 			timezone: string
 		}
 		// interface PageState {}

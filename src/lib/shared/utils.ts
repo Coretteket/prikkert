@@ -35,7 +35,7 @@ export enum KeyType {
 
 export type Theme = 'light' | 'dark' | 'system'
 
-export const toPreciseLocale = (locale: string) =>
+export const toPreciseLocale = (locale: Locale) =>
 	locale === 'en' ? 'en-GB' : locale === 'nl' ? 'nl-NL' : locale
 
-export const isLocale = (value: string): value is 'nl' | 'en' => value === 'nl' || value === 'en'
+export const isLocale = (value: string): value is Locale => locales.includes(value as Locale)
