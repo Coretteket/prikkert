@@ -1,62 +1,102 @@
-import type { InferSelectModel } from 'drizzle-orm'
-
 import { page } from '$app/state'
-
-import type { schema } from '@/server/db'
 
 import { toUserTimezone } from '@/shared/timezone'
 import { toPreciseLocale } from '@/shared/utils'
 import { Temporal } from '@/shared/temporal'
 
-export const formatOptions = {
-	date: {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-	},
-	time: {
-		hour: '2-digit',
-		minute: '2-digit',
-	},
-} satisfies Record<string, Intl.DateTimeFormatOptions>
+type DateLabel = { weekday: string; date: string; time?: string }
+type DateRangeLabel = { kind: 'range'; start: DateLabel; end: DateLabel }
+type DateSingleLabel = { kind: 'single' } & DateLabel
+type DateOptionLabel = DateSingleLabel | DateRangeLabel
 
-export function formatDateTimeOption({
-	startsAt,
-	endsAt,
-}: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>) {
-	const userStart = toUserTimezone(startsAt)
+export function formatDate(
+	start: Temporal.ZonedDateTime | Temporal.PlainDate,
+	end?: Temporal.ZonedDateTime | Temporal.PlainDate,
+): DateOptionLabel {
+	const userStart = toUserTimezone(start)
 
-	const weekday = userStart.toLocaleString(toPreciseLocale(page.data.locale), { weekday: 'long' })
-	const date = userStart.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.date)
-	if (userStart instanceof Temporal.PlainDate) return { weekday, date }
+	const weekday = formatWeekday(userStart)
+	const userEnd = end ? toUserTimezone(end) : undefined
 
-	const timeStart = userStart.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.time)
-	if (!endsAt) return { weekday, date, time: timeStart }
+	if (!userEnd)
+		return {
+			kind: 'single',
+			weekday,
+			date: formatPlainDate(userStart),
+			time: formatPlainTime(userStart),
+		}
 
-	const userEnd = toUserTimezone(endsAt)
-	if (userEnd instanceof Temporal.ZonedDateTime && userStart.equals(userEnd))
-		return { weekday, date, time: timeStart }
+	const startDate =
+		userStart instanceof Temporal.ZonedDateTime ? userStart.toPlainDate() : userStart
 
-	const timeEnd = userEnd.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.time)
-	return { weekday, date, time: `${timeStart} - ${timeEnd}` }
+	const endDate = userEnd instanceof Temporal.ZonedDateTime ? userEnd.toPlainDate() : userEnd
+	const endShowsYear = shouldShowYear(endDate)
+
+	if (Temporal.PlainDate.compare(startDate, endDate) === 0) {
+		if (userStart instanceof Temporal.ZonedDateTime)
+			return userStart.equals(userEnd)
+				? {
+						kind: 'single',
+						weekday,
+						date: formatPlainDate(startDate),
+						time: formatPlainTime(userStart),
+					}
+				: {
+						kind: 'single',
+						weekday,
+						date: formatPlainDate(startDate),
+						time: `${formatPlainTime(userStart)} – ${formatPlainTime(userEnd)}`,
+					}
+
+		return {
+			kind: 'single',
+			weekday,
+			date: formatPlainDate(startDate),
+		}
+	}
+
+	return {
+		kind: 'range',
+		start: {
+			weekday,
+			date: formatPlainDate(startDate, endShowsYear),
+			time: formatPlainTime(userStart),
+		},
+		end: {
+			weekday: formatWeekday(userEnd),
+			date: formatPlainDate(endDate, endShowsYear),
+			time: formatPlainTime(userEnd),
+		},
+	}
 }
 
-export function formatDateTimeRange(
-	startsAt: Temporal.PlainDate | Temporal.ZonedDateTime,
-	endsAt: Temporal.PlainDate | Temporal.ZonedDateTime,
+function locale() {
+	return toPreciseLocale(page.data.locale)
+}
+
+function formatWeekday(date: Temporal.PlainDate | Temporal.ZonedDateTime) {
+	return date.toLocaleString(locale(), { weekday: 'long' })
+}
+
+function shouldShowYear(date: Temporal.PlainDate) {
+	const now = Temporal.Now.plainDateISO(page.data.timezone)
+	return Temporal.PlainDate.compare(date, now.add({ years: 1 })) > 0
+}
+
+function formatPlainDate(
+	date: Temporal.PlainDate | Temporal.ZonedDateTime,
+	forceYear = false,
 ) {
-	const userStart = toUserTimezone(startsAt)
-	const userEnd = toUserTimezone(endsAt)
+	const plainDate = date instanceof Temporal.ZonedDateTime ? date.toPlainDate() : date
+	return plainDate.toLocaleString(locale(), {
+		day: 'numeric',
+		month: 'long',
+		year: forceYear || shouldShowYear(plainDate) ? 'numeric' : undefined,
+	})
+}
 
-	const start = userStart.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.date)
-	const end = userEnd.toLocaleString(toPreciseLocale(page.data.locale), formatOptions.date)
-
-	if (start === end) return start
-
-	const [startWords, endWords] = [start, end].map((d) => d.split(' ').toReversed())
-	const commonCount = startWords.findIndex((w, index) => w !== endWords[index])
-	const trimmedStart = startWords.slice(commonCount).toReversed().join(' ')
-
-	const joiner = /* @wc-include */ 't/m'
-	return [trimmedStart, joiner, end].join(' ')
+function formatPlainTime(date: Temporal.PlainDate | Temporal.ZonedDateTime) {
+	return date instanceof Temporal.ZonedDateTime
+		? date.toLocaleString(locale(), { hour: '2-digit', minute: '2-digit' })
+		: undefined
 }

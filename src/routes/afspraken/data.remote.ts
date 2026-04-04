@@ -2,6 +2,7 @@ import { asc, inArray } from 'drizzle-orm'
 
 import { query, getRequestEvent } from '$app/server'
 
+import { toInstant } from '@/shared/event/utils'
 import { Temporal } from '@/shared/temporal'
 import { db, schema } from '@/server/db'
 import { omit } from '@/shared/utils'
@@ -16,7 +17,7 @@ export const getEvents = query(async () => {
 		columns: { id: true, title: true, createdAt: true },
 		with: {
 			options: {
-				columns: { startsAt: true },
+				columns: { startsAt: true, endsAt: true },
 				orderBy: [asc(schema.options.startsAt)],
 			},
 			respondents: {
@@ -30,7 +31,10 @@ export const getEvents = query(async () => {
 		.map((event) => ({
 			...omit(event, 'options', 'respondents'),
 			firstDate: event.options.at(0)!.startsAt,
-			lastDate: event.options.at(-1)!.startsAt,
+			lastDate: event.options
+				.map((option) => option.endsAt ?? option.startsAt)
+				.toSorted((a, b) => Temporal.Instant.compare(toInstant(a), toInstant(b)))
+				.at(-1)!,
 			numberOfResponses: event.respondents.filter((s) => s.responses.length > 0).length,
 		}))
 		.toSorted((a, b) => Temporal.PlainDateTime.compare(b.createdAt, a.createdAt))

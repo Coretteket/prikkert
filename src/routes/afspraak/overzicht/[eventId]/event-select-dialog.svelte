@@ -35,7 +35,7 @@
 		>
 			{#each options as option}
 				<option value={option.id}>
-					<Date {option} />
+					<Date {...option} />
 				</option>
 			{/each}
 		</select>

@@ -1,3 +1,5 @@
+import { locales, type Locale } from '../../locales/data'
+
 export type Prettify<T> = {
 	[K in keyof T]: T[K]
 } & {}

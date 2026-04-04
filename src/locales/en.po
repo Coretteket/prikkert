@@ -98,6 +98,7 @@ msgid "Je hebt nog niet gereageerd of een afspraak aangemaakt."
 msgstr "You haven't responded or created an event yet."
 
 #: src/lib/components/event/confirm-dialog.svelte
+#: src/lib/components/event/end-date-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
@@ -106,6 +107,7 @@ msgstr "You haven't responded or created an event yet."
 msgid "Annuleren"
 msgstr "Cancel"
 
+#: src/lib/components/event/end-date-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
 #: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
 msgid "Verwijderen"
@@ -180,14 +182,6 @@ msgstr "Options <0>(optional)</0>"
 #: src/lib/components/event/form.svelte
 msgid "Tijden verbergen"
 msgstr "Hide times"
-
-#: src/lib/components/event/form.svelte
-msgid "Selecteer datums om opmerkingen en tijden toe te voegen."
-msgstr "Select dates to add notes and times."
-
-#: src/lib/components/event/form.svelte
-msgid "Opmerkingen en tijden toevoegen"
-msgstr "Add notes and times"
 
 #: src/lib/components/event/form.svelte
 msgid "Privacy instellen"
@@ -424,6 +418,7 @@ msgid "Selecteer een optie om de datum te prikken."
 msgstr "Select an option to confirm the date."
 
 #: src/lib/components/event/confirm-dialog.svelte
+#: src/lib/components/event/end-date-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
@@ -679,10 +674,6 @@ msgstr "to invite people to submit their availability."
 #: src/lib/shared/content.ts
 msgid "voor de afspraak wanneer iedereen heeft gereageerd."
 msgstr "for the event once everyone has responded."
-
-#: src/lib/shared/time-format.ts
-msgid "t/m"
-msgstr "to"
 
 #: src/lib/components/settings.svelte
 msgid "Tijdzone..."
@@ -1051,10 +1042,6 @@ msgid "<0>Quinten Coret</0> bouwde Prikkert als passieproject. Hij ontwikkelde d
 msgstr "<0>Quinten Coret</0> built Prikkert as a passion project. He developed the tool with the simple idea that scheduling works just fine without costs, ads and tracking. Prikkert is his small act of resistance against the enshittification of the internet."
 
 #: src/routes/vs/plennur/+page.svelte
-msgid "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
-msgstr "Plennur <0>costs money</0> as soon as you create more than 3 events."
-
-#: src/routes/vs/plennur/+page.svelte
 msgid "Prikkert is <0>open</0>. Iedereen kan de broncode inzien en hergebruiken."
 msgstr "Prikkert is <0>open</0>. Anyone can view and reuse the source code."
 
@@ -1085,3 +1072,33 @@ msgstr "<0>Quinten Coret</0> launched Prikkert as a passion project. He built th
 #: src/routes/footer.svelte
 msgid "Doneren"
 msgstr "Donate"
+
+#: src/lib/components/event/form.svelte
+msgid "Selecteer datums om opmerkingen, tijden en einddatums toe te voegen."
+msgstr "Select dates to add notes, times, and end dates."
+
+#: src/lib/components/event/end-date-dialog.svelte
+#: src/lib/components/event/time-slot.svelte
+msgid "Einddatum toevoegen"
+msgstr "Add end date"
+
+#: src/lib/components/event/end-date-dialog.svelte
+#: src/lib/components/event/time-slot.svelte
+msgid "Einddatum aanpassen"
+msgstr "Edit end date"
+
+#: src/lib/components/event/end-date-dialog.svelte
+msgid "Pas de einddatum voor deze datumoptie aan. Of klik op de geselecteerde einddatum om het te verwijderen."
+msgstr "Adjust the end date for this date option. Or click the selected end date to remove it."
+
+#: src/lib/components/event/end-date-dialog.svelte
+msgid "Kies een einddatum voor de optie die begint op <0/>."
+msgstr "Choose an end date for the option that starts on <0/>."
+
+#: src/lib/components/event/form.svelte
+msgid "Datumopties aanpassen"
+msgstr "Edit date options"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
+msgstr "Plennur <0>costs money</0> as soon as you create more than 3 events."

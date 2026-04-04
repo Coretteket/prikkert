@@ -9,16 +9,22 @@
 	import Icon from '@/components/icon.svelte'
 	import { KeyType } from '@/shared/utils'
 
+	const now = Temporal.Now.plainDateISO(page.data.timezone)
+
 	let {
 		options,
 		initialOptions,
 		maxViewMonths = 1,
-		hasIssues,
+		type = 'multiple',
+		minDate = now,
+		hasIssues = false,
 	}: {
 		options: Options
 		initialOptions?: Map<string, { hasTime: boolean; slots: Slot[] }>
 		maxViewMonths?: 1 | 2
-		hasIssues: boolean
+		type?: 'single' | 'multiple'
+		minDate?: Temporal.PlainDate
+		hasIssues?: boolean
 	} = $props()
 
 	const weekdays = $derived(
@@ -29,9 +35,7 @@
 		),
 	)
 
-	const now = Temporal.Now.plainDateISO(page.data.timezone)
-
-	let view = $state(now)
+	let view = $derived(minDate)
 
 	const firstVisible = $derived(view.with({ day: 1 }))
 	const lastVisible = $derived(
@@ -44,7 +48,7 @@
 		firstVisible.since(
 			initialOptions && initialOptions.size > 0
 				? Temporal.PlainDate.from(Array.from(initialOptions.keys()).toSorted()[0])
-				: now,
+				: minDate,
 		).sign <= 0,
 	)
 
@@ -67,13 +71,22 @@
 
 	function toggleDate(date: Temporal.PlainDate) {
 		const stringDate = date.toString()
-		if (options.has(stringDate)) options.delete(stringDate)
-		else options.set(stringDate, emptyEntry)
+		const isSelected = options.has(stringDate)
+		if (type === 'single') {
+			if (isSelected) options.delete(stringDate)
+			else {
+				options.clear()
+				options.set(stringDate, emptyEntry)
+			}
+		} else {
+			if (isSelected) options.delete(stringDate)
+			else options.set(stringDate, emptyEntry)
+		}
 	}
 
 	function isTabbable(day: Temporal.PlainDate, inMonth: boolean, isPast: boolean) {
 		if (!inMonth || isPast) return false
-		return Temporal.PlainDate.compare(day, now) === 0
+		return Temporal.PlainDate.compare(day, minDate) === 0
 	}
 
 	const keyActions = new Map<string, (day: Temporal.PlainDate) => Temporal.PlainDate>([
@@ -86,7 +99,7 @@
 	async function handleKeydown(event: KeyboardEvent, day: Temporal.PlainDate) {
 		if (event.key === KeyType.Enter || event.key === ' ') {
 			event.preventDefault()
-			if (Temporal.PlainDate.compare(day, now) >= 0) toggleDate(day)
+			if (Temporal.PlainDate.compare(day, minDate) >= 0) toggleDate(day)
 			return
 		}
 
@@ -95,7 +108,7 @@
 
 		event.preventDefault()
 
-		if (Temporal.PlainDate.compare(newDate, now) < 0) return
+		if (Temporal.PlainDate.compare(newDate, minDate) < 0) return
 
 		if (Temporal.PlainDate.compare(newDate, firstVisible) < 0) {
 			view = view.subtract({ months: 1 })
@@ -126,7 +139,10 @@
 							label="Vorige maand"
 							onclick={() => (view = view.subtract({ months: 1 }))}
 							disabled={isFirstMonth}
-							class={['disabled:opacity-40', index === months.length - 1 && 'sm:invisible']}
+							class={[
+								'disabled:opacity-40',
+								maxViewMonths === 2 && index === months.length - 1 && 'sm:invisible',
+							]}
 						>
 							<Icon icon="tabler--chevron-left" class="size-5" />
 						</Button>
@@ -140,7 +156,7 @@
 							size="icon"
 							label="Volgende maand"
 							onclick={() => (view = view.add({ months: 1 }))}
-							class={[index === 0 && 'sm:invisible']}
+							class={[maxViewMonths === 2 && index === 0 && 'sm:invisible']}
 						>
 							<Icon icon="tabler--chevron-right" class="size-5" />
 						</Button>
@@ -164,7 +180,7 @@
 									{#each { length: 7 }, dayIndex (dayIndex)}
 										{@const date = monday.add({ days: dayIndex })}
 										{@const inMonth = date.month === month.month}
-										{@const isPast = Temporal.PlainDate.compare(date, now) < 0}
+										{@const isPast = Temporal.PlainDate.compare(date, minDate) < 0}
 										{@const isInitial = initialOptions?.has(date.toString()) ?? false}
 
 										<td class="relative flex aspect-square">
@@ -183,8 +199,9 @@
 											</button>
 											{#if Temporal.PlainDate.compare(date, now) === 0 && inMonth}
 												<span
+												data-disabled={(!inMonth || (isPast && !isInitial)) || null}
 													aria-label="Vandaag"
-													class="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 text-xl leading-none text-neutral-700 peer-aria-pressed:text-neutral-100 motion-safe:transition-colors motion-safe:duration-100 dark:text-neutral-300"
+													class="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 text-xl leading-none text-neutral-700 peer-aria-pressed:text-neutral-100 data-disabled:text-neutral-300 motion-safe:transition-colors motion-safe:duration-100 dark:text-neutral-300 data-disabled:dark:text-neutral-700"
 												>
 													&middot;
 												</span>

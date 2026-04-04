@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { formatDateTimeRange } from '@/shared/time-format'
 	import Button from '@/components/button.svelte'
+	import Date from '@/components/date.svelte'
 	import { url } from '@/shared/url'
 
 	import { getEvents } from './data.remote'
@@ -28,7 +28,7 @@
 			</h2>
 
 			<p class="text-neutral-600 dark:text-neutral-400">
-				{formatDateTimeRange(event.firstDate, event.lastDate)}
+				<Date startsAt={event.firstDate} endsAt={event.lastDate} options={{ time: false }} />
 				<span class="mx-1">·</span>
 				{numberResponses(event.numberOfResponses)}
 			</p>

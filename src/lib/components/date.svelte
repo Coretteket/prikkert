@@ -1,23 +1,36 @@
 <script lang="ts">
-	import type { HTMLAttributes } from 'svelte/elements'
-	import type { InferSelectModel } from 'drizzle-orm'
+	import type { Temporal } from 'temporal-polyfill'
 
-	import type { schema } from '@/server/db'
-
-	import { formatDateTimeOption } from '@/shared/time-format'
+	import { formatDate } from '@/shared/time-format'
 
 	type Props = {
-		option: Pick<InferSelectModel<typeof schema.options>, 'startsAt' | 'endsAt'>
-	} & HTMLAttributes<HTMLTimeElement>
+		startsAt: Temporal.ZonedDateTime | Temporal.PlainDate
+		endsAt?: Temporal.ZonedDateTime | Temporal.PlainDate | null
+		options?: { weekday?: boolean; time?: boolean }
+		class?: string
+	}
 
-	let { option, ...rest }: Props = $props()
+	let { startsAt, endsAt, options, class: className }: Props = $props()
 
-	const formattedOption = $derived(formatDateTimeOption(option))
+	const formattedOption = $derived(formatDate(startsAt, endsAt ?? undefined))
 </script>
 
-<time datetime={option.startsAt.toString()} {...rest}
-	>{formattedOption.weekday}
-	<span class="whitespace-nowrap">{formattedOption.date}</span>{#if formattedOption.time}, <span
-			class="whitespace-nowrap">{formattedOption.time}</span
-		>{/if}</time
+<time datetime={startsAt.toString()} class={className}
+	>{#if formattedOption.kind === 'single'}
+		{#if options?.weekday !== false}{formattedOption.weekday}{/if}
+		<span class="whitespace-nowrap">{formattedOption.date}</span
+		>{#if options?.time !== false && formattedOption.time}, <span class="whitespace-nowrap"
+				>{formattedOption.time}</span
+			>{/if}
+	{:else}
+		{#if options?.weekday !== false}{formattedOption.start.weekday}{/if}
+		<span class="whitespace-nowrap">{formattedOption.start.date}</span
+		>{#if options?.time !== false && formattedOption.start.time}, <span class="whitespace-nowrap"
+				>{formattedOption.start.time}</span
+			>{/if} – {#if options?.weekday !== false}{formattedOption.end.weekday}{/if}
+		<span class="whitespace-nowrap">{formattedOption.end.date}</span
+		>{#if options?.time !== false && formattedOption.end.time}, <span class="whitespace-nowrap"
+				>{formattedOption.end.time}</span
+			>{/if}
+	{/if}</time
 >

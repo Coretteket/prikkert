@@ -98,6 +98,7 @@ msgid "Je hebt nog niet gereageerd of een afspraak aangemaakt."
 msgstr "Je hebt nog niet gereageerd of een afspraak aangemaakt."
 
 #: src/lib/components/event/confirm-dialog.svelte
+#: src/lib/components/event/end-date-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
@@ -106,6 +107,7 @@ msgstr "Je hebt nog niet gereageerd of een afspraak aangemaakt."
 msgid "Annuleren"
 msgstr "Annuleren"
 
+#: src/lib/components/event/end-date-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-remove-dialog.svelte
 #: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
 msgid "Verwijderen"
@@ -180,14 +182,6 @@ msgstr "Opties <0>(optioneel)</0>"
 #: src/lib/components/event/form.svelte
 msgid "Tijden verbergen"
 msgstr "Tijden verbergen"
-
-#: src/lib/components/event/form.svelte
-msgid "Selecteer datums om opmerkingen en tijden toe te voegen."
-msgstr "Selecteer datums om opmerkingen en tijden toe te voegen."
-
-#: src/lib/components/event/form.svelte
-msgid "Opmerkingen en tijden toevoegen"
-msgstr "Opmerkingen en tijden toevoegen"
 
 #: src/lib/components/event/form.svelte
 msgid "Privacy instellen"
@@ -424,6 +418,7 @@ msgid "Selecteer een optie om de datum te prikken."
 msgstr "Selecteer een optie om de datum te prikken."
 
 #: src/lib/components/event/confirm-dialog.svelte
+#: src/lib/components/event/end-date-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-select-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/event-unselect-dialog.svelte
 #: src/routes/afspraak/overzicht/[eventId]/organizer-receive-dialog.svelte
@@ -679,10 +674,6 @@ msgstr "om mensen uit te nodigen om hun beschikbaarheid door te geven."
 #: src/lib/shared/content.ts
 msgid "voor de afspraak wanneer iedereen heeft gereageerd."
 msgstr "voor de afspraak wanneer iedereen heeft gereageerd."
-
-#: src/lib/shared/time-format.ts
-msgid "t/m"
-msgstr "t/m"
 
 #: src/lib/components/settings.svelte
 msgid "Tijdzone..."
@@ -1051,10 +1042,6 @@ msgid "<0>Quinten Coret</0> bouwde Prikkert als passieproject. Hij ontwikkelde d
 msgstr "<0>Quinten Coret</0> bouwde Prikkert als passieproject. Hij ontwikkelde de tool met het simpele idee dat datumprikken prima zonder kosten, reclame en tracking kan. Prikkert is zijn kleine vorm van verzet tegen de verkuttificatie van het internet."
 
 #: src/routes/vs/plennur/+page.svelte
-msgid "Plennur is <0>kost geld</0> zodra je meer dan 5 mensen uitnodigt."
-msgstr "Plennur is <0>kost geld</0> zodra je meer dan 5 mensen uitnodigt."
-
-#: src/routes/vs/plennur/+page.svelte
 msgid "Prikkert is <0>open</0>. Iedereen kan de broncode inzien en hergebruiken."
 msgstr "Prikkert is <0>open</0>. Iedereen kan de broncode inzien en hergebruiken."
 
@@ -1085,3 +1072,33 @@ msgstr "<0>Quinten Coret</0> lanceerde Prikkert als passieproject. Hij bouwde de
 #: src/routes/footer.svelte
 msgid "Doneren"
 msgstr "Doneren"
+
+#: src/lib/components/event/form.svelte
+msgid "Selecteer datums om opmerkingen, tijden en einddatums toe te voegen."
+msgstr "Selecteer datums om opmerkingen, tijden en einddatums toe te voegen."
+
+#: src/lib/components/event/end-date-dialog.svelte
+#: src/lib/components/event/time-slot.svelte
+msgid "Einddatum toevoegen"
+msgstr "Einddatum toevoegen"
+
+#: src/lib/components/event/end-date-dialog.svelte
+#: src/lib/components/event/time-slot.svelte
+msgid "Einddatum aanpassen"
+msgstr "Einddatum aanpassen"
+
+#: src/lib/components/event/end-date-dialog.svelte
+msgid "Pas de einddatum voor deze datumoptie aan. Of klik op de geselecteerde einddatum om het te verwijderen."
+msgstr "Pas de einddatum voor deze datumoptie aan. Of klik op de geselecteerde einddatum om het te verwijderen."
+
+#: src/lib/components/event/end-date-dialog.svelte
+msgid "Kies een einddatum voor de optie die begint op <0/>."
+msgstr "Kies een einddatum voor de optie die begint op <0/>."
+
+#: src/lib/components/event/form.svelte
+msgid "Datumopties aanpassen"
+msgstr "Datumopties aanpassen"
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
+msgstr "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."

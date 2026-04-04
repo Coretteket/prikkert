@@ -47,7 +47,7 @@
 	let showDescription = $derived(Boolean(initialValues?.description))
 	let showOptions = $derived(
 		Array.from(initialValues?.options.values() ?? []).some(
-			(entry) => entry.hasTime || entry.slots.some((slot) => slot.note),
+			(entry) => entry.hasTime || entry.endDate || entry.slots.some((slot) => slot.note),
 		) ?? false,
 	)
 	let showSettings = $derived(
@@ -94,7 +94,9 @@
 
 		for (const [date, entry] of initialValues.options) {
 			if (!options.has(date)) return true
-			const currentSlots = options.get(date)!.slots
+			const currentEntry = options.get(date)!
+			const currentSlots = currentEntry.slots
+			if (entry.endDate !== currentEntry.endDate) return true
 
 			for (const slot of entry.slots) {
 				const found = currentSlots.some((s) => compareSlots(s, slot))
@@ -323,7 +325,7 @@
 					<p
 						class="text-neutral-500 py-4 absolute left-1/2 top-1/2 -translate-1/2 text-center text-balance dark:text-neutral-400"
 					>
-						Selecteer datums om opmerkingen en tijden toe te voegen.
+						Selecteer datums om opmerkingen, tijden en einddatums toe te voegen.
 					</p>
 				{/each}
 			</div>
@@ -334,7 +336,7 @@
 		<div class="-mt-6 mb-8 flex flex-wrap gap-3">
 			{#if !showOptions}
 				<Button type="button" variant="secondary" size="sm" onclick={() => (showOptions = true)}>
-					Opmerkingen en tijden toevoegen
+					Datumopties aanpassen
 				</Button>
 			{/if}
 			{#if !showSettings}

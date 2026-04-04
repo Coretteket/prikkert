@@ -3,10 +3,9 @@ import { error, redirect } from '@sveltejs/kit'
 
 import { form, getRequestEvent } from '$app/server'
 
+import { buildEventOptions, getExpiryDate, getOptionKey } from '@/shared/event/utils'
 import { requireOrganizerOrThrow } from '@/server/session/validation'
-import { getExpiryDate, getOptionKey } from '@/shared/event/utils'
 import { EventFormSchema } from '@/shared/event/schema'
-import { deduplicate } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
 type Option = Omit<InferSelectModel<typeof schema.options>, 'isSelected'>
@@ -53,21 +52,10 @@ export const updateEvent = form(EventFormSchema, async (parsed) => {
 		error(400, 'Je kunt de reacties niet openbaar maken nadat er gereageerd is.')
 	}
 
-	const newOptions = deduplicate(
-		parsed.options.flatMap(([date, { slots }]) =>
-			slots.map((slot) => ({
-				startsAt: slot.startsAt
-					? date.toPlainDateTime(slot.startsAt).toZonedDateTime(locals.timezone)
-					: date,
-				endsAt: slot.endsAt
-					? date.toPlainDateTime(slot.endsAt).toZonedDateTime(locals.timezone)
-					: null,
-				note: slot.note || null,
-				eventId,
-			})),
-		),
-		getOptionKey,
-	)
+	const newOptions = buildEventOptions(parsed.options, locals.timezone).map((option) => ({
+		...option,
+		eventId,
+	}))
 
 	const { toInsert, toDelete, toUpdate } = getOptionsDifference(existingEvent.options, newOptions)
 

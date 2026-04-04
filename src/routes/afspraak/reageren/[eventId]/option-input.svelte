@@ -27,7 +27,7 @@
 	<div class="grid min-h-12 items-center gap-x-6 gap-y-3 px-5 pr-4 md:grid-cols-[1fr_auto]">
 		<div>
 			<p>
-				<Date {option} />
+				<Date {...option} />
 			</p>
 			<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">
 				{option.note}
@@ -75,10 +75,10 @@
 			>
 				{#if showNote}
 					<Icon icon="tabler--message-circle-x" class="size-5" />
-					<span class="sr-only">Opmerking verwijderen voor <Date {option} /></span>
+					<span class="sr-only">Opmerking verwijderen voor <Date {...option} /></span>
 				{:else}
 					<Icon icon="tabler--message-circle" class="size-5" />
-					<span class="sr-only">Opmerking toevoegen voor <Date {option} /></span>
+					<span class="sr-only">Opmerking toevoegen voor <Date {...option} /></span>
 				{/if}
 			</Button>
 		</div>

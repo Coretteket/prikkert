@@ -35,6 +35,7 @@ export const OptionSlotSchema = v.union(
 
 export const OptionSchema = v.object({
 	hasTime: v.boolean(),
+	endDate: v.optional(v.plainDate()),
 	slots: v.array(OptionSlotSchema),
 })
 
@@ -65,7 +66,15 @@ export const EventFormSchema = v.strictObject({
 	),
 	options: v.json(
 		v.pipe(
-			v.array(v.tuple([v.plainDate(), OptionSchema])),
+			v.array(
+				v.pipe(
+					v.tuple([v.plainDate(), OptionSchema]),
+					v.check(
+						(v) => (v[1].endDate ? Temporal.PlainDate.compare(v[0], v[1].endDate) < 0 : true),
+						'De einddatum moet na de startdatum liggen.',
+					),
+				),
+			),
 			v.minLength(1, 'Selecteer minstens 1 datum.'),
 		),
 	),

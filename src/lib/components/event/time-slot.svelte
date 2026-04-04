@@ -1,18 +1,21 @@
 <script lang="ts">
-	import { page } from '$app/state'
-
-	import { emptySlot, type Options, type Slot } from '@/shared/event/types'
+	import { emptySlot, type OptionEntry, type Options, type Slot } from '@/shared/event/types'
 	import Button from '@/components/button.svelte'
 	import { Temporal } from '@/shared/temporal'
+	import Date from '@/components/date.svelte'
 	import Icon from '@/components/icon.svelte'
 
+	import EndDateDialog from './end-date-dialog.svelte'
 	import TimeInput from './time-input.svelte'
 
 	type Props = { date: string; options: Options; isFirst: boolean }
 
 	let { date, options, isFirst }: Props = $props()
 
+	let endDateOpen = $state(false)
+
 	const entry = $derived(options.get(date))
+	const endDate = $derived(entry?.endDate)
 	const hasTime = $derived(entry?.hasTime ?? false)
 	const slots = $derived(
 		entry?.slots.toSorted((a, b) =>
@@ -20,19 +23,25 @@
 		) ?? [emptySlot],
 	)
 
+	function updateEntry(patch: Partial<OptionEntry>) {
+		options.set(date, {
+			endDate: 'endDate' in patch ? patch.endDate : endDate,
+			hasTime: patch.hasTime ?? hasTime,
+			slots: patch.slots ?? slots,
+		})
+	}
+
 	function updateSlot(index: number, patch: Partial<Slot>) {
 		const updated = slots.map((s, i) => (i === index ? { ...s, ...patch } : s))
-		options.set(date, { hasTime, slots: updated })
+		options.set(date, { endDate, hasTime, slots: updated })
 	}
 </script>
 
 <div class={['grow font-medium text-neutral-700 dark:text-neutral-300']}>
-	{Temporal.PlainDate.from(date).toLocaleString(page.data.locale, {
-		weekday: 'long',
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-	})}
+	<Date
+		startsAt={Temporal.PlainDate.from(date)}
+		endsAt={entry?.endDate ? Temporal.PlainDate.from(entry.endDate) : null}
+	/>
 </div>
 
 <div class={['grid gap-4', hasTime ? 'mt-3 mb-5' : 'my-4']}>
@@ -66,15 +75,12 @@
 					variant="secondary"
 					size="icon"
 					class="self-end p-2.75"
-					onclick={() => {
-						if (slots.length === 1) {
-							options.set(date, { hasTime: false, slots: [emptySlot] })
-						} else
-							options.set(date, {
-								hasTime,
-								slots: slots.filter((_, j) => j !== i),
-							})
-					}}
+					onclick={() =>
+						updateEntry(
+							slots.length === 1
+								? { hasTime: false, slots: [emptySlot] }
+								: { slots: slots.filter((_, j) => j !== i) },
+						)}
 					label="Tijdoptie verwijderen"
 				>
 					<Icon icon="tabler--trash" class="size-4.5" />
@@ -85,16 +91,23 @@
 </div>
 
 <div class="flex flex-wrap gap-x-3 gap-y-3">
+	<Button
+		type="button"
+		variant="secondary"
+		size="sm"
+		onclick={() => {
+			endDateOpen = true
+		}}
+	>
+		{#if endDate}Einddatum aanpassen{:else}Einddatum toevoegen{/if}
+	</Button>
+
 	{#if hasTime}
 		<Button
 			type="button"
 			variant="secondary"
 			size="sm"
-			onclick={() =>
-				options.set(date, {
-					hasTime,
-					slots: slots.concat([emptySlot]),
-				})}
+			onclick={() => updateEntry({ slots: slots.concat([emptySlot]) })}
 		>
 			Tijdoptie toevoegen
 		</Button>
@@ -103,7 +116,7 @@
 			type="button"
 			variant="secondary"
 			size="sm"
-			onclick={() => options.set(date, { hasTime: true, slots })}
+			onclick={() => updateEntry({ hasTime: true })}
 		>
 			Tijden toevoegen
 		</Button>
@@ -115,10 +128,27 @@
 			variant="secondary"
 			size="sm"
 			onclick={() => {
-				for (const key of options.keys()) options.set(key, { hasTime, slots })
+				for (const key of options.keys()) {
+					options.set(key, {
+						endDate: endDate
+							? Temporal.PlainDate.from(key)
+									.add(Temporal.PlainDate.from(date).until(endDate))
+									.toString()
+							: undefined,
+						hasTime,
+						slots,
+					})
+				}
 			}}
 		>
 			Kopiëren naar alle datums
 		</Button>
 	{/if}
 </div>
+
+<EndDateDialog
+	bind:open={endDateOpen}
+	onConfirm={(confirm) => confirm !== false && updateEntry({ endDate: confirm })}
+	{date}
+	{endDate}
+/>

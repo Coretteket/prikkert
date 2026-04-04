@@ -2,11 +2,10 @@ import { redirect } from '@sveltejs/kit'
 
 import { form, getRequestEvent } from '$app/server'
 
-import { getExpiryDate, getOptionKey } from '@/shared/event/utils'
+import { buildEventOptions, getExpiryDate } from '@/shared/event/utils'
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
 import { setSessionCookie } from '@/server/session/cookies'
 import { EventFormSchema } from '@/shared/event/schema'
-import { deduplicate } from '@/shared/utils'
 import { db, schema } from '@/server/db'
 
 import { hasSession } from '../../data.remote'
@@ -18,20 +17,7 @@ export const createEvent = form(EventFormSchema, async (parsed) => {
 	const hashedToken = await encodeSHA256(token)
 
 	const [event] = await db.transaction(async (db) => {
-		const options = deduplicate(
-			parsed.options.flatMap(([date, { slots }]) =>
-				slots.map((slot) => ({
-					startsAt: slot.startsAt
-						? date.toPlainDateTime(slot.startsAt).toZonedDateTime(locals.timezone)
-						: date,
-					endsAt: slot.endsAt
-						? date.toPlainDateTime(slot.endsAt).toZonedDateTime(locals.timezone)
-						: null,
-					note: slot.note || null,
-				})),
-			),
-			getOptionKey,
-		)
+		const options = buildEventOptions(parsed.options, locals.timezone)
 
 		const expiresAt = getExpiryDate(options)
 

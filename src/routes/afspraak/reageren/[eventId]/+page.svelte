@@ -49,7 +49,7 @@
 	{#if event.selectedOption}
 		Deze afspraak is geprikt voor
 		<Date
-			option={event.selectedOption}
+			{...event.selectedOption}
 			class="font-medium text-neutral-800 dark:text-neutral-200"
 		/>.
 

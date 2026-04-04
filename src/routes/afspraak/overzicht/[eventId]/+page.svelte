@@ -59,10 +59,7 @@
 <p class="mb-6 text-[17px] text-balance text-neutral-700 xs:text-lg dark:text-neutral-300">
 	{#if event.selectedOption}
 		{#if event.isOrganizer}Je hebt deze afspraak gepland voor{:else}Deze afspraak staat gepland voor{/if}
-		<Date
-			option={event.selectedOption}
-			class="font-medium text-neutral-800 dark:text-neutral-200"
-		/>.
+		<Date {...event.selectedOption} class="font-medium text-neutral-800 dark:text-neutral-200" />.
 
 		{#if event.selectedOption.responses.length > 1}
 			{@const total = event.selectedOption.responses.length}
@@ -340,7 +337,7 @@
 		>
 			{#if option.responses.length === 0}
 				<div class={[option.note && '-my-1']}>
-					<Date {option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
+					<Date {...option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
 					{#if option.note}
 						<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">{option.note}</p>
 					{/if}
@@ -350,7 +347,7 @@
 				<summary class="flex cursor-pointer flex-col p-5 pt-4">
 					<div class="mb-3 flex w-full justify-between gap-3">
 						<div>
-							<Date {option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
+							<Date {...option} class="font-[450] text-neutral-800 dark:text-neutral-200" />
 							{#if option.note}
 								<p class="line-clamp-1 text-neutral-500 dark:text-neutral-400">{option.note}</p>
 							{/if}
