@@ -711,7 +711,7 @@ msgstr "Close"
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/+page.svelte
 msgid "Opties worden weergegeven volgens de {0}."
-msgstr "Opties are shown according to {0}."
+msgstr "Options are shown according to {0}."
 
 #. 0: formatTimezoneID(timezone)
 #: src/lib/components/event/form.svelte
