@@ -1051,8 +1051,8 @@ msgid "<0>Quinten Coret</0> bouwde Prikkert als passieproject. Hij ontwikkelde d
 msgstr "<0>Quinten Coret</0> built Prikkert as a passion project. He developed the tool with the simple idea that scheduling works just fine without costs, ads and tracking. Prikkert is his small act of resistance against the enshittification of the internet."
 
 #: src/routes/vs/plennur/+page.svelte
-msgid "Plennur is <0>kost geld</0> zodra je meer dan 5 mensen uitnodigt."
-msgstr "Plennur <0>costs money</0> as soon as you invite more than 5 people."
+msgid "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
+msgstr "Plennur <0>costs money</0> as soon as you create more than 3 events."
 
 #: src/routes/vs/plennur/+page.svelte
 msgid "Prikkert is <0>open</0>. Iedereen kan de broncode inzien en hergebruiken."

@@ -57,7 +57,7 @@
 			{#snippet right()}
 				Plennur is
 				<strong class="font-[650] text-neutral-800 dark:text-neutral-50/90">kost geld</strong> zodra je
-				meer dan 5 mensen uitnodigt.
+				meer dan 3 afspraken aanmaakt.
 			{/snippet}
 		</ComparisonRow>
 
