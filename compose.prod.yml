@@ -1,6 +1,5 @@
 services:
   app:
-    image: coretteket/prikkert:latest
     build:
       context: .
       dockerfile: Dockerfile-prod
