@@ -10,7 +10,7 @@ import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
-import { MAX_NAME_LENGTH } from '@/shared/event/schema'
+import { MAX_NAME_LENGTH, MAX_NOTE_LENGTH } from '@/shared/event/schema'
 import { getEventForSession } from './data.remote'
 import { hasSession } from '../../../data.remote'
 
@@ -45,7 +45,7 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 						v.nullable(
 							v.pipe(
 								v.string(),
-								v.maxLength(200, 'Opmerkingen mogen maximaal 200 tekens zijn.'),
+								v.maxLength(MAX_NOTE_LENGTH, `Opmerkingen mogen maximaal ${MAX_NOTE_LENGTH} tekens zijn.`),
 								v.transform((s) => {
 									const trimmed = s.replaceAll(/\s*\n\s*/g, ' ').trim()
 									return trimmed === '' ? null : trimmed

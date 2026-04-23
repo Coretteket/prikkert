@@ -1,7 +1,7 @@
 import { Temporal } from '@/shared/temporal'
 import * as v from '@/server/validation'
 
-export const MAX_NOTE_LENGTH = 75
+export const MAX_NOTE_LENGTH = 200
 export const MIN_TITLE_LENGTH = 3
 export const MAX_TITLE_LENGTH = 100
 export const MAX_NAME_LENGTH = 100
