@@ -10,6 +10,7 @@ import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
+import { MAX_NAME_LENGTH } from '@/shared/event/schema'
 import { getEventForSession } from './data.remote'
 import { hasSession } from '../../../data.remote'
 
@@ -21,10 +22,14 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 	v.object({
 		name: event.allowAnonymous
 			? v.pipe(
-					v.nullable(v.string()),
+					v.nullable(v.pipe(v.string(), v.maxLength(MAX_NAME_LENGTH, `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`))),
 					v.transform((name) => (name?.trim() === '' ? null : name)),
 				)
-			: v.pipe(v.string('Vul je naam in.'), v.minLength(1, 'Vul je naam in.')),
+			: v.pipe(
+					v.string('Vul je naam in.'),
+					v.minLength(1, 'Vul je naam in.'),
+					v.maxLength(MAX_NAME_LENGTH, `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`),
+				),
 		availability: v.strictObject(
 			v.entriesFromList(
 				event.options.map((o) => `option_${o.id}`),

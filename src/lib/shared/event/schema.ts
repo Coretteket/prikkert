@@ -4,6 +4,7 @@ import * as v from '@/server/validation'
 export const MAX_NOTE_LENGTH = 75
 export const MIN_TITLE_LENGTH = 3
 export const MAX_TITLE_LENGTH = 100
+export const MAX_NAME_LENGTH = 100
 export const MAX_DESCRIPTION_LENGTH = 500
 
 export const OptionNoteSchema = v.pipe(
@@ -60,7 +61,7 @@ export const EventFormSchema = v.strictObject({
 	organizerName: v.optional(
 		v.pipe(
 			v.string(),
-			v.maxLength(MAX_TITLE_LENGTH, `Vul een naam in van maximaal ${MAX_TITLE_LENGTH} tekens.`),
+			v.maxLength(MAX_NAME_LENGTH, `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`),
 			v.transform((val) => (val.length > 0 ? val : undefined)),
 		),
 	),
