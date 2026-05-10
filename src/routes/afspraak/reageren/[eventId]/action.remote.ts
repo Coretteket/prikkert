@@ -35,6 +35,7 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 				)
 			: v.pipe(
 					v.string('Vul je naam in.'),
+					v.trim(),
 					v.minLength(1, 'Vul je naam in.'),
 					v.maxLength(MAX_NAME_LENGTH, `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`),
 				),

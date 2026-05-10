@@ -44,6 +44,7 @@ export const EventFormSchema = v.strictObject({
 	id: v.optional(v.union([v.literal(0), v.string()])), // 0 for create (workaround), string for edit
 	title: v.pipe(
 		v.string('Vul een titel in.'),
+		v.trim(),
 		v.minLength(MIN_TITLE_LENGTH, `Vul een titel in van minstens ${MIN_TITLE_LENGTH} tekens.`),
 		v.maxLength(MAX_TITLE_LENGTH, `Vul een titel in van maximaal ${MAX_TITLE_LENGTH} tekens.`),
 	),
