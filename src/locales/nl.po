@@ -979,10 +979,6 @@ msgid "Vul je naam in."
 msgstr "Vul je naam in."
 
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
-msgid "Opmerkingen mogen maximaal 200 tekens zijn."
-msgstr "Opmerkingen mogen maximaal 200 tekens zijn."
-
-#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Niet toegestaan."
@@ -1102,3 +1098,15 @@ msgstr "Datumopties aanpassen"
 #: src/routes/vs/plennur/+page.svelte
 msgid "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
 msgstr "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
+
+#. 0: MAX_NAME_LENGTH
+#. 0: MAX_NAME_LENGTH
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+msgid "Vul een naam in van maximaal {0} tekens."
+msgstr "Vul een naam in van maximaal {0} tekens."
+
+#. 0: MAX_NOTE_LENGTH
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+msgid "Opmerkingen mogen maximaal {0} tekens zijn."
+msgstr "Opmerkingen mogen maximaal {0} tekens zijn."
