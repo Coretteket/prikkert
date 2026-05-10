@@ -28,10 +28,8 @@ export const getEditEvent = query(v.string(), async (eventId) => {
 		const isZoned = startsAt instanceof Temporal.ZonedDateTime
 		const date = isZoned ? startsAt.toPlainDate().toString() : startsAt.toString()
 		const startDate = isZoned ? startsAt.toPlainDate() : startsAt
-		const endDate = endsAt instanceof Temporal.ZonedDateTime
-				? endsAt.toPlainDate()
-				: endsAt ?? undefined
-
+		const endDate =
+			endsAt instanceof Temporal.ZonedDateTime ? endsAt.toPlainDate() : (endsAt ?? undefined)
 
 		const entry = options.get(date) ?? { hasTime: isZoned, slots: [] }
 		if (

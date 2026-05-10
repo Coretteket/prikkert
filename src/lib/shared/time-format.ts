@@ -83,10 +83,7 @@ function shouldShowYear(date: Temporal.PlainDate) {
 	return Temporal.PlainDate.compare(date, now.add({ years: 1 })) > 0
 }
 
-function formatPlainDate(
-	date: Temporal.PlainDate | Temporal.ZonedDateTime,
-	forceYear = false,
-) {
+function formatPlainDate(date: Temporal.PlainDate | Temporal.ZonedDateTime, forceYear = false) {
 	const plainDate = date instanceof Temporal.ZonedDateTime ? date.toPlainDate() : date
 	return plainDate.toLocaleString(locale(), {
 		day: 'numeric',

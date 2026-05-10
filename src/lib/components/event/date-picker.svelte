@@ -199,7 +199,7 @@
 											</button>
 											{#if Temporal.PlainDate.compare(date, now) === 0 && inMonth}
 												<span
-												data-disabled={(!inMonth || (isPast && !isInitial)) || null}
+													data-disabled={!inMonth || (isPast && !isInitial) || null}
 													aria-label="Vandaag"
 													class="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 text-xl leading-none text-neutral-700 peer-aria-pressed:text-neutral-100 data-disabled:text-neutral-300 motion-safe:transition-colors motion-safe:duration-100 dark:text-neutral-300 data-disabled:dark:text-neutral-700"
 												>

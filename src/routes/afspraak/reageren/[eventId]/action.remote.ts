@@ -4,13 +4,13 @@ import { asc, eq, sql } from 'drizzle-orm'
 import { form, getRequestEvent } from '$app/server'
 
 import { deleteSessionCookie, setSessionCookie } from '@/server/session/cookies'
+import { MAX_NAME_LENGTH, MAX_NOTE_LENGTH } from '@/shared/event/schema'
 import { encodeSHA256, generateNanoID } from '@/server/crypto'
 import { validateSession } from '@/server/session/validation'
 import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
 import { db, schema } from '@/server/db'
 import * as v from '@/server/validation'
 
-import { MAX_NAME_LENGTH, MAX_NOTE_LENGTH } from '@/shared/event/schema'
 import { getEventForSession } from './data.remote'
 import { hasSession } from '../../../data.remote'
 
@@ -22,7 +22,15 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 	v.object({
 		name: event.allowAnonymous
 			? v.pipe(
-					v.nullable(v.pipe(v.string(), v.maxLength(MAX_NAME_LENGTH, `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`))),
+					v.nullable(
+						v.pipe(
+							v.string(),
+							v.maxLength(
+								MAX_NAME_LENGTH,
+								`Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`,
+							),
+						),
+					),
 					v.transform((name) => (name?.trim() === '' ? null : name)),
 				)
 			: v.pipe(
@@ -45,7 +53,10 @@ const createResponseSchema = (event: { options: Array<{ id: string }>; allowAnon
 						v.nullable(
 							v.pipe(
 								v.string(),
-								v.maxLength(MAX_NOTE_LENGTH, `Opmerkingen mogen maximaal ${MAX_NOTE_LENGTH} tekens zijn.`),
+								v.maxLength(
+									MAX_NOTE_LENGTH,
+									`Opmerkingen mogen maximaal ${MAX_NOTE_LENGTH} tekens zijn.`,
+								),
 								v.transform((s) => {
 									const trimmed = s.replaceAll(/\s*\n\s*/g, ' ').trim()
 									return trimmed === '' ? null : trimmed

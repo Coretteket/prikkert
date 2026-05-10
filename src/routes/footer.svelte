@@ -26,7 +26,9 @@
 		</div>
 
 		<nav>
-			<ul class="flex flex-wrap gap-x-8 gap-y-4 md:gap-y-0 before:hidden md:before:block md:before:basis-full md:before:order-1">
+			<ul
+				class="flex flex-wrap gap-x-8 gap-y-4 before:hidden md:gap-y-0 md:before:order-1 md:before:block md:before:basis-full"
+			>
 				<li><a href={url('/contact')} class="hover:underline">Contact</a></li>
 				<li>
 					<a href="https://bunq.me/qcoret" class="hover:underline" target="_blank"> Doneren </a>
