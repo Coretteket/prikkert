@@ -163,9 +163,8 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	}
 })
 
-export const deleteAvailability = form('unchecked', async () => {
-	const { locals, params } = getRequestEvent()
-	const eventId = params.eventId
+export const deleteAvailability = form(v.object({ eventId: v.string() }), async ({ eventId }) => {
+	const { locals } = getRequestEvent()
 
 	if (!eventId) error(404, 'Afspraak niet gevonden')
 

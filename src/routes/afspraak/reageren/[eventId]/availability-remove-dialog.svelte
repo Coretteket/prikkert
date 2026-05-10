@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/state'
+
 	import Button from '@/components/button.svelte'
 	import Dialog from '@/components/dialog.svelte'
 
@@ -14,6 +16,7 @@
 			open = false
 		})}
 	>
+		<input {...deleteAvailability.fields.eventId.as('hidden', page.params.eventId!)} />
 		<p class="mb-4 text-lg font-medium">Reactie verwijderen</p>
 		<p class="mb-6 text-neutral-700 dark:text-neutral-300">
 			Als je doorgaat wordt je beschikbaarheid verwijderd. Je kunt daarna opnieuw reageren.
