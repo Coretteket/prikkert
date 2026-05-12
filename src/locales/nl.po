@@ -1096,8 +1096,8 @@ msgid "Datumopties aanpassen"
 msgstr "Datumopties aanpassen"
 
 #: src/routes/vs/plennur/+page.svelte
-msgid "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
-msgstr "Plennur is <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
+msgid "Plennur <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
+msgstr "Plennur <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
 
 #. 0: MAX_NAME_LENGTH
 #. 0: MAX_NAME_LENGTH
