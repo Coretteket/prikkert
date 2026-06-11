@@ -17,11 +17,7 @@
 	const entry = $derived(options.get(date))
 	const endDate = $derived(entry?.endDate)
 	const hasTime = $derived(entry?.hasTime ?? false)
-	const slots = $derived(
-		entry?.slots.toSorted((a, b) =>
-			a.startsAt && b.startsAt ? Temporal.PlainTime.compare(a.startsAt, b.startsAt) : 0,
-		) ?? [emptySlot],
-	)
+	const slots = $derived(entry?.slots ?? [emptySlot])
 
 	function updateEntry(patch: Partial<OptionEntry>) {
 		options.set(date, {
