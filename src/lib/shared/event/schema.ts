@@ -9,7 +9,10 @@ export const MAX_DESCRIPTION_LENGTH = 500
 
 export const OptionNoteSchema = v.pipe(
 	v.string(),
-	v.maxLength(MAX_NOTE_LENGTH, `Vul een opmerking in van maximaal ${MAX_NOTE_LENGTH} tekens.`),
+	v.maxLength(
+		MAX_NOTE_LENGTH,
+		() => `Vul een opmerking in van maximaal ${MAX_NOTE_LENGTH} tekens.`,
+	),
 )
 
 export const OptionSlotSchema = v.union(
@@ -22,7 +25,7 @@ export const OptionSlotSchema = v.union(
 			}),
 			v.check(
 				(s) => !s.endsAt || Temporal.PlainTime.compare(s.startsAt, s.endsAt) < 1,
-				'Vul een starttijd in die eerder is dan de eindtijd.',
+				() => 'Vul een starttijd in die eerder is dan de eindtijd.',
 			),
 		),
 		v.object({
@@ -31,7 +34,7 @@ export const OptionSlotSchema = v.union(
 			note: v.optional(OptionNoteSchema),
 		}),
 	],
-	'Ongeldig tijdslot.',
+	() => 'Ongeldig tijdslot.',
 )
 
 export const OptionSchema = v.object({
@@ -43,17 +46,23 @@ export const OptionSchema = v.object({
 export const EventFormSchema = v.strictObject({
 	id: v.optional(v.union([v.literal(0), v.string()])), // 0 for create (workaround), string for edit
 	title: v.pipe(
-		v.string('Vul een titel in.'),
+		v.string(() => 'Vul een titel in.'),
 		v.trim(),
-		v.minLength(MIN_TITLE_LENGTH, `Vul een titel in van minstens ${MIN_TITLE_LENGTH} tekens.`),
-		v.maxLength(MAX_TITLE_LENGTH, `Vul een titel in van maximaal ${MAX_TITLE_LENGTH} tekens.`),
+		v.minLength(
+			MIN_TITLE_LENGTH,
+			() => `Vul een titel in van minstens ${MIN_TITLE_LENGTH} tekens.`,
+		),
+		v.maxLength(
+			MAX_TITLE_LENGTH,
+			() => `Vul een titel in van maximaal ${MAX_TITLE_LENGTH} tekens.`,
+		),
 	),
 	description: v.optional(
 		v.pipe(
 			v.string(),
 			v.maxLength(
 				MAX_DESCRIPTION_LENGTH,
-				`Vul een beschrijving in van maximaal ${MAX_DESCRIPTION_LENGTH} tekens.`,
+				() => `Vul een beschrijving in van maximaal ${MAX_DESCRIPTION_LENGTH} tekens.`,
 			),
 			v.transform((val) => (val.length > 0 ? val : undefined)),
 		),
@@ -62,7 +71,7 @@ export const EventFormSchema = v.strictObject({
 	organizerName: v.optional(
 		v.pipe(
 			v.string(),
-			v.maxLength(MAX_NAME_LENGTH, `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`),
+			v.maxLength(MAX_NAME_LENGTH, () => `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`),
 			v.transform((val) => (val.length > 0 ? val : undefined)),
 		),
 	),
@@ -73,11 +82,11 @@ export const EventFormSchema = v.strictObject({
 					v.tuple([v.plainDate(), OptionSchema]),
 					v.check(
 						(v) => (v[1].endDate ? Temporal.PlainDate.compare(v[0], v[1].endDate) < 0 : true),
-						'De einddatum moet na de startdatum liggen.',
+						() => 'De einddatum moet na de startdatum liggen.',
 					),
 				),
 			),
-			v.minLength(1, 'Selecteer minstens 1 datum.'),
+			v.minLength(1, () => 'Selecteer minstens 1 datum.'),
 		),
 	),
 	allowAnonymous: v.optional(v.boolean()),

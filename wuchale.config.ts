@@ -13,6 +13,7 @@ export default defineConfig({
 				'src/**/+{page,layout}.server.{js,ts}',
 				'src/**/*.remote.{js,ts}',
 				'src/lib/shared/**/*.{js,ts}',
+				'src/lib/server/validation.ts',
 			],
 		}),
 	},

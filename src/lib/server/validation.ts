@@ -8,7 +8,8 @@ v.setGlobalConfig({ lang: 'nl' })
 
 export const temporal = <T>(
 	temporal: { from: (input: string) => T },
-	message = 'Vul een geldige datum in.',
+	// lazy so the message is translated per request, at validation time
+	message: () => string = () => 'Vul een geldige datum in.',
 ) =>
 	v.pipe(
 		v.string(),
@@ -16,14 +17,14 @@ export const temporal = <T>(
 			try {
 				return temporal.from(context.dataset.value)
 			} catch {
-				context.addIssue({ message })
+				context.addIssue({ message: message() })
 				return context.NEVER
 			}
 		}),
 	)
 
-export const plainDate = () => temporal(Temporal.PlainDate, 'Vul een geldige datum in.')
-export const plainTime = () => temporal(Temporal.PlainTime, 'Vul een geldig tijdstip in.')
+export const plainDate = () => temporal(Temporal.PlainDate, () => 'Vul een geldige datum in.')
+export const plainTime = () => temporal(Temporal.PlainTime, () => 'Vul een geldig tijdstip in.')
 
 export const json = <TSchema extends v.BaseSchema<object, unknown, v.BaseIssue<unknown>>>(
 	schema: TSchema,

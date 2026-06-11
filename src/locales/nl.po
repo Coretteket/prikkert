@@ -970,6 +970,7 @@ msgid "Ongeldige link."
 msgstr "Ongeldige link."
 
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Vul je beschikbaarheid in."
 msgstr "Vul je beschikbaarheid in."
 
@@ -1101,6 +1102,8 @@ msgstr "Plennur <0>kost geld</0> zodra je meer dan 3 afspraken aanmaakt."
 
 #. 0: MAX_NAME_LENGTH
 #. 0: MAX_NAME_LENGTH
+#. 0: MAX_NAME_LENGTH
+#: src/lib/shared/event/schema.ts
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Vul een naam in van maximaal {0} tekens."
@@ -1110,3 +1113,51 @@ msgstr "Vul een naam in van maximaal {0} tekens."
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Opmerkingen mogen maximaal {0} tekens zijn."
 msgstr "Opmerkingen mogen maximaal {0} tekens zijn."
+
+#: src/lib/shared/event/schema.ts
+msgid "Vul een titel in."
+msgstr "Vul een titel in."
+
+#. 0: MIN_TITLE_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een titel in van minstens {0} tekens."
+msgstr "Vul een titel in van minstens {0} tekens."
+
+#. 0: MAX_TITLE_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een titel in van maximaal {0} tekens."
+msgstr "Vul een titel in van maximaal {0} tekens."
+
+#: src/lib/server/validation.ts
+msgid "Vul een geldige datum in."
+msgstr "Vul een geldige datum in."
+
+#: src/lib/server/validation.ts
+msgid "Vul een geldig tijdstip in."
+msgstr "Vul een geldig tijdstip in."
+
+#. 0: MAX_NOTE_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een opmerking in van maximaal {0} tekens."
+msgstr "Vul een opmerking in van maximaal {0} tekens."
+
+#: src/lib/shared/event/schema.ts
+msgid "Vul een starttijd in die eerder is dan de eindtijd."
+msgstr "Vul een starttijd in die eerder is dan de eindtijd."
+
+#: src/lib/shared/event/schema.ts
+msgid "Ongeldig tijdslot."
+msgstr "Ongeldig tijdslot."
+
+#. 0: MAX_DESCRIPTION_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een beschrijving in van maximaal {0} tekens."
+msgstr "Vul een beschrijving in van maximaal {0} tekens."
+
+#: src/lib/shared/event/schema.ts
+msgid "De einddatum moet na de startdatum liggen."
+msgstr "De einddatum moet na de startdatum liggen."
+
+#: src/lib/shared/event/schema.ts
+msgid "Selecteer minstens 1 datum."
+msgstr "Selecteer minstens 1 datum."

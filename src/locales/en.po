@@ -970,6 +970,7 @@ msgid "Ongeldige link."
 msgstr "Invalid link."
 
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Vul je beschikbaarheid in."
 msgstr "Select your availability."
 
@@ -1101,6 +1102,8 @@ msgstr "Plennur <0>costs money</0> as soon as you create more than 3 events."
 
 #. 0: MAX_NAME_LENGTH
 #. 0: MAX_NAME_LENGTH
+#. 0: MAX_NAME_LENGTH
+#: src/lib/shared/event/schema.ts
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Vul een naam in van maximaal {0} tekens."
@@ -1110,3 +1113,51 @@ msgstr "Enter a name of at most {0} characters."
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Opmerkingen mogen maximaal {0} tekens zijn."
 msgstr "Comments cannot be longer than 200 characters."
+
+#: src/lib/shared/event/schema.ts
+msgid "Vul een titel in."
+msgstr "Enter a title."
+
+#. 0: MIN_TITLE_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een titel in van minstens {0} tekens."
+msgstr "Enter a title of at least {0} characters."
+
+#. 0: MAX_TITLE_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een titel in van maximaal {0} tekens."
+msgstr "Enter a title of at most {0} characters."
+
+#: src/lib/server/validation.ts
+msgid "Vul een geldige datum in."
+msgstr "Enter a valid date."
+
+#: src/lib/server/validation.ts
+msgid "Vul een geldig tijdstip in."
+msgstr "Enter a valid time."
+
+#. 0: MAX_NOTE_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een opmerking in van maximaal {0} tekens."
+msgstr "Enter a note of at most {0} characters."
+
+#: src/lib/shared/event/schema.ts
+msgid "Vul een starttijd in die eerder is dan de eindtijd."
+msgstr "Enter a start time that is earlier than the end time."
+
+#: src/lib/shared/event/schema.ts
+msgid "Ongeldig tijdslot."
+msgstr "Invalid time slot."
+
+#. 0: MAX_DESCRIPTION_LENGTH
+#: src/lib/shared/event/schema.ts
+msgid "Vul een beschrijving in van maximaal {0} tekens."
+msgstr "Enter a description of at most {0} characters."
+
+#: src/lib/shared/event/schema.ts
+msgid "De einddatum moet na de startdatum liggen."
+msgstr "The end date must be after the start date."
+
+#: src/lib/shared/event/schema.ts
+msgid "Selecteer minstens 1 datum."
+msgstr "Select at least 1 date."

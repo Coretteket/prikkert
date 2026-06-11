@@ -14,7 +14,7 @@ import * as v from '@/server/validation'
 import { getEventForSession } from './data.remote'
 import { hasSession } from '../../../data.remote'
 
-const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], 'Vul je beschikbaarheid in.')
+const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], () => 'Vul je beschikbaarheid in.')
 
 type OptionName = `option_${string}`
 
