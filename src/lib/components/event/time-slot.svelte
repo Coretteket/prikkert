@@ -31,6 +31,14 @@
 		const updated = slots.map((s, i) => (i === index ? { ...s, ...patch } : s))
 		options.set(date, { endDate, hasTime, slots: updated })
 	}
+
+	function nextSlot(): Slot {
+		const last = slots.at(-1)
+		if (!last?.startsAt || !last.endsAt) return emptySlot
+		const startsAt = last.endsAt
+		const endsAt = startsAt.add(last.startsAt.until(last.endsAt))
+		return Temporal.PlainTime.compare(startsAt, endsAt) < 1 ? { startsAt, endsAt } : { startsAt }
+	}
 </script>
 
 <div class={['grow font-medium text-neutral-700 dark:text-neutral-300']}>
@@ -103,7 +111,7 @@
 			type="button"
 			variant="secondary"
 			size="sm"
-			onclick={() => updateEntry({ slots: slots.concat([emptySlot]) })}
+			onclick={() => updateEntry({ slots: slots.concat([nextSlot()]) })}
 		>
 			Tijdoptie toevoegen
 		</Button>
