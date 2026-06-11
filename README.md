@@ -47,6 +47,12 @@ docker compose -f compose.prod.yml build app
 docker rollout -f compose.prod.yml app
 ```
 
+On the first deployment, and after updates that change the database schema, apply the schema to the database:
+
+```bash
+docker compose -f compose.prod.yml exec app corepack pnpm drizzle-kit push
+```
+
 When self-hosting, please set `PUBLIC_NO_INDEX=1` or use your own branding, to avoid confusing search engines. Note that the [EUPL license](LICENSE) has a network use clause: if you run a modified version as a public service, please release your source code.
 
 Set `PUBLIC_ORIGIN` in `.env` to your domain (e.g. `https://example.com`). See `.env.example` for all options.
