@@ -79,5 +79,6 @@ export function generateJSONLD() {
 		})
 	}
 
-	return JSON.stringify(baseSchema)
+	// Prevent JSON-LD content from closing the script element
+	return JSON.stringify(baseSchema).replaceAll('<', String.raw`\u003c`)
 }
