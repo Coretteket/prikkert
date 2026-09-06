@@ -3,6 +3,9 @@ import { page } from '$app/state'
 import { capitalizeFirst } from '../utils'
 import { getContent } from '../content'
 
+/*
+@wc-ignore
+*/
 function formatTitle(title: string) {
 	return `${capitalizeFirst(title)} · Prikkert`
 }

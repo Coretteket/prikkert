@@ -15,7 +15,7 @@ Contributions are very welcome! Check the [issue tracker](https://codeberg.org/q
 
 ## Development
 
-You'll need Node 24+, pnpm 10+, and Docker.
+You'll need Node 24+, pnpm 11+, and Docker.
 
 ```bash
 cp .env.example .env

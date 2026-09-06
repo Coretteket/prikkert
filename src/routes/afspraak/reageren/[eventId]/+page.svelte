@@ -14,7 +14,7 @@
 	import { getEventForSession } from './data.remote'
 	import OptionInput from './option-input.svelte'
 
-	let removeDialogOpen = $state(false)
+	let isRemoveDialogOpen = $state(false)
 
 	let { params } = $props()
 
@@ -175,7 +175,7 @@
 						type="button"
 						variant="secondary"
 						disabled={submitAvailability.pending > 0}
-						onclick={() => (removeDialogOpen = true)}
+						onclick={() => (isRemoveDialogOpen = true)}
 					>
 						Reactie verwijderen
 					</Button>
@@ -188,5 +188,5 @@
 	</form>
 {/if}
 
-<AvailabilityRemoveDialog bind:open={removeDialogOpen} />
+<AvailabilityRemoveDialog bind:open={isRemoveDialogOpen} />
 <OrganizerReceiveDialog id={event.id} isOrganizer={event.isOrganizer} />

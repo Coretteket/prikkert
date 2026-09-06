@@ -4,7 +4,7 @@ import { Temporal } from '@/shared/temporal'
 
 import { routes as forwardRoutes } from './lib/shared/url'
 
-const routes = Array.from(forwardRoutes.entries()).map(([nl, en]) => [en, nl])
+const routes = Array.from(forwardRoutes.entries(), ([nl, en]) => [en, nl])
 
 export const reroute = (({ url }) => {
 	const route = routes.find(([from]) => url.pathname.startsWith(from))

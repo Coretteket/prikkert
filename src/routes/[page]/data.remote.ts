@@ -1,4 +1,4 @@
-import { marked, type RendererObject } from 'marked'
+import { marked, type Renderer, type RendererObject } from 'marked'
 import parseFrontmatter from 'front-matter'
 import { XMLParser } from 'fast-xml-parser'
 import { error } from '@sveltejs/kit'
@@ -27,13 +27,16 @@ const FeedSchema = v.object({
 })
 
 const renderer = {
-	link(token) {
+	link(this: Renderer, token) {
 		const link = marked.Renderer.prototype.link.call(this, token)
 		return link.replace('<a', '<a target="_blank"')
 	},
-	heading(token) {
+	heading(this: Renderer, token) {
 		const heading = marked.Renderer.prototype.heading.call(this, token)
-		return heading.replace('<h2', `<h2 id="${token.text.toLowerCase().replaceAll(/\s+/g, '-')}"`)
+		return heading.replace(
+			'<h2',
+			() => `<h2 id="${token.text.toLowerCase().replaceAll(/\s+/g, '-')}"`,
+		)
 	},
 } satisfies RendererObject
 
@@ -58,7 +61,7 @@ async function getLastCommit(page: string, locale: string) {
 		const filePath = `src/routes/[page]/content/${page}.${locale}.md`
 		const encodedPath = filePath
 			.split('/')
-			.map((e) => encodeURIComponent(e))
+			.map((segment) => encodeURIComponent(segment))
 			.join('/')
 
 		const contentsResponse = await fetch(

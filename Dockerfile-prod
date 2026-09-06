@@ -7,7 +7,7 @@ WORKDIR /app
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 COPY . .
@@ -28,4 +28,5 @@ COPY --chown=node:node ./src/lib/server/crypto.ts ./src/lib/server/crypto.ts
 
 USER node
 ENV NODE_ENV=production
+ENV PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false
 CMD ["node", "build"]

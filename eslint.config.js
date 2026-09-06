@@ -1,5 +1,5 @@
+import { includeIgnoreFile } from '@eslint/config-helpers'
 import perfectionist from 'eslint-plugin-perfectionist'
-import { includeIgnoreFile } from '@eslint/compat'
 import prettier from 'eslint-config-prettier'
 import { defineConfig } from 'eslint/config'
 import unicorn from 'eslint-plugin-unicorn'
@@ -21,6 +21,15 @@ export default defineConfig(
 	unicorn.configs.recommended,
 	{
 		rules: {
+			'unicorn/max-nested-calls': 'off',
+			'unicorn/filename-case': 'off',
+			'unicorn/no-top-level-assignment-in-function': 'off',
+			'unicorn/single-line-block-comment-style': 'off',
+			'unicorn/consistent-class-member-order': 'off',
+			'unicorn/name-replacements': [
+				'error',
+				{ replacements: { db: false, props: false, utils: false } },
+			],
 			'unicorn/prevent-abbreviations': 'off',
 			'unicorn/prefer-spread': 'off',
 			'unicorn/no-null': 'off',

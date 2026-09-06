@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 		event.organizerToken,
 	)
 
-	if (event.hideResponses && !isOrganizer) {
+	if (!isOrganizer && event.hideResponses) {
 		redirect(303, `/afspraak/reageren/${params.eventId}`)
 	}
 

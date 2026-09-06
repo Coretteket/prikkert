@@ -33,7 +33,7 @@ export function formatDate(
 	const endShowsYear = shouldShowYear(endDate)
 
 	if (Temporal.PlainDate.compare(startDate, endDate) === 0) {
-		if (userStart instanceof Temporal.ZonedDateTime)
+		if (userStart instanceof Temporal.ZonedDateTime && userEnd instanceof Temporal.ZonedDateTime)
 			return userStart.equals(userEnd)
 				? {
 						kind: 'single',
@@ -83,12 +83,15 @@ function shouldShowYear(date: Temporal.PlainDate) {
 	return Temporal.PlainDate.compare(date, now.add({ years: 1 })) > 0
 }
 
-function formatPlainDate(date: Temporal.PlainDate | Temporal.ZonedDateTime, forceYear = false) {
+function formatPlainDate(
+	date: Temporal.PlainDate | Temporal.ZonedDateTime,
+	shouldForceYear = false,
+) {
 	const plainDate = date instanceof Temporal.ZonedDateTime ? date.toPlainDate() : date
 	return plainDate.toLocaleString(locale(), {
 		day: 'numeric',
 		month: 'long',
-		year: forceYear || shouldShowYear(plainDate) ? 'numeric' : undefined,
+		year: shouldForceYear || shouldShowYear(plainDate) ? 'numeric' : undefined,
 	})
 }
 

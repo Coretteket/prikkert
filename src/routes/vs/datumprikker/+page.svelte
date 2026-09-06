@@ -111,8 +111,8 @@
 		In drie simpele stappen plan je jouw groepsafspraak.
 	</p>
 	<div class="mx-auto max-w-120">
-		{#each steps as step, i}
-			<Step n={i + 1} bold={step.bold} normal={step.normal} />
+		{#each steps as step, index}
+			<Step n={index + 1} bold={step.bold} normal={step.normal} />
 		{/each}
 	</div>
 	<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" class="mx-auto mt-12">

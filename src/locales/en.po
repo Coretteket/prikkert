@@ -1,11 +1,12 @@
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "Source-Language: nl\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2\n"
+"X-Plurals-Order: one, other\n"
 
 #: src/routes/+layout.svelte
 #: src/routes/+layout.svelte
@@ -490,14 +491,17 @@ msgstr "Save response"
 msgid "Als je doorgaat wordt je beschikbaarheid verwijderd. Je kunt daarna opnieuw reageren."
 msgstr "If you continue, your availability will be deleted. You can then respond again."
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/option-input.svelte
 msgid "Ja"
 msgstr "Yes"
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/option-input.svelte
 msgid "Misschien"
 msgstr "Maybe"
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/option-input.svelte
 msgid "Nee"
 msgstr "No"
@@ -1112,7 +1116,7 @@ msgstr "Enter a name of at most {0} characters."
 #. 0: MAX_NOTE_LENGTH
 #: src/routes/afspraak/reageren/[eventId]/action.remote.ts
 msgid "Opmerkingen mogen maximaal {0} tekens zijn."
-msgstr "Comments cannot be longer than 200 characters."
+msgstr "Comments cannot be longer than {0} characters."
 
 #: src/lib/shared/event/schema.ts
 msgid "Vul een titel in."

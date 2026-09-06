@@ -43,17 +43,17 @@
 		submitLabel?: string
 	} = $props()
 
-	let showName = $derived(Boolean(initialValues?.organizerName))
-	let showDescription = $derived(Boolean(initialValues?.description))
-	let showOptions = $derived(
+	let isShowName = $derived(Boolean(initialValues?.organizerName))
+	let isShowDescription = $derived(Boolean(initialValues?.description))
+	let isShowOptions = $derived(
 		Array.from(initialValues?.options.values() ?? []).some(
 			(entry) => entry.hasTime || entry.endDate || entry.slots.some((slot) => slot.note),
 		) ?? false,
 	)
-	let showSettings = $derived(
+	let isShowSettings = $derived(
 		Boolean(initialValues?.hideResponses) || Boolean(initialValues?.allowAnonymous),
 	)
-	const hideResponsesLocked = $derived(hasResponses && Boolean(initialValues?.hideResponses))
+	const isHideResponsesLocked = $derived(hasResponses && Boolean(initialValues?.hideResponses))
 
 	const issues = $derived(form.fields.allIssues() ?? [])
 
@@ -66,11 +66,14 @@
 		const optionsIssues = new SvelteMap<string, string>()
 
 		for (const issue of issues) {
-			if (issue.path?.[0] === 'options' && typeof issue.path[1] === 'number') {
-				const dateIndex = issue.path[1]
-				const dates = Array.from(options.keys()).toSorted(Temporal.PlainDate.compare)
-				if (dates[dateIndex]) optionsIssues.set(dates[dateIndex], issue.message)
+			if (!(issue.path?.[0] === 'options' && typeof issue.path[1] === 'number')) {
+				continue
 			}
+
+			const dateIndex = issue.path[1]
+			const dates = Array.from(options.keys()).toSorted(Temporal.PlainDate.compare)
+			const date = dates[dateIndex]
+			if (date !== undefined) optionsIssues.set(date, issue.message)
 		}
 
 		return optionsIssues
@@ -95,42 +98,43 @@
 		for (const [date, entry] of initialValues.options) {
 			if (!options.has(date)) return true
 			const currentEntry = options.get(date)!
-			const currentSlots = currentEntry.slots
 			if (entry.endDate !== currentEntry.endDate) return true
+			const currentSlots = currentEntry.slots
 
 			for (const slot of entry.slots) {
-				const found = currentSlots.some((s) => compareSlots(s, slot))
-				if (!found) return true
+				const isFound = currentSlots.some((s) => compareSlots(s, slot))
+				if (!isFound) return true
 			}
 		}
 
 		return false
 	}
 
-	let showConfirmation = $state(false)
+	let isShowConfirmation = $state(false)
 	let confirmMessage = $state('')
-	let onConfirm: ((value: boolean) => void) | undefined = $state()
+	let onConfirm: ((isConfirmed: boolean) => void) | undefined = $state()
 
 	function untilConfirmed() {
-		const confirmOptions = hasRemovedOptions()
-		const confirmTimezone = hasDifferentTimezone()
-		if ((!confirmOptions && !confirmTimezone) || !hasResponses) return Promise.resolve(true)
+		const isConfirmOptions = hasRemovedOptions()
+		const isConfirmTimezone = hasDifferentTimezone()
+		if (!hasResponses || (!isConfirmOptions && !isConfirmTimezone)) return Promise.resolve(true)
 		return new Promise<boolean>((resolve) => {
 			onConfirm = resolve
-			confirmMessage = confirmTimezone
+			confirmMessage = isConfirmTimezone
 				? `Jouw tijdzone verschilt van de oorspronkelijke tijdzone van deze afspraak (${formatTimezoneID(timezone)}). Als je doorgaat wordt de beschikbaarheid van deelnemers voor alle opties met tijden verwijderd. Dit kan niet ongedaan worden gemaakt.`
 				: 'Je hebt een of meerdere datumopties aangepast. Als je doorgaat wordt de beschikbaarheid van deelnemers voor deze opties verwijderd. Dit kan niet ongedaan worden gemaakt.'
-			showConfirmation = true
+			isShowConfirmation = true
 		})
 	}
 </script>
 
 <form
 	{...form.enhance(async (form) => {
-		if (isEditMode === false) form.submit()
-		else {
-			const confirmed = await untilConfirmed()
-			if (!confirmed) return
+		if (isEditMode) {
+			const isConfirmed = await untilConfirmed()
+			if (!isConfirmed) return
+			form.submit()
+		} else {
 			form.submit()
 		}
 	})}
@@ -161,7 +165,7 @@
 		{/each}
 	</div>
 
-	{#if showName}
+	{#if isShowName}
 		<div class="my-10">
 			<div class="mb-4 flex items-center justify-between">
 				<label for="name" class="text-lg font-medium">
@@ -177,7 +181,7 @@
 					class="-my-2"
 					label="Naam verbergen"
 					onclick={() => {
-						showName = false
+						isShowName = false
 						const field = form.fields.organizerName
 						if (field) field.set('')
 					}}
@@ -201,19 +205,19 @@
 		</div>
 	{/if}
 
-	{#if !showName || !showDescription}
+	{#if !isShowName || !isShowDescription}
 		<div class="-mt-6 flex flex-wrap gap-3">
-			{#if !showName}
-				<Button type="button" variant="secondary" size="sm" onclick={() => (showName = true)}>
+			{#if !isShowName}
+				<Button type="button" variant="secondary" size="sm" onclick={() => (isShowName = true)}>
 					Naam toevoegen
 				</Button>
 			{/if}
-			{#if !showDescription}
+			{#if !isShowDescription}
 				<Button
 					type="button"
 					variant="secondary"
 					size="sm"
-					onclick={() => (showDescription = true)}
+					onclick={() => (isShowDescription = true)}
 				>
 					Omschrijving toevoegen
 				</Button>
@@ -221,7 +225,7 @@
 		</div>
 	{/if}
 
-	{#if showDescription}
+	{#if isShowDescription}
 		<div class="my-10">
 			<div class="mb-4 flex items-center justify-between">
 				<label for="description" class="text-lg font-medium">
@@ -237,7 +241,7 @@
 					class="-my-2"
 					label="Omschrijving verbergen"
 					onclick={() => {
-						showDescription = false
+						isShowDescription = false
 						const field = form.fields.description
 						if (field) field.set('')
 					}}
@@ -254,8 +258,7 @@
 				class={[
 					'mb-4 block w-full rounded-lg border px-4 py-2.5 placeholder:opacity-80 dark:bg-neutral-825',
 					(form.fields.description.issues()?.length ?? 0) > 0 && 'ring-2 ring-pink-500',
-				]}
-			></textarea>
+				]}></textarea>
 			{#each form.fields.description.issues() ?? [] as issue}
 				<p class="font-medium text-pink-600 dark:text-pink-500" data-issue>{issue.message}</p>
 			{/each}
@@ -285,7 +288,7 @@
 	</div>
 
 	<div class="mb-10">
-		{#if showOptions}
+		{#if isShowOptions}
 			<div class="mb-4 flex items-center justify-between">
 				<span class="text-lg font-medium">
 					Opties
@@ -299,7 +302,7 @@
 					size="icon"
 					label="Tijden verbergen"
 					onclick={() => {
-						showOptions = false
+						isShowOptions = false
 						for (const date of options.keys()) options.set(date, emptyEntry)
 					}}
 				>
@@ -308,13 +311,13 @@
 			</div>
 			<div
 				class={[
-					'relative mb-4 max-h-100 min-h-48 divide-y overflow-y-auto rounded-lg border [scrollbar-gutter:stable]',
+					'relative mb-4 max-h-100 min-h-48 [scrollbar-gutter:stable] divide-y overflow-y-auto rounded-lg border',
 					nestedOptionsIssues.size > 0 && 'ring-2 ring-pink-500',
 				]}
 			>
-				{#each Array.from(options.keys()).toSorted(Temporal.PlainDate.compare) as date, i}
+				{#each Array.from(options.keys()).toSorted(Temporal.PlainDate.compare) as date, index}
 					<div class="px-6 pt-4.5 pb-5.5">
-						<TimeSlot {date} {options} isFirst={i === 0} />
+						<TimeSlot {date} {options} isFirst={index === 0} />
 						{#if nestedOptionsIssues.has(date)}
 							<p class="mt-4 text-center font-medium text-pink-600 dark:text-pink-500" data-issue>
 								{nestedOptionsIssues.get(date)}
@@ -323,7 +326,7 @@
 					</div>
 				{:else}
 					<p
-						class="text-neutral-500 py-4 absolute left-1/2 top-1/2 -translate-1/2 text-center text-balance dark:text-neutral-400"
+						class="absolute top-1/2 left-1/2 -translate-1/2 py-4 text-center text-balance text-neutral-500 dark:text-neutral-400"
 					>
 						Selecteer datums om opmerkingen, tijden en einddatums toe te voegen.
 					</p>
@@ -332,22 +335,22 @@
 		{/if}
 	</div>
 
-	{#if !showOptions || !showSettings}
+	{#if !isShowOptions || !isShowSettings}
 		<div class="-mt-6 mb-8 flex flex-wrap gap-3">
-			{#if !showOptions}
-				<Button type="button" variant="secondary" size="sm" onclick={() => (showOptions = true)}>
+			{#if !isShowOptions}
+				<Button type="button" variant="secondary" size="sm" onclick={() => (isShowOptions = true)}>
 					Datumopties aanpassen
 				</Button>
 			{/if}
-			{#if !showSettings}
-				<Button type="button" variant="secondary" size="sm" onclick={() => (showSettings = true)}>
+			{#if !isShowSettings}
+				<Button type="button" variant="secondary" size="sm" onclick={() => (isShowSettings = true)}>
 					Privacy instellen
 				</Button>
 			{/if}
 		</div>
 	{/if}
 
-	{#if showSettings}
+	{#if isShowSettings}
 		<div class="mb-10">
 			<div class="mb-4 flex items-center justify-between">
 				<span class="text-lg font-medium">
@@ -361,7 +364,7 @@
 					variant="ghost"
 					size="icon"
 					label="Instellingen verbergen"
-					onclick={() => (showSettings = false)}
+					onclick={() => (isShowSettings = false)}
 				>
 					<Icon icon="tabler--x" class="size-5" />
 				</Button>
@@ -371,12 +374,12 @@
 					<input
 						{...form.fields.hideResponses.as('checkbox')}
 						checked={initialValues?.hideResponses}
-						disabled={hideResponsesLocked}
+						disabled={isHideResponsesLocked}
 						class="my-0.75 size-4.5 shrink-0 cursor-pointer accent-pink-600 disabled:opacity-50 dark:accent-pink-700"
 					/>
 
 					<!-- disabled input is not submitted, so we need a hidden input -->
-					{#if hideResponsesLocked}
+					{#if isHideResponsesLocked}
 						<input
 							{...form.fields.hideResponses.as('checkbox')}
 							checked={initialValues?.hideResponses}
@@ -414,4 +417,4 @@
 	</Button>
 </form>
 
-<EventEditDialog bind:open={showConfirmation} message={confirmMessage} {onConfirm} />
+<EventEditDialog bind:open={isShowConfirmation} message={confirmMessage} {onConfirm} />

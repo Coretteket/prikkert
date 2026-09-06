@@ -16,7 +16,7 @@
 	let { option, errors, disabled }: Props = $props()
 
 	let availability = $derived(option.response?.availability ?? '')
-	let showNote = $derived(Boolean(option.response?.note))
+	let isShowNote = $derived(Boolean(option.response?.note))
 	let noteValue = $derived(option.response?.note ?? '')
 
 	const availabilityName = $derived(`availability.option_${option.id}`)
@@ -68,12 +68,12 @@
 				variant="secondary"
 				size="icon"
 				class="px-2.5"
-				label={showNote ? 'Opmerking verwijderen' : 'Opmerking toevoegen'}
+				label={isShowNote ? 'Opmerking verwijderen' : 'Opmerking toevoegen'}
 				type="button"
-				onclick={() => (showNote = !showNote)}
+				onclick={() => (isShowNote = !isShowNote)}
 				{disabled}
 			>
-				{#if showNote}
+				{#if isShowNote}
 					<Icon icon="tabler--message-circle-x" class="size-5" />
 					<span class="sr-only">Opmerking verwijderen voor <Date {...option} /></span>
 				{:else}
@@ -84,23 +84,22 @@
 		</div>
 	</div>
 
-	{#if showNote}
+	{#if isShowNote}
 		<div data-desc class="-mb-1 px-5 pt-3 pb-1 md:px-4">
 			<textarea
 				{disabled}
 				id={noteName}
-				name={showNote ? noteName : undefined}
+				name={isShowNote ? noteName : undefined}
 				class="block min-h-12 w-full rounded-lg border px-4 py-2.5 disabled:cursor-not-allowed dark:bg-neutral-825"
 				placeholder="Voeg een opmerking toe..."
 				rows={1}
-				tabindex={showNote ? 0 : -1}
+				tabindex={isShowNote ? 0 : -1}
 				spellcheck={false}
-				bind:value={noteValue}
-			></textarea>
+				bind:value={noteValue}></textarea>
 		</div>
 	{/if}
 
-	{#each errors.filter((e) => e !== undefined) as error}
+	{#each errors.filter((error) => error !== undefined) as error}
 		<p class="mt-2 px-5 font-medium text-pink-600 dark:text-pink-500" data-issue>
 			{error}
 		</p>

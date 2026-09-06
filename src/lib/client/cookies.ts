@@ -27,9 +27,7 @@ export function setDetectedTimezone(timezone: string) {
 
 export function setTheme(theme: Theme) {
 	document.documentElement.classList.add('no-transition')
-	const systemTheme = globalThis.matchMedia('(prefers-color-scheme: dark)').matches
-		? 'dark'
-		: 'light'
+	const systemTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 	document.documentElement.dataset.theme = theme === 'system' ? systemTheme : theme
 	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	document.documentElement.offsetHeight

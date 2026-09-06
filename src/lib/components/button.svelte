@@ -13,8 +13,7 @@
 	type Variants = VariantProps<typeof buttonVariants>
 
 	type SizeProps =
-		| { size: 'icon'; label: string }
-		| { size?: Exclude<Variants['size'], 'icon'>; label?: string }
+		{ size: 'icon'; label: string } | { size?: Exclude<Variants['size'], 'icon'>; label?: string }
 
 	type AsButtonProps = Omit<HTMLButtonAttributes, keyof BaseProps | 'size' | 'label'>
 	type AsLinkProps = Omit<HTMLAnchorAttributes, keyof BaseProps | 'size' | 'label'>
@@ -55,7 +54,7 @@
 	const getRestProps = () => rest as any
 </script>
 
-{#if as === 'link'}
+{#if as === /* @wc-ignore */ 'link'}
 	<a
 		title={label}
 		{...getRestProps()}

@@ -12,12 +12,12 @@ import { isLocale } from '@/shared/utils'
 
 import type { LayoutLoad } from './$types'
 
-export const load: LayoutLoad = async (e) => {
-	const locale = e.data.locale
+export const load: LayoutLoad = async (event) => {
+	const locale = event.data.locale
 	if (browser && isLocale(locale)) await loadLocale(locale)
 
 	const isAutomaticTimezone = browser && !getTimezone()
-	const timezone = isAutomaticTimezone ? detectTimezone() : e.data.timezone
+	const timezone = isAutomaticTimezone ? detectTimezone() : event.data.timezone
 	if (isAutomaticTimezone) setDetectedTimezone(timezone)
 
 	return { locale, timezone }

@@ -3,8 +3,8 @@ import { Temporal } from 'temporal-polyfill'
 
 /** Instant with timezone compatible with Temporal API. */
 export const instant = (name?: string) => {
-	const params = { withTimezone: true, mode: 'string' } satisfies PgTimestampConfig
-	return name ? timestamp(name, params) : timestamp(params)
+	const parameters = { withTimezone: true, mode: 'string' } satisfies PgTimestampConfig
+	return name ? timestamp(name, parameters) : timestamp(parameters)
 }
 
 /** Zoned datetime or plain date compatible with Temporal API. */

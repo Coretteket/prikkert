@@ -34,7 +34,7 @@ type Keys<T extends Map<unknown, unknown>> = T extends Map<infer V, unknown> ? V
 
 export function url(path: Keys<typeof routes> | `${Keys<typeof routes>}/${string}`) {
 	if (page.data.locale === 'en')
-		for (const [key, value] of routes.entries())
+		for (const [key, value] of routes)
 			if (path.startsWith(key)) return value + path.slice(key.length)
 
 	return path
@@ -45,7 +45,7 @@ export function getLocaleURL(path: string, locale: 'nl' | 'en') {
 	if (locale === 'en' && alreadyEnglish) return path
 	if (locale === 'nl' && !alreadyEnglish) return path
 
-	for (const [key, value] of routes.entries())
+	for (const [key, value] of routes)
 		if (path.startsWith(locale === 'nl' ? value : key))
 			return locale === 'nl' ? key + path.slice(value.length) : value + path.slice(key.length)
 

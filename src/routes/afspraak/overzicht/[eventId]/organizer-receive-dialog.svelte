@@ -14,7 +14,7 @@
 
 	onMount(async () => {
 		const hash = new URLSearchParams(location.hash.slice(1))
-		if (hash.has('organisator') === false) return
+		if (!hash.has('organisator')) return
 		// navigate to remove hash from url
 		await goto(location.pathname, { replaceState: true, noScroll: true })
 		if (isOrganizer) return

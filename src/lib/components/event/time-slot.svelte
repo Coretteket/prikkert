@@ -12,7 +12,7 @@
 
 	let { date, options, isFirst }: Props = $props()
 
-	let endDateOpen = $state(false)
+	let isEndDateOpen = $state(false)
 
 	const entry = $derived(options.get(date))
 	const endDate = $derived(entry?.endDate)
@@ -28,7 +28,7 @@
 	}
 
 	function updateSlot(index: number, patch: Partial<Slot>) {
-		const updated = slots.map((s, i) => (i === index ? { ...s, ...patch } : s))
+		const updated = slots.map((s, index_) => (index_ === index ? { ...s, ...patch } : s))
 		options.set(date, { endDate, hasTime, slots: updated })
 	}
 
@@ -49,16 +49,18 @@
 </div>
 
 <div class={['grid gap-4', hasTime ? 'mt-3 mb-5' : 'my-4']}>
-	{#each slots as slot, i (i)}
+	{#each slots as slot, index (index)}
 		<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
 			{#if hasTime}
 				<div>
 					<p class="mb-2 text-[15px] text-neutral-500 dark:text-neutral-400">Starttijd</p>
-					<TimeInput bind:time={() => slot.startsAt, (time) => updateSlot(i, { startsAt: time })} />
+					<TimeInput
+						bind:time={() => slot.startsAt, (time) => updateSlot(index, { startsAt: time })}
+					/>
 				</div>
 				<div>
 					<p class="mb-2 text-[15px] text-neutral-500 dark:text-neutral-400">Eindtijd</p>
-					<TimeInput bind:time={() => slot.endsAt, (time) => updateSlot(i, { endsAt: time })} />
+					<TimeInput bind:time={() => slot.endsAt, (time) => updateSlot(index, { endsAt: time })} />
 				</div>
 			{/if}
 			<div class="grow">
@@ -70,7 +72,7 @@
 					class="w-full rounded-md border px-3.5 py-2 dark:bg-neutral-825 dark:text-neutral-300"
 					placeholder="Vul een opmerking in... (optioneel)"
 					value={slot.note ?? ''}
-					oninput={(e) => updateSlot(i, { note: e.currentTarget.value })}
+					oninput={(event) => updateSlot(index, { note: event.currentTarget.value })}
 				/>
 			</div>
 			{#if hasTime}
@@ -83,7 +85,7 @@
 						updateEntry(
 							slots.length === 1
 								? { hasTime: false, slots: [emptySlot] }
-								: { slots: slots.filter((_, j) => j !== i) },
+								: { slots: slots.filter((_, index_) => index_ !== index) },
 						)}
 					label="Tijdoptie verwijderen"
 				>
@@ -100,7 +102,7 @@
 		variant="secondary"
 		size="sm"
 		onclick={() => {
-			endDateOpen = true
+			isEndDateOpen = true
 		}}
 	>
 		{#if endDate}Einddatum aanpassen{:else}Einddatum toevoegen{/if}
@@ -151,7 +153,7 @@
 </div>
 
 <EndDateDialog
-	bind:open={endDateOpen}
+	bind:open={isEndDateOpen}
 	onConfirm={(confirm) => confirm !== false && updateEntry({ endDate: confirm })}
 	{date}
 	{endDate}

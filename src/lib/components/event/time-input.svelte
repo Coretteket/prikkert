@@ -15,21 +15,21 @@
 		return Temporal.PlainTime.from({ hour, minute })
 	}
 
-	function handleBlur(e: FocusEvent & { currentTarget: HTMLInputElement }) {
-		const input = e.currentTarget
+	function handleBlur(event: FocusEvent & { currentTarget: HTMLInputElement }) {
+		const input = event.currentTarget
 		if (!input.value) return (time = undefined)
 
 		time = parseTime(input.value)
 		input.value = time ? time.toString({ smallestUnit: 'minute' }) : displayValue
 	}
 
-	function handleKeydown(e: KeyboardEvent & { currentTarget: HTMLInputElement }) {
-		if (e.key === KeyType.Enter) return e.currentTarget.blur()
-		if (e.key.length > 1 || e.ctrlKey || e.metaKey || e.altKey) return
+	function handleKeydown(event: KeyboardEvent & { currentTarget: HTMLInputElement }) {
+		if (event.key === KeyType.Enter) return event.currentTarget.blur()
+		if (event.key.length > 1 || event.ctrlKey || event.metaKey || event.altKey) return
 
-		const value = e.currentTarget.value
+		const value = event.currentTarget.value
 		const max = value.includes(':') || value.includes('.') ? 5 : 4
-		if (value.length >= max || !/^[0-9.:]$/.test(e.key)) e.preventDefault()
+		if (value.length >= max || !/^[0-9.:]$/.test(event.key)) event.preventDefault()
 	}
 </script>
 

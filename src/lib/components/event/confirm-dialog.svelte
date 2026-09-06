@@ -6,7 +6,7 @@
 		message,
 		open = $bindable(false),
 		onConfirm,
-	}: { message: string; open: boolean; onConfirm?: (value: boolean) => void } = $props()
+	}: { message: string; open: boolean; onConfirm?: (isConfirmed: boolean) => void } = $props()
 </script>
 
 <Dialog bind:open>

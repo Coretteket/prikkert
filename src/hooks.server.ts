@@ -16,10 +16,13 @@ import * as js from './locales/js.loader.server.js'
 import { locales } from './locales/data'
 import { cron } from './cron.server'
 
-export const init = () => !dev && !building && cron.start()
-
-loadLocales(main.key, main.loadIDs, main.loadCatalog, locales)
-loadLocales(js.key, js.loadIDs, js.loadCatalog, locales)
+export const init = async () => {
+	await Promise.all([
+		loadLocales(main.key, main.loadCount, main.loadCatalog, locales),
+		loadLocales(js.key, js.loadCount, js.loadCatalog, locales),
+	])
+	if (!dev && !building) cron.start()
+}
 
 const redirect = (location: string) =>
 	new Response(null, { status: 303, headers: { Location: location, 'Cache-Control': 'no-store' } })
@@ -56,8 +59,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		resolve(event, {
 			transformPageChunk: ({ html }) =>
 				html
-					.replace('%sveltekit.theme%', event.locals.theme)
-					.replace('%sveltekit.lang%', event.locals.locale),
+					.replace('%sveltekit.theme%', () => event.locals.theme)
+					.replace('%sveltekit.lang%', () => event.locals.locale),
 		}),
 	)
 

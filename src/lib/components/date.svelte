@@ -16,7 +16,7 @@
 </script>
 
 <time datetime={startsAt.toString()} class={className}
-	>{#if formattedOption.kind === 'single'}
+	>{#if formattedOption.kind === /* @wc-ignore */ 'single'}
 		{#if options?.weekday !== false}{formattedOption.weekday}{/if}
 		<span class="whitespace-nowrap">{formattedOption.date}</span
 		>{#if options?.time !== false && formattedOption.time}, <span class="whitespace-nowrap"

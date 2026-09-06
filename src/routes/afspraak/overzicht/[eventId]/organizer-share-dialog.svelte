@@ -11,7 +11,7 @@
 
 	const shareLink = $derived(open ? await getOrganizerShareLink(id) : '')
 
-	let linkCopied = $state(false)
+	let isLinkCopied = $state(false)
 </script>
 
 <Dialog bind:open>
@@ -35,11 +35,11 @@
 				size="sm"
 				onclick={() => {
 					navigator.clipboard.writeText(shareLink)
-					linkCopied = true
-					setTimeout(() => (linkCopied = false), 1000)
+					isLinkCopied = true
+					setTimeout(() => (isLinkCopied = false), 1000)
 				}}
 			>
-				<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="size-4.5" />
+				<Icon icon={isLinkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="size-4.5" />
 				Link kopiëren
 			</Button>
 

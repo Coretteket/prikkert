@@ -1,7 +1,7 @@
 FROM node:24-alpine
 WORKDIR /app
 RUN npm install -g corepack@latest
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN corepack pnpm i --frozen-lockfile
 COPY . .
 CMD ["corepack", "pnpm", "dev", "--host"]

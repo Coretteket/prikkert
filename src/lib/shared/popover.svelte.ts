@@ -1,11 +1,11 @@
 import type { Placement } from '@floating-ui/dom'
 
-const supportsPopover =
+const isSupportsPopover =
 	typeof HTMLElement !== 'undefined' && typeof HTMLElement.prototype.togglePopover === 'function'
 
-const supportsAnchorPositioning = typeof CSS !== 'undefined' && CSS.supports('anchor-name', '--a')
+const isSupportsAnchorPositioning = typeof CSS !== 'undefined' && CSS.supports('anchor-name', '--a')
 
-const useNative = supportsPopover && supportsAnchorPositioning
+const isUseNative = isSupportsPopover && isSupportsAnchorPositioning
 
 type PositionArea =
 	| `${'top' | 'bottom'}${'' | ' left' | ' right' | ' span-left' | ' span-right'}`
@@ -140,10 +140,12 @@ class FallbackPopover implements Popover {
 	}
 
 	#handleKeydown = (event: KeyboardEvent) => {
-		if (event.key === 'Escape') {
-			this.isOpen = false
-			this.#triggerEl?.focus()
+		if (event.key !== 'Escape') {
+			return
 		}
+
+		this.isOpen = false
+		this.#triggerEl?.focus()
 	}
 
 	triggerHandler = (node: HTMLElement) => {
@@ -171,7 +173,9 @@ class FallbackPopover implements Popover {
 
 				let positionCleanup: (() => void) | undefined
 
-				import('@floating-ui/dom').then(({ autoUpdate, computePosition, flip, offset, shift }) => {
+				void (async () => {
+					const { autoUpdate, computePosition, flip, offset, shift } =
+						await import('@floating-ui/dom')
 					if (!this.isOpen || !this.#triggerEl || !this.#floatingEl) return
 
 					positionCleanup = autoUpdate(this.#triggerEl, this.#floatingEl, async () => {
@@ -190,7 +194,7 @@ class FallbackPopover implements Popover {
 							visibility: 'visible',
 						})
 					})
-				})
+				})()
 
 				return () => {
 					document.removeEventListener('click', this.#handleOutsideClick)
@@ -219,5 +223,5 @@ class FallbackPopover implements Popover {
 }
 
 export function createPopover(options: PopoverOptions = {}): Popover {
-	return useNative ? new NativePopover(options) : new FallbackPopover(options)
+	return isUseNative ? new NativePopover(options) : new FallbackPopover(options)
 }

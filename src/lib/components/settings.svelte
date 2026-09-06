@@ -17,7 +17,7 @@
 
 	const popover = createPopover({ positionArea: 'bottom span-left' })
 
-	let timezoneDialog = $state(false)
+	let isTimezoneDialog = $state(false)
 </script>
 
 <Button size="icon" label="Instellingen" {@attach popover.triggerHandler} {...popover.triggerAttrs}>
@@ -94,14 +94,14 @@
 		class="w-full!"
 		{@attach popover.closeHandler}
 		{...popover.closeAttrs}
-		onclick={() => (timezoneDialog = true)}
+		onclick={() => (isTimezoneDialog = true)}
 	>
 		<Icon icon="tabler--clock" class="size-5" />
 		<span>Tijdzone...</span>
 	</Button>
 </div>
 
-<Dialog bind:open={timezoneDialog}>
+<Dialog bind:open={isTimezoneDialog}>
 	<form method="dialog">
 		<p class="mb-4 text-lg font-medium">Tijdzone</p>
 		<p class="mb-6 text-neutral-700 dark:text-neutral-300">

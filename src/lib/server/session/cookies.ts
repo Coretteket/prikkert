@@ -50,7 +50,7 @@ const RespondentSessionCookieSchema = v.object({
 	value: RespondentSessionValueSchema,
 })
 
-type SessionCookieOpts = {
+type SessionCookieOptions = {
 	eventId: string
 	expires: number | string | Date
 	token: string
@@ -63,38 +63,38 @@ const COOKIE_OPTIONS = {
 	secure: !dev,
 } satisfies Parameters<Cookies['set']>[2]
 
-export function setSessionCookie(opts: SessionCookieOpts) {
+export function setSessionCookie(options: SessionCookieOptions) {
 	const { cookies, locals } = getRequestEvent()
 
-	const key = (opts.isOrganizer ? ORGANIZER_PREFIX : RESPONDENT_PREFIX) + opts.eventId
-	const value = opts.isOrganizer ? opts.token : opts.respondentId + opts.token
+	const key = (options.isOrganizer ? ORGANIZER_PREFIX : RESPONDENT_PREFIX) + options.eventId
+	const value = options.isOrganizer ? options.token : options.respondentId + options.token
 
-	v.assert(opts.isOrganizer ? OrganizerSessionKeySchema : RespondentSessionKeySchema, key)
-	v.assert(opts.isOrganizer ? OrganizerSessionValueSchema : RespondentSessionValueSchema, value)
+	v.assert(options.isOrganizer ? OrganizerSessionKeySchema : RespondentSessionKeySchema, key)
+	v.assert(options.isOrganizer ? OrganizerSessionValueSchema : RespondentSessionValueSchema, value)
 
-	cookies.set(key, value, { ...COOKIE_OPTIONS, expires: new Date(opts.expires) })
+	cookies.set(key, value, { ...COOKIE_OPTIONS, expires: new Date(options.expires) })
 
-	if (opts.isOrganizer)
-		locals.session.organizer.set(opts.eventId, {
-			eventId: opts.eventId,
-			token: opts.token,
+	if (options.isOrganizer)
+		locals.session.organizer.set(options.eventId, {
+			eventId: options.eventId,
+			token: options.token,
 		})
 	else
-		locals.session.respondent.set(opts.eventId, {
-			eventId: opts.eventId,
-			respondentId: opts.respondentId,
-			token: opts.token,
+		locals.session.respondent.set(options.eventId, {
+			eventId: options.eventId,
+			respondentId: options.respondentId,
+			token: options.token,
 		})
 }
 
-export function deleteSessionCookie(opts: { isOrganizer: boolean; eventId: string }) {
+export function deleteSessionCookie(options: { isOrganizer: boolean; eventId: string }) {
 	const { cookies, locals } = getRequestEvent()
 
-	const key = (opts.isOrganizer ? ORGANIZER_PREFIX : RESPONDENT_PREFIX) + opts.eventId
+	const key = (options.isOrganizer ? ORGANIZER_PREFIX : RESPONDENT_PREFIX) + options.eventId
 
 	cookies.delete(key, COOKIE_OPTIONS)
 
-	locals.session[opts.isOrganizer ? 'organizer' : 'respondent'].delete(opts.eventId)
+	locals.session[options.isOrganizer ? 'organizer' : 'respondent'].delete(options.eventId)
 }
 
 type Session<T extends boolean> = v.InferOutput<

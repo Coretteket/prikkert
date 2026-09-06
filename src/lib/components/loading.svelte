@@ -10,8 +10,8 @@
 	const PROGRESS_SPEED = 0.03
 
 	let progress = $state(0)
-	let visible = $state(false)
-	let animating = $state(false)
+	let isVisible = $state(false)
+	let isAnimating = $state(false)
 	let frame: number | undefined
 	let showTimeout: ReturnType<typeof setTimeout> | undefined
 	let hideTimeout: ReturnType<typeof setTimeout> | undefined
@@ -19,7 +19,7 @@
 	function animate() {
 		// Exponential approach to max - slows down as it gets closer
 		progress += (PROGRESS_MAX - progress) * PROGRESS_SPEED
-		if (animating && progress < PROGRESS_MAX) {
+		if (isAnimating && progress < PROGRESS_MAX) {
 			frame = requestAnimationFrame(animate)
 		}
 	}
@@ -33,25 +33,25 @@
 		cancelAnimationFrame(frame!)
 
 		// Reset instantly (no transition)
-		animating = false
+		isAnimating = false
 		progress = 0
 
 		// Only show after delay to skip quick navigations
 		showTimeout = setTimeout(() => {
-			visible = true
-			animating = true
+			isVisible = true
+			isAnimating = true
 			frame = requestAnimationFrame(animate)
 		}, SHOW_DELAY)
 	})
 
 	afterNavigate(() => {
-		if (visible) {
+		if (isVisible) {
 			// Complete with animation, then hide
 			cancelAnimationFrame(frame!)
-			animating = true
+			isAnimating = true
 			progress = 100
 			hideTimeout = setTimeout(() => {
-				visible = false
+				isVisible = false
 			}, HIDE_DELAY)
 		} else {
 			// Navigation completed before bar was shown
@@ -60,9 +60,9 @@
 	})
 </script>
 
-{#if visible}
+{#if isVisible}
 	<output
-		class="fixed top-0 right-0 left-0 z-50 h-[3px] overflow-hidden duration-200"
+		class="fixed top-0 right-0 left-0 z-50 h-0.75 overflow-hidden duration-200"
 		out:fade={{ duration: FADE_DURATION }}
 		role="progressbar"
 		aria-valuenow={Math.round(progress)}

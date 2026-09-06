@@ -28,9 +28,9 @@
 	} = $props()
 
 	const weekdays = $derived(
-		Array.from({ length: 7 }, (_, i) =>
+		Array.from({ length: 7 }, (_, index) =>
 			Temporal.PlainDate.from('2026-02-23') // a monday
-				.add({ days: i })
+				.add({ days: index })
 				.toLocaleString(page.data.locale, { weekday: 'short' }),
 		),
 	)
@@ -47,7 +47,9 @@
 	const isFirstMonth = $derived(
 		firstVisible.since(
 			initialOptions && initialOptions.size > 0
-				? Temporal.PlainDate.from(Array.from(initialOptions.keys()).toSorted()[0])
+				? Temporal.PlainDate.from(
+						Array.from(initialOptions.keys()).toSorted(Temporal.PlainDate.compare)[0],
+					)
 				: minDate,
 		).sign <= 0,
 	)
@@ -84,8 +86,8 @@
 		}
 	}
 
-	function isTabbable(day: Temporal.PlainDate, inMonth: boolean, isPast: boolean) {
-		if (!inMonth || isPast) return false
+	function isTabbable(day: Temporal.PlainDate, isInMonth: boolean, isPast: boolean) {
+		if (!isInMonth || isPast) return false
 		return Temporal.PlainDate.compare(day, minDate) === 0
 	}
 
@@ -179,27 +181,27 @@
 								<tr class="grid grid-cols-7 gap-1 @xs:gap-2">
 									{#each { length: 7 }, dayIndex (dayIndex)}
 										{@const date = monday.add({ days: dayIndex })}
-										{@const inMonth = date.month === month.month}
+										{@const isInMonth = date.month === month.month}
 										{@const isPast = Temporal.PlainDate.compare(date, minDate) < 0}
 										{@const isInitial = initialOptions?.has(date.toString()) ?? false}
 
 										<td class="relative flex aspect-square">
 											<button
 												type="button"
-												tabindex={isTabbable(date, inMonth, isPast) ? 0 : -1}
+												tabindex={isTabbable(date, isInMonth, isPast) ? 0 : -1}
 												data-date={date.toString()}
 												onclick={() => toggleDate(date)}
-												onkeydown={(e) => handleKeydown(e, date)}
+												onkeydown={(event) => handleKeydown(event, date)}
 												aria-pressed={options.has(date.toString())}
-												data-in-month={inMonth}
-												disabled={!inMonth || (isPast && !isInitial)}
+												data-in-month={isInMonth}
+												disabled={!isInMonth || (isPast && !isInitial)}
 												class="peer flex aspect-square grow items-center justify-center squircle text-neutral-700 not-disabled:cursor-pointer not-data-[in-month=true]:invisible not-aria-pressed:not-disabled:hover:bg-neutral-100 disabled:text-neutral-300 aria-pressed:border aria-pressed:border-pink-900 aria-pressed:bg-pink-700 aria-pressed:font-semibold aria-pressed:text-white aria-pressed:not-disabled:hover:bg-pink-800 motion-safe:transition-all motion-safe:duration-100 dark:text-neutral-300 not-aria-pressed:not-disabled:hover:dark:bg-neutral-800 disabled:dark:text-neutral-700 aria-pressed:dark:border-pink-700 aria-pressed:dark:bg-pink-800 aria-pressed:dark:not-disabled:hover:bg-pink-700"
 											>
 												{date.day}
 											</button>
-											{#if Temporal.PlainDate.compare(date, now) === 0 && inMonth}
+											{#if Temporal.PlainDate.compare(date, now) === 0 && isInMonth}
 												<span
-													data-disabled={!inMonth || (isPast && !isInitial) || null}
+													data-disabled={!isInMonth || (isPast && !isInitial) || null}
 													aria-label="Vandaag"
 													class="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 text-xl leading-none text-neutral-700 peer-aria-pressed:text-neutral-100 data-disabled:text-neutral-300 motion-safe:transition-colors motion-safe:duration-100 dark:text-neutral-300 data-disabled:dark:text-neutral-700"
 												>

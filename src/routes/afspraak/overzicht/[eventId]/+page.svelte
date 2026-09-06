@@ -24,8 +24,8 @@
 	let sortBy = $derived(page.url.searchParams.get(SORT_KEY))
 
 	const getAvailabilityScore = (option: (typeof event.options)[number]) => {
-		const yes = option.responses.filter((r) => r.availability === 'YES').length
-		const maybe = option.responses.filter((r) => r.availability === 'MAYBE').length
+		const yes = option.responses.filter((r) => r.availability === AVAILABILITY.YES).length
+		const maybe = option.responses.filter((r) => r.availability === AVAILABILITY.MAYBE).length
 		return yes + maybe * 0.49 // to make sure that 1 YES outweighs 2 MAYBEs
 	}
 
@@ -35,12 +35,12 @@
 			: options
 	}
 
-	let allOpened = $state(false)
-	let linkCopied = $state(false)
+	let isAllOpened = $state(false)
+	let isLinkCopied = $state(false)
 
-	let removeDialog = $state(false)
-	let shareOrganizerDialog = $state(false)
-	let selectDateDialog = $state(false)
+	let isRemoveDialog = $state(false)
+	let isShareOrganizerDialog = $state(false)
+	let isSelectDateDialog = $state(false)
 
 	const popover = createPopover({ positionArea: 'bottom span-right' })
 
@@ -50,6 +50,11 @@
 
 	const ANONYMOUS = 'Anonieme deelnemer'
 	const NO_RESPONSES = 'Nog geen reacties'
+	const AVAILABILITY = {
+		YES: /* @wc-ignore */ 'YES',
+		MAYBE: /* @wc-ignore */ 'MAYBE',
+		NO: /* @wc-ignore */ 'NO',
+	} as const
 
 	const eventTimezone = $derived(getEventTimezone(event.options))
 </script>
@@ -64,10 +69,10 @@
 		{#if event.selectedOption.responses.length > 1}
 			{@const total = event.selectedOption.responses.length}
 			{@const available = event.selectedOption.responses.filter(
-				(r) => r.availability === 'YES',
+				(r) => r.availability === AVAILABILITY.YES,
 			).length}
 			{@const maybe = event.selectedOption.responses.filter(
-				(r) => r.availability === 'MAYBE',
+				(r) => r.availability === AVAILABILITY.MAYBE,
 			).length}
 
 			Op deze datum {#if available === 1}is{:else}zijn{/if}
@@ -139,7 +144,7 @@
 					{@attach popover.closeHandler}
 					{...popover.closeAttrs}
 					onclick={() => {
-						selectDateDialog = true
+						isSelectDateDialog = true
 					}}
 				>
 					<Icon icon="tabler--pin" class="mb-px size-5" />
@@ -165,7 +170,7 @@
 					{@attach popover.closeHandler}
 					{...popover.closeAttrs}
 					onclick={() => {
-						selectDateDialog = true
+						isSelectDateDialog = true
 					}}
 				>
 					<Icon icon="tabler--pinned-off" class="mb-px size-5" />
@@ -179,7 +184,7 @@
 				{@attach popover.closeHandler}
 				{...popover.closeAttrs}
 				onclick={() => {
-					shareOrganizerDialog = true
+					isShareOrganizerDialog = true
 				}}
 			>
 				<Icon icon="tabler--user-shield" class="mb-px size-5" />
@@ -192,7 +197,7 @@
 				{@attach popover.closeHandler}
 				{...popover.closeAttrs}
 				onclick={() => {
-					removeDialog = true
+					isRemoveDialog = true
 				}}
 			>
 				<Icon icon="tabler--trash" class="mb-px size-5" />
@@ -200,9 +205,9 @@
 			</Button>
 		</div>
 
-		<EventRemoveDialog bind:open={removeDialog} id={event.id} />
+		<EventRemoveDialog bind:open={isRemoveDialog} id={event.id} />
 
-		<OrganizerShareDialog bind:open={shareOrganizerDialog} id={event.id} />
+		<OrganizerShareDialog bind:open={isShareOrganizerDialog} id={event.id} />
 	{/if}
 
 	<OrganizerReceiveDialog id={event.id} isOrganizer={event.isOrganizer} />
@@ -233,11 +238,11 @@
 			size="sm"
 			onclick={() => {
 				navigator.clipboard.writeText(eventLink)
-				linkCopied = true
-				setTimeout(() => (linkCopied = false), 1000)
+				isLinkCopied = true
+				setTimeout(() => (isLinkCopied = false), 1000)
 			}}
 		>
-			<Icon icon={linkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="mt-px size-5" />
+			<Icon icon={isLinkCopied ? 'tabler--copy-check' : 'tabler--copy'} class="mt-px size-5" />
 			Link kopiëren
 		</Button>
 		{#if !browser || navigator.share}
@@ -288,10 +293,10 @@
 						() => sortBy ?? 'd',
 						(value) => {
 							// eslint-disable-next-line svelte/prefer-svelte-reactivity
-							const params = new URLSearchParams(page.url.searchParams)
-							if (value === 'd') params.delete(SORT_KEY)
-							else if (value) params.set(SORT_KEY, value)
-							goto(`${page.url.pathname}?${params.toString()}`, {
+							const parameters = new URLSearchParams(page.url.searchParams)
+							if (value === 'd') parameters.delete(SORT_KEY)
+							else if (value) parameters.set(SORT_KEY, value)
+							goto(`${page.url.pathname}?${parameters.toString()}`, {
 								replaceState: true,
 								noScroll: true,
 							})
@@ -305,13 +310,13 @@
 
 				<Button
 					size="icon"
-					label={allOpened ? 'Verberg alle reacties' : 'Toon alle reacties'}
-					title={allOpened ? 'Verberg alle reacties' : 'Toon alle reacties'}
+					label={isAllOpened ? 'Verberg alle reacties' : 'Toon alle reacties'}
+					title={isAllOpened ? 'Verberg alle reacties' : 'Toon alle reacties'}
 					variant="secondary"
-					onclick={() => (allOpened = !allOpened)}
+					onclick={() => (isAllOpened = !isAllOpened)}
 					class="ml-auto"
 				>
-					{#if allOpened}
+					{#if isAllOpened}
 						<Icon icon="tabler--arrows-minimize" class="size-4.5" />
 					{:else}
 						<Icon icon="tabler--arrows-maximize" class="size-4.5" />
@@ -332,7 +337,7 @@
 			class={hasResponses
 				? 'group has-[summary:hover]:bg-neutral-50 motion-safe:transition-colors dark:has-[summary:hover]:bg-neutral-825'
 				: 'flex justify-between gap-2 p-5 max-sm:flex-col sm:items-center'}
-			open={hasResponses ? allOpened : undefined}
+			open={hasResponses ? isAllOpened : undefined}
 			animate:flip={{ duration: 100 }}
 		>
 			{#if option.responses.length === 0}
@@ -360,7 +365,7 @@
 					</div>
 
 					<div role="progressbar" class="flex divide-x overflow-hidden rounded-lg border">
-						{#each ['YES', 'MAYBE', 'NO'] as availability}
+						{#each Object.values(AVAILABILITY) as availability}
 							{@const number = option.responses.filter(
 								(r) => r.availability === availability,
 							).length}
@@ -372,20 +377,20 @@
 										'@container shrink-0 grow-0 px-2.5 py-1 text-[15px] font-medium',
 										{
 											'bg-lime-400/60 text-lime-900 dark:bg-lime-500/30 dark:text-lime-200':
-												availability === 'YES',
+												availability === AVAILABILITY.YES,
 											'bg-yellow-400/60 text-yellow-900 dark:bg-yellow-500/30 dark:text-yellow-200':
-												availability === 'MAYBE',
+												availability === AVAILABILITY.MAYBE,
 											'bg-red-400/60 text-red-900 dark:bg-red-500/30 dark:text-red-200':
-												availability === 'NO',
+												availability === AVAILABILITY.NO,
 										},
 									]}
 								>
 									<span class="flex items-center gap-2 font-medium @max-[35px]:invisible">
 										<Icon
 											icon={{
-												YES: 'tabler--check',
-												MAYBE: 'tabler--tilde',
-												NO: 'tabler--x',
+												[AVAILABILITY.YES]: 'tabler--check',
+												[AVAILABILITY.MAYBE]: 'tabler--tilde',
+												[AVAILABILITY.NO]: 'tabler--x',
 											}[availability]!}
 											class="size-5"
 										/>
@@ -401,16 +406,23 @@
 					{#each option.responses as response}
 						<div class="flex gap-3">
 							<Icon
-								title={{ YES: 'Ja', MAYBE: 'Misschien', NO: 'Nee' }[response.availability]}
-								icon={{ YES: 'tabler--check', MAYBE: 'tabler--tilde', NO: 'tabler--x' }[
-									response.availability
-								]}
+								title={{
+									[AVAILABILITY.YES]: 'Ja',
+									[AVAILABILITY.MAYBE]: 'Misschien',
+									[AVAILABILITY.NO]: 'Nee',
+								}[response.availability]}
+								icon={{
+									[AVAILABILITY.YES]: 'tabler--check',
+									[AVAILABILITY.MAYBE]: 'tabler--tilde',
+									[AVAILABILITY.NO]: 'tabler--x',
+								}[response.availability]}
 								class={[
 									'size-6',
 									{
-										'text-lime-600 dark:text-lime-400': response.availability === 'YES',
-										'text-yellow-600 dark:text-yellow-400': response.availability === 'MAYBE',
-										'text-red-600 dark:text-red-400': response.availability === 'NO',
+										'text-lime-600 dark:text-lime-400': response.availability === AVAILABILITY.YES,
+										'text-yellow-600 dark:text-yellow-400':
+											response.availability === AVAILABILITY.MAYBE,
+										'text-red-600 dark:text-red-400': response.availability === AVAILABILITY.NO,
 									},
 								]}
 							/>
@@ -439,12 +451,12 @@
 {#if event.isOrganizer && !event.selectedOption}
 	<Button
 		type="submit"
-		variant={event.numberOfResponses - +event.hasResponded > 0 ? 'primary' : 'secondary'}
+		variant={event.numberOfResponses > +event.hasResponded ? 'primary' : 'secondary'}
 		class="mt-10 ml-auto"
-		onclick={() => (selectDateDialog = true)}>Datum bevestigen</Button
+		onclick={() => (isSelectDateDialog = true)}>Datum bevestigen</Button
 	>
 
-	<EventSelectDialog bind:open={selectDateDialog} id={event.id} options={event.options} />
+	<EventSelectDialog bind:open={isSelectDateDialog} id={event.id} options={event.options} />
 {/if}
 
 {#if event.isOrganizer && event.selectedOption}
@@ -452,11 +464,11 @@
 		type="submit"
 		variant="secondary"
 		class="mt-10 ml-auto"
-		onclick={() => (selectDateDialog = true)}>Bevestiging intrekken</Button
+		onclick={() => (isSelectDateDialog = true)}>Bevestiging intrekken</Button
 	>
 
 	<EventUnselectDialog
-		bind:open={selectDateDialog}
+		bind:open={isSelectDateDialog}
 		id={event.id}
 		selectedOption={event.selectedOption}
 	/>

@@ -51,8 +51,11 @@
 		href={`${env.PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'nl')}`}
 		hreflang="nl"
 	/>
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html `<script type="application/ld+json">${generateJSONLD()}<` + `/script>`}
+	<!-- @wc-ignore -->
+	<svelte:element this={"script"} type="application/ld+json">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html generateJSONLD()}
+	</svelte:element>
 </svelte:head>
 
 <Loading />

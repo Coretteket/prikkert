@@ -66,8 +66,8 @@
 		Plan jouw groepsafspraak in drie simpele stappen.
 	</p>
 	<div class="mx-auto max-w-120">
-		{#each content.steps as step, i}
-			<Step n={i + 1} bold={step.bold} normal={step.normal} />
+		{#each content.steps as step, index}
+			<Step n={index + 1} bold={step.bold} normal={step.normal} />
 		{/each}
 	</div>
 	<Button as="link" href={url('/afspraak/aanmaken')} variant="primary" class="mx-auto mt-12">
@@ -83,8 +83,8 @@
 		Vind de antwoorden op veelgestelde vragen.
 	</p>
 	<div class="mx-auto max-w-130">
-		{#each content.faq as { question, answer }, i}
-			<FaqItem {question} open={i === 0}>
+		{#each content.faq as { question, answer }, index}
+			<FaqItem {question} open={index === 0}>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html answer}
 			</FaqItem>

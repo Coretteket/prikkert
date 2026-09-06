@@ -64,7 +64,7 @@ export const EventFormSchema = v.strictObject({
 				MAX_DESCRIPTION_LENGTH,
 				() => `Vul een beschrijving in van maximaal ${MAX_DESCRIPTION_LENGTH} tekens.`,
 			),
-			v.transform((val) => (val.length > 0 ? val : undefined)),
+			v.transform((value) => (value.length > 0 ? value : undefined)),
 		),
 		'',
 	),
@@ -72,7 +72,7 @@ export const EventFormSchema = v.strictObject({
 		v.pipe(
 			v.string(),
 			v.maxLength(MAX_NAME_LENGTH, () => `Vul een naam in van maximaal ${MAX_NAME_LENGTH} tekens.`),
-			v.transform((val) => (val.length > 0 ? val : undefined)),
+			v.transform((value) => (value.length > 0 ? value : undefined)),
 		),
 	),
 	options: v.json(

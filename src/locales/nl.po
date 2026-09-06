@@ -1,11 +1,12 @@
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "Source-Language: nl\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2\n"
+"X-Plurals-Order: one, other\n"
 
 #: src/routes/+layout.svelte
 #: src/routes/+layout.svelte
@@ -490,14 +491,17 @@ msgstr "Reactie opslaan"
 msgid "Als je doorgaat wordt je beschikbaarheid verwijderd. Je kunt daarna opnieuw reageren."
 msgstr "Als je doorgaat wordt je beschikbaarheid verwijderd. Je kunt daarna opnieuw reageren."
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/option-input.svelte
 msgid "Ja"
 msgstr "Ja"
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/option-input.svelte
 msgid "Misschien"
 msgstr "Misschien"
 
+#: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/option-input.svelte
 msgid "Nee"
 msgstr "Nee"
