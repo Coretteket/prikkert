@@ -7,4 +7,7 @@ export const ThemeSchema = v.fallback(v.picklist(['light', 'dark', 'system']), '
 
 export const parseTheme = () => v.parse(ThemeSchema, getRequestEvent().cookies.get('theme'))
 
-export const parseTimezone = () => getRequestEvent().cookies.get('timezone') || DEFAULT_TIMEZONE
+export const parseTimezone = () => {
+	const cookies = getRequestEvent().cookies
+	return cookies.get('timezone') || cookies.get('detected_timezone') || DEFAULT_TIMEZONE
+}

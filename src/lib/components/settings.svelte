@@ -2,7 +2,13 @@
 	import { invalidateAll } from '$app/navigation'
 	import { page } from '$app/state'
 
-	import { getTimezone, setTimezone, setTheme, setLocale } from '@/client/cookies'
+	import {
+		getTimezone,
+		setDetectedTimezone,
+		setTimezone,
+		setTheme,
+		setLocale,
+	} from '@/client/cookies'
 	import { detectTimezone, formatTimezoneID } from '@/shared/timezone'
 	import { createPopover } from '@/shared/popover.svelte'
 	import Button from '@/components/button.svelte'
@@ -107,7 +113,9 @@
 			class="mb-6 block w-full rounded-lg border px-4 py-2.5 dark:bg-neutral-825"
 			value={getTimezone() ?? 'AUTOMATIC'}
 			onchange={(e) => {
-				setTimezone(e.currentTarget.value)
+				const timezone = e.currentTarget.value
+				setTimezone(timezone)
+				if (timezone === 'AUTOMATIC') setDetectedTimezone(detectTimezone())
 				invalidateAll()
 			}}
 		>

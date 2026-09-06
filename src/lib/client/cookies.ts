@@ -19,6 +19,12 @@ export function getTimezone() {
 	return match ? match[1] : null
 }
 
+export function setDetectedTimezone(timezone: string) {
+	const match = document.cookie.match(/(?:^|; )detected_timezone=([^;]+)/)
+	if (match?.[1] === timezone) return
+	document.cookie = `detected_timezone=${timezone}; path=/; max-age=31536000`
+}
+
 export function setTheme(theme: Theme) {
 	document.documentElement.classList.add('no-transition')
 	const systemTheme = globalThis.matchMedia('(prefers-color-scheme: dark)').matches
