@@ -1,0 +1,23 @@
+on:
+  release:
+    types:
+      - published
+jobs:
+  release:
+    runs-on: codeberg-small
+    steps:
+      - uses: actions/checkout@v7
+      - run: apt-get update
+      - run: apt-get install -y buildah
+      - run: |
+          buildah build \
+            --storage-driver=vfs \
+            --isolation=chroot \
+            --tag codeberg.org/${{ forgejo.event.repository.owner.username }}/${{ forgejo.event.repository.name }}:latest \
+            -f Dockerfile-prod \
+            .
+      - run: |
+          buildah push \
+            --storage-driver=vfs \
+            --creds ${{ forgejo.event.repository.owner.username }}:${{ secrets.REGISTRY_TOKEN }} \
+            codeberg.org/${{ forgejo.event.repository.owner.username }}/${{ forgejo.event.repository.name }}:latest
