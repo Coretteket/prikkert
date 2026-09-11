@@ -13,11 +13,11 @@ jobs:
           buildah build \
             --storage-driver=vfs \
             --isolation=chroot \
-            --tag codeberg.org/${{ forgejo.event.repository.owner.username }}/${{ forgejo.event.repository.name }}:latest \
+            --tag codeberg.org/${{ forgejo.repository }}:latest \
             -f Dockerfile-prod \
             .
       - run: |
           buildah push \
             --storage-driver=vfs \
-            --creds ${{ forgejo.event.repository.owner.username }}:${{ secrets.REGISTRY_TOKEN }} \
-            codeberg.org/${{ forgejo.event.repository.owner.username }}/${{ forgejo.event.repository.name }}:latest
+            --creds ${{ forgejo.repository_owner }}:${{ secrets.REGISTRY_TOKEN }} \
+            codeberg.org/${{ forgejo.repository }}:latest
