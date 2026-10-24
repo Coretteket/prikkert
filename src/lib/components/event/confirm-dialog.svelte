@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '@/components/button.svelte'
-	import Dialog from '@/components/dialog.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Dialog from '#lib/components/dialog.svelte'
 
 	let {
 		message,

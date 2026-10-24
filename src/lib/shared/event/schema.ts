@@ -1,5 +1,5 @@
-import { Temporal } from '@/shared/temporal'
-import * as v from '@/server/validation'
+import { Temporal } from '#lib/shared/temporal.ts'
+import * as v from '#lib/server/validation.ts'
 
 export const MAX_NOTE_LENGTH = 200
 export const MIN_TITLE_LENGTH = 3
@@ -81,7 +81,7 @@ export const EventFormSchema = v.strictObject({
 				v.pipe(
 					v.tuple([v.plainDate(), OptionSchema]),
 					v.check(
-						(v) => (v[1].endDate ? Temporal.PlainDate.compare(v[0], v[1].endDate) < 0 : true),
+						(v) => !v[1].endDate || Temporal.PlainDate.compare(v[0], v[1].endDate) < 0,
 						() => 'De einddatum moet na de startdatum liggen.',
 					),
 				),

@@ -2,10 +2,10 @@ import { asc, inArray } from 'drizzle-orm'
 
 import { query, getRequestEvent } from '$app/server'
 
-import { toInstant } from '@/shared/event/utils'
-import { Temporal } from '@/shared/temporal'
-import { db, schema } from '@/server/db'
-import { omit } from '@/shared/utils'
+import { toInstant } from '#lib/shared/event/utils.ts'
+import { db, schema } from '#lib/server/db/index.ts'
+import { Temporal } from '#lib/shared/temporal.ts'
+import { omit } from '#lib/shared/utils.ts'
 
 export const getEvents = query(async () => {
 	const { locals } = getRequestEvent()

@@ -1,6 +1,6 @@
-import { expect, test } from './support/fixtures'
-import { futureDate } from './support/database'
-import { newSession } from './support/sessions'
+import { expect, test } from './support/fixtures.ts'
+import { futureDate } from './support/database.ts'
+import { newSession } from './support/sessions.ts'
 
 test('a visitor can open a public event and start responding', async ({ browser, seedEvent }) => {
 	const event = await seedEvent({ authenticateOrganizer: false, organizerName: 'Olivia' })

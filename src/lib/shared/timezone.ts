@@ -1,6 +1,6 @@
 import { page } from '$app/state'
 
-import { Temporal } from '@/shared/temporal'
+import { Temporal } from '#lib/shared/temporal.ts'
 
 /* @wc-ignore */
 export const DEFAULT_TIMEZONE = 'Europe/Amsterdam'

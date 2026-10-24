@@ -1,9 +1,9 @@
 <script lang="ts">
-	import ComparisonRow from '@/components/comparison-row.svelte'
-	import FaqItem from '@/components/faq-item.svelte'
-	import Button from '@/components/button.svelte'
-	import Step from '@/components/step.svelte'
-	import { url } from '@/shared/url'
+	import ComparisonRow from '#lib/components/comparison-row.svelte'
+	import FaqItem from '#lib/components/faq-item.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Step from '#lib/components/step.svelte'
+	import { url } from '#lib/shared/url.ts'
 
 	const steps = [
 		{

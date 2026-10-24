@@ -1,20 +1,21 @@
+import type { Handle } from '@sveltejs/kit/hooks'
+
 import { loadLocales, runWithLocale } from 'wuchale/load-utils/server'
-import { type Handle } from '@sveltejs/kit'
-import { env } from '$env/dynamic/public'
 import { isbot } from 'isbot'
 
-import { building, dev } from '$app/environment'
+import { PUBLIC_NO_INDEX } from '$app/env/public'
+import { building, dev } from '$app/env'
 
-import { getLocaleURL, getLocaleFromURL, PUBLIC_PATHS } from '@/shared/url'
-import { parseSessionCookies } from '@/server/session/cookies'
-import { parseTheme, parseTimezone } from '@/server/cookies'
-import { ID_LENGTH } from '@/server/db/schema'
-import { isLocale } from '@/shared/utils.js'
+import { getLocaleURL, getLocaleFromURL, PUBLIC_PATHS } from '#lib/shared/url.ts'
+import { parseSessionCookies } from '#lib/server/session/cookies.ts'
+import { parseTheme, parseTimezone } from '#lib/server/cookies.ts'
+import { ID_LENGTH } from '#lib/server/db/schema.ts'
+import { isLocale } from '#lib/shared/utils.ts'
 
 import * as main from './locales/main.loader.server.svelte.js'
 import * as js from './locales/js.loader.server.js'
 import { locales } from './locales/data'
-import { cron } from './cron.server'
+import { cron } from './cron.server.ts'
 
 export const init = async () => {
 	await Promise.all([
@@ -68,7 +69,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	response.headers.set(
 		'X-Robots-Tag',
-		env.PUBLIC_NO_INDEX === '1' || !PUBLIC_PATHS.includes(event.url.pathname)
+		PUBLIC_NO_INDEX === '1' || !PUBLIC_PATHS.includes(event.url.pathname)
 			? 'noindex, nofollow'
 			: 'all',
 	)

@@ -1,6 +1,6 @@
-import { seedRespondent } from './support/database'
-import { expect, test } from './support/fixtures'
-import { newSession } from './support/sessions'
+import { seedRespondent } from './support/database.ts'
+import { expect, test } from './support/fixtures.ts'
+import { newSession } from './support/sessions.ts'
 
 test('shows response names, availability and notes', async ({ browser, seedEvent }) => {
 	const event = await seedEvent({ authenticateOrganizer: false })

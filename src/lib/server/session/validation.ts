@@ -4,10 +4,10 @@ import crypto from 'node:crypto'
 
 import { getRequestEvent } from '$app/server'
 
-import type { OrganizerSession, RespondentSession } from './cookies'
+import type { OrganizerSession, RespondentSession } from './cookies.ts'
 
-import { encodeSHA256 } from '../crypto'
-import { db, schema } from '../db'
+import { encodeSHA256 } from '../crypto.ts'
+import { db, schema } from '../db/index.ts'
 
 const getOrganizerToken = async (session: OrganizerSession) => {
 	const event = await db.query.events.findFirst({
@@ -28,9 +28,9 @@ const getRespondentToken = async (session: RespondentSession) => {
 	return respondent?.token
 }
 
-export function timingSafeEqual(a: string, b: string | undefined) {
+export function timingSafeEqual(a: string, b: string | undefined = '') {
 	try {
-		return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b ?? ''))
+		return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b))
 	} catch {
 		return false
 	}
@@ -42,11 +42,11 @@ export async function validateSession(
 ) {
 	if (!session) return false
 
-	const checkToken =
-		hashedToken ??
-		(await ('respondentId' in session ? getRespondentToken(session) : getOrganizerToken(session)))
+	hashedToken ??= await ('respondentId' in session
+		? getRespondentToken(session)
+		: getOrganizerToken(session))
 
-	return timingSafeEqual(await encodeSHA256(session.token), checkToken)
+	return timingSafeEqual(await encodeSHA256(session.token), hashedToken)
 }
 
 export async function requireOrganizerOrThrow(eventId: string) {

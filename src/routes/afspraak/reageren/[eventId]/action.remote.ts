@@ -3,16 +3,17 @@ import { asc, eq, sql } from 'drizzle-orm'
 
 import { form, getRequestEvent } from '$app/server'
 
-import { deleteSessionCookie, setSessionCookie } from '@/server/session/cookies'
-import { MAX_NAME_LENGTH, MAX_NOTE_LENGTH } from '@/shared/event/schema'
-import { encodeSHA256, generateNanoID } from '@/server/crypto'
-import { validateSession } from '@/server/session/validation'
-import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
-import { db, schema } from '@/server/db'
-import * as v from '@/server/validation'
+import { deleteSessionCookie, setSessionCookie } from '#lib/server/session/cookies.ts'
+import { MAX_NAME_LENGTH, MAX_NOTE_LENGTH } from '#lib/shared/event/schema.ts'
+import { encodeSHA256, generateNanoID } from '#lib/server/crypto.ts'
+import { validateSession } from '#lib/server/session/validation.ts'
+import { ID_LENGTH, TOKEN_LENGTH } from '#lib/server/db/schema.ts'
+import { db, schema } from '#lib/server/db/index.ts'
+import * as v from '#lib/server/validation.ts'
 
-import { getEventForSession } from './data.remote'
-import { hasSession } from '../../../data.remote'
+import { getEventResponses } from '../../overzicht/[eventId]/data.remote.ts'
+import { getEventForSession } from './data.remote.ts'
+import { hasSession } from '../../../data.remote.ts'
 
 const AvailabilitySchema = v.picklist(['YES', 'NO', 'MAYBE'], () => 'Vul je beschikbaarheid in.')
 
@@ -152,6 +153,7 @@ export const submitAvailability = form('unchecked', async (formData) => {
 	})
 
 	getEventForSession(eventId).refresh()
+	getEventResponses(eventId).refresh()
 	hasSession().set(true)
 
 	const isOrganizer = await validateSession(
@@ -180,4 +182,5 @@ export const deleteAvailability = form(v.object({ eventId: v.string() }), async 
 	deleteSessionCookie({ isOrganizer: false, eventId })
 
 	getEventForSession(eventId).refresh()
+	getEventResponses(eventId).refresh()
 })

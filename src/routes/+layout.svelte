@@ -2,22 +2,21 @@
 	import '@fontsource-variable/golos-text'
 	import '../app.css'
 
-	import { env } from '$env/dynamic/public'
-
+	import { PUBLIC_ORIGIN } from '$app/env/public'
 	import { page } from '$app/state'
 
-	import Settings from '@/components/settings.svelte'
-	import { generateJSONLD } from '@/shared/seo/json'
-	import Loading from '@/components/loading.svelte'
-	import { getLocaleURL, url } from '@/shared/url'
-	import Button from '@/components/button.svelte'
-	import { getPageMeta } from '@/shared/seo/meta'
-	import Icon from '@/components/icon.svelte'
-	import icon from '@/assets/icon.svg'
-	import og from '@/assets/og.png'
+	import { generateJSONLD } from '#lib/shared/seo/json.ts'
+	import { getLocaleURL, url } from '#lib/shared/url.ts'
+	import Settings from '#lib/components/settings.svelte'
+	import { getPageMeta } from '#lib/shared/seo/meta.ts'
+	import Loading from '#lib/components/loading.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Icon from '#lib/components/icon.svelte'
+	import icon from '#lib/assets/icon.svg'
+	import og from '#lib/assets/og.png'
 
+	import { hasSession } from './data.remote.ts'
 	import Background from './background.svelte'
-	import { hasSession } from './data.remote'
 	import Footer from './footer.svelte'
 
 	let { children } = $props()
@@ -32,7 +31,7 @@
 	<meta itemprop="name" content={meta.title} />
 	<meta itemprop="description" content={meta.description} />
 	<meta itemprop="image" content={og} />
-	<meta property="og:url" content={env.PUBLIC_ORIGIN + page.url.pathname} />
+	<meta property="og:url" content={PUBLIC_ORIGIN + page.url.pathname} />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content={meta.title} />
 	<meta property="og:description" content={meta.description} />
@@ -40,15 +39,15 @@
 	<meta property="og:site_name" content="Prikkert" />
 	<meta property="og:locale" content={page.data.locale} />
 	<meta name="twitter:card" content="summary_large_image" />
-	<link rel="canonical" href={`${env.PUBLIC_ORIGIN}${page.url.pathname}`} />
+	<link rel="canonical" href={`${PUBLIC_ORIGIN}${page.url.pathname}`} />
 	<link
 		rel="alternate"
-		href={`${env.PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'en')}`}
+		href={`${PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'en')}`}
 		hreflang="en"
 	/>
 	<link
 		rel="alternate"
-		href={`${env.PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'nl')}`}
+		href={`${PUBLIC_ORIGIN}${getLocaleURL(page.url.pathname, 'nl')}`}
 		hreflang="nl"
 	/>
 	<!-- Render as HTML to avoid a hydration error -->

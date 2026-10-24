@@ -1,6 +1,6 @@
 import { expect, type Page } from '@playwright/test'
 
-import { openMenu } from './ui'
+import { openMenu } from './ui.ts'
 
 type Availability = 'YES' | 'MAYBE' | 'NO'
 
@@ -76,11 +76,11 @@ export async function submitResponse(page: Page, details: ResponseDetails | stri
 		await optionField.getByText(availabilityLabels[availability], { exact: true }).click()
 
 		const note = notes[index]
-		if (note !== undefined) {
-			const option = optionFields.nth(index).locator('xpath=../../..')
-			await option.getByRole('button', { name: 'Opmerking toevoegen' }).click()
-			await page.getByPlaceholder('Voeg een opmerking toe...').nth(index).fill(note)
-		}
+		if (note === undefined) continue
+
+		const option = optionFields.nth(index).locator('xpath=../../..')
+		await option.getByRole('button', { name: 'Opmerking toevoegen' }).click()
+		await page.getByPlaceholder('Voeg een opmerking toe...').nth(index).fill(note)
 	}
 
 	await page.getByRole('button', { name: 'Reactie opslaan' }).click()

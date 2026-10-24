@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Button from '@/components/button.svelte'
-	import Dialog from '@/components/dialog.svelte'
-	import Date from '@/components/date.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Dialog from '#lib/components/dialog.svelte'
+	import Date from '#lib/components/date.svelte'
 
-	import type { getEventResponses } from './data.remote'
+	import type { getEventResponses } from './data.remote.ts'
 
-	import { selectDate } from './action.remote'
+	import { selectDate } from './action.remote.ts'
 
 	let {
 		id,

@@ -5,9 +5,9 @@ import { error } from '@sveltejs/kit'
 
 import { getRequestEvent, prerender } from '$app/server'
 
-import { DEFAULT_TIMEZONE } from '@/shared/timezone'
-import { Temporal } from '@/shared/temporal'
-import * as v from '@/server/validation'
+import { DEFAULT_TIMEZONE } from '#lib/shared/timezone.ts'
+import { Temporal } from '#lib/shared/temporal.ts'
+import * as v from '#lib/server/validation.ts'
 
 // Static pages (like /privacy and /voorwaarden) use content from this folder
 const content = import.meta.glob('./content/*.md', {

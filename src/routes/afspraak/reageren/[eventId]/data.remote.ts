@@ -3,10 +3,10 @@ import { error } from '@sveltejs/kit'
 
 import { query, getRequestEvent } from '$app/server'
 
-import { validateSession } from '@/server/session/validation'
-import { db, schema } from '@/server/db'
-import * as v from '@/server/validation'
-import { omit } from '@/shared/utils'
+import { validateSession } from '#lib/server/session/validation.ts'
+import { db, schema } from '#lib/server/db/index.ts'
+import * as v from '#lib/server/validation.ts'
+import { omit } from '#lib/shared/utils.ts'
 
 export const getEventForSession = query(v.string(), async (eventId) => {
 	const { locals } = getRequestEvent()

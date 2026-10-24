@@ -3,12 +3,12 @@ import { eq } from 'drizzle-orm'
 
 import { query } from '$app/server'
 
-import { requireOrganizerOrThrow } from '@/server/session/validation'
-import { type OptionEntry } from '@/shared/event/types'
-import { getEventTimezone } from '@/shared/event/utils'
-import { Temporal } from '@/shared/temporal'
-import { db, schema } from '@/server/db'
-import * as v from '@/server/validation'
+import { requireOrganizerOrThrow } from '#lib/server/session/validation.ts'
+import { type OptionEntry } from '#lib/shared/event/types.ts'
+import { getEventTimezone } from '#lib/shared/event/utils.ts'
+import { db, schema } from '#lib/server/db/index.ts'
+import { Temporal } from '#lib/shared/temporal.ts'
+import * as v from '#lib/server/validation.ts'
 
 export const getEditEvent = query(v.string(), async (eventId) => {
 	await requireOrganizerOrThrow(eventId)

@@ -3,11 +3,11 @@
 
 	import { page } from '$app/state'
 
-	import { emptyEntry, type Options, type Slot } from '@/shared/event/types'
-	import Button from '@/components/button.svelte'
-	import { Temporal } from '@/shared/temporal'
-	import Icon from '@/components/icon.svelte'
-	import { KeyType } from '@/shared/utils'
+	import { emptyEntry, type Options, type Slot } from '#lib/shared/event/types.ts'
+	import { Temporal } from '#lib/shared/temporal.ts'
+	import Button from '#lib/components/button.svelte'
+	import { KeyType } from '#lib/shared/utils.ts'
+	import Icon from '#lib/components/icon.svelte'
 
 	const now = Temporal.Now.plainDateISO(page.data.timezone)
 

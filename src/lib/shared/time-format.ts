@@ -1,8 +1,8 @@
 import { page } from '$app/state'
 
-import { toUserTimezone } from '@/shared/timezone'
-import { toPreciseLocale } from '@/shared/utils'
-import { Temporal } from '@/shared/temporal'
+import { toUserTimezone } from '#lib/shared/timezone.ts'
+import { toPreciseLocale } from '#lib/shared/utils.ts'
+import { Temporal } from '#lib/shared/temporal.ts'
 
 type DateLabel = { weekday: string; date: string; time?: string }
 type DateRangeLabel = { kind: 'range'; start: DateLabel; end: DateLabel }

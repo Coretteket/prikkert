@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { SvelteMap } from 'svelte/reactivity'
 
-	import type { Options } from '@/shared/event/types'
+	import type { Options } from '#lib/shared/event/types.ts'
 
-	import EventForm from '@/components/event/form.svelte'
+	import EventForm from '#lib/components/event/form.svelte'
 
-	import { createEvent } from './action.remote'
+	import { createEvent } from './action.remote.ts'
 
 	let options = new SvelteMap() satisfies Options
 

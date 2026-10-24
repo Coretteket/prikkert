@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { browser } from '$app/environment'
+	import { browser } from '$app/env'
 
-	import Dialog from '@/components/dialog.svelte'
-	import Button from '@/components/button.svelte'
-	import Icon from '@/components/icon.svelte'
+	import Dialog from '#lib/components/dialog.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Icon from '#lib/components/icon.svelte'
 
-	import { getOrganizerShareLink } from './action.remote'
+	import { getOrganizerShareLink } from './action.remote.ts'
 
 	let { id, open = $bindable(false) }: { id: string; open: boolean } = $props()
 

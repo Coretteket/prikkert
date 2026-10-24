@@ -1,10 +1,11 @@
 <script lang="ts">
-	import Button from '@/components/button.svelte'
-	import Icon from '@/components/icon.svelte'
-	import Date from '@/components/date.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Icon from '#lib/components/icon.svelte'
+	import Date from '#lib/components/date.svelte'
 
-	import type { getEventForSession } from './data.remote'
+	import type { getEventForSession } from './data.remote.ts'
 
+	import { submitAvailability } from './action.remote.ts'
 	import RadioButton from './option-input-button.svelte'
 
 	type Props = {
@@ -19,8 +20,10 @@
 	let isShowNote = $derived(Boolean(option.response?.note))
 	let noteValue = $derived(option.response?.note ?? '')
 
-	const availabilityName = $derived(`availability.option_${option.id}`)
 	const noteName = $derived(`note.option_${option.id}`)
+	const availabilityField = $derived(submitAvailability.fields.availability[`option_${option.id}`])
+	const noteField = $derived(submitAvailability.fields.note[`option_${option.id}`])
+	const noteInput = $derived(noteField.as('text'))
 </script>
 
 <div class="py-4 text-neutral-800 max-md:pb-5 dark:text-neutral-200">
@@ -39,7 +42,7 @@
 				<RadioButton
 					{disabled}
 					bind:availability
-					name={availabilityName}
+					input={availabilityField.as('radio', 'YES')}
 					value="YES"
 					icon="tabler--check"
 					label="Ja"
@@ -48,7 +51,7 @@
 				<RadioButton
 					{disabled}
 					bind:availability
-					name={availabilityName}
+					input={availabilityField.as('radio', 'MAYBE')}
 					value="MAYBE"
 					icon="tabler--tilde"
 					label="Misschien"
@@ -57,7 +60,7 @@
 				<RadioButton
 					{disabled}
 					bind:availability
-					name={availabilityName}
+					input={availabilityField.as('radio', 'NO')}
 					value="NO"
 					icon="tabler--x"
 					label="Nee"
@@ -87,9 +90,10 @@
 	{#if isShowNote}
 		<div data-desc class="-mb-1 px-5 pt-3 pb-1 md:px-4">
 			<textarea
+				name={noteInput.name}
+				aria-invalid={noteInput['aria-invalid']}
 				{disabled}
 				id={noteName}
-				name={isShowNote ? noteName : undefined}
 				class="block min-h-12 w-full rounded-lg border px-4 py-2.5 disabled:cursor-not-allowed dark:bg-neutral-825"
 				placeholder="Voeg een opmerking toe..."
 				rows={1}
@@ -98,7 +102,7 @@
 				bind:value={noteValue}></textarea>
 		</div>
 	{:else if option.response?.note}
-		<input type="hidden" name={noteName} value="" />
+		<input {...noteField.as('hidden', '')} />
 	{/if}
 
 	{#each errors.filter((error) => error !== undefined) as error}

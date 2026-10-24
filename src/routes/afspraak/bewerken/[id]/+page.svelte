@@ -4,10 +4,10 @@
 
 	import { page } from '$app/state'
 
-	import EventForm from '@/components/event/form.svelte'
+	import EventForm from '#lib/components/event/form.svelte'
 
-	import { updateEvent } from './action.remote'
-	import { getEditEvent } from './data.remote'
+	import { updateEvent } from './action.remote.ts'
+	import { getEditEvent } from './data.remote.ts'
 
 	const form = $derived(updateEvent.for(page.params.id!))
 

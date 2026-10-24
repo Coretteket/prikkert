@@ -2,9 +2,8 @@ import '@valibot/i18n/nl'
 
 import * as v from 'valibot'
 
-import { Temporal } from '@/shared/temporal'
+import { Temporal } from '#lib/shared/temporal.ts'
 
-// eslint-disable-next-line unicorn/no-top-level-side-effects -- Configure Valibot once for all server validation.
 v.setGlobalConfig({ lang: 'nl' })
 
 export const temporal = <T>(

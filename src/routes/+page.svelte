@@ -1,10 +1,10 @@
 <script lang="ts">
-	import FaqItem from '@/components/faq-item.svelte'
-	import Button from '@/components/button.svelte'
-	import { getContent } from '@/shared/content'
-	import Icon from '@/components/icon.svelte'
-	import Step from '@/components/step.svelte'
-	import { url } from '@/shared/url'
+	import FaqItem from '#lib/components/faq-item.svelte'
+	import { getContent } from '#lib/shared/content.ts'
+	import Button from '#lib/components/button.svelte'
+	import Icon from '#lib/components/icon.svelte'
+	import Step from '#lib/components/step.svelte'
+	import { url } from '#lib/shared/url.ts'
 
 	const content = $derived(getContent())
 </script>

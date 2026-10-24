@@ -1,5 +1,6 @@
 import { includeIgnoreFile } from '@eslint/config-helpers'
 import perfectionist from 'eslint-plugin-perfectionist'
+import { loadConfig } from '@sveltejs/load-config'
 import prettier from 'eslint-config-prettier'
 import { defineConfig } from 'eslint/config'
 import unicorn from 'eslint-plugin-unicorn'
@@ -9,7 +10,8 @@ import ts from 'typescript-eslint'
 import globals from 'globals'
 import js from '@eslint/js'
 
-import svelteConfig from './svelte.config.js'
+const loadedSvelteConfig = await loadConfig('./', { traverse: false })
+const svelteConfig = loadedSvelteConfig?.config
 
 const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 
@@ -22,13 +24,15 @@ export default defineConfig(
 	{
 		rules: {
 			'unicorn/max-nested-calls': 'off',
+			'unicorn/no-top-level-side-effects': 'off',
 			'unicorn/filename-case': 'off',
+			'unicorn/prefer-ternary': 'off',
 			'unicorn/no-top-level-assignment-in-function': 'off',
 			'unicorn/single-line-block-comment-style': 'off',
 			'unicorn/consistent-class-member-order': 'off',
 			'unicorn/name-replacements': [
 				'error',
-				{ replacements: { db: false, props: false, utils: false } },
+				{ replacements: { db: false, env: false, props: false, utils: false } },
 			],
 			'unicorn/prevent-abbreviations': 'off',
 			'unicorn/prefer-spread': 'off',

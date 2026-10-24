@@ -1,8 +1,8 @@
-import type { Reroute, Transport } from '@sveltejs/kit'
+import type { Reroute, Transport } from '@sveltejs/kit/hooks'
 
-import { Temporal } from '@/shared/temporal'
+import { Temporal } from '#lib/shared/temporal.ts'
 
-import { routes as forwardRoutes } from './lib/shared/url'
+import { routes as forwardRoutes } from './lib/shared/url.ts'
 
 const routes = Array.from(forwardRoutes.entries(), ([nl, en]) => [en, nl])
 

@@ -3,10 +3,10 @@ import { error, redirect } from '@sveltejs/kit'
 
 import { form, getRequestEvent } from '$app/server'
 
-import { buildEventOptions, getExpiryDate, getOptionKey } from '@/shared/event/utils'
-import { requireOrganizerOrThrow } from '@/server/session/validation'
-import { EventFormSchema } from '@/shared/event/schema'
-import { db, schema } from '@/server/db'
+import { buildEventOptions, getExpiryDate, getOptionKey } from '#lib/shared/event/utils.ts'
+import { requireOrganizerOrThrow } from '#lib/server/session/validation.ts'
+import { EventFormSchema } from '#lib/shared/event/schema.ts'
+import { db, schema } from '#lib/server/db/index.ts'
 
 type Option = Omit<InferSelectModel<typeof schema.options>, 'isSelected'>
 
@@ -25,7 +25,7 @@ function getOptionsDifference(existingOptions: Option[], newOptions: Omit<Option
 	const toUpdate = Array.from(newOptionMap.values()).flatMap((option) => {
 		const existing = existingOptionMap.get(getOptionKey(option))
 		if (!existing || existing.note === option.note) return []
-		return [{ id: existing.id, note: option.note }]
+		return { id: existing.id, note: option.note }
 	})
 
 	return { toInsert, toDelete, toUpdate }

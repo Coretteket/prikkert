@@ -1,5 +1,7 @@
 <script lang="ts">
-	import Icon from '@/components/icon.svelte'
+	import type { HTMLInputAttributes } from 'svelte/elements'
+
+	import Icon from '#lib/components/icon.svelte'
 
 	type Props = {
 		value: string
@@ -7,7 +9,7 @@
 		label: string
 		class: string
 		availability: string
-		name: string
+		input: HTMLInputAttributes
 		disabled?: boolean
 		// handleAvailabilityChange: (value: string) => void
 	}
@@ -18,7 +20,7 @@
 		label,
 		class: className,
 		availability = $bindable(),
-		name,
+		input,
 		disabled = false,
 		// handleAvailabilityChange,
 	}: Props = $props()
@@ -27,7 +29,7 @@
 <label class="group cursor-pointer has-disabled:cursor-not-allowed">
 	<input
 		type="radio"
-		{name}
+		name={input.name}
 		{value}
 		{disabled}
 		aria-label={label}

@@ -6,8 +6,8 @@ import {
 	seedEvent,
 	type SeededEvent,
 	type SeedEventDetails,
-} from './database'
-import { createEvent, eventTitle, removeEvent, type EventDetails } from './events'
+} from './database.ts'
+import { createEvent, eventTitle, removeEvent, type EventDetails } from './events.ts'
 
 type CreatedEvent = {
 	id: string

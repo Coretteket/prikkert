@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state'
 
-	import { getContent } from '@/shared/content'
-	import icon from '@/assets/icon.svg'
-	import { url } from '@/shared/url'
+	import { getContent } from '#lib/shared/content.ts'
+	import { url } from '#lib/shared/url.ts'
+	import icon from '#lib/assets/icon.svg'
 
 	const showAlternatives = $derived(page.route.id === '/' || page.route.id?.startsWith('/vs/'))
 

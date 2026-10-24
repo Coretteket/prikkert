@@ -2,7 +2,7 @@
 	/* eslint-disable svelte/no-at-html-tags */
 	import { page } from '$app/state'
 
-	import { getPage } from './data.remote'
+	import { getPage } from './data.remote.ts'
 
 	let data = $derived(await getPage({ page: page.params.page!, locale: page.data.locale! }))
 </script>

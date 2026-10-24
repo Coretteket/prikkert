@@ -2,14 +2,15 @@ import { error, redirect } from '@sveltejs/kit'
 import { and, eq } from 'drizzle-orm'
 
 import { form, getRequestEvent, query } from '$app/server'
+import { PUBLIC_ORIGIN } from '$app/env/public'
 
-import { requireOrganizerOrThrow, validateSession } from '@/server/session/validation'
-import { deleteSessionCookie, setSessionCookie } from '@/server/session/cookies'
-import * as v from '@/server/validation'
-import { db, schema } from '@/server/db'
+import { requireOrganizerOrThrow, validateSession } from '#lib/server/session/validation.ts'
+import { deleteSessionCookie, setSessionCookie } from '#lib/server/session/cookies.ts'
+import { db, schema } from '#lib/server/db/index.ts'
+import * as v from '#lib/server/validation.ts'
 
-import { hasSession } from '../../../data.remote'
-import { getEventResponses } from './data.remote'
+import { hasSession } from '../../../data.remote.ts'
+import { getEventResponses } from './data.remote.ts'
 
 export const removeEvent = form(v.object({ id: v.string() }), async ({ id: eventId }) => {
 	await requireOrganizerOrThrow(eventId)
@@ -53,7 +54,7 @@ export const unselectDate = form(v.object({ id: v.string() }), async ({ id: even
 
 export const getOrganizerShareLink = query(v.string(), async (eventId) => {
 	const session = await requireOrganizerOrThrow(eventId)
-	return `${getRequestEvent().url.origin}/${eventId}#organisator=${session.token}`
+	return `${PUBLIC_ORIGIN}/${eventId}#organisator=${session.token}`
 })
 
 export const validateOrganizerShareLink = form(

@@ -1,24 +1,24 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate'
 
-	import { browser } from '$app/environment'
 	import { goto } from '$app/navigation'
+	import { browser } from '$app/env'
 	import { page } from '$app/state'
 
-	import { formatTimezoneName, hasSameOffset } from '@/shared/timezone'
-	import { getEventTimezone } from '@/shared/event/utils'
-	import { createPopover } from '@/shared/popover.svelte'
-	import Button from '@/components/button.svelte'
-	import Icon from '@/components/icon.svelte'
-	import Date from '@/components/date.svelte'
-	import { url } from '@/shared/url'
+	import { formatTimezoneName, hasSameOffset } from '#lib/shared/timezone.ts'
+	import { getEventTimezone } from '#lib/shared/event/utils.ts'
+	import { createPopover } from '#lib/shared/popover.svelte.ts'
+	import Button from '#lib/components/button.svelte'
+	import Icon from '#lib/components/icon.svelte'
+	import Date from '#lib/components/date.svelte'
+	import { url } from '#lib/shared/url.ts'
 
 	import OrganizerReceiveDialog from './organizer-receive-dialog.svelte'
 	import OrganizerShareDialog from './organizer-share-dialog.svelte'
 	import EventUnselectDialog from './event-unselect-dialog.svelte'
 	import EventRemoveDialog from './event-remove-dialog.svelte'
 	import EventSelectDialog from './event-select-dialog.svelte'
-	import { getEventResponses } from './data.remote'
+	import { getEventResponses } from './data.remote.ts'
 
 	const SORT_KEY = 's'
 	let sortBy = $derived(page.url.searchParams.get(SORT_KEY))
@@ -292,13 +292,12 @@
 					bind:value={
 						() => sortBy ?? 'd',
 						(value) => {
-							// eslint-disable-next-line svelte/prefer-svelte-reactivity
-							const parameters = new URLSearchParams(page.url.searchParams)
-							if (value === 'd') parameters.delete(SORT_KEY)
-							else if (value) parameters.set(SORT_KEY, value)
-							goto(`${page.url.pathname}?${parameters.toString()}`, {
-								replaceState: true,
-								noScroll: true,
+							const target = new URL(page.url.href)
+							if (value === 'd') target.searchParams.delete(SORT_KEY)
+							else if (value) target.searchParams.set(SORT_KEY, value)
+							goto(target, {
+								replace: true,
+								reset: false,
 							})
 						}
 					}

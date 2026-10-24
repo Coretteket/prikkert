@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Button from '@/components/button.svelte'
-	import Date from '@/components/date.svelte'
-	import { url } from '@/shared/url'
+	import Button from '#lib/components/button.svelte'
+	import Date from '#lib/components/date.svelte'
+	import { url } from '#lib/shared/url.ts'
 
-	import { getEvents } from './data.remote'
+	import { getEvents } from './data.remote.ts'
 
 	const events = $derived(await getEvents())
 

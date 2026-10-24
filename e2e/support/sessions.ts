@@ -1,8 +1,8 @@
 import type { Browser, BrowserContext, Page } from '@playwright/test'
 
-import type { SeededEvent, SeededRespondent } from './database'
+import type { SeededEvent, SeededRespondent } from './database.ts'
 
-import { organizerCookie, respondentCookie } from './database'
+import { organizerCookie, respondentCookie } from './database.ts'
 
 type SessionOptions = {
 	organizer?: SeededEvent

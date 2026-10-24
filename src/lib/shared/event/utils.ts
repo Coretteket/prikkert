@@ -1,10 +1,10 @@
 import type { InferSelectModel } from 'drizzle-orm'
 
-import type { schema } from '@/server/db'
+import type { schema } from '#lib/server/db/index.ts'
 
-import { DEFAULT_TIMEZONE } from '@/shared/timezone'
-import { Temporal } from '@/shared/temporal'
-import { deduplicate } from '@/shared/utils'
+import { DEFAULT_TIMEZONE } from '#lib/shared/timezone.ts'
+import { Temporal } from '#lib/shared/temporal.ts'
+import { deduplicate } from '#lib/shared/utils.ts'
 
 export const toInstant = (value: Temporal.ZonedDateTime | Temporal.PlainDate) =>
 	value instanceof Temporal.ZonedDateTime

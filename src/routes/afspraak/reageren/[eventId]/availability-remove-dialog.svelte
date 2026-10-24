@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state'
 
-	import Button from '@/components/button.svelte'
-	import Dialog from '@/components/dialog.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Dialog from '#lib/components/dialog.svelte'
 
-	import { deleteAvailability } from './action.remote'
+	import { deleteAvailability } from './action.remote.ts'
 
 	let { open = $bindable(false) }: { open: boolean } = $props()
 </script>

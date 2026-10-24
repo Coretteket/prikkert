@@ -1,7 +1,7 @@
 import { page } from '$app/state'
 
-import { capitalizeFirst } from '../utils'
-import { getContent } from '../content'
+import { capitalizeFirst } from '../utils.ts'
+import { getContent } from '../content.ts'
 
 /*
 @wc-ignore

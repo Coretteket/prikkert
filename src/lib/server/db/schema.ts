@@ -12,8 +12,8 @@ import {
 } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 
-import { datetime, instant } from './types'
-import { generateNanoID } from '../crypto'
+import { datetime, instant } from './types.ts'
+import { generateNanoID } from '../crypto.ts'
 
 /* UTILITIES */
 

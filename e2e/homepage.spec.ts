@@ -1,10 +1,10 @@
-import { expect, test } from './support/fixtures'
-import { futureDate } from './support/database'
-import { openMenu } from './support/ui'
+import { expect, test } from './support/fixtures.ts'
+import { futureDate } from './support/database.ts'
+import { openMenu } from './support/ui.ts'
 
-async function cookieValue(page: Parameters<typeof openMenu>[0], name: string) {
+async function timezoneCookieValue(page: Parameters<typeof openMenu>[0]) {
 	const cookies = await page.context().cookies()
-	return cookies.find((cookie) => cookie.name === name)?.value
+	return cookies.find((cookie) => cookie.name === 'timezone')?.value
 }
 
 test('opens the event creation form from the homepage', async ({ page }) => {
@@ -46,7 +46,7 @@ test('changes and resets the display time zone', async ({ page, seedEvent }) => 
 	await menu.getByText('Tijdzone...').click()
 	let dialog = page.getByRole('dialog')
 	await dialog.getByRole('combobox').selectOption('Asia/Tokyo')
-	await expect.poll(() => cookieValue(page, 'timezone')).toBe('Asia/Tokyo')
+	await expect.poll(() => timezoneCookieValue(page)).toBe('Asia/Tokyo')
 	await expect(displayedOption).not.toHaveText(automaticText ?? '')
 	await dialog.getByRole('button', { name: 'Sluiten' }).click()
 
@@ -55,7 +55,7 @@ test('changes and resets the display time zone', async ({ page, seedEvent }) => 
 	dialog = page.getByRole('dialog')
 	await expect(dialog.getByRole('combobox')).toHaveValue('Asia/Tokyo')
 	await dialog.getByRole('combobox').selectOption('AUTOMATIC')
-	await expect.poll(() => cookieValue(page, 'timezone')).toBeUndefined()
+	await expect.poll(() => timezoneCookieValue(page)).toBeUndefined()
 	await expect(displayedOption).toHaveText(automaticText ?? '')
 })
 

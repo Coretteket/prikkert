@@ -6,7 +6,7 @@ export const generateNanoID = customAlphabet(
 )
 
 /** Encodes an input for a given encoding algorithm type (like "SHA-256").
- * Returns using the provided buffer encoding (like "base64" or "hex") */
+Returns using the provided buffer encoding (like "base64" or "hex") */
 export async function encode(
 	algorithm: AlgorithmIdentifier,
 	bufferEncoding: BufferEncoding,

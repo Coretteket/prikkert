@@ -25,6 +25,7 @@
 	}
 
 	beforeNavigate((navigation) => {
+		if (navigation.shallow && navigation.type === 'goto') return
 		if (navigation.willUnload) return
 
 		// Start loading
@@ -44,7 +45,9 @@
 		}, SHOW_DELAY)
 	})
 
-	afterNavigate(() => {
+	afterNavigate(({ shallow, type }) => {
+		if (shallow && type === 'goto') return
+
 		if (isVisible) {
 			// Complete with animation, then hide
 			cancelAnimationFrame(frame!)

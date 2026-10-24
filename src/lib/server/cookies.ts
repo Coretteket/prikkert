@@ -1,7 +1,7 @@
 import { getRequestEvent } from '$app/server'
 
-import { DEFAULT_TIMEZONE } from '@/shared/timezone'
-import * as v from '@/server/validation'
+import { DEFAULT_TIMEZONE } from '#lib/shared/timezone.ts'
+import * as v from '#lib/server/validation.ts'
 
 export const ThemeSchema = v.fallback(v.picklist(['light', 'dark', 'system']), 'system')
 

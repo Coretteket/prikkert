@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Temporal } from 'temporal-polyfill'
 
-	import { formatDate } from '@/shared/time-format'
+	import { formatDate } from '#lib/shared/time-format.ts'
 
 	type Props = {
 		startsAt: Temporal.ZonedDateTime | Temporal.PlainDate

@@ -1,12 +1,12 @@
 import type { RequestHandler } from '@sveltejs/kit'
 
-import { env } from '$env/dynamic/public'
+import { PUBLIC_ORIGIN } from '$app/env/public'
 
-import { getLocaleURL, NL_PUBLIC_PATHS } from '../../lib/shared/url'
+import { getLocaleURL, NL_PUBLIC_PATHS } from '../../lib/shared/url.ts'
 
 function makeUrlEntry(path: string) {
-	const nl = env.PUBLIC_ORIGIN + getLocaleURL(path, 'nl')
-	const en = env.PUBLIC_ORIGIN + getLocaleURL(path, 'en')
+	const nl = PUBLIC_ORIGIN + getLocaleURL(path, 'nl')
+	const en = PUBLIC_ORIGIN + getLocaleURL(path, 'en')
 	return [
 		`<url>`,
 		`  <loc>${nl}</loc>`,

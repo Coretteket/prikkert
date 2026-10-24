@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/state'
 
-	import { formatTimezoneName, hasSameOffset } from '@/shared/timezone'
-	import { getEventTimezone } from '@/shared/event/utils'
-	import Button from '@/components/button.svelte'
-	import Date from '@/components/date.svelte'
-	import { noReset } from '@/shared/utils'
-	import { url } from '@/shared/url'
+	import { formatTimezoneName, hasSameOffset } from '#lib/shared/timezone.ts'
+	import { getEventTimezone } from '#lib/shared/event/utils.ts'
+	import Button from '#lib/components/button.svelte'
+	import { noReset } from '#lib/shared/utils.ts'
+	import Date from '#lib/components/date.svelte'
+	import { url } from '#lib/shared/url.ts'
 
 	import OrganizerReceiveDialog from '../../overzicht/[eventId]/organizer-receive-dialog.svelte'
 	import AvailabilityRemoveDialog from './availability-remove-dialog.svelte'
-	import { submitAvailability } from './action.remote'
-	import { getEventForSession } from './data.remote'
+	import { submitAvailability } from './action.remote.ts'
+	import { getEventForSession } from './data.remote.ts'
 	import OptionInput from './option-input.svelte'
 
 	let isRemoveDialogOpen = $state(false)
@@ -39,6 +39,7 @@
 	const ISSUE_THRESHOLD = 3
 
 	const event = $derived(await getEventForSession(params.eventId))
+	const nameInput = $derived(submitAvailability.fields.name.as('text'))
 
 	const eventTimezone = $derived(getEventTimezone(event.options))
 </script>
@@ -116,8 +117,8 @@
 			</label>
 			<input
 				id="name"
-				type="text"
-				name="name"
+				name={nameInput.name}
+				aria-invalid={nameInput['aria-invalid']}
 				value={event.responseName}
 				placeholder="Vul jouw naam in..."
 				autocomplete="name"

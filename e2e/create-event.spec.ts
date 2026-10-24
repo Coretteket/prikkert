@@ -1,7 +1,7 @@
-import { getPersistedOptions, removeSeededEvent } from './support/database'
-import { eventTitle, submitResponse } from './support/events'
-import { expect, test } from './support/fixtures'
-import { newSession } from './support/sessions'
+import { getPersistedOptions, removeSeededEvent } from './support/database.ts'
+import { eventTitle, submitResponse } from './support/events.ts'
+import { expect, test } from './support/fixtures.ts'
+import { newSession } from './support/sessions.ts'
 
 test('validates the required event fields', async ({ page }) => {
 	await page.goto('/afspraak/aanmaken')

@@ -1,10 +1,10 @@
-import { eventTitle, submitResponse } from './support/events'
-import { expect, test } from './support/fixtures'
-import { newSession } from './support/sessions'
-import { openMenu } from './support/ui'
+import { eventTitle, submitResponse } from './support/events.ts'
+import { expect, test } from './support/fixtures.ts'
+import { newSession } from './support/sessions.ts'
+import { openMenu } from './support/ui.ts'
 
 test('edits an event', async ({ createEvent, page }) => {
-	const event = await createEvent()
+	await createEvent()
 	const updatedTitle = eventTitle('Teamuitje')
 
 	const menu = await openMenu(page, 'Afspraak beheren')

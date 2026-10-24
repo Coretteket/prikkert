@@ -1,5 +1,5 @@
 <script lang="ts">
-	import pattern from '@/assets/pattern.svg'
+	import pattern from '#lib/assets/pattern.svg'
 </script>
 
 <div

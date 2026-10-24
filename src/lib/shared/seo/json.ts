@@ -1,16 +1,15 @@
 // @wc-ignore-file
-import { env } from '$env/dynamic/public'
-
+import { PUBLIC_ORIGIN } from '$app/env/public'
 import { page } from '$app/state'
 
-import { getContent } from '../content'
-import { getPageMeta } from './meta'
+import { getContent } from '../content.ts'
+import { getPageMeta } from './meta.ts'
 
 export function generateJSONLD() {
 	const isHome = page.url.pathname === '/'
 	const { promises, faq } = getContent()
 	const meta = getPageMeta()
-	const origin = env.PUBLIC_ORIGIN
+	const origin = PUBLIC_ORIGIN
 
 	const baseSchema: {
 		'@context': string

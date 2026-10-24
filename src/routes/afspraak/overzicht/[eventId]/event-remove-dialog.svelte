@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Button from '@/components/button.svelte'
-	import Dialog from '@/components/dialog.svelte'
+	import Button from '#lib/components/button.svelte'
+	import Dialog from '#lib/components/dialog.svelte'
 
-	import { removeEvent } from './action.remote'
+	import { removeEvent } from './action.remote.ts'
 
 	let { id, open = $bindable(false) }: { id: string; open: boolean } = $props()
 </script>

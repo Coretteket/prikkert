@@ -1,9 +1,9 @@
 import type { Browser } from '@playwright/test'
 
-import { submitResponse } from './support/events'
-import { expect, test } from './support/fixtures'
-import { futureDate } from './support/database'
-import { newSession } from './support/sessions'
+import { submitResponse } from './support/events.ts'
+import { expect, test } from './support/fixtures.ts'
+import { futureDate } from './support/database.ts'
+import { newSession } from './support/sessions.ts'
 
 async function openResponsePage(browser: Browser, eventId: string) {
 	const session = await newSession(browser)
@@ -35,6 +35,7 @@ test('submits and updates a participant response', async ({ browser, page, seedE
 	await participant.page.getByRole('link', { name: 'Beschikbaarheid bewerken' }).click()
 	await participant.page.getByText('Misschien', { exact: true }).last().click()
 	await participant.page.getByRole('button', { name: 'Reactie opslaan' }).click()
+	await expect(participant.page).toHaveURL(`/afspraak/overzicht/${event.id}`)
 
 	await page.goto(`/afspraak/overzicht/${event.id}`)
 	await page.getByRole('button', { name: 'Toon alle reacties' }).click()

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Temporal } from '@/shared/temporal'
-	import { KeyType } from '@/shared/utils'
+	import { Temporal } from '#lib/shared/temporal.ts'
+	import { KeyType } from '#lib/shared/utils.ts'
 
 	let { time = $bindable() }: { time?: Temporal.PlainTime } = $props()
 
@@ -10,7 +10,7 @@
 		const clean = input.replaceAll(/[^0-9]/g, '')
 		if (clean.length > 4 || clean.length === 0) return
 
-		let hour = clean.length >= 3 ? Number.parseInt(clean.slice(0, -2)) : Number.parseInt(clean)
+		let hour = Number.parseInt(clean.length >= 3 ? clean.slice(0, -2) : clean)
 		let minute = clean.length >= 3 ? Number.parseInt(clean.slice(-2)) : 0
 		return Temporal.PlainTime.from({ hour, minute })
 	}
@@ -20,7 +20,7 @@
 		if (!input.value) return (time = undefined)
 
 		time = parseTime(input.value)
-		input.value = time ? time.toString({ smallestUnit: 'minute' }) : displayValue
+		input.value = time?.toString({ smallestUnit: 'minute' }) ?? displayValue
 	}
 
 	function handleKeydown(event: KeyboardEvent & { currentTarget: HTMLInputElement }) {

@@ -1,19 +1,18 @@
 <script lang="ts">
-	import type { RemoteForm } from '@sveltejs/kit'
-
 	import { SvelteMap } from 'svelte/reactivity'
 
+	import type { RemoteForm } from '$app/server'
 	import { page } from '$app/state'
 
-	import { emptyEntry, type OptionEntry, type Options, type Slot } from '@/shared/event/types'
-	import EventEditDialog from '@/components/event/confirm-dialog.svelte'
-	import DatePicker from '@/components/event/date-picker.svelte'
-	import TimeSlot from '@/components/event/time-slot.svelte'
-	import { formatTimezoneID } from '@/shared/timezone'
-	import Button from '@/components/button.svelte'
-	import { Temporal } from '@/shared/temporal'
-	import Icon from '@/components/icon.svelte'
-	import { url } from '@/shared/url'
+	import { emptyEntry, type OptionEntry, type Options, type Slot } from '#lib/shared/event/types.ts'
+	import EventEditDialog from '#lib/components/event/confirm-dialog.svelte'
+	import DatePicker from '#lib/components/event/date-picker.svelte'
+	import TimeSlot from '#lib/components/event/time-slot.svelte'
+	import { formatTimezoneID } from '#lib/shared/timezone.ts'
+	import { Temporal } from '#lib/shared/temporal.ts'
+	import Button from '#lib/components/button.svelte'
+	import Icon from '#lib/components/icon.svelte'
+	import { url } from '#lib/shared/url.ts'
 
 	type FormFieldInput = {
 		id?: string | 0 | undefined
@@ -79,7 +78,7 @@
 		return optionsIssues
 	})
 
-	function compareSlots(a: Slot, b: Slot) {
+	function areSlotsEqual(a: Slot, b: Slot) {
 		const aStart = a.startsAt?.toString()
 		const bStart = b.startsAt?.toString()
 		const aEnd = a.endsAt?.toString()
@@ -102,7 +101,7 @@
 			const currentSlots = currentEntry.slots
 
 			for (const slot of entry.slots) {
-				const isFound = currentSlots.some((s) => compareSlots(s, slot))
+				const isFound = currentSlots.some((s) => areSlotsEqual(s, slot))
 				if (!isFound) return true
 			}
 		}
@@ -114,7 +113,7 @@
 	let confirmMessage = $state('')
 	let onConfirm: ((isConfirmed: boolean) => void) | undefined = $state()
 
-	function untilConfirmed() {
+	function isChangeConfirmed() {
 		const isConfirmOptions = hasRemovedOptions()
 		const isConfirmTimezone = hasDifferentTimezone()
 		if (!hasResponses || (!isConfirmOptions && !isConfirmTimezone)) return Promise.resolve(true)
@@ -131,7 +130,7 @@
 <form
 	{...form.enhance(async (form) => {
 		if (isEditMode) {
-			const isConfirmed = await untilConfirmed()
+			const isConfirmed = await isChangeConfirmed()
 			if (!isConfirmed) return
 			form.submit()
 		} else {
@@ -140,10 +139,9 @@
 	})}
 >
 	<input
-		type="hidden"
-		name="options"
-		value={JSON.stringify(
-			Array.from(options).toSorted(([a], [b]) => Temporal.PlainDate.compare(a, b)),
+		{...form.fields.options.as(
+			'hidden',
+			JSON.stringify(Array.from(options).toSorted(([a], [b]) => Temporal.PlainDate.compare(a, b))),
 		)}
 	/>
 

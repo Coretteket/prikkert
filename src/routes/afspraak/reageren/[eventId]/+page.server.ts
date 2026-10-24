@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit'
 import { eq } from 'drizzle-orm'
 
-import { db, schema } from '@/server/db'
+import { db, schema } from '#lib/server/db/index.ts'
 
 import type { PageServerLoad } from './$types'
 

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { SvelteMap } from 'svelte/reactivity'
 
-	import { emptyEntry, type Options } from '@/shared/event/types'
-	import Button from '@/components/button.svelte'
-	import Dialog from '@/components/dialog.svelte'
-	import { Temporal } from '@/shared/temporal'
-	import Date from '@/components/date.svelte'
+	import { emptyEntry, type Options } from '#lib/shared/event/types.ts'
+	import { Temporal } from '#lib/shared/temporal.ts'
+	import Button from '#lib/components/button.svelte'
+	import Dialog from '#lib/components/dialog.svelte'
+	import Date from '#lib/components/date.svelte'
 
 	import DatePicker from './date-picker.svelte'
 

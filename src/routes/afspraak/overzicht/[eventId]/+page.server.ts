@@ -1,8 +1,8 @@
 import { error, redirect } from '@sveltejs/kit'
 import { eq } from 'drizzle-orm'
 
-import { validateSession } from '@/server/session/validation'
-import { db, schema } from '@/server/db'
+import { validateSession } from '#lib/server/session/validation.ts'
+import { db, schema } from '#lib/server/db/index.ts'
 
 import type { PageServerLoad } from './$types'
 

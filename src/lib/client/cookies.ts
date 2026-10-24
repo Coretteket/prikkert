@@ -3,9 +3,9 @@
 import { goto } from '$app/navigation'
 import { page } from '$app/state'
 
-import type { Theme } from '@/shared/utils'
+import type { Theme } from '#lib/shared/utils.ts'
 
-import { getLocaleURL } from '@/shared/url'
+import { getLocaleURL } from '#lib/shared/url.ts'
 
 export function setTimezone(timezone: string) {
 	document.cookie =
@@ -38,9 +38,9 @@ export function setTheme(theme: Theme) {
 export function setLocale(locale: 'nl' | 'en') {
 	document.cookie = `locale=${locale};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`
 	goto(getLocaleURL(page.url.pathname, locale) + page.url.search, {
-		invalidateAll: true,
-		replaceState: true,
-		noScroll: true,
+		refreshAll: true,
+		replace: true,
+		reset: false,
 	})
 	document.documentElement.lang = locale
 }

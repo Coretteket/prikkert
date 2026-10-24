@@ -1,9 +1,9 @@
 import { lt } from 'drizzle-orm'
 import { CronJob } from 'cron'
 
-import { DEFAULT_TIMEZONE } from '@/shared/timezone'
-import { Temporal } from '@/shared/temporal'
-import { db, schema } from '@/server/db'
+import { DEFAULT_TIMEZONE } from '#lib/shared/timezone.ts'
+import { db, schema } from '#lib/server/db/index.ts'
+import { Temporal } from '#lib/shared/temporal.ts'
 
 export const cron = CronJob.from({
 	cronTime: '0 5 * * *',

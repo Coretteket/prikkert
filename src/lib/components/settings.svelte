@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation'
+	import { refreshAll } from '$app/navigation'
 	import { page } from '$app/state'
 
 	import {
@@ -8,12 +8,12 @@
 		setTimezone,
 		setTheme,
 		setLocale,
-	} from '@/client/cookies'
-	import { detectTimezone, formatTimezoneID } from '@/shared/timezone'
-	import { createPopover } from '@/shared/popover.svelte'
-	import Button from '@/components/button.svelte'
-	import Dialog from '@/components/dialog.svelte'
-	import Icon from '@/components/icon.svelte'
+	} from '#lib/client/cookies.ts'
+	import { detectTimezone, formatTimezoneID } from '#lib/shared/timezone.ts'
+	import { createPopover } from '#lib/shared/popover.svelte.ts'
+	import Button from '#lib/components/button.svelte'
+	import Dialog from '#lib/components/dialog.svelte'
+	import Icon from '#lib/components/icon.svelte'
 
 	const popover = createPopover({ positionArea: 'bottom span-left' })
 
@@ -116,7 +116,7 @@
 				const timezone = event_.currentTarget.value
 				setTimezone(timezone)
 				if (timezone === 'AUTOMATIC') setDetectedTimezone(detectTimezone())
-				invalidateAll()
+				refreshAll()
 			}}
 		>
 			<option value="AUTOMATIC">

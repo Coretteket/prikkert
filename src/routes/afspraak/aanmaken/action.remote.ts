@@ -2,13 +2,13 @@ import { redirect } from '@sveltejs/kit'
 
 import { form, getRequestEvent } from '$app/server'
 
-import { buildEventOptions, getExpiryDate } from '@/shared/event/utils'
-import { encodeSHA256, generateNanoID } from '@/server/crypto'
-import { setSessionCookie } from '@/server/session/cookies'
-import { EventFormSchema } from '@/shared/event/schema'
-import { db, schema } from '@/server/db'
+import { buildEventOptions, getExpiryDate } from '#lib/shared/event/utils.ts'
+import { encodeSHA256, generateNanoID } from '#lib/server/crypto.ts'
+import { setSessionCookie } from '#lib/server/session/cookies.ts'
+import { EventFormSchema } from '#lib/shared/event/schema.ts'
+import { db, schema } from '#lib/server/db/index.ts'
 
-import { hasSession } from '../../data.remote'
+import { hasSession } from '../../data.remote.ts'
 
 export const createEvent = form(EventFormSchema, async (parsed) => {
 	const { locals } = getRequestEvent()

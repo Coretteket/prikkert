@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { emptySlot, type OptionEntry, type Options, type Slot } from '@/shared/event/types'
-	import Button from '@/components/button.svelte'
-	import { Temporal } from '@/shared/temporal'
-	import Date from '@/components/date.svelte'
-	import Icon from '@/components/icon.svelte'
+	import { emptySlot, type OptionEntry, type Options, type Slot } from '#lib/shared/event/types.ts'
+	import { Temporal } from '#lib/shared/temporal.ts'
+	import Button from '#lib/components/button.svelte'
+	import Date from '#lib/components/date.svelte'
+	import Icon from '#lib/components/icon.svelte'
 
 	import EndDateDialog from './end-date-dialog.svelte'
 	import TimeInput from './time-input.svelte'

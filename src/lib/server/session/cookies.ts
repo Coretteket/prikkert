@@ -1,15 +1,14 @@
 import type { Cookies } from '@sveltejs/kit'
 
-import { env } from '$env/dynamic/private'
-
+import { COOKIE_PREFIX } from '$app/env/private'
 import { getRequestEvent } from '$app/server'
-import { dev } from '$app/environment'
+import { dev } from '$app/env'
 
-import { ID_LENGTH, TOKEN_LENGTH } from '@/server/db/schema'
-import * as v from '@/server/validation'
+import { ID_LENGTH, TOKEN_LENGTH } from '#lib/server/db/schema.ts'
+import * as v from '#lib/server/validation.ts'
 
-const RESPONDENT_PREFIX = `${env.COOKIE_PREFIX}_deelnemer_`
-const ORGANIZER_PREFIX = `${env.COOKIE_PREFIX}_organisator_`
+const RESPONDENT_PREFIX = `${COOKIE_PREFIX}_deelnemer_`
+const ORGANIZER_PREFIX = `${COOKIE_PREFIX}_organisator_`
 
 const RespondentSessionKeySchema = v.pipe(
 	v.string(),

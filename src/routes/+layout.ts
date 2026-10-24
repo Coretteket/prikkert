@@ -4,11 +4,11 @@ import '../locales/js.loader.js'
 
 import { loadLocale } from 'wuchale/load-utils'
 
-import { browser } from '$app/environment'
+import { browser } from '$app/env'
 
-import { getTimezone, setDetectedTimezone } from '@/client/cookies'
-import { detectTimezone } from '@/shared/timezone'
-import { isLocale } from '@/shared/utils'
+import { getTimezone, setDetectedTimezone } from '#lib/client/cookies.ts'
+import { detectTimezone } from '#lib/shared/timezone.ts'
+import { isLocale } from '#lib/shared/utils.ts'
 
 import type { LayoutLoad } from './$types'
 
