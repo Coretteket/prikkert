@@ -11,6 +11,7 @@ export const routes = new Map([
 	['/privacy', '/en/privacy'],
 	['/vs/datumprikker', '/en/vs/cally'],
 	['/vs/plennur', '/en/vs/plennur'],
+	['/', '/en'],
 ] as const)
 
 export const NL_PUBLIC_PATHS = [
@@ -40,12 +41,11 @@ export function url(path: Keys<typeof routes> | `${Keys<typeof routes>}/${string
 }
 
 export function getLocaleURL(path: string, locale: 'nl' | 'en') {
+	if (path.startsWith('/_app')) return path // don't translate generated paths
+
 	const alreadyEnglish = path === '/en' || path.startsWith('/en/')
 	if (locale === 'en' && alreadyEnglish) return path
 	if (locale === 'nl' && !alreadyEnglish) return path
-
-	if (locale === "en" && path === "/") return "/en"
-	if (locale === "nl" && path === "/en") return "/"
 
 	for (const [key, value] of routes)
 		if (path.startsWith(locale === 'nl' ? value : key))

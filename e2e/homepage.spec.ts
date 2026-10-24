@@ -16,23 +16,30 @@ test('opens the event creation form from the homepage', async ({ page }) => {
 })
 
 test('switches languages correctly and durably', async ({ page }) => {
-	await page.goto('/afspraak/aanmaken?bron=nieuwsbrief')
+	await page.goto('/?bron=nieuwsbrief')
 
 	let menu = await openMenu(page, 'Instellingen')
 	await menu.getByText('English').click()
-	await expect(page).toHaveURL('/en/event/create?bron=nieuwsbrief')
-	await expect(page.getByLabel('Title')).toBeVisible()
+	await expect(page).toHaveURL('/en?bron=nieuwsbrief')
+
+	const button = page.getByRole('link', { name: 'Create event' }).first()
+	await expect(button).toBeVisible()
+
+	await button.click()
+	await expect(page).toHaveURL('/en/event/create')
+	await expect(page.getByRole('heading', { level: 1, name: 'Create event' })).toBeVisible()
 
 	await page.reload()
-	await expect(page.getByLabel('Title')).toBeVisible()
+	await expect(page.getByRole('heading', { level: 1, name: 'Create event' })).toBeVisible()
 
 	menu = await openMenu(page, 'Settings')
 	await menu.getByText('Nederlands').click()
-	await expect(page).toHaveURL('/afspraak/aanmaken?bron=nieuwsbrief')
-	await expect(page.getByLabel('Titel')).toBeVisible()
+	await expect(page).toHaveURL('/afspraak/aanmaken')
+	await expect(page.getByRole('heading', { level: 1, name: 'Afspraak aanmaken' })).toBeVisible()
 
-	await page.reload()
-	await expect(page.getByLabel('Titel')).toBeVisible()
+	await page.getByRole('link', { name: 'Prikkert' }).first().click()
+	await expect(page).toHaveURL('/')
+	await expect(page.getByRole('link', { name: 'Afspraak aanmaken' }).first()).toBeVisible()
 })
 
 test('changes and resets the display time zone', async ({ page, seedEvent }) => {
