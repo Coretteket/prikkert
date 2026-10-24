@@ -585,10 +585,6 @@ msgid "Hoe blijft Prikkert gratis en reclamevrij?"
 msgstr "How does Prikkert stay free and ad-free?"
 
 #: src/lib/shared/content.ts
-msgid "Prikkert heeft geen winstoogmerk of verdienmodel. De techniek is eenvoudig en de kosten zijn verwaarloosbaar, dus het is niet nodig om je lastig te vallen met reclame. Prikkert is een passieproject en zal daarom nooit paywalls of reclames tonen. Dat is een belofte."
-msgstr "Prikkert has no profit motive or business model. The technology is simple and the costs are negligible, so there's no need to bother you with advertising. Prikkert is a passion project and will therefore never show paywalls or ads. That's a promise."
-
-#: src/lib/shared/content.ts
 msgid "Hoe beschermt Prikkert je privacy?"
 msgstr "How does Prikkert protect your privacy?"
 
@@ -607,10 +603,6 @@ msgstr "Prikkert is open source so that anyone can verify what happens under the
 #: src/lib/shared/content.ts
 msgid "Wie heeft Prikkert gemaakt?"
 msgstr "Who created Prikkert?"
-
-#: src/lib/shared/content.ts
-msgid "Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan. Het is zijn kleine vorm van verzet tegen de <a href='https://nl.wikipedia.org/wiki/Platformverval' target='_blank' class='underline'>verkuttificatie</a> van het internet."
-msgstr "Prikkert is a passion project by <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. He built Prikkert with the simple idea that scheduling can be done without costs, ads and tracking. It's his small act of resistance against the <a href='https://en.wikipedia.org/wiki/Enshittification' target='_blank' class='underline'>enshittification</a> of the internet."
 
 #: src/routes/+page.svelte
 msgid "Samen plannen,<0/> zo geprikt"
@@ -1023,10 +1015,6 @@ msgid "Datumprikker is een <0>black box</0>, dus je bent afhankelijk van hun bed
 msgstr "Cally is a <0>black box</0>, so you depend on their company."
 
 #: src/routes/vs/datumprikker/+page.svelte
-msgid "Geld verdienen is niet het doel van Prikkert. Dit passieproject draait op verwaarloosbare kosten en heeft daarom geen enkele vorm van reclame of betaalmuren nodig. Prikkert garandeert iedereen een volledig gratis en advertentievrije ervaring."
-msgstr "Making money is not the goal of Prikkert. This passion project runs on negligible costs and therefore doesn't need any form of advertising or paywalls. Prikkert guarantees everyone a completely free and ad-free experience."
-
-#: src/routes/vs/datumprikker/+page.svelte
 msgid "Jij bent bij Prikkert niet het product. Prikkert verkoopt je gegevens nooit en trackt je niet. Jouw data blijft altijd binnen de Europese Unie en verdwijnt automatisch zodra je deze niet meer nodig hebt. Omdat je geen account aanmaakt kan je direct starten. Lees meer in de <0>privacyverklaring</0>."
 msgstr "With Prikkert, you are not the product. Prikkert never sells your data and doesn't track you. Your data always stays within the European Union and is automatically deleted once you no longer need it. Since you don't need an account, you can get started right away. Read more in the <0>privacy policy</0>."
 
@@ -1038,10 +1026,6 @@ msgstr "No, Prikkert doesn't ask for an email or password, but recognizes you th
 msgid "Ja. Prikkert is open source zodat iedereen de techniek onder de motorkap kan controleren. De broncode staat openbaar op <0>Codeberg</0> en mag door iedereen worden hergebruikt onder de <1>European Union Public License</1>."
 msgstr "Yes. Prikkert is open source so that anyone can verify the technology under the hood. The source code is publicly available on <0>Codeberg</0> and can be reused by anyone under the <1>European Union Public License</1>."
 
-#: src/routes/vs/datumprikker/+page.svelte
-msgid "<0>Quinten Coret</0> bouwde Prikkert als passieproject. Hij ontwikkelde de tool met het simpele idee dat datumprikken prima zonder kosten, reclame en tracking kan. Prikkert is zijn kleine vorm van verzet tegen de verkuttificatie van het internet."
-msgstr "<0>Quinten Coret</0> built Prikkert as a passion project. He developed the tool with the simple idea that scheduling works just fine without costs, ads and tracking. Prikkert is his small act of resistance against the enshittification of the internet."
-
 #: src/routes/vs/plennur/+page.svelte
 msgid "Prikkert is <0>open</0>. Iedereen kan de broncode inzien en hergebruiken."
 msgstr "Prikkert is <0>open</0>. Anyone can view and reuse the source code."
@@ -1049,10 +1033,6 @@ msgstr "Prikkert is <0>open</0>. Anyone can view and reuse the source code."
 #: src/routes/vs/plennur/+page.svelte
 msgid "Plennur is een <0>black box</0>, dus je kan niet zonder hun bedrijf."
 msgstr "Plennur is a <0>black box</0>, so you can't do without their company."
-
-#: src/routes/vs/plennur/+page.svelte
-msgid "Prikkert hoeft geen geld te verdienen. Het is een passieproject met verwaarloosbare kosten, waardoor het geen advertenties of betaalmuren nodig heeft. Prikkert is en blijft dus gratis en reclamevrij voor iedereen."
-msgstr "Prikkert doesn't need to make money. It's a passion project with negligible costs, so it doesn't need any advertising or paywalls. Prikkert is and will remain free and ad-free for everyone."
 
 #: src/routes/vs/plennur/+page.svelte
 msgid "Prikkert weigert je gegevens te verkopen en houdt geen surfgedrag bij. Jouw informatie wordt alleen opgeslagen binnen de Europese Unie en wordt automatisch gewist na de bewaartermijn. Je kan zonder account of zelfs volledig anononiem meteen aan de slag. Lees meer in de <0>privacyverklaring</0>."
@@ -1065,10 +1045,6 @@ msgstr "Yes. Prikkert never asks for an email address or password. Easily edit y
 #: src/routes/vs/plennur/+page.svelte
 msgid "Zeker weten. Prikkert is open source software, waardoor iedereen het systeem tot in detail kan inspecteren. Vind de complete broncode direct terug op <0>Codeberg</0> en hergebruik deze vrijuit volgens de voorwaarden van de <1>European Union Public License</1>."
 msgstr "Absolutely. Prikkert is open source software, so anyone can inspect the system in full detail. Find the complete source code on <0>Codeberg</0> and reuse it freely under the terms of the <1>European Union Public License</1>."
-
-#: src/routes/vs/plennur/+page.svelte
-msgid "<0>Quinten Coret</0> lanceerde Prikkert als passieproject. Hij bouwde de website vanuit de ijzersterke overtuiging dat een datum plannen gratis, advertentievrij en privacyvriendelijk hoort te zijn. Prikkert vormt zo zijn kleine protest tegen de verkuttificatie van het internet."
-msgstr "<0>Quinten Coret</0> launched Prikkert as a passion project. He built the website with the firm conviction that scheduling should be free, ad-free and privacy-friendly. Prikkert is his small protest against the enshittification of the internet."
 
 #: src/routes/footer.svelte
 msgid "Doneren"
@@ -1165,3 +1141,27 @@ msgstr "The end date must be after the start date."
 #: src/lib/shared/event/schema.ts
 msgid "Selecteer minstens 1 datum."
 msgstr "Select at least 1 date."
+
+#: src/lib/shared/content.ts
+msgid "Prikkert heeft geen winstoogmerk of verdienmodel. De techniek is eenvoudig en de kosten zijn verwaarloosbaar, dus het is niet nodig om je lastig te vallen met reclame. Prikkert is een passieproject en zal daarom nooit paywalls of reclames tonen. Dat is een belofte. Je kan Prikkert steunen met een <a href='https://bunq.me/qcoret' target='_blank' class='underline'>vrijwillige bijdrage</a>."
+msgstr "Prikkert has no profit motive or business model. The technology is simple and the costs are negligible, so there is no need to bother you with advertising. Prikkert is a passion project and will therefore never show paywalls or ads. That's a promise. You can support Prikkert with a <a href='https://bunq.me/qcoret' target='_blank' class='underline'>voluntary contribution</a>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "Geld verdienen is niet het doel van Prikkert. Dit passieproject draait op verwaarloosbare kosten en heeft daarom geen enkele vorm van reclame of betaalmuren nodig. Prikkert garandeert iedereen een volledig gratis en advertentievrije ervaring. Je kan Prikkert steunen met een <0>vrijwillige bijdrage</0>."
+msgstr "Making money is not the goal of Prikkert. This passion project runs on negligible costs and therefore doesn't need any form of advertising or paywalls. Prikkert guarantees everyone a completely free and ad-free experience. You can support Prikkert with a <0>voluntary contribution</0>."
+
+#: src/routes/vs/datumprikker/+page.svelte
+msgid "<0>Quinten Coret</0> bouwde Prikkert als passieproject. Hij ontwikkelde de tool met het simpele idee dat datumprikken prima zonder kosten, reclame en tracking kan. Prikkert is zijn kleine vorm van verzet tegen de verkuttificatie van het internet. Je kan zijn werk steunen met een <1>vrijwillige bijdrage</1>."
+msgstr "<0>Quinten Coret</0> built Prikkert as a passion project. He developed the tool with the simple idea that scheduling works just fine without costs, ads and tracking. Prikkert is his small act of resistance against the enshittification of the internet. You can support his work with a <1>voluntary contribution</1>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "Prikkert hoeft geen geld te verdienen. Het is een passieproject met verwaarloosbare kosten, waardoor het geen advertenties of betaalmuren nodig heeft. Prikkert is en blijft dus gratis en reclamevrij voor iedereen. Je kan Prikkert steunen met een <0>vrijwillige bijdrage</0>."
+msgstr "Prikkert doesn't need to make money. It's a passion project with negligible costs, so it doesn't need any advertising or paywalls. Prikkert is and will remain free and ad-free for everyone. You can support Prikkert with a <0>voluntary contribution</0>."
+
+#: src/routes/vs/plennur/+page.svelte
+msgid "<0>Quinten Coret</0> lanceerde Prikkert als passieproject. Hij bouwde de website vanuit de ijzersterke overtuiging dat een datum plannen gratis, advertentievrij en privacyvriendelijk hoort te zijn. Prikkert vormt zo zijn kleine protest tegen de verkuttificatie van het internet. Je kan zijn werk steunen met een <1>vrijwillige bijdrage</1>."
+msgstr "<0>Quinten Coret</0> launched Prikkert as a passion project. He built the website with the firm conviction that scheduling should be free, ad-free and privacy-friendly. Prikkert is his small protest against the enshittification of the internet. You can support his work with a <1>voluntary contribution</1>."
+
+#: src/lib/shared/content.ts
+msgid "Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan. Het is zijn kleine vorm van verzet tegen de verkuttificatie van het internet. Je kan zijn werk steunen met een <a href='https://bunq.me/qcoret' target='_blank' class='underline'>vrijwillige bijdrage</a>."
+msgstr "Prikkert is a passion project by <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. He developed Prikkert with the simple idea that scheduling can work without costs, ads and tracking. It is his small act of resistance against the enshittification of the internet. You can support his work with a <a href='https://bunq.me/qcoret' target='_blank' class='underline'>voluntary contribution</a>."

@@ -60,7 +60,7 @@ export function getContent() {
 		{
 			question: 'Hoe blijft Prikkert gratis en reclamevrij?',
 			answer:
-				'Prikkert heeft geen winstoogmerk of verdienmodel. De techniek is eenvoudig en de kosten zijn verwaarloosbaar, dus het is niet nodig om je lastig te vallen met reclame. Prikkert is een passieproject en zal daarom nooit paywalls of reclames tonen. Dat is een belofte.',
+				"Prikkert heeft geen winstoogmerk of verdienmodel. De techniek is eenvoudig en de kosten zijn verwaarloosbaar, dus het is niet nodig om je lastig te vallen met reclame. Prikkert is een passieproject en zal daarom nooit paywalls of reclames tonen. Dat is een belofte. Je kan Prikkert steunen met een <a href='https://bunq.me/qcoret' target='_blank' class='underline'>vrijwillige bijdrage</a>.",
 		},
 		{
 			question: 'Hoe beschermt Prikkert je privacy?',
@@ -78,7 +78,7 @@ export function getContent() {
 		{
 			question: 'Wie heeft Prikkert gemaakt?',
 			answer:
-				"Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan. Het is zijn kleine vorm van verzet tegen de <a href='https://nl.wikipedia.org/wiki/Platformverval' target='_blank' class='underline'>verkuttificatie</a> van het internet.",
+				"Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan. Het is zijn kleine vorm van verzet tegen de verkuttificatie van het internet. Je kan zijn werk steunen met een <a href='https://bunq.me/qcoret' target='_blank' class='underline'>vrijwillige bijdrage</a>.",
 		},
 	]
 

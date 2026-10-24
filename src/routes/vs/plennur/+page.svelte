@@ -116,7 +116,8 @@
 		<FaqItem question="Wat is het verdienmodel van Prikkert?" open>
 			Prikkert hoeft geen geld te verdienen. Het is een passieproject met verwaarloosbare kosten,
 			waardoor het geen advertenties of betaalmuren nodig heeft. Prikkert is en blijft dus gratis en
-			reclamevrij voor iedereen.
+			reclamevrij voor iedereen. Je kan Prikkert steunen met een
+			<a href="https://bunq.me/qcoret" target="_blank" class="underline">vrijwillige bijdrage</a>.
 		</FaqItem>
 		<FaqItem question="Hoe veilig is mijn data bij Prikkert?">
 			Prikkert weigert je gegevens te verkopen en houdt geen surfgedrag bij. Jouw informatie wordt
@@ -145,10 +146,11 @@
 			</a>.
 		</FaqItem>
 		<FaqItem question="Wie is de maker van Prikkert?">
-			<a href="https://quintencoret.nl" target="_blank" class="underline">Quinten Coret</a> lanceerde
-			Prikkert als passieproject. Hij bouwde de website vanuit de ijzersterke overtuiging dat een datum
-			plannen gratis, advertentievrij en privacyvriendelijk hoort te zijn. Prikkert vormt zo zijn kleine
-			protest tegen de verkuttificatie van het internet.
+			<a href="https://quintencoret.nl" target="_blank" class="underline">Quinten Coret</a>
+			lanceerde Prikkert als passieproject. Hij bouwde de website vanuit de ijzersterke overtuiging dat
+			een datum plannen gratis, advertentievrij en privacyvriendelijk hoort te zijn. Prikkert vormt zo
+			zijn kleine protest tegen de verkuttificatie van het internet. Je kan zijn werk steunen met een
+			<a href="https://bunq.me/qcoret" target="_blank" class="underline">vrijwillige bijdrage</a>.
 		</FaqItem>
 	</div>
 
