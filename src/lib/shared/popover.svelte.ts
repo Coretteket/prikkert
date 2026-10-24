@@ -44,12 +44,16 @@ class NativePopover implements Popover {
 		this.id = crypto.randomUUID()
 		this.#anchorName = `--popover-${this.id.slice(0, 8)}`
 
-		this.triggerAttrs = {
+		this.triggerAttrs = $derived({
+			'aria-controls': this.id,
+			'aria-expanded': this.#isOpen,
+			'aria-haspopup': 'menu',
 			popovertarget: this.id,
 			style: `anchor-name: ${this.#anchorName};`,
-		}
+		})
 
-		this.floatingAttrs = {
+		this.floatingAttrs = $derived({
+			'aria-hidden': !this.#isOpen,
 			id: this.id,
 			role: 'menu',
 			popover: 'auto',
@@ -61,7 +65,7 @@ class NativePopover implements Popover {
 				`width: max-content`,
 				`height: auto`,
 			].join('; '),
-		}
+		})
 
 		this.closeAttrs = {
 			popovertarget: this.id,

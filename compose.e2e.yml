@@ -1,0 +1,18 @@
+name: prikkert-e2e
+
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: prikkert
+      POSTGRES_PASSWORD: prikkert
+      POSTGRES_USER: prikkert
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U prikkert']
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    ports:
+      - 127.0.0.1:5433:5432
+    tmpfs:
+      - /var/lib/postgresql/data

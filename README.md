@@ -30,6 +30,18 @@ The SvelteKit development server runs on `localhost:5173` by default. It also ru
 
 Other useful commands: `pnpm build`, `pnpm check`, `pnpm lint`, `pnpm lint:fix`.
 
+### End-to-end tests
+
+Install Playwright's Chromium browser once, then run the end-to-end tests. The test command starts
+and stops an isolated PostgreSQL container automatically, so Docker must be running.
+
+```bash
+pnpm exec playwright install chromium
+pnpm test
+```
+
+Use `pnpm test:ui` to run the tests in Playwright's interactive UI.
+
 ## Production
 
 Production runs as two Docker containers (Node server + Postgres). The included `compose.prod.yml` uses Traefik as a reverse proxy. Adjust the labels and `.env` to match your setup, or swap Traefik for your own reverse proxy.

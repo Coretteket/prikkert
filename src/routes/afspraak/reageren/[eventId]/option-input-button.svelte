@@ -30,6 +30,7 @@
 		{name}
 		{value}
 		{disabled}
+		aria-label={label}
 		checked={availability === value}
 		class="peer absolute opacity-0"
 		bind:group={availability}

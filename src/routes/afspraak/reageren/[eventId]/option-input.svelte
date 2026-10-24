@@ -97,6 +97,8 @@
 				spellcheck={false}
 				bind:value={noteValue}></textarea>
 		</div>
+	{:else if option.response?.note}
+		<input type="hidden" name={noteName} value="" />
 	{/if}
 
 	{#each errors.filter((error) => error !== undefined) as error}
