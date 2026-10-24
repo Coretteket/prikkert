@@ -15,7 +15,7 @@ test('opens the event creation form from the homepage', async ({ page }) => {
 	await expect(page.getByRole('heading', { level: 1, name: 'Afspraak aanmaken' })).toBeVisible()
 })
 
-test('switches languages without losing the current page', async ({ page }) => {
+test('switches languages correctly and durably', async ({ page }) => {
 	await page.goto('/afspraak/aanmaken?bron=nieuwsbrief')
 
 	let menu = await openMenu(page, 'Instellingen')
@@ -23,9 +23,16 @@ test('switches languages without losing the current page', async ({ page }) => {
 	await expect(page).toHaveURL('/en/event/create?bron=nieuwsbrief')
 	await expect(page.getByLabel('Title')).toBeVisible()
 
+	await page.reload()
+	await expect(page.getByLabel('Title')).toBeVisible()
+
 	menu = await openMenu(page, 'Settings')
 	await menu.getByText('Nederlands').click()
 	await expect(page).toHaveURL('/afspraak/aanmaken?bron=nieuwsbrief')
+	await expect(page.getByLabel('Titel')).toBeVisible()
+
+	await page.reload()
+	await expect(page.getByLabel('Titel')).toBeVisible()
 })
 
 test('changes and resets the display time zone', async ({ page, seedEvent }) => {

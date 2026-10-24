@@ -1,6 +1,7 @@
 import { seedRespondent } from './support/database.ts'
 import { expect, test } from './support/fixtures.ts'
 import { newSession } from './support/sessions.ts'
+import { openMenu } from './support/ui.ts'
 
 test('shows response names, availability and notes', async ({ browser, seedEvent }) => {
 	const event = await seedEvent({ authenticateOrganizer: false })
@@ -45,4 +46,20 @@ test('sorts date options by calculated availability', async ({ page, seedEvent }
 
 	await expect(summaries.first()).toContainText(betterDate)
 	await expect(page).toHaveURL(new RegExp(String.raw`/afspraak/overzicht/${event.id}\?s=b$`))
+})
+
+test('switches languages without losing current event page', async ({ page, seedEvent }) => {
+	const event = await seedEvent()
+	await page.goto('/afspraak/overzicht/' + event.id)
+
+	let menu = await openMenu(page, 'Instellingen')
+	await menu.getByText('English').click()
+	await expect(page).toHaveURL('/en/event/overview/' + event.id)
+	await expect(page.getByText(event.title)).toBeVisible()
+	await expect(page.getByText('Availability', { exact: true })).toBeVisible()
+
+	menu = await openMenu(page, 'Settings')
+	await menu.getByText('Nederlands').click()
+	await expect(page).toHaveURL('/afspraak/overzicht/' + event.id)
+	await expect(page.getByText('Beschikbaarheid', { exact: true })).toBeVisible()
 })
