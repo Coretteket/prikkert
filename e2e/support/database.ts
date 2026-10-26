@@ -129,6 +129,25 @@ export async function removeSeededEvent(eventId: string) {
 	await sql`delete from events where id = ${eventId}`
 }
 
+export async function getPersistedResponses(eventId: string) {
+	return sql<
+		Array<{
+			id: string
+			name: string | null
+			option_id: string | null
+			availability: SeedResponse['availability'] | null
+			note: string | null
+		}>
+	>`
+		select respondents.id, respondents.name, responses.option_id,
+			responses.availability, responses.note
+		from respondents
+		left join responses on responses.respondent_id = respondents.id
+		where respondents.event_id = ${eventId}
+		order by respondents.id, responses.option_id
+	`
+}
+
 export async function getPersistedOptions(eventId: string) {
 	return sql<Array<{ endsAt: string | null; startsAt: string }>>`
 		select starts_at as "startsAt", ends_at as "endsAt"

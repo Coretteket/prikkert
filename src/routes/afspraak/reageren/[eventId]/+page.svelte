@@ -169,7 +169,7 @@
 			{/if}
 		</div>
 
-		{#if !event.selectedOption}
+		{#if event.hasResponded || !event.selectedOption}
 			<div class="mt-10 flex flex-wrap-reverse justify-end gap-3">
 				{#if event.hasResponded}
 					<Button
@@ -181,9 +181,11 @@
 						Reactie verwijderen
 					</Button>
 				{/if}
-				<Button type="submit" variant="primary" disabled={submitAvailability.pending > 0}>
-					Reactie opslaan
-				</Button>
+				{#if !event.selectedOption}
+					<Button type="submit" variant="primary" disabled={submitAvailability.pending > 0}>
+						Reactie opslaan
+					</Button>
+				{/if}
 			</div>
 		{/if}
 	</form>

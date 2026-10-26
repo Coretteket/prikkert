@@ -487,10 +487,6 @@ msgstr "Delete response"
 msgid "Reactie opslaan"
 msgstr "Save response"
 
-#: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
-msgid "Als je doorgaat wordt je beschikbaarheid verwijderd. Je kunt daarna opnieuw reageren."
-msgstr "If you continue, your availability will be deleted. You can then respond again."
-
 #: src/routes/afspraak/overzicht/[eventId]/+page.svelte
 #: src/routes/afspraak/reageren/[eventId]/option-input.svelte
 msgid "Ja"
@@ -1165,3 +1161,11 @@ msgstr "<0>Quinten Coret</0> launched Prikkert as a passion project. He built th
 #: src/lib/shared/content.ts
 msgid "Prikkert is een passieproject van <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. Hij ontwikkelde Prikkert met het simpele idee dat datumprikken ook zonder kosten, reclame en tracking kan. Het is zijn kleine vorm van verzet tegen de verkuttificatie van het internet. Je kan zijn werk steunen met een <a href='https://bunq.me/qcoret' target='_blank' class='underline'>vrijwillige bijdrage</a>."
 msgstr "Prikkert is a passion project by <a href='https://quintencoret.nl' target='_blank' class='underline'>Quinten Coret</a>. He developed Prikkert with the simple idea that scheduling can work without costs, ads and tracking. It is his small act of resistance against the enshittification of the internet. You can support his work with a <a href='https://bunq.me/qcoret' target='_blank' class='underline'>voluntary contribution</a>."
+
+#: src/routes/afspraak/reageren/[eventId]/action.remote.ts
+msgid "Je kan niet meer reageren op deze afspraak."
+msgstr "You can no longer respond to this event."
+
+#: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
+msgid "Als je doorgaat wordt je beschikbaarheid verwijderd."
+msgstr "If you continue, your availability will be deleted."

@@ -1,5 +1,6 @@
-import { futureDate, seedRespondent } from './support/database.ts'
+import { futureDate, getPersistedResponses, seedRespondent } from './support/database.ts'
 import { encodeSHA256 } from '../src/lib/server/crypto.ts'
+import { submitResponse } from './support/events.ts'
 import { expect, test } from './support/fixtures.ts'
 import { newSession } from './support/sessions.ts'
 
@@ -53,6 +54,34 @@ test('a confirmed event does not accept new responses', async ({ browser, seedEv
 	await expect(visitor.page.getByText('Je kunt niet meer reageren.')).toBeVisible()
 	await expect(visitor.page.getByRole('button', { name: 'Reactie opslaan' })).toHaveCount(0)
 	await visitor.context.close()
+})
+
+test('rejects a response after the organizer confirms a date', async ({
+	context,
+	page,
+	seedEvent,
+}) => {
+	const event = await seedEvent()
+	const responsePage = await context.newPage()
+
+	await responsePage.goto(`/afspraak/reageren/${event.id}`)
+	await expect(responsePage.getByRole('button', { name: 'Reactie opslaan' })).toBeVisible()
+
+	await page.goto(`/afspraak/overzicht/${event.id}`)
+	await page.getByRole('button', { name: 'Datum bevestigen' }).last().click()
+	await page.getByRole('dialog').getByRole('button', { name: 'Bevestigen' }).click()
+	await expect(page.getByText('Je hebt deze afspraak gepland voor')).toBeVisible()
+
+	const responsePromise = responsePage.waitForResponse((response) =>
+		response.url().includes('/submitAvailability'),
+	)
+	await submitResponse(responsePage, 'Noor')
+
+	const response = await responsePromise
+	const result = await response.json()
+	expect(result.type).toBe('error')
+	expect(result.error.status).toBe(403)
+	expect(await getPersistedResponses(event.id)).toHaveLength(0)
 })
 
 test('an unknown event returns a useful 404', async ({ page }) => {

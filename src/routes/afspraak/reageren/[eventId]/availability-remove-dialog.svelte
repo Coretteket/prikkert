@@ -19,7 +19,7 @@
 		<input {...deleteAvailability.fields.eventId.as('hidden', page.params.eventId!)} />
 		<p class="mb-4 text-lg font-medium">Reactie verwijderen</p>
 		<p class="mb-6 text-neutral-700 dark:text-neutral-300">
-			Als je doorgaat wordt je beschikbaarheid verwijderd. Je kunt daarna opnieuw reageren.
+			Als je doorgaat wordt je beschikbaarheid verwijderd.
 		</p>
 		<div class="flex justify-end gap-3">
 			<Button formmethod="dialog" variant="secondary">Annuleren</Button>

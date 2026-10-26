@@ -117,7 +117,7 @@
 </p>
 
 <div class="mb-10 flex flex-wrap gap-3">
-	{#if event.hasResponded && !event.selectedOption}
+	{#if event.hasResponded}
 		<Button as="link" href={url(`/afspraak/reageren/${event.id}`)} variant="secondary">
 			Beschikbaarheid bewerken
 		</Button>

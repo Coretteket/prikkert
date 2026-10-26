@@ -94,6 +94,10 @@ export const submitAvailability = form('unchecked', async (formData) => {
 
 	if (!event) error(404, 'Afspraak niet gevonden')
 
+	if (event.options.some((option) => option.isSelected)) {
+		error(403, 'Je kan niet meer reageren op deze afspraak.')
+	}
+
 	const ResponseSchema = createResponseSchema(event)
 
 	const result = v.safeParse(ResponseSchema, formData)
