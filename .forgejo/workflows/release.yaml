@@ -4,7 +4,7 @@ on:
       - main
 jobs:
   release:
-    runs-on: codeberg-small
+    runs-on: docker
     steps:
       - uses: actions/checkout@v7
       - run: apt-get update
