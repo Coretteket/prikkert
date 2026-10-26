@@ -44,18 +44,21 @@ Use `pnpm test:ui` to run the tests in Playwright's interactive UI.
 
 ## Production
 
-Production runs as two Docker containers (Node server + Postgres). The included `compose.prod.yml` uses Traefik as a reverse proxy. Adjust the labels and `.env` to match your setup, or swap Traefik for your own reverse proxy.
+Production runs as two Docker containers (Node server + Postgres). The Node server is published as the `codeberg.org/qcoret/prikkert:latest` image. The included `compose.prod.yml` uses Traefik as a reverse proxy. Adjust the labels and `.env` to match your setup, or swap Traefik for your own reverse proxy.
 
 ```bash
 cp .env.example .env
 # set values in .env
-docker compose -f compose.prod.yml up -d --build
+docker compose -f compose.prod.yml pull
+docker compose -f compose.prod.yml up -d
 ```
 
-You can also use [docker-rollout](https://github.com/Wowu/docker-rollout) for zero-downtime deployments.
+To build the app locally instead, run `docker compose -f compose.prod.yml build app`.
+
+To update, pull the latest app image and recreate the app container. You can use [docker-rollout](https://github.com/Wowu/docker-rollout) for zero-downtime updates.
 
 ```bash
-docker compose -f compose.prod.yml build app
+docker compose -f compose.prod.yml pull app
 docker rollout -f compose.prod.yml app
 ```
 
