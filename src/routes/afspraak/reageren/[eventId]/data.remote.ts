@@ -1,4 +1,4 @@
-import { asc, eq } from 'drizzle-orm'
+import { and, asc, eq } from 'drizzle-orm'
 import { error } from '@sveltejs/kit'
 
 import { query, getRequestEvent } from '$app/server'
@@ -13,10 +13,18 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 
 	const event = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
-		columns: { createdAt: false, expiresAt: false },
+		columns: {
+			id: true,
+			title: true,
+			description: true,
+			organizerName: true,
+			organizerToken: true,
+			allowAnonymous: true,
+			hideResponses: true,
+		},
 		with: {
 			options: {
-				columns: { eventId: false },
+				columns: { id: true, startsAt: true, endsAt: true, note: true, isSelected: true },
 				orderBy: [asc(schema.options.startsAt)],
 			},
 		},
@@ -24,15 +32,20 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 
 	if (!event) error(404, 'Afspraak niet gevonden')
 
-	const respondentId = locals.session.respondent.get(eventId)?.respondentId
+	const respondentSession = locals.session.respondent.get(eventId)
+	const isRespondent = await validateSession(respondentSession)
 
-	const respondent = respondentId
-		? await db.query.respondents.findFirst({
-				where: eq(schema.respondents.id, respondentId),
-				columns: { id: true, name: true },
-				with: { responses: { columns: { optionId: true, availability: true, note: true } } },
-			})
-		: null
+	const respondent =
+		isRespondent && respondentSession
+			? await db.query.respondents.findFirst({
+					where: and(
+						eq(schema.respondents.id, respondentSession.respondentId),
+						eq(schema.respondents.eventId, eventId),
+					),
+					columns: { id: true, name: true },
+					with: { responses: { columns: { optionId: true, availability: true, note: true } } },
+				})
+			: null
 
 	const hasResponded = Boolean(respondent)
 
@@ -44,7 +57,12 @@ export const getEventForSession = query(v.string(), async (eventId) => {
 	const selectedOption = event.options.find((option) => option.isSelected)
 
 	return {
-		...event,
+		id: event.id,
+		title: event.title,
+		description: event.description,
+		organizerName: event.organizerName,
+		allowAnonymous: event.allowAnonymous,
+		hideResponses: event.hideResponses,
 		isOrganizer,
 		selectedOption,
 		hasResponded,

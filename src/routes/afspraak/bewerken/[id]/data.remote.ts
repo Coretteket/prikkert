@@ -15,7 +15,20 @@ export const getEditEvent = query(v.string(), async (eventId) => {
 
 	const event = await db.query.events.findFirst({
 		where: eq(schema.events.id, eventId),
-		with: { options: { with: { responses: true } } },
+		columns: {
+			id: true,
+			title: true,
+			description: true,
+			organizerName: true,
+			allowAnonymous: true,
+			hideResponses: true,
+		},
+		with: {
+			options: {
+				columns: { startsAt: true, endsAt: true, note: true },
+				with: { responses: { columns: { optionId: true } } },
+			},
+		},
 	})
 
 	if (!event) error(404, 'Afspraak niet gevonden')
@@ -49,7 +62,6 @@ export const getEditEvent = query(v.string(), async (eventId) => {
 	}
 
 	return {
-		event,
 		hasResponses: event.options.some((o) => o.responses.length > 0),
 		timezone,
 		initialValues: {

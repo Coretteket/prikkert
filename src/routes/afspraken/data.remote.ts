@@ -2,6 +2,7 @@ import { asc, inArray } from 'drizzle-orm'
 
 import { query, getRequestEvent } from '$app/server'
 
+import { validateSession } from '#lib/server/session/validation.ts'
 import { toInstant } from '#lib/shared/event/utils.ts'
 import { db, schema } from '#lib/server/db/index.ts'
 import { Temporal } from '#lib/shared/temporal.ts'
@@ -10,7 +11,11 @@ import { omit } from '#lib/shared/utils.ts'
 export const getEvents = query(async () => {
 	const { locals } = getRequestEvent()
 
-	const eventIds = [...locals.session.respondent.keys(), ...locals.session.organizer.keys()]
+	const sessions = [...locals.session.respondent.values(), ...locals.session.organizer.values()]
+	const validEventIds = await Promise.all(
+		sessions.map(async (session) => ((await validateSession(session)) ? session.eventId : null)),
+	)
+	const eventIds = validEventIds.filter((id) => id !== null)
 
 	const data = await db.query.events.findMany({
 		where: inArray(schema.events.id, eventIds),

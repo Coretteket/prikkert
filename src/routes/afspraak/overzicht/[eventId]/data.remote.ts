@@ -27,7 +27,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 		},
 		with: {
 			options: {
-				columns: { eventId: false },
+				columns: { id: true, startsAt: true, endsAt: true, note: true, isSelected: true },
 				orderBy: [asc(schema.options.startsAt)],
 				with: {
 					responses: {
@@ -46,9 +46,7 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 		event.organizerToken,
 	)
 
-	const selectedOption = event.options.find((option) => option.isSelected)
-
-	const hasResponded = locals.session.respondent.has(eventId)
+	const hasResponded = await validateSession(locals.session.respondent.get(eventId))
 
 	const numberOfResponses = new Set(
 		event.options.flatMap((option) => option.responses.map((r) => r.respondent.id)),
@@ -56,25 +54,27 @@ export const getEventResponses = query(v.optional(v.string()), async (eventId) =
 
 	const shouldHideResponses = event.hideResponses && !isOrganizer
 
+	const options = event.options.map((option) => ({
+		...option,
+		responses: (shouldHideResponses ? [] : option.responses)
+			.toSorted((a, b) => {
+				const availability = order[a.availability] - order[b.availability]
+				if (availability !== 0) return availability
+				return (b.respondent.name ?? '').localeCompare(a.respondent.name ?? '')
+			})
+			.map((response) => ({
+				availability: response.availability,
+				note: response.note,
+				name: response.respondent.name,
+			})),
+	}))
+
 	return {
-		...omit(event, 'organizerToken'),
-		selectedOption,
+		...omit(event, 'organizerToken', 'options'),
+		selectedOption: options.find((option) => option.isSelected),
 		hasResponded,
 		numberOfResponses,
 		isOrganizer,
-		options: event.options.map((option) => ({
-			...option,
-			responses: (shouldHideResponses ? [] : option.responses)
-				.toSorted((a, b) => {
-					const availability = order[a.availability] - order[b.availability]
-					if (availability !== 0) return availability
-					return (b.respondent.name ?? '').localeCompare(a.respondent.name ?? '')
-				})
-				.map((response) => ({
-					availability: response.availability,
-					note: response.note,
-					name: response.respondent.name,
-				})),
-		})),
+		options,
 	}
 })
