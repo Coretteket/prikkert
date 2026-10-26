@@ -1,6 +1,5 @@
-import { createHash } from 'node:crypto'
-
 import { futureDate, seedRespondent } from './support/database.ts'
+import { encodeSHA256 } from '../src/lib/server/crypto.ts'
 import { expect, test } from './support/fixtures.ts'
 import { newSession } from './support/sessions.ts'
 
@@ -114,7 +113,7 @@ test('loads a private response without exposing the organizer token hash', async
 	const participant = await newSession(browser, {
 		respondent: { eventId: event.id, respondent },
 	})
-	const organizerTokenHash = createHash('sha256').update(event.organizerToken).digest('base64')
+	const organizerTokenHash = await encodeSHA256(event.organizerToken)
 
 	const response = await participant.page.goto(`/afspraak/reageren/${event.id}`)
 	const html = await response?.text()
@@ -166,7 +165,7 @@ test('loads the edit form without exposing credentials or responses', async ({
 	const respondent = await seedRespondent(event.id, 'Noa', [
 		{ availability: 'YES', note: 'Bij voorkeur in de ochtend', optionId: event.options[0].id },
 	])
-	const organizerTokenHash = createHash('sha256').update(event.organizerToken).digest('base64')
+	const organizerTokenHash = await encodeSHA256(event.organizerToken)
 
 	const response = await page.goto(`/afspraak/bewerken/${event.id}`)
 	const html = await response?.text()
