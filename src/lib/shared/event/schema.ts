@@ -6,6 +6,7 @@ export const MIN_TITLE_LENGTH = 3
 export const MAX_TITLE_LENGTH = 100
 export const MAX_NAME_LENGTH = 100
 export const MAX_DESCRIPTION_LENGTH = 500
+export const MAX_OPTIONS = 500
 
 export const OptionNoteSchema = v.pipe(
 	v.string(),
@@ -87,6 +88,12 @@ export const EventFormSchema = v.strictObject({
 				),
 			),
 			v.minLength(1, () => 'Selecteer minstens 1 datum.'),
+			v.check(
+				(options) =>
+					options.reduce((total, [, entry]) => total + Math.max(1, entry.slots.length), 0) <=
+					MAX_OPTIONS,
+				() => `Voeg maximaal ${MAX_OPTIONS} datumopties toe.`,
+			),
 		),
 	),
 	allowAnonymous: v.optional(v.boolean()),

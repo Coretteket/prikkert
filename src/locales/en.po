@@ -1169,3 +1169,8 @@ msgstr "You can no longer respond to this event."
 #: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
 msgid "Als je doorgaat wordt je beschikbaarheid verwijderd."
 msgstr "If you continue, your availability will be deleted."
+
+#. 0: MAX_OPTIONS
+#: src/lib/shared/event/schema.ts
+msgid "Voeg maximaal {0} datumopties toe."
+msgstr "Add no more than {0} date options."

@@ -1169,3 +1169,8 @@ msgstr "Je kan niet meer reageren op deze afspraak."
 #: src/routes/afspraak/reageren/[eventId]/availability-remove-dialog.svelte
 msgid "Als je doorgaat wordt je beschikbaarheid verwijderd."
 msgstr "Als je doorgaat wordt je beschikbaarheid verwijderd."
+
+#. 0: MAX_OPTIONS
+#: src/lib/shared/event/schema.ts
+msgid "Voeg maximaal {0} datumopties toe."
+msgstr "Voeg maximaal {0} datumopties toe."
